@@ -1,0 +1,1939 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>More Pandas methods &#8212; Pandas from Numpy</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '0_6_more_pandas_methods_strings';</script>
+    <link rel="canonical" href="https://pxr687.github.io/ASPP_pandas_tutorials/0_6_more_pandas_methods_strings.html" />
+    <link rel="icon" href="_static/pandas_numpy.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Filtering Data Frames with Boolean Series" href="0_5_filtering_data_with_pandas.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/pandas_numpy.jpg" class="logo__image only-light" alt="Pandas from Numpy - Home"/>
+    <img src="_static/pandas_numpy.jpg" class="logo__image only-dark pst-js-only" alt="Pandas from Numpy - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Pandas from Numpy</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="0_0_pandas_intro.html">Pandas from Numpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_1_to_loc_or_iloc.html">To <code class="docutils literal notranslate"><span class="pre">.loc</span></code> or <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> - more on Pandas indexes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_2_pandas_dataframes_attributes_methods.html">Pandas DataFrames: Attributes and Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_3_constructing_dataframes.html">Let There Be Data : Creating Data Frames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_4_dealing_with_missing_data_in_pandas.html">Dealing with NaNs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_5_filtering_data_with_pandas.html">Filtering Data Frames with Boolean Series</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">More Pandas methods</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="interact/lab/index.html?path=0_6_more_pandas_methods_strings.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch via JupyterLite"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="JupyterLite logo" src="_static/images/logo_jupyterlite.svg">
+  </span>
+<span class="btn__text-container">JupyterLite</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/pxr687/ASPP_pandas_tutorials" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pxr687/ASPP_pandas_tutorials/edit/main/0_6_more_pandas_methods_strings.Rmd" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pxr687/ASPP_pandas_tutorials/issues/new?title=Issue%20on%20page%20%2F0_6_more_pandas_methods_strings.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/0_6_more_pandas_methods_strings.Rmd" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.Rmd</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>More Pandas methods</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strings-methods-with-numpy-arrays">Strings methods with numpy arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string-methods-with-pandas-series">String methods with Pandas Series</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string-methods-with-pandas-dataframes">String methods with Pandas DataFrames</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uses-of-string-methods-in-data-wrangling">Uses of string methods in data wrangling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="more-pandas-methods">
+<h1>More Pandas methods<a class="headerlink" href="#more-pandas-methods" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p>📝 NOTE: Covered here:</p>
+<ul class="simple">
+<li><p>string operations, ex: df[‘name’].str[2:4], df[‘name’].str.count(‘a’) [For this, compare different country names between Mat &gt; Mort data and Dev/Fertility data, e.g. different names for Russia and South Korea])</p></li>
+<li><p>Strings (and dates) have a special accessor to perform vectorized
+string (or date) operations</p></li>
+<li><p>specialized accessor methods Series.str</p></li>
+</ul>
+<p><strong>Matthew Notes: do everything on a Series first. Series.str follow the pandas from numpy structure</strong></p>
+<p><strong>For any string operations, show different routes to the same outcome e.g. via Boolean indexing and then replace etc.</strong></p>
+<p>Structure of this page:</p>
+<ul class="simple">
+<li><p>show python string methods/string methods with numpy arrays</p></li>
+<li><p>build a Series and show Series.str methods</p></li>
+<li><p>show str methods with a dataframe + how this can be very useful when cleaning data</p></li>
+</ul>
+</div></blockquote>
+<p>String/text data is often used to represent categorical variables, and commonly appears in data analyses in a variety of contexts. When dealing with string/text data we will frequently find that we need to alter the strings to correct errors, improve clarity, make formatting uniform, or a host of other reasons.</p>
+<p>String methods are inherent to Python, and these methods or variants of them can all be used on Numpy arrays and Pandas Series/Data Frames. However, Numpy and Pandas use different interfaces for interacting with strings. To understand the differences between Numpy and Pandas with respect to strings, let’s begin at the foundation, the in-built string methods of Python. The cell below contains a simple string.</p>
+<p><em>NB</em>: you may want to use <code class="docutils literal notranslate"><span class="pre">dir()</span></code> again here to see the full complement of available string methods.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># a string</span>
+<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;string_of_words&quot;</span>
+
+<span class="n">string</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;string_of_words&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Remember that <em>a method is a function attached to an object</em>. In this case our object is a string.</p>
+<p>Let’s say we like reading values in our data as if they are being spoken in a loud voice. If this is the case we can alter the format of the string to make all letters uppercase, using the <code class="docutils literal notranslate"><span class="pre">.upper()</span></code> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># upper method</span>
+<span class="n">string</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;STRING_OF_WORDS&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can replace characters in the string using the aptly named <code class="docutils literal notranslate"><span class="pre">.replace()</span></code> method. Here we supply two strings to the method, first the string we want to replace, and then second, the string we want to replace it with.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># replace</span>
+<span class="n">string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;stringofwords&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Fancier formatting methods will let us adjust strings, for instance, in title case (<code class="docutils literal notranslate"><span class="pre">.title()</span></code>):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># a more elaborate method</span>
+<span class="n">string</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;String_Of_Words&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>In Python, strings are collections of characters, and so we can slice them as we would a list or array, using integer indexes and the <code class="docutils literal notranslate"><span class="pre">:</span></code> symbol:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># slicing with strings</span>
+<span class="n">string</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;s&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">string</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;st&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">string</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;string_&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>You can visit <a class="reference external" href="https://www.w3schools.com/python/python_ref_string.asp">this page</a> to see the variety of string methods available in base Python.</p>
+<section id="strings-methods-with-numpy-arrays">
+<h2>Strings methods with numpy arrays<a class="headerlink" href="#strings-methods-with-numpy-arrays" title="Link to this heading">#</a></h2>
+<p>So, strings in base python have a large number of in-built methods - what about strings in Numpy?</p>
+<p>Numpy arrays themselves do not have specific string methods, but the in-built Python string methods can be called on individual string values in a Numpy array. Alternatively, we can use functions from the <code class="docutils literal notranslate"><span class="pre">np.char.</span></code> module to operate on all the strings in the array concurrently.</p>
+<p>To investigate how string data is handled in Numpy, let’s make some arrays containing strings:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import libraries (no imports were needed prior to this point as string methods are part of base python)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># standard three-letter code for each country</span>
+<span class="n">country_codes_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;AUS&#39;</span><span class="p">,</span> <span class="s1">&#39;BRA&#39;</span><span class="p">,</span> <span class="s1">&#39;CAN&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;CHN&#39;</span><span class="p">,</span> <span class="s1">&#39;DEU&#39;</span><span class="p">,</span> <span class="s1">&#39;ESP&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;FRA&#39;</span><span class="p">,</span> <span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;IND&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;ITA&#39;</span><span class="p">,</span> <span class="s1">&#39;JPN&#39;</span><span class="p">,</span> <span class="s1">&#39;KOR&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;MEX&#39;</span><span class="p">,</span> <span class="s1">&#39;RUS&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">])</span>
+<span class="n">country_codes_array</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;AUS&#39;, &#39;BRA&#39;, &#39;CAN&#39;, &#39;CHN&#39;, &#39;DEU&#39;, &#39;ESP&#39;, &#39;FRA&#39;, &#39;GBR&#39;, &#39;IND&#39;,
+       &#39;ITA&#39;, &#39;JPN&#39;, &#39;KOR&#39;, &#39;MEX&#39;, &#39;RUS&#39;, &#39;USA&#39;], dtype=&#39;&lt;U3&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># country names</span>
+<span class="n">country_names_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;Australia&#39;</span><span class="p">,</span> <span class="s1">&#39;Brazil&#39;</span><span class="p">,</span> <span class="s1">&#39;Canada&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;China&#39;</span><span class="p">,</span> <span class="s1">&#39;Germany&#39;</span><span class="p">,</span> <span class="s1">&#39;Spain&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;France&#39;</span><span class="p">,</span> <span class="s1">&#39;United Kingdom&#39;</span><span class="p">,</span> <span class="s1">&#39;India&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;Italy&#39;</span><span class="p">,</span> <span class="s1">&#39;Japan&#39;</span><span class="p">,</span> <span class="s1">&#39;South Korea&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;Mexico&#39;</span><span class="p">,</span> <span class="s1">&#39;Russia&#39;</span><span class="p">,</span> <span class="s1">&#39;United States&#39;</span><span class="p">])</span>
+<span class="n">country_names_array</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;Australia&#39;, &#39;Brazil&#39;, &#39;Canada&#39;, &#39;China&#39;, &#39;Germany&#39;, &#39;Spain&#39;,
+       &#39;France&#39;, &#39;United Kingdom&#39;, &#39;India&#39;, &#39;Italy&#39;, &#39;Japan&#39;,
+       &#39;South Korea&#39;, &#39;Mexico&#39;, &#39;Russia&#39;, &#39;United States&#39;], dtype=&#39;&lt;U14&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>For comparison, let’s make an array containing the numerical HDI scores:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Human Development Index Scores for each country</span>
+<span class="n">hdis_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.896</span><span class="p">,</span> <span class="mf">0.668</span><span class="p">,</span> <span class="mf">0.89</span> <span class="p">,</span> <span class="mf">0.586</span><span class="p">,</span> 
+                 <span class="mf">0.844</span><span class="p">,</span> <span class="mf">0.89</span> <span class="p">,</span> <span class="mf">0.49</span> <span class="p">,</span> <span class="mf">0.842</span><span class="p">,</span> 
+                 <span class="mf">0.883</span><span class="p">,</span> <span class="mf">0.709</span><span class="p">,</span> <span class="mf">0.733</span><span class="p">,</span> <span class="mf">0.824</span><span class="p">,</span>
+                 <span class="mf">0.828</span><span class="p">,</span> <span class="mf">0.863</span><span class="p">,</span> <span class="mf">0.894</span><span class="p">])</span>
+
+<span class="n">hdis_array</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.896, 0.668, 0.89 , 0.586, 0.844, 0.89 , 0.49 , 0.842, 0.883,
+       0.709, 0.733, 0.824, 0.828, 0.863, 0.894])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">dtype</span></code> attribute of the first two arrays begins with <code class="docutils literal notranslate"><span class="pre">&lt;U</span></code>, indicating we are dealing with string data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the dtype of the country codes array (e.g. string data)</span>
+<span class="n">country_codes_array</span><span class="o">.</span><span class="n">dtype</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dtype(&#39;&lt;U3&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the dtype of the country names array (e.g. string data)</span>
+<span class="n">country_names_array</span><span class="o">.</span><span class="n">dtype</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dtype(&#39;&lt;U14&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Conversely, the <code class="docutils literal notranslate"><span class="pre">hdis_array</span></code> contains data of a numerical type:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the dtype of the hdis array (e.g. numeric data)</span>
+<span class="n">hdis_array</span><span class="o">.</span><span class="n">dtype</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dtype(&#39;float64&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Using direct indexing, we can use all of the in-built Python string methods on the individual values within a Numpy array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># methods on an individual string</span>
+<span class="n">country_codes_array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.str_(&#39;AUS&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>For instance, we can change the case of the value:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># lowercase</span>
+<span class="n">country_codes_array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;aus&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># uppercase</span>
+<span class="n">country_codes_array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;AUS&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also replace elements of the string:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">country_codes_array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;HELLO&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;HELLOUS&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Understandably, if we try to use any of these string methods on numerical data, we will get an error:</p>
+<div class="cell tag_raises-exception docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># oh no!</span>
+<span class="n">hdis_array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">18</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># oh no!</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">hdis_array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+
+<span class="ne">AttributeError</span>: &#39;numpy.float64&#39; object has no attribute &#39;upper&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>All of the string methods used in this section above have been called on single string values from a Numpy array. If we try to use a string method on all values of the array simultaneously, we will also get an error:</p>
+<div class="cell tag_raises-exception docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># this does not work</span>
+<span class="n">country_codes_array</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">19</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># this does not work</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">country_codes_array</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+<span class="ne">AttributeError</span>: &#39;numpy.ndarray&#39; object has no attribute &#39;lower&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>The same error occurs if we try to use a string method on a slice from the array:</p>
+<div class="cell tag_raises-exception docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># this also does not work</span>
+<span class="n">country_codes_array</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">20</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># this also does not work</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">country_codes_array</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+<span class="ne">AttributeError</span>: &#39;numpy.ndarray&#39; object has no attribute &#39;lower&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>String methods in Numpy must be called from the single string values or using the <code class="docutils literal notranslate"><span class="pre">.char.</span></code> module.</p>
+<p>For example, we can use the <code class="docutils literal notranslate"><span class="pre">np.char.lower()</span></code> function to operate on all values of the Numpy array at once:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># this DOES work</span>
+<span class="n">np</span><span class="o">.</span><span class="n">char</span><span class="o">.</span><span class="n">lower</span><span class="p">(</span><span class="n">country_codes_array</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;aus&#39;, &#39;bra&#39;, &#39;can&#39;, &#39;chn&#39;, &#39;deu&#39;, &#39;esp&#39;, &#39;fra&#39;, &#39;gbr&#39;, &#39;ind&#39;,
+       &#39;ita&#39;, &#39;jpn&#39;, &#39;kor&#39;, &#39;mex&#39;, &#39;rus&#39;, &#39;usa&#39;], dtype=&#39;&lt;U3&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># this DOES work</span>
+<span class="n">np</span><span class="o">.</span><span class="n">char</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">country_codes_array</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;!&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;!US&#39;, &#39;BR!&#39;, &#39;C!N&#39;, &#39;CHN&#39;, &#39;DEU&#39;, &#39;ESP&#39;, &#39;FR!&#39;, &#39;GBR&#39;, &#39;IND&#39;,
+       &#39;IT!&#39;, &#39;JPN&#39;, &#39;KOR&#39;, &#39;MEX&#39;, &#39;RUS&#39;, &#39;US!&#39;], dtype=&#39;&lt;U3&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Pandas deals with string data slightly differently to Numpy. The elements of the <code class="docutils literal notranslate"><span class="pre">.values</span></code> component of a Pandas Series can be operated on altogether by using the <code class="docutils literal notranslate"><span class="pre">.str.</span></code> accessor, to which we will now turn our attention.</p>
+</section>
+<section id="string-methods-with-pandas-series">
+<h2>String methods with Pandas Series<a class="headerlink" href="#string-methods-with-pandas-series" title="Link to this heading">#</a></h2>
+<p>As mentioned above, Pandas Series have a specialised accessor (<code class="docutils literal notranslate"><span class="pre">.str.</span></code>) which bypasses the need to use <code class="docutils literal notranslate"><span class="pre">np.char.</span></code> when we want to do something to all of the string values in a Series.</p>
+<p>To see how this works, let’s construct a Series from our <code class="docutils literal notranslate"><span class="pre">country_names</span></code> array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show again from Series</span>
+<span class="n">names_series</span> <span class="o">=</span>  <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">country_names_array</span><span class="p">,</span>
+                          <span class="n">index</span><span class="o">=</span><span class="n">country_codes_array</span><span class="p">)</span>
+
+<span class="n">names_series</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUS         Australia
+BRA            Brazil
+CAN            Canada
+CHN             China
+DEU           Germany
+ESP             Spain
+FRA            France
+GBR    United Kingdom
+IND             India
+ITA             Italy
+JPN             Japan
+KOR       South Korea
+MEX            Mexico
+RUS            Russia
+USA     United States
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>To use the <code class="docutils literal notranslate"><span class="pre">.str.</span></code> accessor, we just place it after our object (e.g. our Series containing our string data). We then can call a variety of string methods, which we be applied to all elements in the <code class="docutils literal notranslate"><span class="pre">.values</span></code> array of the Series:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># string methods on Series</span>
+<span class="n">names_series</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUS         AUSTRALIA
+BRA            BRAZIL
+CAN            CANADA
+CHN             CHINA
+DEU           GERMANY
+ESP             SPAIN
+FRA            FRANCE
+GBR    UNITED KINGDOM
+IND             INDIA
+ITA             ITALY
+JPN             JAPAN
+KOR       SOUTH KOREA
+MEX            MEXICO
+RUS            RUSSIA
+USA     UNITED STATES
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the `.str.lower()` method</span>
+<span class="n">names_series</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUS         australia
+BRA            brazil
+CAN            canada
+CHN             china
+DEU           germany
+ESP             spain
+FRA            france
+GBR    united kingdom
+IND             india
+ITA             italy
+JPN             japan
+KOR       south korea
+MEX            mexico
+RUS            russia
+USA     united states
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">.replace()</span></code> method is also available here, it will operate on all the elements in the Series, though in this case (as there is only one <code class="docutils literal notranslate"><span class="pre">United</span> <span class="pre">States</span></code>!) it will only alter one value:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># replacing values in the Series</span>
+<span class="n">names_series</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;United States&quot;</span><span class="p">,</span> <span class="s2">&quot;USA&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUS         Australia
+BRA            Brazil
+CAN            Canada
+CHN             China
+DEU           Germany
+ESP             Spain
+FRA            France
+GBR    United Kingdom
+IND             India
+ITA             Italy
+JPN             Japan
+KOR       South Korea
+MEX            Mexico
+RUS            Russia
+USA               USA
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>The syntax for slicing strings is the same as for a single value, but it also operates across all elements in the Series at once:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># slicing with strings, in a Series</span>
+<span class="n">names_series</span><span class="o">.</span><span class="n">str</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUS    st
+BRA    az
+CAN    na
+CHN    in
+DEU    rm
+ESP    ai
+FRA    an
+GBR    it
+IND    di
+ITA    al
+JPN    pa
+KOR    ut
+MEX    xi
+RUS    ss
+USA    it
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>In contrast to the behaviour of Numpy arrays, string methods used via the <code class="docutils literal notranslate"><span class="pre">.str.</span></code> accessor can be used when slicing the Series. Be careful to use <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> or <code class="docutils literal notranslate"><span class="pre">loc</span></code> here, for the <a class="reference internal" href="0_1_to_loc_or_iloc.html"><span class="std std-doc">aforementioned reasons</span></a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># slicing with Series and string methods</span>
+<span class="n">names_series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;!&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUS    Austr!li!
+BRA       Br!zil
+CAN       C!n!d!
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>Using the <code class="docutils literal notranslate"><span class="pre">.contains()</span></code> method, Boolean Series can be generated by searching for specific instances of a substring in each value:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate a Boolean Series, True where the value contains &quot;Ind&quot;</span>
+<span class="n">names_series</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;Ind&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUS    False
+BRA    False
+CAN    False
+CHN    False
+DEU    False
+ESP    False
+FRA    False
+GBR    False
+IND     True
+ITA    False
+JPN    False
+KOR    False
+MEX    False
+RUS    False
+USA    False
+dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<p>These Boolean Series can be used to retrieve specific values from the original Series, via Boolean filtering:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># use Boolean filtering to retrieve a specific datapoint</span>
+<span class="n">names_series</span><span class="p">[</span><span class="n">names_series</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;Ind&quot;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>IND    India
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="string-methods-with-pandas-dataframes">
+<h2>String methods with Pandas DataFrames<a class="headerlink" href="#string-methods-with-pandas-dataframes" title="Link to this heading">#</a></h2>
+<p>So, Pandas makes it somewhat easier than Numpy to perform operations on all the string elements at once.</p>
+<p>Remember that <em>a DataFrame is a dictionary-like collection of Series</em>, and so everything we have just seen of strings in Pandas Series applies to the <em>columns</em> of a Data Frame.</p>
+<p>Let’s import the <a class="reference external" href="https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index">HDI data</a>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/year_2000_hdi_fert.csv&quot;</span><span class="p">)</span>
+
+<span class="c1"># show the data</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Code</th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>AUS</td>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>1.913247e+07</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>BRA</td>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>1.740183e+08</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>CAN</td>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>3.089180e+07</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>CHN</td>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1.269581e+09</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>DEU</td>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>8.179726e+07</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>ESP</td>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>4.101977e+07</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>FRA</td>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>5.948372e+07</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>GBR</td>
+      <td>0.863</td>
+      <td>1.641</td>
+      <td>5.905734e+07</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>IND</td>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1.057923e+09</td>
+      <td>India</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>ITA</td>
+      <td>0.842</td>
+      <td>1.249</td>
+      <td>5.727220e+07</td>
+      <td>Italy</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>JPN</td>
+      <td>0.883</td>
+      <td>1.346</td>
+      <td>1.270278e+08</td>
+      <td>Japan</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>KOR</td>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>4.676666e+07</td>
+      <td>South Korea</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>MEX</td>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>9.862555e+07</td>
+      <td>Mexico</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>RUS</td>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>1.467178e+08</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>USA</td>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>2.814841e+08</td>
+      <td>United States</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Because each Data Frame column is nothing other than a Pandas Series, we can use string methods in the same way as we saw in the last secton:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># use the `.replace()` method</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Country Name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;HELLO&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0          Australia
+1             Brazil
+2             Canada
+3              China
+4            Germany
+5              Spain
+6             France
+7     United Kingdom
+8          HELLOndia
+9          HELLOtaly
+10             Japan
+11       South Korea
+12            Mexico
+13            Russia
+14     United States
+Name: Country Name, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>However, Pandas will not let us use string methods on the whole Data Frame at once:</p>
+<div class="cell tag_raises-exception docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cannot use `.str` methods on whole Data Frame.</span>
+<span class="n">df</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="nn">/var/folders/hd/rfxyn9gx4bl39bvwzrgn3rtr0000gn/T/ipykernel_37274/1916934331.py</span> in <span class="ni">?</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Cannot use `.str` methods on whole Data Frame.</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">df</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+
+<span class="nn">/Volumes/zorg/mb312/.virtualenvs/pandas-pages/lib/python3.12/site-packages/pandas/core/generic.py</span> in <span class="ni">?</span><span class="nt">(self, name)</span>
+<span class="g g-Whitespace">   </span><span class="mi">6295</span>             <span class="ow">and</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accessors</span>
+<span class="g g-Whitespace">   </span><span class="mi">6296</span>             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_info_axis</span><span class="o">.</span><span class="n">_can_hold_identifiers_and_holds_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">6297</span>         <span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">6298</span>             <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+<span class="ne">-&gt; </span><span class="mi">6299</span>         <span class="k">return</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+<span class="ne">AttributeError</span>: &#39;DataFrame&#39; object has no attribute &#39;str&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>We might think that this is because not all the data in the Data Frame is of
+the string type, but this is not the case. We also cannot use Pandas string
+methods on Data Frames with columns only containing string data, as we get the
+same error:</p>
+<div class="cell tag_raises-exception docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Oops, using `.str` fails even for all-string-dtype columns.</span>
+<span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Country Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Code&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="nn">/var/folders/hd/rfxyn9gx4bl39bvwzrgn3rtr0000gn/T/ipykernel_37274/3866909753.py</span> in <span class="ni">?</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Oops, using `.str` fails even for all-string-dtype columns.</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Country Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Code&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">()</span>
+
+<span class="nn">/Volumes/zorg/mb312/.virtualenvs/pandas-pages/lib/python3.12/site-packages/pandas/core/generic.py</span> in <span class="ni">?</span><span class="nt">(self, name)</span>
+<span class="g g-Whitespace">   </span><span class="mi">6295</span>             <span class="ow">and</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_accessors</span>
+<span class="g g-Whitespace">   </span><span class="mi">6296</span>             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_info_axis</span><span class="o">.</span><span class="n">_can_hold_identifiers_and_holds_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">6297</span>         <span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">6298</span>             <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+<span class="ne">-&gt; </span><span class="mi">6299</span>         <span class="k">return</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+<span class="ne">AttributeError</span>: &#39;DataFrame&#39; object has no attribute &#39;str&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice here we did not set <code class="docutils literal notranslate"><span class="pre">Code</span></code> as the index of the Data Frame, we are just treating it as a column containing string data. The cell below sets it as the index, so we can use label-based indexing later in this tutorial:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set the index</span>
+<span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Code&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>So, we cannot apply string methods to multiple columns at once, but if we focus on one column, we can use all of the available string methods:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># `lower` method</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Country Name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Code
+AUS         australia
+BRA            brazil
+CAN            canada
+CHN             china
+DEU           germany
+ESP             spain
+FRA            france
+GBR    united kingdom
+IND             india
+ITA             italy
+JPN             japan
+KOR       south korea
+MEX            mexico
+RUS            russia
+USA     united states
+Name: Country Name, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># `upper` method</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Country Name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Code
+AUS         AUSTRALIA
+BRA            BRAZIL
+CAN            CANADA
+CHN             CHINA
+DEU           GERMANY
+ESP             SPAIN
+FRA            FRANCE
+GBR    UNITED KINGDOM
+IND             INDIA
+ITA             ITALY
+JPN             JAPAN
+KOR       SOUTH KOREA
+MEX            MEXICO
+RUS            RUSSIA
+USA     UNITED STATES
+Name: Country Name, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># using the `str.count()` method</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Country Name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Code
+AUS    2
+BRA    1
+CAN    3
+CHN    1
+DEU    1
+ESP    1
+FRA    1
+GBR    0
+IND    1
+ITA    1
+JPN    2
+KOR    1
+MEX    0
+RUS    1
+USA    1
+Name: Country Name, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the `str.contains()` method</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Country Name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;Russia&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Code
+AUS    False
+BRA    False
+CAN    False
+CHN    False
+DEU    False
+ESP    False
+FRA    False
+GBR    False
+IND    False
+ITA    False
+JPN    False
+KOR    False
+MEX    False
+RUS     True
+USA    False
+Name: Country Name, dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># see if there are any Trues in the Series</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Country Name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;Russia&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.06666666666666667)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># filtering data using the `str.contains()` method</span>
+<span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Country Name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;Russia&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Code</th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>RUS</th>
+      <td>RUS</td>
+      <td>0.733</td>
+      <td>1.19</td>
+      <td>146717784.0</td>
+      <td>Russia</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="uses-of-string-methods-in-data-wrangling">
+<h2>Uses of string methods in data wrangling<a class="headerlink" href="#uses-of-string-methods-in-data-wrangling" title="Link to this heading">#</a></h2>
+<p>As we mentioned earlier, string methods generally useful for cleaning text data. This can be especially useful when combining data from different sources, where different conventions in data entry may lead to similar data being formatted differently.</p>
+<p>To explore this, let’s import a new dataset, which, like the HDI data, contains observations at the country level (e.g. each row is an observarion from a specific country).</p>
+<p>You can read more about the dataset <a class="reference external" href="https://github.com/odsti/datasets/tree/main/gender_stats">here</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import maternal mortality dataset</span>
+<span class="n">maternal_mort</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/gender_stats.csv&quot;</span><span class="p">)</span>
+
+<span class="n">maternal_mort</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country_name</th>
+      <th>country_code</th>
+      <th>fert_rate</th>
+      <th>gdp_us_billion</th>
+      <th>health_exp_per_cap</th>
+      <th>health_exp_pub</th>
+      <th>prim_ed_girls</th>
+      <th>mat_mort_ratio</th>
+      <th>population</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Aruba</td>
+      <td>ABW</td>
+      <td>1.66325</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>48.721939</td>
+      <td>NaN</td>
+      <td>0.103744</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>4.95450</td>
+      <td>19.961015</td>
+      <td>161.138034</td>
+      <td>2.834598</td>
+      <td>40.109708</td>
+      <td>444.00</td>
+      <td>32.715838</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Angola</td>
+      <td>AGO</td>
+      <td>6.12300</td>
+      <td>111.936542</td>
+      <td>254.747970</td>
+      <td>2.447546</td>
+      <td>NaN</td>
+      <td>501.25</td>
+      <td>26.937545</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Albania</td>
+      <td>ALB</td>
+      <td>1.76925</td>
+      <td>12.327586</td>
+      <td>574.202694</td>
+      <td>2.836021</td>
+      <td>47.201082</td>
+      <td>29.25</td>
+      <td>2.888280</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Andorra</td>
+      <td>AND</td>
+      <td>NaN</td>
+      <td>3.197538</td>
+      <td>4421.224933</td>
+      <td>7.260281</td>
+      <td>47.123345</td>
+      <td>NaN</td>
+      <td>0.079547</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>211</th>
+      <td>Kosovo</td>
+      <td>XKX</td>
+      <td>2.14250</td>
+      <td>6.804620</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.813820</td>
+    </tr>
+    <tr>
+      <th>212</th>
+      <td>Yemen, Rep.</td>
+      <td>YEM</td>
+      <td>4.22575</td>
+      <td>36.819337</td>
+      <td>207.949700</td>
+      <td>1.417836</td>
+      <td>44.470076</td>
+      <td>399.75</td>
+      <td>26.246608</td>
+    </tr>
+    <tr>
+      <th>213</th>
+      <td>South Africa</td>
+      <td>ZAF</td>
+      <td>2.37525</td>
+      <td>345.209888</td>
+      <td>1123.142656</td>
+      <td>4.241441</td>
+      <td>48.516298</td>
+      <td>143.75</td>
+      <td>54.177209</td>
+    </tr>
+    <tr>
+      <th>214</th>
+      <td>Zambia</td>
+      <td>ZMB</td>
+      <td>5.39425</td>
+      <td>24.280990</td>
+      <td>185.556359</td>
+      <td>2.687290</td>
+      <td>49.934484</td>
+      <td>233.75</td>
+      <td>15.633220</td>
+    </tr>
+    <tr>
+      <th>215</th>
+      <td>Zimbabwe</td>
+      <td>ZWE</td>
+      <td>3.94300</td>
+      <td>15.495514</td>
+      <td>115.519881</td>
+      <td>2.695188</td>
+      <td>49.529875</td>
+      <td>398.00</td>
+      <td>15.420964</td>
+    </tr>
+  </tbody>
+</table>
+<p>216 rows × 9 columns</p>
+</div></div></div>
+</div>
+<p>Let’s say we are interested in Russia, but do not know how the name of the country is formatted. We can use the <code class="docutils literal notranslate"><span class="pre">str.contains()</span></code> method to search for likely matches.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># hmmm is Russia not in this data?</span>
+<span class="n">maternal_mort</span><span class="p">[</span><span class="s1">&#39;country_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;Russia&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0      False
+1      False
+2      False
+3      False
+4      False
+       ...  
+211    False
+212    False
+213    False
+214    False
+215    False
+Name: country_name, Length: 216, dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<p>That output is pretty opaque, maybe there is a <code class="docutils literal notranslate"><span class="pre">True</span></code> in there somewhere. We can chain on the <code class="docutils literal notranslate"><span class="pre">.sum()</span></code> method to count the number of <code class="docutils literal notranslate"><span class="pre">True</span></code> values in the above Boolean Series:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># count the Trues for country names containing &quot;Russia&quot; in the `maternal</span>
+<span class="n">maternal_mort</span><span class="p">[</span><span class="s1">&#39;country_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;Russia&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.int64(1)
+</pre></div>
+</div>
+</div>
+</div>
+<p>It appears we do have one match. Let’s use the Boolean Series we just made to have a look at the row that contains the string “Russia” in the <code class="docutils literal notranslate"><span class="pre">country_name</span></code> column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># use the `str.contains()` method to filter the data</span>
+<span class="n">maternal_mort</span><span class="p">[</span><span class="n">maternal_mort</span><span class="p">[</span><span class="s1">&#39;country_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;Russia&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country_name</th>
+      <th>country_code</th>
+      <th>fert_rate</th>
+      <th>gdp_us_billion</th>
+      <th>health_exp_per_cap</th>
+      <th>health_exp_pub</th>
+      <th>prim_ed_girls</th>
+      <th>mat_mort_ratio</th>
+      <th>population</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>164</th>
+      <td>Russian Federation</td>
+      <td>RUS</td>
+      <td>1.7245</td>
+      <td>1822.6917</td>
+      <td>1755.506635</td>
+      <td>3.731354</td>
+      <td>48.96807</td>
+      <td>25.25</td>
+      <td>143.793504</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>So, we have found the row for Russia in this new dataset. Let’s compare the naming convention to the HDI data, in the <code class="docutils literal notranslate"><span class="pre">df</span></code> Data Frame:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the data for Russia, from the HDI data</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;RUS&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Code                               RUS
+Human Development Index          0.733
+Fertility Rate                    1.19
+Population                 146717784.0
+Country Name                    Russia
+Name: RUS, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>We may want to <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.merge.html">merge</a> these datasets. To do that, we need common identifiers linking rows in each dataset which refer to the same observational units (in this case countries).</p>
+<p>String methods are our friend here. We can use the process just outlined for find data for a specific country, and then use other methods to ensure uniform formatting between the datasets, such that we can merge them:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># format the maternal mortality data for Russia to use the same country name as the HDI data</span>
+<span class="n">maternal_mort</span><span class="p">[</span><span class="s1">&#39;country_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">maternal_mort</span><span class="p">[</span><span class="s1">&#39;country_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Russian Federation&#39;</span><span class="p">,</span> <span class="s1">&#39;Russia&#39;</span><span class="p">)</span>
+
+<span class="n">maternal_mort</span><span class="p">[</span><span class="n">maternal_mort</span><span class="p">[</span><span class="s1">&#39;country_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;Russia&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country_name</th>
+      <th>country_code</th>
+      <th>fert_rate</th>
+      <th>gdp_us_billion</th>
+      <th>health_exp_per_cap</th>
+      <th>health_exp_pub</th>
+      <th>prim_ed_girls</th>
+      <th>mat_mort_ratio</th>
+      <th>population</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>164</th>
+      <td>Russia</td>
+      <td>RUS</td>
+      <td>1.7245</td>
+      <td>1822.6917</td>
+      <td>1755.506635</td>
+      <td>3.731354</td>
+      <td>48.96807</td>
+      <td>25.25</td>
+      <td>143.793504</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>This page looked at string methods in base python, Numpy and Pandas.</p>
+<p>Numpy and Python inherit their string methods from base python, but apply them in different ways.</p>
+<p>Numpy does not have a set of methods for applying string methods to every element of an array simultaneously. We need functions from the <code class="docutils literal notranslate"><span class="pre">np.char</span></code> module if we want this.</p>
+<p>By contrast, Pandas Series - whether in isolation or as columns in a Data Frame - have the <code class="docutils literal notranslate"><span class="pre">.str.</span></code> accessor for easily performing string operations on every element in a Series.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="0_5_filtering_data_with_pandas.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Filtering Data Frames with Boolean Series</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strings-methods-with-numpy-arrays">Strings methods with numpy arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string-methods-with-pandas-series">String methods with Pandas Series</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string-methods-with-pandas-dataframes">String methods with Pandas DataFrames</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uses-of-string-methods-in-data-wrangling">Uses of string methods in data wrangling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Peter Rush, Matthew Brett
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

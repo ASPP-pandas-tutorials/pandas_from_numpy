@@ -1,0 +1,269 @@
+---
+jupyter:
+  jupytext:
+    formats: ipynb,Rmd
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.17.1
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
+# Dealing with NaNs
+
+> 📝 NOTE:
+> Covered on this page/structure of this page:
+>
+> * Make an array and series containing NaNs and show how pandas and numpy treat them differently
+>
+> * Populating the region column? E.g. replacing the missing data?
+>
+>```
+> # drop NaNs gives the same mean
+> df['Fertility Rate'].loc['ZWE'].dropna().mean()
+>```
+>
+> * NaNs are interpreted as missing data and ignored in most operations
+> * Pandas uses NaN as a flag, not as an indication of a failed floating point
+>    operation
+> * Numpy does not have a concept of a missing value, NaNs propagate.
+> * In Pandas NaN is an  indcation of missing data - Pandas will by default
+>   drop nans from most operations).s
+
+This page will compare how NaNs (Not a Number) values differ between Numpy and
+Pandas. You are probably aware that Numpy will produce NaNs from invalid
+floating point operations, such as `np.inf / np.inf`. In Pandas, NaNs are more
+commonly a flag to indicate the abscence of data, for floating point and other
+data types.
+
+We will also look at how to handle NaNs safely in Pandas.
+
+First, let's remind ourselves how NaNs work in Numpy...
+
+
+## NaNs in Numpy
+
+As mentioned above, NaNs in Numpy result from floating point errors. Numpy floating-point errors occur due to limitations in how computers represent and process numbers. They can result, for instance, from overflow and underflow - when a computer is dealing with numbers too large or too small to be represented within a floating point range. Likewise, invalid operations, doing something mathematically illegal/nonsensical will create NaN values in Numpy.
+
+```{python}
+# import libraries
+import numpy as np
+import pandas as pd
+
+# an array containing NaN values resulting from an invalid operation
+array_with_nans = np.array([0, 0]) / np.array([0, 0])
+array_with_nans
+```
+
+There are many oddities and potential pitfalls when dealing with NaN data, to which we will now turn our attention.
+
+Let's look at a single NaN value from the array we just made.
+
+```{python}
+# use direct indexing to get a single NaN value
+array_with_nans[0]
+```
+
+Let's inspect this value with the `type()` function, surely the type will also be NaN?
+
+```{python}
+# show the type of the NaN value
+type(array_with_nans[0])
+```
+
+Hmmm, as we have seen previously, `float64` is a numerical datatype, and therefore perhaps not what we would expect here? The reason for this is that NaNs are represented in the same (in this case 64) bit sequence used to represent other numbers. The specific representation they use *means* undefined number however, rather than representing a *specific* number.
+
+Because of this feature (though perhaps somewhat bizarrely) NaN values do not behave nicely with the equality operator:
+
+```{python}
+# a (potentially) unexpected False
+array_with_nans[0] == np.nan
+```
+
+We might surmise that this strange result is due to one NaN being retrieved from an array. This is not the case however, because we get the same result from:
+
+```{python}
+# another strange result with the equality operator
+np.nan == np.nan
+```
+
+The last two cells above both return a `False` value because NaN value is treated (essentially) like an undefined number. The equality operator will return `True` where two values are the *same* value. For a NaN, a value is *undefined* and *has no value*, so it cannot be compared with a specific number and checked for equality; therefore, the equality operator returns `False`.
+
+To get the expected result (e.g. a NaN value returning `True` when we ask Python "is this a NaN?"), we can use the `np.isnan()` function:
+
+```{python}
+# the expected result
+np.isnan(array_with_nans[0])
+```
+
+The same principles apply when we are dealing with NaN values in an array:
+
+```{python}
+# a new array with NaN and non-NaN values
+arr = np.array([np.nan, np.nan, 1, 3])
+
+arr
+```
+
+We might want to instruct Python: "show me which elements of this array are NaN values".
+
+We might try something like:
+
+```{python}
+# uh-oh
+arr == np.nan
+```
+
+This has failed to identify the NaN elements, for the reason mentioned above: the equality operator does not 'work' with NaN values, because they are *undefined*, rather than being a specific value that something else can be equal to. 
+
+Clearly, this output of the cell above is not what we want, and will very likely lead to errors.
+
+Once again `np.isnan()` can save us her, and will give the expected results (e.g. the resulting array will be `True` only for elements where the original array contained a NaN value):
+
+```{python}
+# what we want
+np.isnan(arr)
+```
+
+Because NaN values are like undefined numbers, any mathematical operations involving them will also return NaN values:
+
+```{python}
+# multiplying NaNs
+array_with_nans * 2
+```
+
+```{python}
+# dividing NaNs
+array_with_nans/2
+```
+
+OK, so the TLDR here is that in Numpy NaNs signal a failed or illegal operation has taken place.
+
+Let's compare this to the function of NaNs in Pandas...
+
+
+## NaNs in Pandas
+
+We have seen that NaN values in Numpy are undefined values that occur through overflow/underflow and invalid operations, amongst other possible causes.
+
+The function of NaN values in Pandas is somewhat different.
+
+Essentially, NaN values in Pandas are *flags for missing data*. The values themselves possess the same properties and pitfalls that we showed in the last section. However the *cause* of NaNs in Pandas is most often that *data was missing* rather than numerical over/underflow or invalid operations being performed on the data.
+
+Let's explore these concepts further by importing a dataset. We will use the full version of the [Human Development Index](https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index) dataset, which contains values for every year, rather than just the subset of data from the year 2000, which we have looked at on previous pages:
+
+```{python}
+# import data
+df = pd.read_csv("data/children-per-woman-vs-human-development-index.csv")
+
+# set the index
+df = df.set_index('Code')
+
+df
+```
+
+It is immediately apparent that this dataset contains more NaNs than a retirement village.
+
+Look at the `Human Development Index` column:
+
+```{python}
+# a column with lots of NaN values
+df['Human Development Index']
+```
+
+Let's take a closer look at the value in the first row of this column:
+
+```{python}
+# show a nan value
+df['Human Development Index'].iloc[0]
+```
+
+Sure enough, it's a nan. It also has the expected `float64` data type that we saw above:
+
+```{python}
+# what type of data is `nan`?
+df['Human Development Index'].iloc[0].dtype
+```
+
+We can use `np.isnan()` to get a Boolean confirmed we are in the presence of a true NaN:
+
+```{python}
+# using the `np.isnan()` function
+np.isnan(df['Human Development Index'].iloc[0])
+```
+
+Missing data - fancifully referred to as *missingness* - is common in the vast majority of datasets encountered in the wild.
+
+We will always want to know *how much* of a given dataset is missing, as we will need to factor this in as a limitation of our data analysis (especially if there are correlations between the observations that are missing e.g. they are not "missing at random").
+
+Pandas supplies us some useful methods for checking missingness.
+
+For instance, we can use `.count()` to show us the number of non-NaN elements in each column:
+
+```{python}
+# count non-NaN cells
+df.count()
+```
+
+A useful trick here is to divide the output of the `.count()` method by the `len()` of the Data Frame. This provides a handy summary of the *proportion* of NaNs in each column of the Data Frame:
+
+```{python}
+# show the proportion of missing values, in each column
+df.count()/len(df)
+```
+
+If we want to use brute force, we can use the `.dropna()` method to remove rows which have a single NaN value:
+
+```{python}
+# remove the NaN values
+df_no_NaN = df.dropna()
+
+df_no_NaN
+```
+
+It turns out in this dataset, every row has at least one NaN value so dropping every row with a NaN has dropped *everything*...(we did say this method was brute force)!
+
+
+**By far the most important thing to know about missing data in Pandas** is that **by default NaN values will be *ignored* in numerical operations**.
+
+Let's look at the `Fertility Rate` column, which contains numerical data:
+
+```{python}
+# show the column
+df['Fertility Rate']
+```
+
+Because we are dealing with just one column, we can safely use `.dropna()` without losing every row (becaue not every row of the *Series* contains a NaN value):
+
+```{python}
+# show the column
+df['Fertility Rate'].dropna()
+```
+
+Let's compare computing a statistic (the mean) when we drop the NaN values from this Series versus when we leave them in.
+
+When we use the `.mean()` method on just this column, we get the following value:
+
+```{python}
+# calculate a mean with NaN data included (will be ignored)
+df['Fertility Rate'].loc['ZWE'].mean()
+```
+
+Using `.dropna()` on this column returns *exactly the same value* - because by default Pandas will ignore NaNs in numerical operations:
+
+```{python}
+# drop NaNs gives the same mean 
+df['Fertility Rate'].loc['ZWE'].dropna().mean()
+```
+
+## Summary
+
+On this page we have seen how NaN values indicate different things in Numpy and Pandas.
+
+In Numpy, NaN values typically result from computational issues/errors (like under/overflow and invalid operations like dividing by zero).
+
+In Pandas, NaN values are most commonly flags for missing data. By default, these NaN values will be ignored when Pandas' methods are called on a Series from the Data Frame.

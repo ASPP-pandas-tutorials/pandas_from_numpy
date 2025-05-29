@@ -1,0 +1,814 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Fertility rate vs. Human Development Index - Data package &#8212; Pandas from Numpy</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'data/readme_children-per-woman-vs-human-development-index';</script>
+    <link rel="canonical" href="https://pxr687.github.io/ASPP_pandas_tutorials/data/readme_children-per-woman-vs-human-development-index.html" />
+    <link rel="icon" href="../_static/pandas_numpy.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/pandas_numpy.jpg" class="logo__image only-light" alt="Pandas from Numpy - Home"/>
+    <img src="../_static/pandas_numpy.jpg" class="logo__image only-dark pst-js-only" alt="Pandas from Numpy - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Pandas from Numpy</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../0_0_pandas_intro.html">Pandas from Numpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0_1_to_loc_or_iloc.html">To <code class="docutils literal notranslate"><span class="pre">.loc</span></code> or <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> - more on Pandas indexes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0_2_pandas_dataframes_attributes_methods.html">Pandas DataFrames: Attributes and Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0_3_constructing_dataframes.html">Let There Be Data : Creating Data Frames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0_4_dealing_with_missing_data_in_pandas.html">Dealing with NaNs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0_5_filtering_data_with_pandas.html">Filtering Data Frames with Boolean Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0_6_more_pandas_methods_strings.html">More Pandas methods</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/pxr687/ASPP_pandas_tutorials" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pxr687/ASPP_pandas_tutorials/edit/main/data/readme_children-per-woman-vs-human-development-index.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pxr687/ASPP_pandas_tutorials/issues/new?title=Issue%20on%20page%20%2Fdata/readme_children-per-woman-vs-human-development-index.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/data/readme_children-per-woman-vs-human-development-index.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Fertility rate vs. Human Development Index - Data package</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#csv-structure">CSV Structure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metadata-json-structure">Metadata.json structure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#about-the-data">About the data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-we-process-data-at-our-world-in-data">How we process data at Our World In Data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#detailed-information-about-each-time-series">Detailed information about each time series</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fertility-rate-total-un-wpp">Fertility rate, total – UN WPP</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-cite-this-data">How to cite this data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#in-line-citation">In-line citation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#full-citation">Full citation</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-you-should-know-about-this-data">What you should know about this data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#source">Source</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#united-nations-world-population-prospects">United Nations – World Population Prospects</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#human-development-index">Human Development Index</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">How to cite this data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">In-line citation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Full citation</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">What you should know about this data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-is-this-data-described-by-its-producer-undp-human-development-report-2024">How is this data described by its producer - UNDP, Human Development Report (2024)?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Source</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#undp-human-development-report-human-development-report">UNDP, Human Development Report – Human Development Report</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#notes-on-our-processing-step-for-this-indicator">Notes on our processing step for this indicator</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#population-historical">Population (historical)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">How to cite this data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">In-line citation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Full citation</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sources">Sources</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pbl-netherlands-environmental-assessment-agency-history-database-of-the-global-environment">PBL Netherlands Environmental Assessment Agency – History Database of the Global Environment</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gapminder-population">Gapminder – Population</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">United Nations – World Population Prospects</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gapminder-systema-globalis">Gapminder – Systema Globalis</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Notes on our processing step for this indicator</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#world-regions-according-to-owid">World regions according to OWID</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">How to cite this data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">In-line citation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Full citation</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">What you should know about this data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">Source</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#our-world-in-data-regions">Our World in Data – Regions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="fertility-rate-vs-human-development-index-data-package">
+<h1>Fertility rate vs. Human Development Index - Data package<a class="headerlink" href="#fertility-rate-vs-human-development-index-data-package" title="Link to this heading">#</a></h1>
+<p>This data package contains the data that powers the chart <a class="reference external" href="https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index?v=1&amp;amp;csvType=full&amp;amp;useColumnShortNames=false">“Fertility rate vs. Human Development Index”</a> on the Our World in Data website.</p>
+<section id="csv-structure">
+<h2>CSV Structure<a class="headerlink" href="#csv-structure" title="Link to this heading">#</a></h2>
+<p>The high level structure of the CSV file is that each row is an observation for an entity (usually a country or region) and a timepoint (usually a year).</p>
+<p>The first two columns in the CSV file are “Entity” and “Code”. “Entity” is the name of the entity (e.g. “United States”). “Code” is the OWID internal entity code that we use if the entity is a country or region. For normal countries, this is the same as the <a class="reference external" href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3">iso alpha-3</a> code of the entity (e.g. “USA”) - for non-standard countries like historical countries these are custom codes.</p>
+<p>The third column is either “Year” or “Day”. If the data is annual, this is “Year” and contains only the year as an integer. If the column is “Day”, the column contains a date string in the form “YYYY-MM-DD”.</p>
+<p>The remaining columns are the data columns, each of which is a time series. If the CSV data is downloaded using the “full data” option, then each column corresponds to one time series below. If the CSV data is downloaded using the “only selected data visible in the chart” option then the data columns are transformed depending on the chart type and thus the association with the time series might not be as straightforward.</p>
+</section>
+<section id="metadata-json-structure">
+<h2>Metadata.json structure<a class="headerlink" href="#metadata-json-structure" title="Link to this heading">#</a></h2>
+<p>The .metadata.json file contains metadata about the data package. The “charts” key contains information to recreate the chart, like the title, subtitle etc.. The “columns” key contains information about each of the columns in the csv, like the unit, timespan covered, citation for the data etc..</p>
+</section>
+<section id="about-the-data">
+<h2>About the data<a class="headerlink" href="#about-the-data" title="Link to this heading">#</a></h2>
+<p>Our World in Data is almost never the original producer of the data - almost all of the data we use has been compiled by others. If you want to re-use data, it is your responsibility to ensure that you adhere to the sources’ license and to credit them correctly. Please note that a single time series may have more than one source - e.g. when we stich together data from different time periods by different producers or when we calculate per capita metrics using population data from a second source.</p>
+<section id="how-we-process-data-at-our-world-in-data">
+<h3>How we process data at Our World In Data<a class="headerlink" href="#how-we-process-data-at-our-world-in-data" title="Link to this heading">#</a></h3>
+<p>All data and visualizations on Our World in Data rely on data sourced from one or several original data providers. Preparing this original data involves several processing steps. Depending on the data, this can include standardizing country names and world region definitions, converting units, calculating derived indicators such as per capita measures, as well as adding or adapting metadata such as the name or the description given to an indicator.
+<a class="reference external" href="https://docs.owid.io/projects/etl/">Read about our data pipeline</a></p>
+</section>
+</section>
+<section id="detailed-information-about-each-time-series">
+<h2>Detailed information about each time series<a class="headerlink" href="#detailed-information-about-each-time-series" title="Link to this heading">#</a></h2>
+</section>
+<section id="fertility-rate-total-un-wpp">
+<h2>Fertility rate, total – UN WPP<a class="headerlink" href="#fertility-rate-total-un-wpp" title="Link to this heading">#</a></h2>
+<p>The average number of live births a hypothetical cohort of women would have at the end of their reproductive period if they were subject during their whole lives to the fertility rates of a given period and if they were not subject to mortality.
+Last updated: July 12, 2024<br />
+Date range: 1950–2023<br />
+Unit: live births per woman</p>
+<section id="how-to-cite-this-data">
+<h3>How to cite this data<a class="headerlink" href="#how-to-cite-this-data" title="Link to this heading">#</a></h3>
+<section id="in-line-citation">
+<h4>In-line citation<a class="headerlink" href="#in-line-citation" title="Link to this heading">#</a></h4>
+<p>If you have limited space (e.g. in data visualizations), you can use this abbreviated in-line citation:<br />
+UN, World Population Prospects (2024) – processed by Our World in Data</p>
+</section>
+<section id="full-citation">
+<h4>Full citation<a class="headerlink" href="#full-citation" title="Link to this heading">#</a></h4>
+<p>UN, World Population Prospects (2024) – processed by Our World in Data. “Fertility rate, total – UN WPP” [dataset]. United Nations, “World Population Prospects” [original data].
+Source: UN, World Population Prospects (2024) – processed by Our World In Data</p>
+</section>
+</section>
+<section id="what-you-should-know-about-this-data">
+<h3>What you should know about this data<a class="headerlink" href="#what-you-should-know-about-this-data" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>It is expressed as live births per woman. For age-specific fertility rates, it measures the number of births to women in a particular age group, divided by the number of women in that age group. The age groups used are: 15-19, 20-24, …, 45-49. The data refer to annual civil calendar years from 1 January to 31 December.</p></li>
+</ul>
+</section>
+<section id="source">
+<h3>Source<a class="headerlink" href="#source" title="Link to this heading">#</a></h3>
+<section id="united-nations-world-population-prospects">
+<h4>United Nations – World Population Prospects<a class="headerlink" href="#united-nations-world-population-prospects" title="Link to this heading">#</a></h4>
+<p>Retrieved on: 2024-07-11<br />
+Retrieved from: <a class="reference external" href="https://population.un.org/wpp/Download/">https://population.un.org/wpp/Download/</a></p>
+</section>
+</section>
+</section>
+<section id="human-development-index">
+<h2>Human Development Index<a class="headerlink" href="#human-development-index" title="Link to this heading">#</a></h2>
+<p>The HDI is a summary measure of key dimensions of human development: a long and healthy life, a good education, and a decent standard of living. Higher values indicate higher human development.
+Last updated: April 9, 2024<br />
+Next update: May 2025<br />
+Date range: 1990–2022</p>
+<section id="id1">
+<h3>How to cite this data<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<section id="id2">
+<h4>In-line citation<a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
+<p>If you have limited space (e.g. in data visualizations), you can use this abbreviated in-line citation:<br />
+UNDP, Human Development Report (2024) – with minor processing by Our World in Data</p>
+</section>
+<section id="id3">
+<h4>Full citation<a class="headerlink" href="#id3" title="Link to this heading">#</a></h4>
+<p>UNDP, Human Development Report (2024) – with minor processing by Our World in Data. “Human Development Index – UNDP” [dataset]. UNDP, Human Development Report, “Human Development Report 2023-2024” [original data].
+Source: UNDP, Human Development Report (2024) – with minor processing by Our World In Data</p>
+</section>
+</section>
+<section id="id4">
+<h3>What you should know about this data<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Each of the dimensions of the HDI is measured with four indicators: a long and healthy life is measured by <em>life expectancy at birth</em>, good education (knowledge) is measured by two indicators, <em>expected</em> and <em>mean</em> <em>years of schooling</em>; and a decent standard of living is measured by <em>Gross National Income (GNI) per capita</em>, logarithmized to reflect that incomes become less important as they increase.</p></li>
+<li><p>The index is then calculated by normalizing and aggregating the indicators. First, the indicators are brought onto the same scale, ranging from 0 to 1. This is done by setting minimum and maximum values for each indicator, and a country at or below the minimum value receiving a score of 0, and a country at or above the maximum value receiving a score of 1.</p></li>
+<li><p>The minimum and maximum values for each indicator are defined as follows: <em>Life expectancy at birth</em> ranges between 20 and 85 years; <em>expected years of schooling</em> between 0 and 18 years; <em>mean years of schooling</em>, between 0 and 15 years; and <em>GNI per capita</em> between 100 and 75,000 international-$ at 2017 prices.</p></li>
+<li><p>The HDI is then estimated as the geometric mean of these indices, or <em>HDI = (Health index * Education index * Income index)^(1/3)</em>. The education index is the arithmetic mean (average) of the mean years of schooling and expected years of schooling.</p></li>
+</ul>
+</section>
+<section id="how-is-this-data-described-by-its-producer-undp-human-development-report-2024">
+<h3>How is this data described by its producer - UNDP, Human Development Report (2024)?<a class="headerlink" href="#how-is-this-data-described-by-its-producer-undp-human-development-report-2024" title="Link to this heading">#</a></h3>
+<p>The Human Development Index (HDI) is a summary measure of average achievement in key dimensions of human development: a long and healthy life, being knowledgeable and having a decent standard of living. The HDI is the geometric mean of normalized indices for each of the three dimensions.</p>
+<p>The health dimension is assessed by life expectancy at birth, the education dimension is measured by mean of years of schooling for adults aged 25 years and more and expected years of schooling for children of school entering age. The standard of living dimension is measured by gross national income per capita. The HDI uses the logarithm of income, to reflect the diminishing importance of income with increasing GNI. The scores for the three HDI dimension indices are then aggregated into a composite index using geometric mean. Refer to Technical notes for more details.</p>
+<p>The HDI can be used to question national policy choices, asking how two countries with the same level of GNI per capita can end up with different human development outcomes. These contrasts can stimulate debate about government policy priorities.</p>
+<p>The HDI simplifies and captures only part of what human development entails. It does not reflect on inequalities, poverty, human security, empowerment, etc. The HDRO provides other composite indices as broader proxy on some of the key issues of human development, inequality, gender disparity and poverty.</p>
+<p>A fuller picture of a country’s level of human development requires analysis of other indicators and information presented in the HDR statistical annex.</p>
+</section>
+<section id="id5">
+<h3>Source<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<section id="undp-human-development-report-human-development-report">
+<h4>UNDP, Human Development Report – Human Development Report<a class="headerlink" href="#undp-human-development-report-human-development-report" title="Link to this heading">#</a></h4>
+<p>Retrieved on: 2024-04-09<br />
+Retrieved from: <a class="reference external" href="https://hdr.undp.org/">https://hdr.undp.org/</a></p>
+</section>
+<section id="notes-on-our-processing-step-for-this-indicator">
+<h4>Notes on our processing step for this indicator<a class="headerlink" href="#notes-on-our-processing-step-for-this-indicator" title="Link to this heading">#</a></h4>
+<p>We calculated averages over continents and income groups by taking the population-weighted average of the countries in each group. If less than 80% of countries in an area report data for a given year, we do not calculate the average for that area.</p>
+</section>
+</section>
+</section>
+<section id="population-historical">
+<h2>Population (historical)<a class="headerlink" href="#population-historical" title="Link to this heading">#</a></h2>
+<p>Population by country, available from 10,000 BCE to 2023, based on data and estimates from different sources.
+Last updated: July 15, 2024<br />
+Next update: July 2026<br />
+Date range: 10000 BCE – 2023 CE<br />
+Unit: people</p>
+<section id="id6">
+<h3>How to cite this data<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<section id="id7">
+<h4>In-line citation<a class="headerlink" href="#id7" title="Link to this heading">#</a></h4>
+<p>If you have limited space (e.g. in data visualizations), you can use this abbreviated in-line citation:<br />
+HYDE (2023); Gapminder (2022); UN WPP (2024) – with major processing by Our World in Data</p>
+</section>
+<section id="id8">
+<h4>Full citation<a class="headerlink" href="#id8" title="Link to this heading">#</a></h4>
+<p>HYDE (2023); Gapminder (2022); UN WPP (2024) – with major processing by Our World in Data. “Population (historical)” [dataset]. PBL Netherlands Environmental Assessment Agency, “History Database of the Global Environment 3.3”; Gapminder, “Population v7”; United Nations, “World Population Prospects”; Gapminder, “Systema Globalis” [original data].
+Source: HYDE (2023); Gapminder (2022); UN WPP (2024) – with major processing by Our World In Data</p>
+</section>
+</section>
+<section id="sources">
+<h3>Sources<a class="headerlink" href="#sources" title="Link to this heading">#</a></h3>
+<section id="pbl-netherlands-environmental-assessment-agency-history-database-of-the-global-environment">
+<h4>PBL Netherlands Environmental Assessment Agency – History Database of the Global Environment<a class="headerlink" href="#pbl-netherlands-environmental-assessment-agency-history-database-of-the-global-environment" title="Link to this heading">#</a></h4>
+<p>Retrieved on: 2024-01-02<br />
+Retrieved from: <a class="reference external" href="https://doi.org/10.24416/UU01-AEZZIT">https://doi.org/10.24416/UU01-AEZZIT</a></p>
+</section>
+<section id="gapminder-population">
+<h4>Gapminder – Population<a class="headerlink" href="#gapminder-population" title="Link to this heading">#</a></h4>
+<p>Retrieved on: 2023-03-31<br />
+Retrieved from: <a class="reference external" href="http://gapm.io/dpop">http://gapm.io/dpop</a></p>
+</section>
+<section id="id9">
+<h4>United Nations – World Population Prospects<a class="headerlink" href="#id9" title="Link to this heading">#</a></h4>
+<p>Retrieved on: 2024-07-11<br />
+Retrieved from: <a class="reference external" href="https://population.un.org/wpp/Download/">https://population.un.org/wpp/Download/</a></p>
+</section>
+<section id="gapminder-systema-globalis">
+<h4>Gapminder – Systema Globalis<a class="headerlink" href="#gapminder-systema-globalis" title="Link to this heading">#</a></h4>
+<p>Retrieved on: 2023-03-31<br />
+Retrieved from: <a class="reference external" href="https://github.com/open-numbers/ddf--gapminder--systema_globalis">https://github.com/open-numbers/ddf–gapminder–systema_globalis</a></p>
+</section>
+<section id="id10">
+<h4>Notes on our processing step for this indicator<a class="headerlink" href="#id10" title="Link to this heading">#</a></h4>
+<p>The population data is constructed by combining data from multiple sources:</p>
+<ul class="simple">
+<li><p>10,000 BCE - 1799: Historical estimates by HYDE (v3.3).</p></li>
+<li><p>1800 - 1949: Historical estimates by Gapminder (v7).</p></li>
+<li><p>1950-2023: Population records by the UN World Population Prospects (2024 revision).</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="world-regions-according-to-owid">
+<h2>World regions according to OWID<a class="headerlink" href="#world-regions-according-to-owid" title="Link to this heading">#</a></h2>
+<p>Last updated: January 1, 2023<br />
+Date range: 2023–2023</p>
+<section id="id11">
+<h3>How to cite this data<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<section id="id12">
+<h4>In-line citation<a class="headerlink" href="#id12" title="Link to this heading">#</a></h4>
+<p>If you have limited space (e.g. in data visualizations), you can use this abbreviated in-line citation:<br />
+Our World in Data – processed by Our World in Data</p>
+</section>
+<section id="id13">
+<h4>Full citation<a class="headerlink" href="#id13" title="Link to this heading">#</a></h4>
+<p>Our World in Data – processed by Our World in Data. “World regions according to OWID” [dataset]. Our World in Data, “Regions” [original data].
+Source: Our World in Data</p>
+</section>
+</section>
+<section id="id14">
+<h3>What you should know about this data<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
+</section>
+<section id="id15">
+<h3>Source<a class="headerlink" href="#id15" title="Link to this heading">#</a></h3>
+<section id="our-world-in-data-regions">
+<h4>Our World in Data – Regions<a class="headerlink" href="#our-world-in-data-regions" title="Link to this heading">#</a></h4>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./data"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#csv-structure">CSV Structure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metadata-json-structure">Metadata.json structure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#about-the-data">About the data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-we-process-data-at-our-world-in-data">How we process data at Our World In Data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#detailed-information-about-each-time-series">Detailed information about each time series</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fertility-rate-total-un-wpp">Fertility rate, total – UN WPP</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-cite-this-data">How to cite this data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#in-line-citation">In-line citation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#full-citation">Full citation</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-you-should-know-about-this-data">What you should know about this data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#source">Source</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#united-nations-world-population-prospects">United Nations – World Population Prospects</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#human-development-index">Human Development Index</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">How to cite this data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">In-line citation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Full citation</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">What you should know about this data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-is-this-data-described-by-its-producer-undp-human-development-report-2024">How is this data described by its producer - UNDP, Human Development Report (2024)?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Source</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#undp-human-development-report-human-development-report">UNDP, Human Development Report – Human Development Report</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#notes-on-our-processing-step-for-this-indicator">Notes on our processing step for this indicator</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#population-historical">Population (historical)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">How to cite this data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">In-line citation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Full citation</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sources">Sources</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pbl-netherlands-environmental-assessment-agency-history-database-of-the-global-environment">PBL Netherlands Environmental Assessment Agency – History Database of the Global Environment</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gapminder-population">Gapminder – Population</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">United Nations – World Population Prospects</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gapminder-systema-globalis">Gapminder – Systema Globalis</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Notes on our processing step for this indicator</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#world-regions-according-to-owid">World regions according to OWID</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">How to cite this data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">In-line citation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Full citation</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">What you should know about this data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">Source</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#our-world-in-data-regions">Our World in Data – Regions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Peter Rush, Matthew Brett
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

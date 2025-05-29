@@ -1,0 +1,421 @@
+---
+jupyter:
+  jupytext:
+    formats: ipynb,Rmd
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.17.1
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
+# More Pandas methods
+
+> 📝 NOTE: Covered here:
+>
+> * string operations, ex: df[‘name’].str[2:4], df[‘name’].str.count('a') [For this, compare different country names between Mat > Mort data and Dev/Fertility data, e.g. different names for Russia and South Korea])
+> 
+> * Strings (and dates) have a special accessor to perform vectorized
+> string (or date) operations
+> 
+> * specialized accessor methods Series.str
+> 
+> **Matthew Notes: do everything on a Series first. Series.str follow the pandas from numpy structure**
+> 
+> **For any string operations, show different routes to the same outcome e.g. via Boolean indexing and then replace etc.**
+> 
+> Structure of this page:
+> 
+> * show python string methods/string methods with numpy arrays
+> 
+> * build a Series and show Series.str methods
+> 
+> * show str methods with a dataframe + how this can be very useful when cleaning data
+
+String/text data is often used to represent categorical variables, and commonly appears in data analyses in a variety of contexts. When dealing with string/text data we will frequently find that we need to alter the strings to correct errors, improve clarity, make formatting uniform, or a host of other reasons.
+
+String methods are inherent to Python, and these methods or variants of them can all be used on Numpy arrays and Pandas Series/Data Frames. However, Numpy and Pandas use different interfaces for interacting with strings. To understand the differences between Numpy and Pandas with respect to strings, let's begin at the foundation, the in-built string methods of Python. The cell below contains a simple string.
+
+*NB*: you may want to use `dir()` again here to see the full complement of available string methods.
+
+```{python}
+# a string
+string = "string_of_words"
+
+string
+```
+
+Remember that *a method is a function attached to an object*. In this case our object is a string. 
+
+Let's say we like reading values in our data as if they are being spoken in a loud voice. If this is the case we can alter the format of the string to make all letters uppercase, using the `.upper()` method:
+
+```{python}
+# upper method
+string.upper()
+```
+
+We can replace characters in the string using the aptly named `.replace()` method. Here we supply two strings to the method, first the string we want to replace, and then second, the string we want to replace it with.
+
+```{python}
+# replace
+string.replace('_', '')
+```
+
+Fancier formatting methods will let us adjust strings, for instance, in title case (`.title()`):
+
+```{python}
+# a more elaborate method
+string.title()
+```
+
+In Python, strings are collections of characters, and so we can slice them as we would a list or array, using integer indexes and the `:` symbol:
+
+```{python}
+# slicing with strings
+string[0:1]
+```
+
+```{python}
+string[0:2]
+```
+
+```{python}
+string[0:7]
+```
+
+You can visit [this page](https://www.w3schools.com/python/python_ref_string.asp) to see the variety of string methods available in base Python.
+
+
+## Strings methods with numpy arrays
+
+So, strings in base python have a large number of in-built methods - what about strings in Numpy?
+
+Numpy arrays themselves do not have specific string methods, but the in-built Python string methods can be called on individual string values in a Numpy array. Alternatively, we can use functions from the `np.char.` module to operate on all the strings in the array concurrently.
+
+To investigate how string data is handled in Numpy, let's make some arrays containing strings:
+
+```{python}
+# import libraries (no imports were needed prior to this point as string methods are part of base python)
+import numpy as np
+import pandas as pd
+
+# standard three-letter code for each country
+country_codes_array = np.array(['AUS', 'BRA', 'CAN',
+                          'CHN', 'DEU', 'ESP',
+                          'FRA', 'GBR', 'IND',
+                          'ITA', 'JPN', 'KOR',
+                          'MEX', 'RUS', 'USA'])
+country_codes_array
+```
+
+```{python}
+# country names
+country_names_array = np.array(['Australia', 'Brazil', 'Canada',
+                          'China', 'Germany', 'Spain',
+                          'France', 'United Kingdom', 'India',
+                          'Italy', 'Japan', 'South Korea',
+                          'Mexico', 'Russia', 'United States'])
+country_names_array
+```
+
+For comparison, let's make an array containing the numerical HDI scores:
+
+```{python}
+# Human Development Index Scores for each country
+hdis_array = np.array([0.896, 0.668, 0.89 , 0.586, 
+                 0.844, 0.89 , 0.49 , 0.842, 
+                 0.883, 0.709, 0.733, 0.824,
+                 0.828, 0.863, 0.894])
+
+hdis_array
+```
+
+The `dtype` attribute of the first two arrays begins with `<U`, indicating we are dealing with string data:
+
+```{python}
+# show the dtype of the country codes array (e.g. string data)
+country_codes_array.dtype
+```
+
+```{python}
+# show the dtype of the country names array (e.g. string data)
+country_names_array.dtype
+```
+
+Conversely, the `hdis_array` contains data of a numerical type:
+
+```{python}
+# show the dtype of the hdis array (e.g. numeric data)
+hdis_array.dtype
+```
+
+Using direct indexing, we can use all of the in-built Python string methods on the individual values within a Numpy array:
+
+```{python}
+# methods on an individual string
+country_codes_array[0]
+```
+
+For instance, we can change the case of the value:
+
+```{python}
+# lowercase
+country_codes_array[0].lower()
+```
+
+```{python}
+# uppercase
+country_codes_array[0].upper()
+```
+
+We can also replace elements of the string:
+
+```{python}
+country_codes_array[0].replace("A", "HELLO")
+```
+
+Understandably, if we try to use any of these string methods on numerical data, we will get an error:
+
+```{python tags=c("raises-exception")}
+# oh no!
+hdis_array[0].upper()
+```
+
+All of the string methods used in this section above have been called on single string values from a Numpy array. If we try to use a string method on all values of the array simultaneously, we will also get an error:
+
+```{python tags=c("raises-exception")}
+# this does not work
+country_codes_array.lower()
+```
+
+The same error occurs if we try to use a string method on a slice from the array:
+
+```{python tags=c("raises-exception")}
+# this also does not work
+country_codes_array[0:2].lower()
+```
+
+String methods in Numpy must be called from the single string values or using the `.char.` module.
+
+For example, we can use the `np.char.lower()` function to operate on all values of the Numpy array at once:
+
+```{python}
+# this DOES work
+np.char.lower(country_codes_array)
+```
+
+```{python}
+# this DOES work
+np.char.replace(country_codes_array, 'A', '!')
+```
+
+Pandas deals with string data slightly differently to Numpy. The elements of the `.values` component of a Pandas Series can be operated on altogether by using the `.str.` accessor, to which we will now turn our attention.
+
+
+## String methods with Pandas Series
+
+As mentioned above, Pandas Series have a specialised accessor (`.str.`) which bypasses the need to use `np.char.` when we want to do something to all of the string values in a Series.
+
+To see how this works, let's construct a Series from our `country_names` array:
+
+```{python}
+# show again from Series
+names_series =  pd.Series(country_names_array,
+                          index=country_codes_array)
+
+names_series
+```
+
+To use the `.str.` accessor, we just place it after our object (e.g. our Series containing our string data). We then can call a variety of string methods, which we be applied to all elements in the `.values` array of the Series:
+
+```{python}
+# string methods on Series
+names_series.str.upper()
+```
+
+```{python}
+# the `.str.lower()` method
+names_series.str.lower()
+```
+
+The `.replace()` method is also available here, it will operate on all the elements in the Series, though in this case (as there is only one `United States`!) it will only alter one value:
+
+```{python}
+# replacing values in the Series
+names_series.str.replace("United States", "USA")
+```
+
+The syntax for slicing strings is the same as for a single value, but it also operates across all elements in the Series at once:
+
+```{python}
+# slicing with strings, in a Series
+names_series.str[2:4]
+```
+
+In contrast to the behaviour of Numpy arrays, string methods used via the `.str.` accessor can be used when slicing the Series. Be careful to use `.iloc` or `loc` here, for the [aforementioned reasons](0_1_to_loc_or_iloc.Rmd).
+
+```{python}
+# slicing with Series and string methods
+names_series.iloc[0:3].str.replace('a', '!')
+```
+
+Using the `.contains()` method, Boolean Series can be generated by searching for specific instances of a substring in each value:
+
+```{python}
+# generate a Boolean Series, True where the value contains "Ind"
+names_series.str.contains("Ind")
+```
+
+These Boolean Series can be used to retrieve specific values from the original Series, via Boolean filtering:
+
+```{python}
+# use Boolean filtering to retrieve a specific datapoint
+names_series[names_series.str.contains("Ind")]
+```
+
+## String methods with Pandas DataFrames
+
+So, Pandas makes it somewhat easier than Numpy to perform operations on all the string elements at once. 
+
+Remember that *a DataFrame is a dictionary-like collection of Series*, and so everything we have just seen of strings in Pandas Series applies to the *columns* of a Data Frame.
+
+Let's import the [HDI data](https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index):
+
+```{python}
+# import data
+df = pd.read_csv("data/year_2000_hdi_fert.csv")
+
+# show the data
+df
+```
+
+Because each Data Frame column is nothing other than a Pandas Series, we can use string methods in the same way as we saw in the last secton:
+
+```{python}
+# use the `.replace()` method
+df['Country Name'].str.replace('I', 'HELLO')
+```
+
+However, Pandas will not let us use string methods on the whole Data Frame at once:
+
+```{python tags=c("raises-exception")}
+# Cannot use `.str` methods on whole Data Frame.
+df.str.upper()
+```
+
+We might think that this is because not all the data in the Data Frame is of
+the string type, but this is not the case. We also cannot use Pandas string
+methods on Data Frames with columns only containing string data, as we get the
+same error:
+
+```{python tags=c("raises-exception")}
+# Oops, using `.str` fails even for all-string-dtype columns.
+df[['Country Name', 'Code']].str.len()
+```
+
+Notice here we did not set `Code` as the index of the Data Frame, we are just treating it as a column containing string data. The cell below sets it as the index, so we can use label-based indexing later in this tutorial:
+
+```{python}
+# set the index
+df.index = df['Code']
+```
+
+So, we cannot apply string methods to multiple columns at once, but if we focus on one column, we can use all of the available string methods:
+
+```{python}
+# `lower` method
+df['Country Name'].str.lower()
+```
+
+```{python}
+# `upper` method
+df['Country Name'].str.upper()
+```
+
+```{python}
+# using the `str.count()` method
+df['Country Name'].str.count('a') 
+```
+
+```{python}
+# the `str.contains()` method
+df['Country Name'].str.contains('Russia')
+```
+
+```{python}
+# see if there are any Trues in the Series
+df['Country Name'].str.contains('Russia').sum()/len(df)
+```
+
+```{python}
+# filtering data using the `str.contains()` method
+df[df['Country Name'].str.contains('Russia')]
+```
+
+## Uses of string methods in data wrangling
+
+As we mentioned earlier, string methods generally useful for cleaning text data. This can be especially useful when combining data from different sources, where different conventions in data entry may lead to similar data being formatted differently.
+
+To explore this, let's import a new dataset, which, like the HDI data, contains observations at the country level (e.g. each row is an observarion from a specific country).
+
+You can read more about the dataset [here](https://github.com/odsti/datasets/tree/main/gender_stats).
+
+```{python}
+# import maternal mortality dataset
+maternal_mort = pd.read_csv("data/gender_stats.csv")
+
+maternal_mort
+```
+
+Let's say we are interested in Russia, but do not know how the name of the country is formatted. We can use the `str.contains()` method to search for likely matches.
+
+```{python}
+# hmmm is Russia not in this data?
+maternal_mort['country_name'].str.contains('Russia')
+```
+
+That output is pretty opaque, maybe there is a `True` in there somewhere. We can chain on the `.sum()` method to count the number of `True` values in the above Boolean Series:
+
+```{python}
+# count the Trues for country names containing "Russia" in the `maternal
+maternal_mort['country_name'].str.contains('Russia').sum()
+```
+
+It appears we do have one match. Let's use the Boolean Series we just made to have a look at the row that contains the string "Russia" in the `country_name` column:
+
+```{python}
+# use the `str.contains()` method to filter the data
+maternal_mort[maternal_mort['country_name'].str.contains('Russia')]
+```
+
+So, we have found the row for Russia in this new dataset. Let's compare the naming convention to the HDI data, in the `df` Data Frame:
+
+```{python}
+# get the data for Russia, from the HDI data
+df.loc['RUS']
+```
+
+We may want to [merge](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.merge.html) these datasets. To do that, we need common identifiers linking rows in each dataset which refer to the same observational units (in this case countries). 
+
+String methods are our friend here. We can use the process just outlined for find data for a specific country, and then use other methods to ensure uniform formatting between the datasets, such that we can merge them:
+
+```{python}
+# format the maternal mortality data for Russia to use the same country name as the HDI data
+maternal_mort['country_name'] = maternal_mort['country_name'].str.replace('Russian Federation', 'Russia')
+
+maternal_mort[maternal_mort['country_name'].str.contains('Russia')]
+```
+
+## Summary
+
+This page looked at string methods in base python, Numpy and Pandas.
+
+Numpy and Python inherit their string methods from base python, but apply them in different ways. 
+
+Numpy does not have a set of methods for applying string methods to every element of an array simultaneously. We need functions from the `np.char` module if we want this.
+
+By contrast, Pandas Series - whether in isolation or as columns in a Data Frame - have the `.str.` accessor for easily performing string operations on every element in a Series.

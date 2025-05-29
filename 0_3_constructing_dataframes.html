@@ -1,0 +1,1729 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Let There Be Data : Creating Data Frames &#8212; Pandas from Numpy</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '0_3_constructing_dataframes';</script>
+    <link rel="canonical" href="https://pxr687.github.io/ASPP_pandas_tutorials/0_3_constructing_dataframes.html" />
+    <link rel="icon" href="_static/pandas_numpy.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Dealing with NaNs" href="0_4_dealing_with_missing_data_in_pandas.html" />
+    <link rel="prev" title="Pandas DataFrames: Attributes and Methods" href="0_2_pandas_dataframes_attributes_methods.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/pandas_numpy.jpg" class="logo__image only-light" alt="Pandas from Numpy - Home"/>
+    <img src="_static/pandas_numpy.jpg" class="logo__image only-dark pst-js-only" alt="Pandas from Numpy - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Pandas from Numpy</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="0_0_pandas_intro.html">Pandas from Numpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_1_to_loc_or_iloc.html">To <code class="docutils literal notranslate"><span class="pre">.loc</span></code> or <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> - more on Pandas indexes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_2_pandas_dataframes_attributes_methods.html">Pandas DataFrames: Attributes and Methods</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Let There Be Data : Creating Data Frames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_4_dealing_with_missing_data_in_pandas.html">Dealing with NaNs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_5_filtering_data_with_pandas.html">Filtering Data Frames with Boolean Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_6_more_pandas_methods_strings.html">More Pandas methods</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="interact/lab/index.html?path=0_3_constructing_dataframes.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch via JupyterLite"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="JupyterLite logo" src="_static/images/logo_jupyterlite.svg">
+  </span>
+<span class="btn__text-container">JupyterLite</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/pxr687/ASPP_pandas_tutorials" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pxr687/ASPP_pandas_tutorials/edit/main/0_3_constructing_dataframes.Rmd" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pxr687/ASPP_pandas_tutorials/issues/new?title=Issue%20on%20page%20%2F0_3_constructing_dataframes.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/0_3_constructing_dataframes.Rmd" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.Rmd</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Let There Be Data : Creating Data Frames</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-in-data-from-a-file">0: Reading in data from a file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-blank-data-frame">1: Creating a blank Data Frame</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-a-data-frame-from-a-dictionary-using-numpy-arrays">2: Constructing a Data Frame from a dictionary (using Numpy arrays)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-a-data-frame-from-a-dictionary-using-pandas-series">3: Constructing a Data Frame from a dictionary (using Pandas series)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <blockquote>
+<div><p>📝 NOTE: this page will show important ways/considerations when constructing DataFrames via different pathways (e.g pd.concat() on named Series); and will further explain the DataFrame constructor. This page is just to to re-iterate the “DataFrames are just dictionary-like collections of Series”</p>
+</div></blockquote>
+<section class="tex2jax_ignore mathjax_ignore" id="let-there-be-data-creating-data-frames">
+<h1>Let There Be Data : Creating Data Frames<a class="headerlink" href="#let-there-be-data-creating-data-frames" title="Link to this heading">#</a></h1>
+<p>In <a class="reference internal" href="0_0_pandas_intro.html"><span class="std std-doc">the</span></a> <a class="reference internal" href="0_1_to_loc_or_iloc.html"><span class="std std-doc">previous</span></a> <a class="reference internal" href="0_2_pandas_dataframes_attributes_methods.html"><span class="std std-doc">tutorials</span></a> we showed how the Pandas class objects (Series and Data Frames) are constructed from Numpy objects (arrays) and other attributes (<code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">index</span></code>).</p>
+<p>We focused on the maxims:</p>
+<ul class="simple">
+<li><p><em>“a Pandas Series is a numpy array, plus a <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute and an array-like <code class="docutils literal notranslate"><span class="pre">index</span></code>”</em></p></li>
+</ul>
+<p>…and…</p>
+<ul class="simple">
+<li><p>“a Pandas DataFrame is just a <em>dictionary-like collection of Series</em>”.</p></li>
+</ul>
+<p>This page will look at several different ways of constructing Data Frames. All of these use the <code class="docutils literal notranslate"><span class="pre">pd.DataFrame()</span></code> constructor but  supply it with different “ingredients”. This influences the specific collection of attributes that the resulant Data Frame will have.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import libraries</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="reading-in-data-from-a-file">
+<h2>0: Reading in data from a file<a class="headerlink" href="#reading-in-data-from-a-file" title="Link to this heading">#</a></h2>
+<p>The simplest, probably most common, and easiest way to create a Data Frame is to use a <code class="docutils literal notranslate"><span class="pre">pd.read</span></code> function to import data from a file.</p>
+<p><code class="docutils literal notranslate"><span class="pre">.csv</span></code> files are common way of storing data, and (as we have seen) can be imported using the creatively named <code class="docutils literal notranslate"><span class="pre">pd.read_csv()</span></code> function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># read in data the boring way</span>
+<span class="n">df_from_file</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/airline_passengers.csv&#39;</span><span class="p">)</span>
+
+<span class="n">df_from_file</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Month</th>
+      <th>Thousands of Passengers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1949-01</td>
+      <td>112</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1949-02</td>
+      <td>118</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1949-03</td>
+      <td>132</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1949-04</td>
+      <td>129</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1949-05</td>
+      <td>121</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>139</th>
+      <td>1960-08</td>
+      <td>606</td>
+    </tr>
+    <tr>
+      <th>140</th>
+      <td>1960-09</td>
+      <td>508</td>
+    </tr>
+    <tr>
+      <th>141</th>
+      <td>1960-10</td>
+      <td>461</td>
+    </tr>
+    <tr>
+      <th>142</th>
+      <td>1960-11</td>
+      <td>390</td>
+    </tr>
+    <tr>
+      <th>143</th>
+      <td>1960-12</td>
+      <td>432</td>
+    </tr>
+  </tbody>
+</table>
+<p>144 rows × 2 columns</p>
+</div></div></div>
+</div>
+<p>Pandas, as a major Python data science library, has a large array of <code class="docutils literal notranslate"><span class="pre">read_</span></code> functions, for importing data stored in different formats. The following are taken from the output of <code class="docutils literal notranslate"><span class="pre">dir(pd)</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;read_clipboard&#39;</span><span class="p">,</span>
+<span class="s1">&#39;read_csv&#39;</span><span class="p">,</span>
+<span class="s1">&#39;read_excel&#39;</span><span class="p">,</span>
+<span class="s1">&#39;read_feather&#39;</span><span class="p">,</span>
+<span class="s1">&#39;read_fwf&#39;</span><span class="p">,</span>
+<span class="s1">&#39;read_gbq&#39;</span><span class="p">,</span>
+<span class="s1">&#39;read_hdf&#39;</span><span class="p">,</span>
+<span class="s1">&#39;read_html&#39;</span><span class="p">,</span>
+<span class="s1">&#39;read_json&#39;</span><span class="p">,</span>
+<span class="s1">&#39;read_orc&#39;</span><span class="p">,</span>
+<span class="s1">&#39;read_parquet&#39;</span><span class="p">,</span>
+<span class="s1">&#39;read_pickle&#39;</span><span class="p">,</span>
+<span class="s1">&#39;read_sas&#39;</span><span class="p">,</span>
+<span class="s1">&#39;read_spss&#39;</span><span class="p">,</span>
+<span class="s1">&#39;read_sql&#39;</span><span class="p">,</span>
+<span class="s1">&#39;read_sql_query&#39;</span><span class="p">,</span>
+<span class="s1">&#39;read_sql_table&#39;</span><span class="p">,</span>
+<span class="s1">&#39;read_stata&#39;</span><span class="p">,</span>
+<span class="s1">&#39;read_table&#39;</span><span class="p">,</span>
+<span class="s1">&#39;read_xml&#39;</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>In other situations, and to deepend our understanding of Data Frame construction, let’s look at more elaborate, artisanal ways of creating Data Frames…</p>
+</section>
+<section id="creating-a-blank-data-frame">
+<h2>1: Creating a blank Data Frame<a class="headerlink" href="#creating-a-blank-data-frame" title="Link to this heading">#</a></h2>
+<p>The second simplest way to create a Data Frame is by using the <code class="docutils literal notranslate"><span class="pre">pd.DataFrame()</span></code> constructor with no arguments:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># calling the constructor with no arguments</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Perhaps unsurprisingly, this returns a strange, blank output.</p>
+<p>Again, unsurprisingly, many of the attributes of the Data Frame are also blank.</p>
+<p>For instance, the index:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the blank index</span>
+<span class="n">df</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RangeIndex(start=0, stop=0, step=1)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Ditto for the columns attribute:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the blank columns</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RangeIndex(start=0, stop=0, step=1)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can add new columns (e.g. new Pandas Series) into this black Data Frame by using direct indexing. E.g.</p>
+<p><code class="docutils literal notranslate"><span class="pre">df['name_of_column']</span> <span class="pre">=</span> <span class="pre">np.array([])</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a new column in the Data Frame</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;new_column&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>new_column</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We used a Numpy array to construct this new column, however, as we know, Data Frames are a dictionary-like collection of Series, so Pandas has automatically added the array into a Pandas Series:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the type of df[&#39;new_column&#39;]</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;new_column&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pandas.core.series.Series
+</pre></div>
+</div>
+</div>
+</div>
+<p>The string which we used as the column name (<code class="docutils literal notranslate"><span class="pre">new_column</span></code>) has become the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute of this Series:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the `name` of the column</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;new_column&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;new_column&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>…and the numpy array we supplied has become the <code class="docutils literal notranslate"><span class="pre">.values</span></code> of the Series:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the `values` in the column</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;new_column&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1, 2, 3])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Pandas has also automatically created a default <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code> for this column, because we did not specify what it should use as an index:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the index of df[`new_column`]</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;new_column&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RangeIndex(start=0, stop=3, step=1)
+</pre></div>
+</div>
+</div>
+</div>
+<p>In fact - and importantly - <strong>all columns in a Data Frame must share the same index</strong>. So Pandas has made this default <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code> the index of the whole Data Frame, as well as for <code class="docutils literal notranslate"><span class="pre">df['new_column']</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the index of the whole Data Frame</span>
+<span class="n">df</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RangeIndex(start=0, stop=3, step=1)
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we construct Data Frames using this method (“create a blank Data Frame, add the data later”), then any new columns we add must have equal numbers of elements (in order that they can share an index):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># add another new column</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;another_new_column&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">])</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>new_column</th>
+      <th>another_new_column</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>C</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>If the number of elements differs, then Pandas will throw an error:</p>
+<div class="cell tag_raises-exception docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ValueError from wrong number of elements on RHS</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;a_further_new_column&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span> <span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">13</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># ValueError from wrong number of elements on RHS</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;a_further_new_column&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span> <span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+
+<span class="nn">File /Volumes/zorg/mb312/.virtualenvs/pandas-pages/lib/python3.12/site-packages/pandas/core/frame.py:4311,</span> in <span class="ni">DataFrame.__setitem__</span><span class="nt">(self, key, value)</span>
+<span class="g g-Whitespace">   </span><span class="mi">4308</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_setitem_array</span><span class="p">([</span><span class="n">key</span><span class="p">],</span> <span class="n">value</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">4309</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">4310</span>     <span class="c1"># set column</span>
+<span class="ne">-&gt; </span><span class="mi">4311</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_set_item</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+<span class="nn">File /Volumes/zorg/mb312/.virtualenvs/pandas-pages/lib/python3.12/site-packages/pandas/core/frame.py:4524,</span> in <span class="ni">DataFrame._set_item</span><span class="nt">(self, key, value)</span>
+<span class="g g-Whitespace">   </span><span class="mi">4514</span> <span class="k">def</span><span class="w"> </span><span class="nf">_set_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">4515</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">4516</span><span class="sd">     Add series to DataFrame in specified column.</span>
+<span class="g g-Whitespace">   </span><span class="mi">4517</span><span class="sd"> </span>
+<span class="sd">   (...)   4522     ensure homogeneity.</span>
+<span class="g g-Whitespace">   </span><span class="mi">4523</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="ne">-&gt; </span><span class="mi">4524</span>     <span class="n">value</span><span class="p">,</span> <span class="n">refs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sanitize_column</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">4526</span>     <span class="k">if</span> <span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">4527</span>         <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span>
+<span class="g g-Whitespace">   </span><span class="mi">4528</span>         <span class="ow">and</span> <span class="n">value</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="g g-Whitespace">   </span><span class="mi">4529</span>         <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">ExtensionDtype</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">4530</span>     <span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">4531</span>         <span class="c1"># broadcast across multiple columns if necessary</span>
+<span class="g g-Whitespace">   </span><span class="mi">4532</span>         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">is_unique</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">MultiIndex</span><span class="p">):</span>
+
+<span class="nn">File /Volumes/zorg/mb312/.virtualenvs/pandas-pages/lib/python3.12/site-packages/pandas/core/frame.py:5266,</span> in <span class="ni">DataFrame._sanitize_column</span><span class="nt">(self, value)</span>
+<span class="g g-Whitespace">   </span><span class="mi">5263</span>     <span class="k">return</span> <span class="n">_reindex_for_setitem</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">5265</span> <span class="k">if</span> <span class="n">is_list_like</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<span class="ne">-&gt; </span><span class="mi">5266</span>     <span class="n">com</span><span class="o">.</span><span class="n">require_length_match</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">5267</span> <span class="n">arr</span> <span class="o">=</span> <span class="n">sanitize_array</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">allow_2d</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">5268</span> <span class="k">if</span> <span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">5269</span>     <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Index</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">5270</span>     <span class="ow">and</span> <span class="n">value</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s2">&quot;object&quot;</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>   <span class="mi">5273</span>     <span class="c1"># TODO: Remove kludge in sanitize_array for string mode when enforcing</span>
+<span class="g g-Whitespace">   </span><span class="mi">5274</span>     <span class="c1"># this deprecation</span>
+
+<span class="nn">File /Volumes/zorg/mb312/.virtualenvs/pandas-pages/lib/python3.12/site-packages/pandas/core/common.py:573,</span> in <span class="ni">require_length_match</span><span class="nt">(data, index)</span>
+<span class="g g-Whitespace">    </span><span class="mi">569</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">570</span><span class="sd"> Check the length of data matches the length of the index.</span>
+<span class="g g-Whitespace">    </span><span class="mi">571</span><span class="sd"> &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">572</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">index</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">573</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">574</span>         <span class="s2">&quot;Length of values &quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">575</span>         <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s2">) &quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">576</span>         <span class="s2">&quot;does not match length of index &quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">577</span>         <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">index</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">578</span>     <span class="p">)</span>
+
+<span class="ne">ValueError</span>: Length of values (4) does not match length of index (3)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice the text of this error: <code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">Length</span> <span class="pre">of</span> <span class="pre">values</span> <span class="pre">(4)</span> <span class="pre">does</span> <span class="pre">not</span> <span class="pre">match</span> <span class="pre">length</span> <span class="pre">of</span> <span class="pre">index</span> <span class="pre">(3)</span></code>. The error is caused because all columns must share an index, to facilitate the label-based indexing (via <code class="docutils literal notranslate"><span class="pre">.loc</span></code>) that we have seen on previous pages.</p>
+<p>If we want to avoid the <a class="reference internal" href="0_1_to_loc_or_iloc.html"><span class="std std-doc">pitfalls</span></a> of the <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code> (e.g. misalignment between the integer location of data, and the numerical index label of that data) then we can specify an index manually:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set the index</span>
+<span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Person_1&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_2&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_3&#39;</span><span class="p">]</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>new_column</th>
+      <th>another_new_column</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Person_1</th>
+      <td>1</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>Person_2</th>
+      <td>2</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>Person_3</th>
+      <td>3</td>
+      <td>C</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>This can also be done when we make the “blank” Data Frame:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_again</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Person_1&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_2&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_3&#39;</span><span class="p">])</span>
+
+<span class="n">df_again</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Person_1</th>
+    </tr>
+    <tr>
+      <th>Person_2</th>
+    </tr>
+    <tr>
+      <th>Person_3</th>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>This creates a Data Frame with only an index, which data can then be added to:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_again</span><span class="p">[</span><span class="s1">&#39;new_column&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+
+<span class="n">df_again</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>new_column</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Person_1</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Person_2</th>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>Person_3</th>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Becuase all Series/columns in the Data Frame must share an <code class="docutils literal notranslate"><span class="pre">index</span></code>, Pandas will predictably throw an error if try to use something that is the wrong length/shape to be a valid <code class="docutils literal notranslate"><span class="pre">index</span></code>:</p>
+<div class="cell tag_raises-exception docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ValueError because we have specified the wrong number of index elements.</span>
+<span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Person_1&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_2&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_3&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_4&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">17</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># ValueError because we have specified the wrong number of index elements.</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Person_1&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_2&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_3&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_4&#39;</span><span class="p">]</span>
+
+<span class="nn">File /Volumes/zorg/mb312/.virtualenvs/pandas-pages/lib/python3.12/site-packages/pandas/core/generic.py:6313,</span> in <span class="ni">NDFrame.__setattr__</span><span class="nt">(self, name, value)</span>
+<span class="g g-Whitespace">   </span><span class="mi">6311</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">6312</span>     <span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">6313</span>     <span class="k">return</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">6314</span> <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">6315</span>     <span class="k">pass</span>
+
+<span class="nn">File properties.pyx:69,</span> in <span class="ni">pandas._libs.properties.AxisProperty.__set__</span><span class="nt">()</span>
+
+<span class="nn">File /Volumes/zorg/mb312/.virtualenvs/pandas-pages/lib/python3.12/site-packages/pandas/core/generic.py:814,</span> in <span class="ni">NDFrame._set_axis</span><span class="nt">(self, axis, labels)</span>
+<span class="g g-Whitespace">    </span><span class="mi">809</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">810</span><span class="sd"> This is called from the cython code when we set the `index` attribute</span>
+<span class="g g-Whitespace">    </span><span class="mi">811</span><span class="sd"> directly, e.g. `series.index = [1, 2, 3]`.</span>
+<span class="g g-Whitespace">    </span><span class="mi">812</span><span class="sd"> &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">813</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">ensure_index</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">814</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mgr</span><span class="o">.</span><span class="n">set_axis</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">815</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clear_item_cache</span><span class="p">()</span>
+
+<span class="nn">File /Volumes/zorg/mb312/.virtualenvs/pandas-pages/lib/python3.12/site-packages/pandas/core/internals/managers.py:238,</span> in <span class="ni">BaseBlockManager.set_axis</span><span class="nt">(self, axis, new_labels)</span>
+<span class="g g-Whitespace">    </span><span class="mi">236</span> <span class="k">def</span><span class="w"> </span><span class="nf">set_axis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="p">:</span> <span class="n">AxisInt</span><span class="p">,</span> <span class="n">new_labels</span><span class="p">:</span> <span class="n">Index</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">237</span>     <span class="c1"># Caller is responsible for ensuring we have an Index object.</span>
+<span class="ne">--&gt; </span><span class="mi">238</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_validate_set_axis</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">new_labels</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">239</span>     <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_labels</span>
+
+<span class="nn">File /Volumes/zorg/mb312/.virtualenvs/pandas-pages/lib/python3.12/site-packages/pandas/core/internals/base.py:98,</span> in <span class="ni">DataManager._validate_set_axis</span><span class="nt">(self, axis, new_labels)</span>
+<span class="g g-Whitespace">     </span><span class="mi">95</span>     <span class="k">pass</span>
+<span class="g g-Whitespace">     </span><span class="mi">97</span> <span class="k">elif</span> <span class="n">new_len</span> <span class="o">!=</span> <span class="n">old_len</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">98</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">99</span>         <span class="sa">f</span><span class="s2">&quot;Length mismatch: Expected axis has </span><span class="si">{</span><span class="n">old_len</span><span class="si">}</span><span class="s2"> elements, new &quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">100</span>         <span class="sa">f</span><span class="s2">&quot;values have </span><span class="si">{</span><span class="n">new_len</span><span class="si">}</span><span class="s2"> elements&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">101</span>     <span class="p">)</span>
+
+<span class="ne">ValueError</span>: Length mismatch: Expected axis has 3 elements, new values have 4 elements
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="constructing-a-data-frame-from-a-dictionary-using-numpy-arrays">
+<h2>2: Constructing a Data Frame from a dictionary (using Numpy arrays)<a class="headerlink" href="#constructing-a-data-frame-from-a-dictionary-using-numpy-arrays" title="Link to this heading">#</a></h2>
+<p>Another common way to construct Data Frames is to use a dictionary.</p>
+<p>When we do this, the keys of the dictionary become the column names (and therefore the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute of the Series that constitutes a given column); and the values of the dictionary become the <code class="docutils literal notranslate"><span class="pre">values</span></code> attribute of a given column.</p>
+<p>First, let’s make a dictionary:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dictionary</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]),</span>
+              <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">])}</span>
+
+<span class="n">dictionary</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;A&#39;: array([1, 2, 3, 4]), &#39;B&#39;: array([5, 6, 7, 8])}
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here are the keys and values of the dictionary, containing this toy data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the keys of the dictionary</span>
+<span class="n">dictionary</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;A&#39;, &#39;B&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the values of the dictionary</span>
+<span class="n">dictionary</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_values([array([1, 2, 3, 4]), array([5, 6, 7, 8])])
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can pass this dictionary to the <code class="docutils literal notranslate"><span class="pre">pd.DataFrame()</span></code> constructor. As notes above, the keys will become the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute of each column (where each column is a Pandas Series). The values will become the <code class="docutils literal notranslate"><span class="pre">.values</span></code> attribute of each column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># construction from a dictionary</span>
+<span class="n">df3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span>
+
+<span class="n">df3</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>8</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>As we know, the Data Frame itself is just a dictionary-like collection of Series:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show one column/Series</span>
+<span class="n">df3</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    1
+1    2
+2    3
+3    4
+Name: A, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Each Series inherits it’s <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute from its <em>key</em> in the original dictionary:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df3</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;A&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>…and it’s <code class="docutils literal notranslate"><span class="pre">.values</span></code> attribute from the <em>values</em> in the original dictionary:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df3</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1, 2, 3, 4])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="constructing-a-data-frame-from-a-dictionary-using-pandas-series">
+<h2>3: Constructing a Data Frame from a dictionary (using Pandas series)<a class="headerlink" href="#constructing-a-data-frame-from-a-dictionary-using-pandas-series" title="Link to this heading">#</a></h2>
+<p>We can also use Pandas Series as the values in a dictionary, in order to build a Data Frame. Because Pandas Series contain a Numpy array plus additional attributes, like an <code class="docutils literal notranslate"><span class="pre">index</span></code>, we need to be aware of this when using them to create Data Frames, as it can lead to errors.</p>
+<p>Let’s build a Series with the familiar three-letter country codes, the country names, and the <a class="reference external" href="https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index">HDI data</a>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># make an array containing the country codes</span>
+<span class="n">country_codes_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;AUS&#39;</span><span class="p">,</span> <span class="s1">&#39;BRA&#39;</span><span class="p">,</span> <span class="s1">&#39;CAN&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;CHN&#39;</span><span class="p">,</span> <span class="s1">&#39;DEU&#39;</span><span class="p">,</span> <span class="s1">&#39;ESP&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;FRA&#39;</span><span class="p">,</span> <span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;IND&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;ITA&#39;</span><span class="p">,</span> <span class="s1">&#39;JPN&#39;</span><span class="p">,</span> <span class="s1">&#39;KOR&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;MEX&#39;</span><span class="p">,</span> <span class="s1">&#39;RUS&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">])</span>
+<span class="n">country_codes_array</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;AUS&#39;, &#39;BRA&#39;, &#39;CAN&#39;, &#39;CHN&#39;, &#39;DEU&#39;, &#39;ESP&#39;, &#39;FRA&#39;, &#39;GBR&#39;, &#39;IND&#39;,
+       &#39;ITA&#39;, &#39;JPN&#39;, &#39;KOR&#39;, &#39;MEX&#39;, &#39;RUS&#39;, &#39;USA&#39;], dtype=&#39;&lt;U3&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># make an array containing the country names</span>
+<span class="n">country_names_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;Australia&#39;</span><span class="p">,</span> <span class="s1">&#39;Brazil&#39;</span><span class="p">,</span> <span class="s1">&#39;Canada&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;China&#39;</span><span class="p">,</span> <span class="s1">&#39;Germany&#39;</span><span class="p">,</span> <span class="s1">&#39;Spain&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;France&#39;</span><span class="p">,</span> <span class="s1">&#39;United Kingdom&#39;</span><span class="p">,</span> <span class="s1">&#39;India&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;Italy&#39;</span><span class="p">,</span> <span class="s1">&#39;Japan&#39;</span><span class="p">,</span> <span class="s1">&#39;South Korea&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;Mexico&#39;</span><span class="p">,</span> <span class="s1">&#39;Russia&#39;</span><span class="p">,</span> <span class="s1">&#39;United States&#39;</span><span class="p">])</span>
+<span class="n">country_names_array</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;Australia&#39;, &#39;Brazil&#39;, &#39;Canada&#39;, &#39;China&#39;, &#39;Germany&#39;, &#39;Spain&#39;,
+       &#39;France&#39;, &#39;United Kingdom&#39;, &#39;India&#39;, &#39;Italy&#39;, &#39;Japan&#39;,
+       &#39;South Korea&#39;, &#39;Mexico&#39;, &#39;Russia&#39;, &#39;United States&#39;], dtype=&#39;&lt;U14&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>As previously, we will use the country codes as an <code class="docutils literal notranslate"><span class="pre">index</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># build a Series of the country names</span>
+<span class="n">country_names_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">country_names_array</span><span class="p">,</span>
+                                <span class="n">index</span><span class="o">=</span><span class="n">country_codes_array</span><span class="p">)</span>
+
+<span class="n">country_names_series</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUS         Australia
+BRA            Brazil
+CAN            Canada
+CHN             China
+DEU           Germany
+ESP             Spain
+FRA            France
+GBR    United Kingdom
+IND             India
+ITA             Italy
+JPN             Japan
+KOR       South Korea
+MEX            Mexico
+RUS            Russia
+USA     United States
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, let’s do the same for the HDI scores:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Human Development Index Scores for each country</span>
+<span class="n">hdis_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.896</span><span class="p">,</span> <span class="mf">0.668</span><span class="p">,</span> <span class="mf">0.89</span> <span class="p">,</span> <span class="mf">0.586</span><span class="p">,</span> 
+                 <span class="mf">0.844</span><span class="p">,</span> <span class="mf">0.89</span> <span class="p">,</span> <span class="mf">0.49</span> <span class="p">,</span> <span class="mf">0.842</span><span class="p">,</span> 
+                 <span class="mf">0.883</span><span class="p">,</span> <span class="mf">0.709</span><span class="p">,</span> <span class="mf">0.733</span><span class="p">,</span> <span class="mf">0.824</span><span class="p">,</span>
+                 <span class="mf">0.828</span><span class="p">,</span> <span class="mf">0.863</span><span class="p">,</span> <span class="mf">0.894</span><span class="p">])</span>
+
+<span class="n">hdis_array</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.896, 0.668, 0.89 , 0.586, 0.844, 0.89 , 0.49 , 0.842, 0.883,
+       0.709, 0.733, 0.824, 0.828, 0.863, 0.894])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here also we will use the country codes as the index:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hdi_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">hdis_array</span><span class="p">,</span>
+                      <span class="n">index</span><span class="o">=</span><span class="n">country_codes_array</span><span class="p">)</span>
+
+<span class="n">hdi_series</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUS    0.896
+BRA    0.668
+CAN    0.890
+CHN    0.586
+DEU    0.844
+ESP    0.890
+FRA    0.490
+GBR    0.842
+IND    0.883
+ITA    0.709
+JPN    0.733
+KOR    0.824
+MEX    0.828
+RUS    0.863
+USA    0.894
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can then create the Data Frame by using the Series as values in a dictionary, and passing that dictionary to the <code class="docutils literal notranslate"><span class="pre">pd.DataFrame()</span></code> constructor:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df4</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;country_names&#39;</span><span class="p">:</span> <span class="n">country_names_series</span><span class="p">,</span>
+                    <span class="s1">&#39;HDI&#39;</span><span class="p">:</span> <span class="n">hdi_series</span><span class="p">})</span>
+
+<span class="n">df4</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country_names</th>
+      <th>HDI</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AUS</th>
+      <td>Australia</td>
+      <td>0.896</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>Brazil</td>
+      <td>0.668</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>Canada</td>
+      <td>0.890</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>China</td>
+      <td>0.586</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>Germany</td>
+      <td>0.844</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>Spain</td>
+      <td>0.890</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>France</td>
+      <td>0.490</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>United Kingdom</td>
+      <td>0.842</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>India</td>
+      <td>0.883</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>Italy</td>
+      <td>0.709</td>
+    </tr>
+    <tr>
+      <th>JPN</th>
+      <td>Japan</td>
+      <td>0.733</td>
+    </tr>
+    <tr>
+      <th>KOR</th>
+      <td>South Korea</td>
+      <td>0.824</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>Mexico</td>
+      <td>0.828</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>Russia</td>
+      <td>0.863</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>United States</td>
+      <td>0.894</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>It is, however, very important when using this method to ensure that all the Series share an index.</p>
+<p>Strange things can happen if they do not.</p>
+<p>Let’s adjust the <code class="docutils literal notranslate"><span class="pre">hdi_series</span></code> index so that it has a numerical index:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># adjust the `hdi_series` to have a numerical index</span>
+<span class="n">hdi_series</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">hdi_series</span><span class="p">))</span>
+
+<span class="n">hdi_series</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     0.896
+1     0.668
+2     0.890
+3     0.586
+4     0.844
+5     0.890
+6     0.490
+7     0.842
+8     0.883
+9     0.709
+10    0.733
+11    0.824
+12    0.828
+13    0.863
+14    0.894
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>For the latest Pandas (2.2.3 at time of writing), Pandas will give an error if we try to construct a Data Frame from a dictionary with these two Series as the values:</p>
+<div class="cell tag_raises-exception docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TypeError if we construct a Data Frame using Series without matching indexes</span>
+<span class="n">df5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;country_names&#39;</span><span class="p">:</span> <span class="n">country_names_series</span><span class="p">,</span>
+                    <span class="s1">&#39;HDI&#39;</span><span class="p">:</span> <span class="n">hdi_series</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">32</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># TypeError if we construct a Data Frame using Series without matching indexes</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">df5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;country_names&#39;</span><span class="p">:</span> <span class="n">country_names_series</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>                     <span class="s1">&#39;HDI&#39;</span><span class="p">:</span> <span class="n">hdi_series</span><span class="p">})</span>
+
+<span class="nn">File /Volumes/zorg/mb312/.virtualenvs/pandas-pages/lib/python3.12/site-packages/pandas/core/frame.py:778,</span> in <span class="ni">DataFrame.__init__</span><span class="nt">(self, data, index, columns, dtype, copy)</span>
+<span class="g g-Whitespace">    </span><span class="mi">772</span>     <span class="n">mgr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_mgr</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">773</span>         <span class="n">data</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="n">index</span><span class="p">,</span> <span class="s2">&quot;columns&quot;</span><span class="p">:</span> <span class="n">columns</span><span class="p">},</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="n">copy</span>
+<span class="g g-Whitespace">    </span><span class="mi">774</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">776</span> <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">777</span>     <span class="c1"># GH#38939 de facto copy defaults to False only in non-dict cases</span>
+<span class="ne">--&gt; </span><span class="mi">778</span>     <span class="n">mgr</span> <span class="o">=</span> <span class="n">dict_to_mgr</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="n">copy</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="n">manager</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">779</span> <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ma</span><span class="o">.</span><span class="n">MaskedArray</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">780</span>     <span class="kn">from</span><span class="w"> </span><span class="nn">numpy.ma</span><span class="w"> </span><span class="kn">import</span> <span class="n">mrecords</span>
+
+<span class="nn">File /Volumes/zorg/mb312/.virtualenvs/pandas-pages/lib/python3.12/site-packages/pandas/core/internals/construction.py:503,</span> in <span class="ni">dict_to_mgr</span><span class="nt">(data, index, columns, dtype, typ, copy)</span>
+<span class="g g-Whitespace">    </span><span class="mi">499</span>     <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">500</span>         <span class="c1"># dtype check to exclude e.g. range objects, scalars</span>
+<span class="g g-Whitespace">    </span><span class="mi">501</span>         <span class="n">arrays</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;dtype&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">arrays</span><span class="p">]</span>
+<span class="ne">--&gt; </span><span class="mi">503</span> <span class="k">return</span> <span class="n">arrays_to_mgr</span><span class="p">(</span><span class="n">arrays</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="n">typ</span><span class="p">,</span> <span class="n">consolidate</span><span class="o">=</span><span class="n">copy</span><span class="p">)</span>
+
+<span class="nn">File /Volumes/zorg/mb312/.virtualenvs/pandas-pages/lib/python3.12/site-packages/pandas/core/internals/construction.py:114,</span> in <span class="ni">arrays_to_mgr</span><span class="nt">(arrays, columns, index, dtype, verify_integrity, typ, consolidate)</span>
+<span class="g g-Whitespace">    </span><span class="mi">111</span> <span class="k">if</span> <span class="n">verify_integrity</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">112</span>     <span class="c1"># figure out the index, if necessary</span>
+<span class="g g-Whitespace">    </span><span class="mi">113</span>     <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">114</span>         <span class="n">index</span> <span class="o">=</span> <span class="n">_extract_index</span><span class="p">(</span><span class="n">arrays</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">115</span>     <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">116</span>         <span class="n">index</span> <span class="o">=</span> <span class="n">ensure_index</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+<span class="nn">File /Volumes/zorg/mb312/.virtualenvs/pandas-pages/lib/python3.12/site-packages/pandas/core/internals/construction.py:670,</span> in <span class="ni">_extract_index</span><span class="nt">(data)</span>
+<span class="g g-Whitespace">    </span><span class="mi">667</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;If using all scalar values, you must pass an index&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">669</span> <span class="k">if</span> <span class="n">have_series</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">670</span>     <span class="n">index</span> <span class="o">=</span> <span class="n">union_indexes</span><span class="p">(</span><span class="n">indexes</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">671</span> <span class="k">elif</span> <span class="n">have_dicts</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">672</span>     <span class="n">index</span> <span class="o">=</span> <span class="n">union_indexes</span><span class="p">(</span><span class="n">indexes</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nn">File /Volumes/zorg/mb312/.virtualenvs/pandas-pages/lib/python3.12/site-packages/pandas/core/indexes/api.py:319,</span> in <span class="ni">union_indexes</span><span class="nt">(indexes, sort)</span>
+<span class="g g-Whitespace">    </span><span class="mi">317</span> <span class="n">index</span> <span class="o">=</span> <span class="n">indexes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">318</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">other</span><span class="p">)</span> <span class="k">for</span> <span class="n">other</span> <span class="ow">in</span> <span class="n">indexes</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+<span class="ne">--&gt; </span><span class="mi">319</span>     <span class="n">index</span> <span class="o">=</span> <span class="n">_unique_indices</span><span class="p">(</span><span class="n">indexes</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">321</span> <span class="n">name</span> <span class="o">=</span> <span class="n">get_unanimous_names</span><span class="p">(</span><span class="o">*</span><span class="n">indexes</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">322</span> <span class="k">if</span> <span class="n">name</span> <span class="o">!=</span> <span class="n">index</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+
+<span class="nn">File /Volumes/zorg/mb312/.virtualenvs/pandas-pages/lib/python3.12/site-packages/pandas/core/indexes/api.py:252,</span> in <span class="ni">union_indexes.&lt;locals&gt;._unique_indices</span><span class="nt">(inds, dtype)</span>
+<span class="g g-Whitespace">    </span><span class="mi">250</span>         <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">diff</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="g g-Whitespace">    </span><span class="mi">251</span>     <span class="k">if</span> <span class="n">sort</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">252</span>         <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">253</span>     <span class="k">return</span> <span class="n">result</span>
+<span class="g g-Whitespace">    </span><span class="mi">255</span> <span class="k">def</span><span class="w"> </span><span class="nf">conv</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+
+<span class="nn">File /Volumes/zorg/mb312/.virtualenvs/pandas-pages/lib/python3.12/site-packages/pandas/util/_decorators.py:333,</span> in <span class="ni">deprecate_nonkeyword_arguments.&lt;locals&gt;.decorate.&lt;locals&gt;.wrapper</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">327</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">num_allow_args</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">328</span>     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">329</span>         <span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">arguments</span><span class="o">=</span><span class="n">_format_argument_list</span><span class="p">(</span><span class="n">allow_args</span><span class="p">)),</span>
+<span class="g g-Whitespace">    </span><span class="mi">330</span>         <span class="ne">FutureWarning</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">331</span>         <span class="n">stacklevel</span><span class="o">=</span><span class="n">find_stack_level</span><span class="p">(),</span>
+<span class="g g-Whitespace">    </span><span class="mi">332</span>     <span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">333</span> <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File /Volumes/zorg/mb312/.virtualenvs/pandas-pages/lib/python3.12/site-packages/pandas/core/indexes/base.py:5932,</span> in <span class="ni">Index.sort_values</span><span class="nt">(self, return_indexer, ascending, na_position, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">5929</span> <span class="c1"># GH 35584. Sort missing values according to na_position kwarg</span>
+<span class="g g-Whitespace">   </span><span class="mi">5930</span> <span class="c1"># ignore na_position for MultiIndex</span>
+<span class="g g-Whitespace">   </span><span class="mi">5931</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ABCMultiIndex</span><span class="p">):</span>
+<span class="ne">-&gt; </span><span class="mi">5932</span>     <span class="n">_as</span> <span class="o">=</span> <span class="n">nargsort</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">5933</span>         <span class="n">items</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="n">ascending</span><span class="p">,</span> <span class="n">na_position</span><span class="o">=</span><span class="n">na_position</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span>
+<span class="g g-Whitespace">   </span><span class="mi">5934</span>     <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">5935</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">5936</span>     <span class="n">idx</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">Index</span><span class="p">,</span> <span class="n">ensure_key_mapped</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+
+<span class="nn">File /Volumes/zorg/mb312/.virtualenvs/pandas-pages/lib/python3.12/site-packages/pandas/core/sorting.py:439,</span> in <span class="ni">nargsort</span><span class="nt">(items, kind, ascending, na_position, key, mask)</span>
+<span class="g g-Whitespace">    </span><span class="mi">437</span>     <span class="n">non_nans</span> <span class="o">=</span> <span class="n">non_nans</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">438</span>     <span class="n">non_nan_idx</span> <span class="o">=</span> <span class="n">non_nan_idx</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="ne">--&gt; </span><span class="mi">439</span> <span class="n">indexer</span> <span class="o">=</span> <span class="n">non_nan_idx</span><span class="p">[</span><span class="n">non_nans</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="n">kind</span><span class="p">)]</span>
+<span class="g g-Whitespace">    </span><span class="mi">440</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">ascending</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">441</span>     <span class="n">indexer</span> <span class="o">=</span> <span class="n">indexer</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="ne">TypeError</span>: &#39;&lt;&#39; not supported between instances of &#39;int&#39; and &#39;str&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Remember each index label is a unique identifier for each row of the Data Frame. Pandas is trying to compare the indices of the two series in order to match corresponding rows, and failing, because it cannot compare the string index of <code class="docutils literal notranslate"><span class="pre">country_names_series</span></code> to the (newly set) integer series of <code class="docutils literal notranslate"><span class="pre">hdi_series</span></code>.</p>
+<p><a class="reference internal" href="0_4_dealing_with_missing_data_in_pandas.html"><span class="std std-doc">Later on</span></a> we will see further signs that Pandas is trying to match rows between series by using the <code class="docutils literal notranslate"><span class="pre">index</span></code>.</p>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>This page has looked at different methods of constructing Data Frames, and how these affect different attributes of the Pandas Series that constitute each Data Frame.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="0_2_pandas_dataframes_attributes_methods.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Pandas DataFrames: Attributes and Methods</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="0_4_dealing_with_missing_data_in_pandas.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Dealing with NaNs</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-in-data-from-a-file">0: Reading in data from a file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-blank-data-frame">1: Creating a blank Data Frame</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-a-data-frame-from-a-dictionary-using-numpy-arrays">2: Constructing a Data Frame from a dictionary (using Numpy arrays)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-a-data-frame-from-a-dictionary-using-pandas-series">3: Constructing a Data Frame from a dictionary (using Pandas series)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Peter Rush, Matthew Brett
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

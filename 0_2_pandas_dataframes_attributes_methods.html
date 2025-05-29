@@ -1,0 +1,3744 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Pandas DataFrames: Attributes and Methods &#8212; Pandas from Numpy</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '0_2_pandas_dataframes_attributes_methods';</script>
+    <link rel="canonical" href="https://pxr687.github.io/ASPP_pandas_tutorials/0_2_pandas_dataframes_attributes_methods.html" />
+    <link rel="icon" href="_static/pandas_numpy.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Let There Be Data : Creating Data Frames" href="0_3_constructing_dataframes.html" />
+    <link rel="prev" title="To .loc or .iloc - more on Pandas indexes" href="0_1_to_loc_or_iloc.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/pandas_numpy.jpg" class="logo__image only-light" alt="Pandas from Numpy - Home"/>
+    <img src="_static/pandas_numpy.jpg" class="logo__image only-dark pst-js-only" alt="Pandas from Numpy - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Pandas from Numpy</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="0_0_pandas_intro.html">Pandas from Numpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_1_to_loc_or_iloc.html">To <code class="docutils literal notranslate"><span class="pre">.loc</span></code> or <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> - more on Pandas indexes</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Pandas DataFrames: Attributes and Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_3_constructing_dataframes.html">Let There Be Data : Creating Data Frames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_4_dealing_with_missing_data_in_pandas.html">Dealing with NaNs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_5_filtering_data_with_pandas.html">Filtering Data Frames with Boolean Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_6_more_pandas_methods_strings.html">More Pandas methods</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="interact/lab/index.html?path=0_2_pandas_dataframes_attributes_methods.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch via JupyterLite"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="JupyterLite logo" src="_static/images/logo_jupyterlite.svg">
+  </span>
+<span class="btn__text-container">JupyterLite</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/pxr687/ASPP_pandas_tutorials" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pxr687/ASPP_pandas_tutorials/edit/main/0_2_pandas_dataframes_attributes_methods.Rmd" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pxr687/ASPP_pandas_tutorials/issues/new?title=Issue%20on%20page%20%2F0_2_pandas_dataframes_attributes_methods.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/0_2_pandas_dataframes_attributes_methods.Rmd" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.Rmd</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Pandas DataFrames: Attributes and Methods</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-pandas-from-numpy">More Pandas from Numpy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-attributes-of-numpy-arrays">Statistical Attributes of Numpy arrays</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-series-attributes-and-methods">Pandas Series attributes and methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-dataframe-attributes">Pandas DataFrame attributes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-dataframe-methods">Pandas Dataframe Methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-methods">Plotting Methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-note-on-numerical-operations">A note on numerical operations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="pandas-dataframes-attributes-and-methods">
+<h1>Pandas DataFrames: Attributes and Methods<a class="headerlink" href="#pandas-dataframes-attributes-and-methods" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p>📝 NOTE-  Covered here:</p>
+<p>Columns in a dataframe  can be of different dtypes</p>
+<ul class="simple">
+<li><p>Operations are on columns by default (describe, sum, min, max)</p></li>
+<li><p>attributes of df (shape, dtypes columns, index)</p></li>
+<li><p>methods of df (unique, describe, counts, value_counts, min, max, std, sort_values, sort_index)</p></li>
+</ul>
+<p>Structure of page:</p>
+<ul class="simple">
+<li><p>show all relevant methods/attributes of numpy arrays</p></li>
+<li><p>reinforce that “Series = array + index + name”. Then show relevant methods/attributes of Series.</p></li>
+<li><p>reinforce that “DataFrame = dictionary-like collection of Series”. Then show all relevant methods/attributes of DataFrames.</p></li>
+</ul>
+</div></blockquote>
+<p>On the <a class="reference internal" href="0_0_pandas_intro.html"><span class="std std-doc">previous</span></a> <a class="reference internal" href="0_1_to_loc_or_iloc.html"><span class="std std-doc">pages</span></a> we have seen how Pandas Series are constructed by combining numpy arrays (the <code class="docutils literal notranslate"><span class="pre">.values</span></code> attribute of a Series) with other attributes (a <code class="docutils literal notranslate"><span class="pre">.name</span></code> string and and array-like <code class="docutils literal notranslate"><span class="pre">.index</span></code>). We have then examined how Pandas Data Frames are built from a collection of Series, in a dictionary-like structure.</p>
+<p>This page will dive deeper into Data Frames. Once we have constructed our Data Frame, Pandas provides many useful methods for cleaning, aggregating, plotting and (subsequently) analysing our data.</p>
+<p>We will begin by showing that Pandas Series and Data Frames inherit many of their methods from the Numpy arrays that they are in part constructed from, though the methods are adapted to work in the context of Pandas objects.</p>
+<section id="more-pandas-from-numpy">
+<h2>More Pandas from Numpy<a class="headerlink" href="#more-pandas-from-numpy" title="Link to this heading">#</a></h2>
+<p>Let’s examine some of the methods we can use on numpy arrays.</p>
+<p>Remember, a <em>method</em> is a function attached to an object.</p>
+<p>In this case, our object is a Numpy array (later it will be a Pandas Series or Data Frame).</p>
+<p>We’ll build a numpy array using the <code class="docutils literal notranslate"><span class="pre">np.array([])</span></code> constructor, containing our familiar three-letter country codes. As before, you can see the <a class="reference external" href="https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index">Our World in Data page</a> for more detail:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import libraries</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># standard three-letter code for each country</span>
+<span class="n">country_codes_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;AUS&#39;</span><span class="p">,</span> <span class="s1">&#39;BRA&#39;</span><span class="p">,</span> <span class="s1">&#39;CAN&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;CHN&#39;</span><span class="p">,</span> <span class="s1">&#39;DEU&#39;</span><span class="p">,</span> <span class="s1">&#39;ESP&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;FRA&#39;</span><span class="p">,</span> <span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;IND&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;ITA&#39;</span><span class="p">,</span> <span class="s1">&#39;JPN&#39;</span><span class="p">,</span> <span class="s1">&#39;KOR&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;MEX&#39;</span><span class="p">,</span> <span class="s1">&#39;RUS&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">])</span>
+<span class="n">country_codes_array</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;AUS&#39;, &#39;BRA&#39;, &#39;CAN&#39;, &#39;CHN&#39;, &#39;DEU&#39;, &#39;ESP&#39;, &#39;FRA&#39;, &#39;GBR&#39;, &#39;IND&#39;,
+       &#39;ITA&#39;, &#39;JPN&#39;, &#39;KOR&#39;, &#39;MEX&#39;, &#39;RUS&#39;, &#39;USA&#39;], dtype=&#39;&lt;U3&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>And another array containing the Human Development Index scores for each of the countries:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Human Development Index Scores for each country</span>
+<span class="n">hdis_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.896</span><span class="p">,</span> <span class="mf">0.668</span><span class="p">,</span> <span class="mf">0.89</span> <span class="p">,</span> <span class="mf">0.586</span><span class="p">,</span> 
+                 <span class="mf">0.844</span><span class="p">,</span> <span class="mf">0.89</span> <span class="p">,</span> <span class="mf">0.49</span> <span class="p">,</span> <span class="mf">0.842</span><span class="p">,</span> 
+                 <span class="mf">0.883</span><span class="p">,</span> <span class="mf">0.709</span><span class="p">,</span> <span class="mf">0.733</span><span class="p">,</span> <span class="mf">0.824</span><span class="p">,</span>
+                 <span class="mf">0.828</span><span class="p">,</span> <span class="mf">0.863</span><span class="p">,</span> <span class="mf">0.894</span><span class="p">])</span>
+
+<span class="n">hdis_array</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.896, 0.668, 0.89 , 0.586, 0.844, 0.89 , 0.49 , 0.842, 0.883,
+       0.709, 0.733, 0.824, 0.828, 0.863, 0.894])
+</pre></div>
+</div>
+</div>
+</div>
+<p>And for good measure, another array containing the full country names:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># country names array</span>
+<span class="n">country_names_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;Australia&#39;</span><span class="p">,</span> <span class="s1">&#39;Brazil&#39;</span><span class="p">,</span> <span class="s1">&#39;Canada&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;China&#39;</span><span class="p">,</span> <span class="s1">&#39;Germany&#39;</span><span class="p">,</span> <span class="s1">&#39;Spain&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;France&#39;</span><span class="p">,</span> <span class="s1">&#39;United Kingdom&#39;</span><span class="p">,</span> <span class="s1">&#39;India&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;Italy&#39;</span><span class="p">,</span> <span class="s1">&#39;Japan&#39;</span><span class="p">,</span> <span class="s1">&#39;South Korea&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;Mexico&#39;</span><span class="p">,</span> <span class="s1">&#39;Russia&#39;</span><span class="p">,</span> <span class="s1">&#39;United States&#39;</span><span class="p">])</span>
+<span class="n">country_names_array</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;Australia&#39;, &#39;Brazil&#39;, &#39;Canada&#39;, &#39;China&#39;, &#39;Germany&#39;, &#39;Spain&#39;,
+       &#39;France&#39;, &#39;United Kingdom&#39;, &#39;India&#39;, &#39;Italy&#39;, &#39;Japan&#39;,
+       &#39;South Korea&#39;, &#39;Mexico&#39;, &#39;Russia&#39;, &#39;United States&#39;], dtype=&#39;&lt;U14&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>When dealing with any object in python, it can be useful to use the in-built python <code class="docutils literal notranslate"><span class="pre">dir()</span></code> function. This shows every attribute and method that we can access/call from the object, though the printout it produces is messy:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show all available attributes/methods</span>
+<span class="nb">dir</span><span class="p">(</span><span class="n">hdis_array</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;T&#39;,
+ &#39;__abs__&#39;,
+ &#39;__add__&#39;,
+ &#39;__and__&#39;,
+ &#39;__array__&#39;,
+ &#39;__array_finalize__&#39;,
+ &#39;__array_function__&#39;,
+ &#39;__array_interface__&#39;,
+ &#39;__array_namespace__&#39;,
+ &#39;__array_priority__&#39;,
+ &#39;__array_struct__&#39;,
+ &#39;__array_ufunc__&#39;,
+ &#39;__array_wrap__&#39;,
+ &#39;__bool__&#39;,
+ &#39;__buffer__&#39;,
+ &#39;__class__&#39;,
+ &#39;__class_getitem__&#39;,
+ &#39;__complex__&#39;,
+ &#39;__contains__&#39;,
+ &#39;__copy__&#39;,
+ &#39;__deepcopy__&#39;,
+ &#39;__delattr__&#39;,
+ &#39;__delitem__&#39;,
+ &#39;__dir__&#39;,
+ &#39;__divmod__&#39;,
+ &#39;__dlpack__&#39;,
+ &#39;__dlpack_device__&#39;,
+ &#39;__doc__&#39;,
+ &#39;__eq__&#39;,
+ &#39;__float__&#39;,
+ &#39;__floordiv__&#39;,
+ &#39;__format__&#39;,
+ &#39;__ge__&#39;,
+ &#39;__getattribute__&#39;,
+ &#39;__getitem__&#39;,
+ &#39;__getstate__&#39;,
+ &#39;__gt__&#39;,
+ &#39;__hash__&#39;,
+ &#39;__iadd__&#39;,
+ &#39;__iand__&#39;,
+ &#39;__ifloordiv__&#39;,
+ &#39;__ilshift__&#39;,
+ &#39;__imatmul__&#39;,
+ &#39;__imod__&#39;,
+ &#39;__imul__&#39;,
+ &#39;__index__&#39;,
+ &#39;__init__&#39;,
+ &#39;__init_subclass__&#39;,
+ &#39;__int__&#39;,
+ &#39;__invert__&#39;,
+ &#39;__ior__&#39;,
+ &#39;__ipow__&#39;,
+ &#39;__irshift__&#39;,
+ &#39;__isub__&#39;,
+ &#39;__iter__&#39;,
+ &#39;__itruediv__&#39;,
+ &#39;__ixor__&#39;,
+ &#39;__le__&#39;,
+ &#39;__len__&#39;,
+ &#39;__lshift__&#39;,
+ &#39;__lt__&#39;,
+ &#39;__matmul__&#39;,
+ &#39;__mod__&#39;,
+ &#39;__mul__&#39;,
+ &#39;__ne__&#39;,
+ &#39;__neg__&#39;,
+ &#39;__new__&#39;,
+ &#39;__or__&#39;,
+ &#39;__pos__&#39;,
+ &#39;__pow__&#39;,
+ &#39;__radd__&#39;,
+ &#39;__rand__&#39;,
+ &#39;__rdivmod__&#39;,
+ &#39;__reduce__&#39;,
+ &#39;__reduce_ex__&#39;,
+ &#39;__repr__&#39;,
+ &#39;__rfloordiv__&#39;,
+ &#39;__rlshift__&#39;,
+ &#39;__rmatmul__&#39;,
+ &#39;__rmod__&#39;,
+ &#39;__rmul__&#39;,
+ &#39;__ror__&#39;,
+ &#39;__rpow__&#39;,
+ &#39;__rrshift__&#39;,
+ &#39;__rshift__&#39;,
+ &#39;__rsub__&#39;,
+ &#39;__rtruediv__&#39;,
+ &#39;__rxor__&#39;,
+ &#39;__setattr__&#39;,
+ &#39;__setitem__&#39;,
+ &#39;__setstate__&#39;,
+ &#39;__sizeof__&#39;,
+ &#39;__str__&#39;,
+ &#39;__sub__&#39;,
+ &#39;__subclasshook__&#39;,
+ &#39;__truediv__&#39;,
+ &#39;__xor__&#39;,
+ &#39;all&#39;,
+ &#39;any&#39;,
+ &#39;argmax&#39;,
+ &#39;argmin&#39;,
+ &#39;argpartition&#39;,
+ &#39;argsort&#39;,
+ &#39;astype&#39;,
+ &#39;base&#39;,
+ &#39;byteswap&#39;,
+ &#39;choose&#39;,
+ &#39;clip&#39;,
+ &#39;compress&#39;,
+ &#39;conj&#39;,
+ &#39;conjugate&#39;,
+ &#39;copy&#39;,
+ &#39;ctypes&#39;,
+ &#39;cumprod&#39;,
+ &#39;cumsum&#39;,
+ &#39;data&#39;,
+ &#39;device&#39;,
+ &#39;diagonal&#39;,
+ &#39;dot&#39;,
+ &#39;dtype&#39;,
+ &#39;dump&#39;,
+ &#39;dumps&#39;,
+ &#39;fill&#39;,
+ &#39;flags&#39;,
+ &#39;flat&#39;,
+ &#39;flatten&#39;,
+ &#39;getfield&#39;,
+ &#39;imag&#39;,
+ &#39;item&#39;,
+ &#39;itemset&#39;,
+ &#39;itemsize&#39;,
+ &#39;mT&#39;,
+ &#39;max&#39;,
+ &#39;mean&#39;,
+ &#39;min&#39;,
+ &#39;nbytes&#39;,
+ &#39;ndim&#39;,
+ &#39;newbyteorder&#39;,
+ &#39;nonzero&#39;,
+ &#39;partition&#39;,
+ &#39;prod&#39;,
+ &#39;ptp&#39;,
+ &#39;put&#39;,
+ &#39;ravel&#39;,
+ &#39;real&#39;,
+ &#39;repeat&#39;,
+ &#39;reshape&#39;,
+ &#39;resize&#39;,
+ &#39;round&#39;,
+ &#39;searchsorted&#39;,
+ &#39;setfield&#39;,
+ &#39;setflags&#39;,
+ &#39;shape&#39;,
+ &#39;size&#39;,
+ &#39;sort&#39;,
+ &#39;squeeze&#39;,
+ &#39;std&#39;,
+ &#39;strides&#39;,
+ &#39;sum&#39;,
+ &#39;swapaxes&#39;,
+ &#39;take&#39;,
+ &#39;to_device&#39;,
+ &#39;tobytes&#39;,
+ &#39;tofile&#39;,
+ &#39;tolist&#39;,
+ &#39;tostring&#39;,
+ &#39;trace&#39;,
+ &#39;transpose&#39;,
+ &#39;var&#39;,
+ &#39;view&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>For now we will ignore the elements in the printout that contain <code class="docutils literal notranslate"><span class="pre">__</span></code> - these are called “dunders”, which is short for “double underscore”; they are not the attributes and methods in which we are currently interested.</p>
+<p>Ignoring the dunders, we can see a large number of attributes and methods that we can access from this or any other Numpy array.</p>
+<p>One of these attributes is called <code class="docutils literal notranslate"><span class="pre">shape</span></code>. We will almost always want to know the <code class="docutils literal notranslate"><span class="pre">shape</span></code> of our data, as it tells us how many observations we have.</p>
+<p>Let’s take a look at the <code class="docutils literal notranslate"><span class="pre">.shape</span></code> attribute:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># shape</span>
+<span class="n">hdis_array</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(15,)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can read this output as “15 elements in one row”. By contrast, let’s look at an array with more than one dimension:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># arrays with more dimensions</span>
+<span class="n">zeros_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">zeros_array</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0., 0.],
+       [0., 0.]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>This array - which in mathematical terms is a <em>matrix</em> - has the following shape:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># arrays with more dimensions</span>
+<span class="n">zeros_array</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(2, 2)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We an read this as “2 rows and 2 columns” (which equates to 4 elements).</p>
+<p>If we want to count the number of individual elements in an array (across all dimensions) we can use the <code class="docutils literal notranslate"><span class="pre">.size</span></code> attribute:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># how many elements in the (15, ) `hdi` array?</span>
+<span class="n">hdis_array</span><span class="o">.</span><span class="n">size</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>15
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># how many elements in the (2, 2) `zeros_array`?</span>
+<span class="n">zeros_array</span><span class="o">.</span><span class="n">size</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4
+</pre></div>
+</div>
+</div>
+</div>
+<p>Predictably, both of these attributes can be accessed for arrays of any dimensionality:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># an array with more dimensions</span>
+<span class="n">two_rows_ten_columns_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+<span class="n">two_rows_ten_columns_array</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0., 0., 0.]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># arrays with more dimensions</span>
+<span class="n">two_rows_ten_columns_array</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(2, 10)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the number of elements inthe `two_rows_ten_columns` array?</span>
+<span class="n">two_rows_ten_columns_array</span><span class="o">.</span><span class="n">size</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20
+</pre></div>
+</div>
+</div>
+</div>
+<p>We always also want to know what type of data is in our array, as it will affect what graphs we can create and what analyses we can perform. Are we dealing with numbers or text, for instance?</p>
+<p>To access this information, we can view the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> attribute.</p>
+<p>Let’s look at the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> for the <code class="docutils literal notranslate"><span class="pre">country_codes</span></code> array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># dtype</span>
+<span class="n">country_codes_array</span><span class="o">.</span><span class="n">dtype</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dtype(&#39;&lt;U3&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">dtype</span></code> attribute here is just telling us that this is string data. For an explanation of the meaning, see the image below.</p>
+<p><img alt="" src="_images/numpy_string_dtypes.JPG" /></p>
+<p>Let’s look at the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> of the <code class="docutils literal notranslate"><span class="pre">hdis_array</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># dtype (again)</span>
+<span class="n">hdis_array</span><span class="o">.</span><span class="n">dtype</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dtype(&#39;float64&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>For this array, the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> tells us that we are dealing with numerical data - specifically float data represented with 64 bits.</p>
+<section id="statistical-attributes-of-numpy-arrays">
+<h3>Statistical Attributes of Numpy arrays<a class="headerlink" href="#statistical-attributes-of-numpy-arrays" title="Link to this heading">#</a></h3>
+<p>Numpy also provides a variety of what we can call “statistical attributes” which tell us statistics about the data inside the array. As with the methods we looked at in the previous section, Pandas inherits many of these methods, as we will see later in the page.</p>
+<p>Let’s again look at the <code class="docutils literal notranslate"><span class="pre">hdis_array</span></code>, which contains the HDI score of each country.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hdis_array</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.896, 0.668, 0.89 , 0.586, 0.844, 0.89 , 0.49 , 0.842, 0.883,
+       0.709, 0.733, 0.824, 0.828, 0.863, 0.894])
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use the <code class="docutils literal notranslate"><span class="pre">.min()</span></code> method to view the minimum (smallest) value in the array.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># min</span>
+<span class="n">hdis_array</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.49)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Likewise, we can view the maximum (largest) value in the array using <code class="docutils literal notranslate"><span class="pre">.max()</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># max</span>
+<span class="n">hdis_array</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.896)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Other routine statistics, like the mean and standard deviation, can be accessed using the <code class="docutils literal notranslate"><span class="pre">.mean()</span></code> and <code class="docutils literal notranslate"><span class="pre">.std()</span></code> methods, respectively:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># mean</span>
+<span class="n">hdis_array</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.7893333333333332)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># std</span>
+<span class="n">hdis_array</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.12125821850726472)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Numpy arrays also let us sort the data within the array in ascending or descending order (ascending is the default). To do this, we can use the <code class="docutils literal notranslate"><span class="pre">.sort()</span></code> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># sorting the `hdis_array`</span>
+<span class="n">hdis_array</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Hmmm, that is strange, there was no output from the cell. This is because a quirk of the <code class="docutils literal notranslate"><span class="pre">.sort()</span></code> method is that it operates “in place”. Sure enough, if we check the <code class="docutils literal notranslate"><span class="pre">hdis_array</span></code>, the data has been sorted in ascending order:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hdis_array</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.49 , 0.586, 0.668, 0.709, 0.733, 0.824, 0.828, 0.842, 0.844,
+       0.863, 0.883, 0.89 , 0.89 , 0.894, 0.896])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="pandas-series-attributes-and-methods">
+<h2>Pandas Series attributes and methods<a class="headerlink" href="#pandas-series-attributes-and-methods" title="Link to this heading">#</a></h2>
+<p>Remember our maxim that <em>“a Pandas Series is a numpy array, plus a <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute and an array-like <code class="docutils literal notranslate"><span class="pre">index</span></code>”</em>?</p>
+<p>We will see that because of this, we can use many of the same methods we have just seen for Numpy arrays on Pandas Series.</p>
+<p>Let’s make a series from the HDI scores, called <code class="docutils literal notranslate"><span class="pre">hdi_series</span></code>. We do this using the now familiar <code class="docutils literal notranslate"><span class="pre">pd.Series()</span></code> constructor. Again, we will use the <code class="docutils literal notranslate"><span class="pre">country_codes</span></code> array as an index:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show again from Series, then show for df below</span>
+<span class="n">hdi_series</span> <span class="o">=</span>  <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">hdis_array</span><span class="p">,</span> 
+                        <span class="n">index</span><span class="o">=</span><span class="n">country_codes_array</span><span class="p">)</span>
+
+<span class="n">hdi_series</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUS    0.490
+BRA    0.586
+CAN    0.668
+CHN    0.709
+DEU    0.733
+ESP    0.824
+FRA    0.828
+GBR    0.842
+IND    0.844
+ITA    0.863
+JPN    0.883
+KOR    0.890
+MEX    0.890
+RUS    0.894
+USA    0.896
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we know, we can view the <code class="docutils literal notranslate"><span class="pre">index</span></code>, <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">values</span></code> attributes of the Series using the familiar accessors:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the `index` component of the Series</span>
+<span class="n">hdi_series</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;AUS&#39;, &#39;BRA&#39;, &#39;CAN&#39;, &#39;CHN&#39;, &#39;DEU&#39;, &#39;ESP&#39;, &#39;FRA&#39;, &#39;GBR&#39;, &#39;IND&#39;, &#39;ITA&#39;,
+       &#39;JPN&#39;, &#39;KOR&#39;, &#39;MEX&#39;, &#39;RUS&#39;, &#39;USA&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the `name` component (currently is None)</span>
+<span class="n">hdi_series</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the numpy array (aka `.values`) component of the Series</span>
+<span class="n">hdi_series</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.49 , 0.586, 0.668, 0.709, 0.733, 0.824, 0.828, 0.842, 0.844,
+       0.863, 0.883, 0.89 , 0.89 , 0.894, 0.896])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s verify that we can use the Numpy methods we saw above. Predictably, these methods operate on the Numpy array component of the series (e.g. the <code class="docutils literal notranslate"><span class="pre">.values</span></code> attribute).</p>
+<p>First, let’s look at the <code class="docutils literal notranslate"><span class="pre">shape</span></code>, <code class="docutils literal notranslate"><span class="pre">size</span></code> and <code class="docutils literal notranslate"><span class="pre">dtype</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the `shape` of the `hdi_series`</span>
+<span class="n">hdi_series</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(15,)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the `size` of the `hdi_series`</span>
+<span class="n">hdi_series</span><span class="o">.</span><span class="n">size</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>15
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the `dtype` of the `hdi_series`</span>
+<span class="n">hdi_series</span><span class="o">.</span><span class="n">dtype</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dtype(&#39;float64&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Because a Series is nothing but a Numpy array plus some additional attributes/methods, these methods function on the Series in the exact same manner as they function on a Numpy array.</p>
+<p>This is the same for the statistical methods. Let’s get the <code class="docutils literal notranslate"><span class="pre">.min()</span></code> and <code class="docutils literal notranslate"><span class="pre">.max()</span></code> values from the <code class="docutils literal notranslate"><span class="pre">hdi_series</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># min</span>
+<span class="n">hdi_series</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.49)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># max</span>
+<span class="n">hdi_series</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.896)
+</pre></div>
+</div>
+</div>
+</div>
+<p>These operations return the same values as when we call the method directly on the <code class="docutils literal notranslate"><span class="pre">hdis_array</span></code> (unsurprising, as each object contains the same data)!:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the `max()` value from the `hdis_array`, for comparison</span>
+<span class="n">hdis_array</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.896)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Ok, so these familiar Numpy methods are available. However, Pandas also introduces some additional methods (you may want to compare the output of <code class="docutils literal notranslate"><span class="pre">dir()</span></code> for the <code class="docutils literal notranslate"><span class="pre">hdis_array</span></code> vs the <code class="docutils literal notranslate"><span class="pre">hdi_series</span></code> to see the overlap/differences - as the printout is messy, we will not show it again here).</p>
+<p>One very useful Series method is <code class="docutils literal notranslate"><span class="pre">.describe()</span></code>. This will give us a variety of statistics about the data in the <code class="docutils literal notranslate"><span class="pre">.values</span></code> array of the Series:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># `.decribe()` the `hdi_series`</span>
+<span class="n">hdi_series</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count    15.000000
+mean      0.789333
+std       0.125514
+min       0.490000
+25%       0.721000
+50%       0.842000
+75%       0.886500
+max       0.896000
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Neat, an easy summary of the number of observations, the mean, the standard deviation around the mean, and then the range/interquartile range.</p>
+<p>Conversely, the <code class="docutils literal notranslate"><span class="pre">.value_counts()</span></code> method will count the occurence of each <em>unique</em> value in the Series:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># use the `value_counts()` method</span>
+<span class="n">hdi_series</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.890    2
+0.490    1
+0.668    1
+0.709    1
+0.733    1
+0.586    1
+0.824    1
+0.828    1
+0.844    1
+0.842    1
+0.863    1
+0.883    1
+0.894    1
+0.896    1
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>These methods can also be applied to arrays containing categorical/string data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># constructing a Series containing categorical data</span>
+
+<span class="n">country_names_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">country_names_array</span><span class="p">,</span>
+                                 <span class="n">index</span><span class="o">=</span><span class="n">country_codes_array</span><span class="p">)</span>
+
+<span class="n">country_names_series</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUS         Australia
+BRA            Brazil
+CAN            Canada
+CHN             China
+DEU           Germany
+ESP             Spain
+FRA            France
+GBR    United Kingdom
+IND             India
+ITA             Italy
+JPN             Japan
+KOR       South Korea
+MEX            Mexico
+RUS            Russia
+USA     United States
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># .describe()</span>
+<span class="n">country_names_series</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count            15
+unique           15
+top       Australia
+freq              1
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>Helpfully, Pandas has adjusted the <code class="docutils literal notranslate"><span class="pre">.describe()</span></code> summary in light of the <code class="docutils literal notranslate"><span class="pre">values</span></code> array of the <code class="docutils literal notranslate"><span class="pre">country_names_series</span></code> containing categorical/string data.</p>
+<p>We now see summaries of the number values, number of unique values etc, rather than numerical statistics like the mean and standard deviation.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">.value_counts()</span></code> method behaves the same as with numerical data, as both numbers and strings can be unique in an array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">country_names_series</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Australia         1
+Brazil            1
+Canada            1
+China             1
+Germany           1
+Spain             1
+France            1
+United Kingdom    1
+India             1
+Italy             1
+Japan             1
+South Korea       1
+Mexico            1
+Russia            1
+United States     1
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we want to see the <em>unique</em> values only, regardless of the number of times each value occurs, we can use the <code class="docutils literal notranslate"><span class="pre">.unique()</span></code> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the unique values in the Series</span>
+<span class="n">hdi_series</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.49 , 0.586, 0.668, 0.709, 0.733, 0.824, 0.828, 0.842, 0.844,
+       0.863, 0.883, 0.89 , 0.894, 0.896])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the unique values in the Series</span>
+<span class="n">country_names_series</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;Australia&#39;, &#39;Brazil&#39;, &#39;Canada&#39;, &#39;China&#39;, &#39;Germany&#39;, &#39;Spain&#39;,
+       &#39;France&#39;, &#39;United Kingdom&#39;, &#39;India&#39;, &#39;Italy&#39;, &#39;Japan&#39;,
+       &#39;South Korea&#39;, &#39;Mexico&#39;, &#39;Russia&#39;, &#39;United States&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="pandas-dataframe-attributes">
+<h2>Pandas DataFrame attributes<a class="headerlink" href="#pandas-dataframe-attributes" title="Link to this heading">#</a></h2>
+<p>Now, remember again our other maxim that *”a Pandas DataFrame is just a <em>dictionary-like collection of Series</em>”?</p>
+<p>Because of this, we can use all the methods we have seen so far on any Data Frame column. Each column is a Series, and therefore contains a Numpy array as it’s <code class="docutils literal notranslate"><span class="pre">.values</span></code> attribute.</p>
+<p>However, Data Frames have some (useful!) extra methods (including statistical methods) not available for Series.</p>
+<p>First, let’s import the <a class="reference external" href="https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index">HDI/fertility rate data</a>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import our dataset</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/year_2000_hdi_fert.csv&quot;</span><span class="p">)</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Code</th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>AUS</td>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>1.913247e+07</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>BRA</td>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>1.740183e+08</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>CAN</td>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>3.089180e+07</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>CHN</td>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1.269581e+09</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>DEU</td>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>8.179726e+07</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>ESP</td>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>4.101977e+07</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>FRA</td>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>5.948372e+07</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>GBR</td>
+      <td>0.863</td>
+      <td>1.641</td>
+      <td>5.905734e+07</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>IND</td>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1.057923e+09</td>
+      <td>India</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>ITA</td>
+      <td>0.842</td>
+      <td>1.249</td>
+      <td>5.727220e+07</td>
+      <td>Italy</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>JPN</td>
+      <td>0.883</td>
+      <td>1.346</td>
+      <td>1.270278e+08</td>
+      <td>Japan</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>KOR</td>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>4.676666e+07</td>
+      <td>South Korea</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>MEX</td>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>9.862555e+07</td>
+      <td>Mexico</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>RUS</td>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>1.467178e+08</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>USA</td>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>2.814841e+08</td>
+      <td>United States</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Although it is messy (and we did say we wouldn’t use it again earlier…oops), we will use <code class="docutils literal notranslate"><span class="pre">dir()</span></code> on this Data Frame, to view all of the available attributes and methods:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show all available operations on the dataframe</span>
+<span class="nb">dir</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Code&#39;,
+ &#39;Population&#39;,
+ &#39;T&#39;,
+ &#39;_AXIS_LEN&#39;,
+ &#39;_AXIS_ORDERS&#39;,
+ &#39;_AXIS_TO_AXIS_NUMBER&#39;,
+ &#39;_HANDLED_TYPES&#39;,
+ &#39;__abs__&#39;,
+ &#39;__add__&#39;,
+ &#39;__and__&#39;,
+ &#39;__annotations__&#39;,
+ &#39;__array__&#39;,
+ &#39;__array_priority__&#39;,
+ &#39;__array_ufunc__&#39;,
+ &#39;__arrow_c_stream__&#39;,
+ &#39;__bool__&#39;,
+ &#39;__class__&#39;,
+ &#39;__contains__&#39;,
+ &#39;__copy__&#39;,
+ &#39;__dataframe__&#39;,
+ &#39;__dataframe_consortium_standard__&#39;,
+ &#39;__deepcopy__&#39;,
+ &#39;__delattr__&#39;,
+ &#39;__delitem__&#39;,
+ &#39;__dict__&#39;,
+ &#39;__dir__&#39;,
+ &#39;__divmod__&#39;,
+ &#39;__doc__&#39;,
+ &#39;__eq__&#39;,
+ &#39;__finalize__&#39;,
+ &#39;__floordiv__&#39;,
+ &#39;__format__&#39;,
+ &#39;__ge__&#39;,
+ &#39;__getattr__&#39;,
+ &#39;__getattribute__&#39;,
+ &#39;__getitem__&#39;,
+ &#39;__getstate__&#39;,
+ &#39;__gt__&#39;,
+ &#39;__hash__&#39;,
+ &#39;__iadd__&#39;,
+ &#39;__iand__&#39;,
+ &#39;__ifloordiv__&#39;,
+ &#39;__imod__&#39;,
+ &#39;__imul__&#39;,
+ &#39;__init__&#39;,
+ &#39;__init_subclass__&#39;,
+ &#39;__invert__&#39;,
+ &#39;__ior__&#39;,
+ &#39;__ipow__&#39;,
+ &#39;__isub__&#39;,
+ &#39;__iter__&#39;,
+ &#39;__itruediv__&#39;,
+ &#39;__ixor__&#39;,
+ &#39;__le__&#39;,
+ &#39;__len__&#39;,
+ &#39;__lt__&#39;,
+ &#39;__matmul__&#39;,
+ &#39;__mod__&#39;,
+ &#39;__module__&#39;,
+ &#39;__mul__&#39;,
+ &#39;__ne__&#39;,
+ &#39;__neg__&#39;,
+ &#39;__new__&#39;,
+ &#39;__nonzero__&#39;,
+ &#39;__or__&#39;,
+ &#39;__pandas_priority__&#39;,
+ &#39;__pos__&#39;,
+ &#39;__pow__&#39;,
+ &#39;__radd__&#39;,
+ &#39;__rand__&#39;,
+ &#39;__rdivmod__&#39;,
+ &#39;__reduce__&#39;,
+ &#39;__reduce_ex__&#39;,
+ &#39;__repr__&#39;,
+ &#39;__rfloordiv__&#39;,
+ &#39;__rmatmul__&#39;,
+ &#39;__rmod__&#39;,
+ &#39;__rmul__&#39;,
+ &#39;__ror__&#39;,
+ &#39;__round__&#39;,
+ &#39;__rpow__&#39;,
+ &#39;__rsub__&#39;,
+ &#39;__rtruediv__&#39;,
+ &#39;__rxor__&#39;,
+ &#39;__setattr__&#39;,
+ &#39;__setitem__&#39;,
+ &#39;__setstate__&#39;,
+ &#39;__sizeof__&#39;,
+ &#39;__str__&#39;,
+ &#39;__sub__&#39;,
+ &#39;__subclasshook__&#39;,
+ &#39;__truediv__&#39;,
+ &#39;__weakref__&#39;,
+ &#39;__xor__&#39;,
+ &#39;_accessors&#39;,
+ &#39;_accum_func&#39;,
+ &#39;_agg_examples_doc&#39;,
+ &#39;_agg_see_also_doc&#39;,
+ &#39;_align_for_op&#39;,
+ &#39;_align_frame&#39;,
+ &#39;_align_series&#39;,
+ &#39;_append&#39;,
+ &#39;_arith_method&#39;,
+ &#39;_arith_method_with_reindex&#39;,
+ &#39;_as_manager&#39;,
+ &#39;_attrs&#39;,
+ &#39;_box_col_values&#39;,
+ &#39;_can_fast_transpose&#39;,
+ &#39;_check_inplace_and_allows_duplicate_labels&#39;,
+ &#39;_check_is_chained_assignment_possible&#39;,
+ &#39;_check_label_or_level_ambiguity&#39;,
+ &#39;_check_setitem_copy&#39;,
+ &#39;_clear_item_cache&#39;,
+ &#39;_clip_with_one_bound&#39;,
+ &#39;_clip_with_scalar&#39;,
+ &#39;_cmp_method&#39;,
+ &#39;_combine_frame&#39;,
+ &#39;_consolidate&#39;,
+ &#39;_consolidate_inplace&#39;,
+ &#39;_construct_axes_dict&#39;,
+ &#39;_construct_result&#39;,
+ &#39;_constructor&#39;,
+ &#39;_constructor_from_mgr&#39;,
+ &#39;_constructor_sliced&#39;,
+ &#39;_constructor_sliced_from_mgr&#39;,
+ &#39;_create_data_for_split_and_tight_to_dict&#39;,
+ &#39;_data&#39;,
+ &#39;_deprecate_downcast&#39;,
+ &#39;_dir_additions&#39;,
+ &#39;_dir_deletions&#39;,
+ &#39;_dispatch_frame_op&#39;,
+ &#39;_drop_axis&#39;,
+ &#39;_drop_labels_or_levels&#39;,
+ &#39;_ensure_valid_index&#39;,
+ &#39;_find_valid_index&#39;,
+ &#39;_flags&#39;,
+ &#39;_flex_arith_method&#39;,
+ &#39;_flex_cmp_method&#39;,
+ &#39;_from_arrays&#39;,
+ &#39;_from_mgr&#39;,
+ &#39;_get_agg_axis&#39;,
+ &#39;_get_axis&#39;,
+ &#39;_get_axis_name&#39;,
+ &#39;_get_axis_number&#39;,
+ &#39;_get_axis_resolvers&#39;,
+ &#39;_get_block_manager_axis&#39;,
+ &#39;_get_bool_data&#39;,
+ &#39;_get_cleaned_column_resolvers&#39;,
+ &#39;_get_column_array&#39;,
+ &#39;_get_index_resolvers&#39;,
+ &#39;_get_item_cache&#39;,
+ &#39;_get_label_or_level_values&#39;,
+ &#39;_get_numeric_data&#39;,
+ &#39;_get_value&#39;,
+ &#39;_get_values_for_csv&#39;,
+ &#39;_getitem_bool_array&#39;,
+ &#39;_getitem_multilevel&#39;,
+ &#39;_getitem_nocopy&#39;,
+ &#39;_getitem_slice&#39;,
+ &#39;_gotitem&#39;,
+ &#39;_hidden_attrs&#39;,
+ &#39;_indexed_same&#39;,
+ &#39;_info_axis&#39;,
+ &#39;_info_axis_name&#39;,
+ &#39;_info_axis_number&#39;,
+ &#39;_info_repr&#39;,
+ &#39;_init_mgr&#39;,
+ &#39;_inplace_method&#39;,
+ &#39;_internal_names&#39;,
+ &#39;_internal_names_set&#39;,
+ &#39;_is_copy&#39;,
+ &#39;_is_homogeneous_type&#39;,
+ &#39;_is_label_or_level_reference&#39;,
+ &#39;_is_label_reference&#39;,
+ &#39;_is_level_reference&#39;,
+ &#39;_is_mixed_type&#39;,
+ &#39;_is_view&#39;,
+ &#39;_is_view_after_cow_rules&#39;,
+ &#39;_iset_item&#39;,
+ &#39;_iset_item_mgr&#39;,
+ &#39;_iset_not_inplace&#39;,
+ &#39;_item_cache&#39;,
+ &#39;_iter_column_arrays&#39;,
+ &#39;_ixs&#39;,
+ &#39;_logical_func&#39;,
+ &#39;_logical_method&#39;,
+ &#39;_maybe_align_series_as_frame&#39;,
+ &#39;_maybe_cache_changed&#39;,
+ &#39;_maybe_update_cacher&#39;,
+ &#39;_metadata&#39;,
+ &#39;_mgr&#39;,
+ &#39;_min_count_stat_function&#39;,
+ &#39;_needs_reindex_multi&#39;,
+ &#39;_pad_or_backfill&#39;,
+ &#39;_protect_consolidate&#39;,
+ &#39;_reduce&#39;,
+ &#39;_reduce_axis1&#39;,
+ &#39;_reindex_axes&#39;,
+ &#39;_reindex_multi&#39;,
+ &#39;_reindex_with_indexers&#39;,
+ &#39;_rename&#39;,
+ &#39;_replace_columnwise&#39;,
+ &#39;_repr_data_resource_&#39;,
+ &#39;_repr_fits_horizontal_&#39;,
+ &#39;_repr_fits_vertical_&#39;,
+ &#39;_repr_html_&#39;,
+ &#39;_repr_latex_&#39;,
+ &#39;_reset_cache&#39;,
+ &#39;_reset_cacher&#39;,
+ &#39;_sanitize_column&#39;,
+ &#39;_series&#39;,
+ &#39;_set_axis&#39;,
+ &#39;_set_axis_name&#39;,
+ &#39;_set_axis_nocheck&#39;,
+ &#39;_set_is_copy&#39;,
+ &#39;_set_item&#39;,
+ &#39;_set_item_frame_value&#39;,
+ &#39;_set_item_mgr&#39;,
+ &#39;_set_value&#39;,
+ &#39;_setitem_array&#39;,
+ &#39;_setitem_frame&#39;,
+ &#39;_setitem_slice&#39;,
+ &#39;_shift_with_freq&#39;,
+ &#39;_should_reindex_frame_op&#39;,
+ &#39;_slice&#39;,
+ &#39;_stat_function&#39;,
+ &#39;_stat_function_ddof&#39;,
+ &#39;_take_with_is_copy&#39;,
+ &#39;_to_dict_of_blocks&#39;,
+ &#39;_to_latex_via_styler&#39;,
+ &#39;_typ&#39;,
+ &#39;_update_inplace&#39;,
+ &#39;_validate_dtype&#39;,
+ &#39;_values&#39;,
+ &#39;_where&#39;,
+ &#39;abs&#39;,
+ &#39;add&#39;,
+ &#39;add_prefix&#39;,
+ &#39;add_suffix&#39;,
+ &#39;agg&#39;,
+ &#39;aggregate&#39;,
+ &#39;align&#39;,
+ &#39;all&#39;,
+ &#39;any&#39;,
+ &#39;apply&#39;,
+ &#39;applymap&#39;,
+ &#39;asfreq&#39;,
+ &#39;asof&#39;,
+ &#39;assign&#39;,
+ &#39;astype&#39;,
+ &#39;at&#39;,
+ &#39;at_time&#39;,
+ &#39;attrs&#39;,
+ &#39;axes&#39;,
+ &#39;backfill&#39;,
+ &#39;between_time&#39;,
+ &#39;bfill&#39;,
+ &#39;bool&#39;,
+ &#39;boxplot&#39;,
+ &#39;clip&#39;,
+ &#39;columns&#39;,
+ &#39;combine&#39;,
+ &#39;combine_first&#39;,
+ &#39;compare&#39;,
+ &#39;convert_dtypes&#39;,
+ &#39;copy&#39;,
+ &#39;corr&#39;,
+ &#39;corrwith&#39;,
+ &#39;count&#39;,
+ &#39;cov&#39;,
+ &#39;cummax&#39;,
+ &#39;cummin&#39;,
+ &#39;cumprod&#39;,
+ &#39;cumsum&#39;,
+ &#39;describe&#39;,
+ &#39;diff&#39;,
+ &#39;div&#39;,
+ &#39;divide&#39;,
+ &#39;dot&#39;,
+ &#39;drop&#39;,
+ &#39;drop_duplicates&#39;,
+ &#39;droplevel&#39;,
+ &#39;dropna&#39;,
+ &#39;dtypes&#39;,
+ &#39;duplicated&#39;,
+ &#39;empty&#39;,
+ &#39;eq&#39;,
+ &#39;equals&#39;,
+ &#39;eval&#39;,
+ &#39;ewm&#39;,
+ &#39;expanding&#39;,
+ &#39;explode&#39;,
+ &#39;ffill&#39;,
+ &#39;fillna&#39;,
+ &#39;filter&#39;,
+ &#39;first&#39;,
+ &#39;first_valid_index&#39;,
+ &#39;flags&#39;,
+ &#39;floordiv&#39;,
+ &#39;from_dict&#39;,
+ &#39;from_records&#39;,
+ &#39;ge&#39;,
+ &#39;get&#39;,
+ &#39;groupby&#39;,
+ &#39;gt&#39;,
+ &#39;head&#39;,
+ &#39;hist&#39;,
+ &#39;iat&#39;,
+ &#39;idxmax&#39;,
+ &#39;idxmin&#39;,
+ &#39;iloc&#39;,
+ &#39;index&#39;,
+ &#39;infer_objects&#39;,
+ &#39;info&#39;,
+ &#39;insert&#39;,
+ &#39;interpolate&#39;,
+ &#39;isetitem&#39;,
+ &#39;isin&#39;,
+ &#39;isna&#39;,
+ &#39;isnull&#39;,
+ &#39;items&#39;,
+ &#39;iterrows&#39;,
+ &#39;itertuples&#39;,
+ &#39;join&#39;,
+ &#39;keys&#39;,
+ &#39;kurt&#39;,
+ &#39;kurtosis&#39;,
+ &#39;last&#39;,
+ &#39;last_valid_index&#39;,
+ &#39;le&#39;,
+ &#39;loc&#39;,
+ &#39;lt&#39;,
+ &#39;map&#39;,
+ &#39;mask&#39;,
+ &#39;max&#39;,
+ &#39;mean&#39;,
+ &#39;median&#39;,
+ &#39;melt&#39;,
+ &#39;memory_usage&#39;,
+ &#39;merge&#39;,
+ &#39;min&#39;,
+ &#39;mod&#39;,
+ &#39;mode&#39;,
+ &#39;mul&#39;,
+ &#39;multiply&#39;,
+ &#39;ndim&#39;,
+ &#39;ne&#39;,
+ &#39;nlargest&#39;,
+ &#39;notna&#39;,
+ &#39;notnull&#39;,
+ &#39;nsmallest&#39;,
+ &#39;nunique&#39;,
+ &#39;pad&#39;,
+ &#39;pct_change&#39;,
+ &#39;pipe&#39;,
+ &#39;pivot&#39;,
+ &#39;pivot_table&#39;,
+ &#39;plot&#39;,
+ &#39;pop&#39;,
+ &#39;pow&#39;,
+ &#39;prod&#39;,
+ &#39;product&#39;,
+ &#39;quantile&#39;,
+ &#39;query&#39;,
+ &#39;radd&#39;,
+ &#39;rank&#39;,
+ &#39;rdiv&#39;,
+ &#39;reindex&#39;,
+ &#39;reindex_like&#39;,
+ &#39;rename&#39;,
+ &#39;rename_axis&#39;,
+ &#39;reorder_levels&#39;,
+ &#39;replace&#39;,
+ &#39;resample&#39;,
+ &#39;reset_index&#39;,
+ &#39;rfloordiv&#39;,
+ &#39;rmod&#39;,
+ &#39;rmul&#39;,
+ &#39;rolling&#39;,
+ &#39;round&#39;,
+ &#39;rpow&#39;,
+ &#39;rsub&#39;,
+ &#39;rtruediv&#39;,
+ &#39;sample&#39;,
+ &#39;select_dtypes&#39;,
+ &#39;sem&#39;,
+ &#39;set_axis&#39;,
+ &#39;set_flags&#39;,
+ &#39;set_index&#39;,
+ &#39;shape&#39;,
+ &#39;shift&#39;,
+ &#39;size&#39;,
+ &#39;skew&#39;,
+ &#39;sort_index&#39;,
+ &#39;sort_values&#39;,
+ &#39;squeeze&#39;,
+ &#39;stack&#39;,
+ &#39;std&#39;,
+ &#39;style&#39;,
+ &#39;sub&#39;,
+ &#39;subtract&#39;,
+ &#39;sum&#39;,
+ &#39;swapaxes&#39;,
+ &#39;swaplevel&#39;,
+ &#39;tail&#39;,
+ &#39;take&#39;,
+ &#39;to_clipboard&#39;,
+ &#39;to_csv&#39;,
+ &#39;to_dict&#39;,
+ &#39;to_excel&#39;,
+ &#39;to_feather&#39;,
+ &#39;to_gbq&#39;,
+ &#39;to_hdf&#39;,
+ &#39;to_html&#39;,
+ &#39;to_json&#39;,
+ &#39;to_latex&#39;,
+ &#39;to_markdown&#39;,
+ &#39;to_numpy&#39;,
+ &#39;to_orc&#39;,
+ &#39;to_parquet&#39;,
+ &#39;to_period&#39;,
+ &#39;to_pickle&#39;,
+ &#39;to_records&#39;,
+ &#39;to_sql&#39;,
+ &#39;to_stata&#39;,
+ &#39;to_string&#39;,
+ &#39;to_timestamp&#39;,
+ &#39;to_xarray&#39;,
+ &#39;to_xml&#39;,
+ &#39;transform&#39;,
+ &#39;transpose&#39;,
+ &#39;truediv&#39;,
+ &#39;truncate&#39;,
+ &#39;tz_convert&#39;,
+ &#39;tz_localize&#39;,
+ &#39;unstack&#39;,
+ &#39;update&#39;,
+ &#39;value_counts&#39;,
+ &#39;values&#39;,
+ &#39;var&#39;,
+ &#39;where&#39;,
+ &#39;xs&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you peruse the list (again, ignoring the “dunder” entries), you’ll notice that some of the methods are the same as for both Numpy arrays and Series. For instance, we can retrieve the <code class="docutils literal notranslate"><span class="pre">.shape</span></code> of the entire Data Frame:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the shape attribute (n_rows, n_columns)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(15, 5)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also pull out an individual Series/column and view the <code class="docutils literal notranslate"><span class="pre">.shape</span></code> of that specific Series:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># view the `shape` of a specific column</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(15,)
+</pre></div>
+</div>
+</div>
+</div>
+<p>When accessed for the entire Data Frame, the <code class="docutils literal notranslate"><span class="pre">size</span></code> attribute works in the same way as we have seen for Numpy arrays and Pandas Series e.g. it will tell us the total number of <em>elements</em> in the entire Data Frame (e.g. the number of elements in the rows multiplied by the number of elements in the columns):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the `size` of the Data Frame</span>
+<span class="n">df</span><span class="o">.</span><span class="n">size</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>75
+</pre></div>
+</div>
+</div>
+</div>
+<p>Once we know how many observations we have, in any data analysis context, we will always want to know what variables we have in the Data Frame columns, and (again) what type of data is in each.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">.columns</span></code> attribute will tell us the name of each column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the column names</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;Code&#39;, &#39;Human Development Index&#39;, &#39;Fertility Rate&#39;, &#39;Population&#39;,
+       &#39;Country Name&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>…and we can use the <code class="docutils literal notranslate"><span class="pre">.dtypes</span></code> attribute to quickly inspect the type of data in each column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the dtype in each column</span>
+<span class="n">df</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Code                        object
+Human Development Index    float64
+Fertility Rate             float64
+Population                 float64
+Country Name                object
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">object</span></code> data type means that the column contains either mixed data or string data (in this case string data). The numeric data in this Data Frame is represented as a 64-bit float (<code class="docutils literal notranslate"><span class="pre">float64</span></code>).</p>
+<p>Ok, so now we know how much data we have, and what type of data it is. Currently, if we want to access a specific row of the Data Frame (remember, each row here is one country), we will have to navigate the default <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code>. We did not specify an index when we loaded in the Data Frame, so, as we learned previously, Pandas will automatically supply one:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the index (currently (basically) 0 to 15)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RangeIndex(start=0, stop=15, step=1)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We have <a class="reference internal" href="0_1_to_loc_or_iloc.html"><span class="std std-doc">already discussed</span></a> the downsides of using the default index. As we have seen before, we can use the <code class="docutils literal notranslate"><span class="pre">.set_index()</span></code> method to choose a column containing values which we will use as index labels. We have come across Data Frame methods previouslt (<code class="docutils literal notranslate"><span class="pre">.sort_values()</span></code>) and will look at more in the next section. For now, just remember that these differ from <em>attributes</em> in that they are a <em>function attached to an object</em> rather than just a value/values attached to an object. Methods  often do something to the data rather than just report a value or set of values, like an attribute does.</p>
+<p>Let’s set the <code class="docutils literal notranslate"><span class="pre">Code</span></code> column (containing the three-letter country codes) to be our index labels:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set the index as country name</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;Code&quot;</span><span class="p">)</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>1.913247e+07</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>1.740183e+08</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>3.089180e+07</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1.269581e+09</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>8.179726e+07</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>4.101977e+07</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>5.948372e+07</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>0.863</td>
+      <td>1.641</td>
+      <td>5.905734e+07</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1.057923e+09</td>
+      <td>India</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>0.842</td>
+      <td>1.249</td>
+      <td>5.727220e+07</td>
+      <td>Italy</td>
+    </tr>
+    <tr>
+      <th>JPN</th>
+      <td>0.883</td>
+      <td>1.346</td>
+      <td>1.270278e+08</td>
+      <td>Japan</td>
+    </tr>
+    <tr>
+      <th>KOR</th>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>4.676666e+07</td>
+      <td>South Korea</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>9.862555e+07</td>
+      <td>Mexico</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>1.467178e+08</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>2.814841e+08</td>
+      <td>United States</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>As expected, when we now view the <code class="docutils literal notranslate"><span class="pre">index</span></code> attribute, we see that the country codes are the values that populate the index:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show that the index is now country names</span>
+<span class="n">df</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;AUS&#39;, &#39;BRA&#39;, &#39;CAN&#39;, &#39;CHN&#39;, &#39;DEU&#39;, &#39;ESP&#39;, &#39;FRA&#39;, &#39;GBR&#39;, &#39;IND&#39;, &#39;ITA&#39;,
+       &#39;JPN&#39;, &#39;KOR&#39;, &#39;MEX&#39;, &#39;RUS&#39;, &#39;USA&#39;],
+      dtype=&#39;object&#39;, name=&#39;Code&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>…and we can use the now familiar (and less error-prone) label-based indexing to retrieve specific rows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># remember what having the codes in the index lets us do</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s1">&#39;USA&#39;</span><span class="p">,</span> <span class="s1">&#39;ITA&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>281484127.0</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>0.842</td>
+      <td>1.249</td>
+      <td>57272200.0</td>
+      <td>Italy</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="pandas-dataframe-methods">
+<h2>Pandas Dataframe Methods<a class="headerlink" href="#pandas-dataframe-methods" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">.sort_values()</span></code> method we just used is one of many methods attached to Pandas Data Frames. We saw that many Numpy array methods are inherited by Pandas Series and this principle also applies to Data Frames.</p>
+<p>For instance, should we want to see the unique values in a given column (e.g. Series), we can use the <code class="docutils literal notranslate"><span class="pre">.unique()</span></code> method on just that column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># unique values in a given column</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Country Name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;Australia&#39;, &#39;Brazil&#39;, &#39;Canada&#39;, &#39;China&#39;, &#39;Germany&#39;, &#39;Spain&#39;,
+       &#39;France&#39;, &#39;United Kingdom&#39;, &#39;India&#39;, &#39;Italy&#39;, &#39;Japan&#39;,
+       &#39;South Korea&#39;, &#39;Mexico&#39;, &#39;Russia&#39;, &#39;United States&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Other Data Frame methods will report information from the Data Frame <em>as a whole</em>.</p>
+<p>For instance, we can call the <code class="docutils literal notranslate"><span class="pre">.describe()</span></code> method on the whole Data Frame. We saw this method used on a single Series earlier. The same useful statistical summary is shown for every column when we use the method on the whole Data Frame:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># descibe numerical variables</span>
+<span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>15.000000</td>
+      <td>15.000000</td>
+      <td>1.500000e+01</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>0.789333</td>
+      <td>1.773867</td>
+      <td>2.367199e+08</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>0.125514</td>
+      <td>0.605841</td>
+      <td>3.844833e+08</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.490000</td>
+      <td>1.190000</td>
+      <td>1.913247e+07</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>0.721000</td>
+      <td>1.366000</td>
+      <td>5.201943e+07</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>0.842000</td>
+      <td>1.628000</td>
+      <td>8.179726e+07</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>0.886500</td>
+      <td>1.953000</td>
+      <td>1.603680e+08</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>0.896000</td>
+      <td>3.350000</td>
+      <td>1.269581e+09</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can also use direct indexing to <code class="docutils literal notranslate"><span class="pre">describe</span></code> a specific subset of columns:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for categorical variables</span>
+<span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">,</span> <span class="s1">&#39;Human Development Index&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Fertility Rate</th>
+      <th>Human Development Index</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>15.000000</td>
+      <td>15.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>1.773867</td>
+      <td>0.789333</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>0.605841</td>
+      <td>0.125514</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>1.190000</td>
+      <td>0.490000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>1.366000</td>
+      <td>0.721000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>1.628000</td>
+      <td>0.842000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>1.953000</td>
+      <td>0.886500</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>3.350000</td>
+      <td>0.896000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Because each Data Frame column is just a Pandas Series, all of the Series methods we saw above can be used on individual Series:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># specific methods for specific statistics</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(1.19)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># specific methods for specific statistics</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(3.35)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># specific methods for specific statistics</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.6058406045283182)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># specific methods for specific statistics</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(1.7738666666666667)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># value counts of a single variable</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Country Name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Country Name
+Australia         1
+Brazil            1
+Canada            1
+China             1
+Germany           1
+Spain             1
+France            1
+United Kingdom    1
+India             1
+Italy             1
+Japan             1
+South Korea       1
+Mexico            1
+Russia            1
+United States     1
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Other methods, like <code class="docutils literal notranslate"><span class="pre">.sort_values()</span></code> take a column name as an argument, but have effects on the entire Data Frame.</p>
+<p>For instance, if we want to sort by <code class="docutils literal notranslate"><span class="pre">Human</span> <span class="pre">Development</span> <span class="pre">Index</span></code> scores:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># sort values by HDI</span>
+<span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span> <span class="o">=</span> <span class="s1">&#39;Human Development Index&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>IND</th>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1.057923e+09</td>
+      <td>India</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1.269581e+09</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>1.740183e+08</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>9.862555e+07</td>
+      <td>Mexico</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>1.467178e+08</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>KOR</th>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>4.676666e+07</td>
+      <td>South Korea</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>4.101977e+07</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>0.842</td>
+      <td>1.249</td>
+      <td>5.727220e+07</td>
+      <td>Italy</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>5.948372e+07</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>0.863</td>
+      <td>1.641</td>
+      <td>5.905734e+07</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>JPN</th>
+      <td>0.883</td>
+      <td>1.346</td>
+      <td>1.270278e+08</td>
+      <td>Japan</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>3.089180e+07</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>8.179726e+07</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>2.814841e+08</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>1.913247e+07</td>
+      <td>Australia</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># sort values by HDI (the other way)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span> <span class="o">=</span> <span class="s1">&#39;Human Development Index&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>1.913247e+07</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>2.814841e+08</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>3.089180e+07</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>8.179726e+07</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>JPN</th>
+      <td>0.883</td>
+      <td>1.346</td>
+      <td>1.270278e+08</td>
+      <td>Japan</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>0.863</td>
+      <td>1.641</td>
+      <td>5.905734e+07</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>5.948372e+07</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>0.842</td>
+      <td>1.249</td>
+      <td>5.727220e+07</td>
+      <td>Italy</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>4.101977e+07</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>KOR</th>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>4.676666e+07</td>
+      <td>South Korea</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>1.467178e+08</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>9.862555e+07</td>
+      <td>Mexico</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>1.740183e+08</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1.269581e+09</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1.057923e+09</td>
+      <td>India</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can also sort the index using <code class="docutils literal notranslate"><span class="pre">.sort_index()</span></code>, by default this will arrange the rows of the Data Frame in alphabetical order, if we are using string labels (numerical order if we are using the default <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code>):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># sort index (in alphabetical order)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>1.913247e+07</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>1.740183e+08</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>3.089180e+07</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1.269581e+09</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>8.179726e+07</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>4.101977e+07</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>5.948372e+07</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>0.863</td>
+      <td>1.641</td>
+      <td>5.905734e+07</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1.057923e+09</td>
+      <td>India</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>0.842</td>
+      <td>1.249</td>
+      <td>5.727220e+07</td>
+      <td>Italy</td>
+    </tr>
+    <tr>
+      <th>JPN</th>
+      <td>0.883</td>
+      <td>1.346</td>
+      <td>1.270278e+08</td>
+      <td>Japan</td>
+    </tr>
+    <tr>
+      <th>KOR</th>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>4.676666e+07</td>
+      <td>South Korea</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>9.862555e+07</td>
+      <td>Mexico</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>1.467178e+08</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>2.814841e+08</td>
+      <td>United States</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># sort index (reverse alphabetical order)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>2.814841e+08</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>1.467178e+08</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>9.862555e+07</td>
+      <td>Mexico</td>
+    </tr>
+    <tr>
+      <th>KOR</th>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>4.676666e+07</td>
+      <td>South Korea</td>
+    </tr>
+    <tr>
+      <th>JPN</th>
+      <td>0.883</td>
+      <td>1.346</td>
+      <td>1.270278e+08</td>
+      <td>Japan</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>0.842</td>
+      <td>1.249</td>
+      <td>5.727220e+07</td>
+      <td>Italy</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1.057923e+09</td>
+      <td>India</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>0.863</td>
+      <td>1.641</td>
+      <td>5.905734e+07</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>5.948372e+07</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>4.101977e+07</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>8.179726e+07</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1.269581e+09</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>3.089180e+07</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>1.740183e+08</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>1.913247e+07</td>
+      <td>Australia</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Another useful method, which is very powerful in tandem with label-based indexing, is <code class="docutils literal notranslate"><span class="pre">.drop()</span></code>. This lets use specify using index labels rows which we want to remove from the Data Frame. For instance, if we want to remove the data for Australia we can use:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">labels</span> <span class="o">=</span> <span class="s1">&#39;AUS&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>1.740183e+08</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>3.089180e+07</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1.269581e+09</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>8.179726e+07</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>4.101977e+07</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>5.948372e+07</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>0.863</td>
+      <td>1.641</td>
+      <td>5.905734e+07</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1.057923e+09</td>
+      <td>India</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>0.842</td>
+      <td>1.249</td>
+      <td>5.727220e+07</td>
+      <td>Italy</td>
+    </tr>
+    <tr>
+      <th>JPN</th>
+      <td>0.883</td>
+      <td>1.346</td>
+      <td>1.270278e+08</td>
+      <td>Japan</td>
+    </tr>
+    <tr>
+      <th>KOR</th>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>4.676666e+07</td>
+      <td>South Korea</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>9.862555e+07</td>
+      <td>Mexico</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>1.467178e+08</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>2.814841e+08</td>
+      <td>United States</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>If you compare this to the output from the last cell you will see that, as if by magic, the row for <code class="docutils literal notranslate"><span class="pre">AUS</span></code> has disappeared.</p>
+</section>
+<section id="plotting-methods">
+<h2>Plotting Methods<a class="headerlink" href="#plotting-methods" title="Link to this heading">#</a></h2>
+<p>The Data Frame plotting <em>methods</em> that we have seen on the previous pages actually also apply to Series.</p>
+<p>When working with a Series, it makes most sense most of the time to use the <code class="docutils literal notranslate"><span class="pre">kind</span> <span class="pre">=</span> <span class="pre">'hist'</span></code> argument to inspect the distribution of the data in that Series:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hdi_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e468d237a20d07ee50ed0ef478a2ea8832370992ee7b3d2a2ec3565eb8968f67.png" src="_images/e468d237a20d07ee50ed0ef478a2ea8832370992ee7b3d2a2ec3565eb8968f67.png" />
+</div>
+</div>
+<p>Other kinds of plot require bivariate data, and so can only be used with Data Frames:</p>
+<div class="cell tag_raises-exception docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A ValueError from trying to scatter plot a Series</span>
+<span class="n">hdi_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">64</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># A ValueError from trying to scatter plot a Series</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">hdi_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
+
+<span class="nn">File /Volumes/zorg/mb312/.virtualenvs/pandas-pages/lib/python3.12/site-packages/pandas/plotting/_core.py:977,</span> in <span class="ni">PlotAccessor.__call__</span><span class="nt">(self, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">975</span>         <span class="k">return</span> <span class="n">plot_backend</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">kind</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">976</span>     <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">977</span>         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;plot kind </span><span class="si">{</span><span class="n">kind</span><span class="si">}</span><span class="s2"> can only be used for data frames&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">978</span> <span class="k">elif</span> <span class="n">kind</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_series_kinds</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">979</span>     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ABCDataFrame</span><span class="p">):</span>
+
+<span class="ne">ValueError</span>: plot kind scatter can only be used for data frames
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show a scatter plot</span>
+<span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;Human Development Index&#39;</span><span class="p">,</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Fertility Rate&#39;</span><span class="p">,</span>
+        <span class="n">kind</span> <span class="o">=</span> <span class="s1">&#39;scatter&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/3d4e283578d43f9053b031f138ce30660c654051b1a9f5fe47823d1d127f585b.png" src="_images/3d4e283578d43f9053b031f138ce30660c654051b1a9f5fe47823d1d127f585b.png" />
+</div>
+</div>
+</section>
+<section id="a-note-on-numerical-operations">
+<h2>A note on numerical operations<a class="headerlink" href="#a-note-on-numerical-operations" title="Link to this heading">#</a></h2>
+<p>Any numerical operations performed on the Data Frame <em>as a whole</em> will be default be performed on the <code class="docutils literal notranslate"><span class="pre">values</span></code> in the Series that make up each column.</p>
+<p>So, if we want to do something weird/stupid like multiplying the entire Data Frame by a single number, this operation will be performed separately on each element in the Data Frame:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># do not do this </span>
+<span class="n">df</span> <span class="o">*</span> <span class="mi">200</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AUS</th>
+      <td>179.2</td>
+      <td>352.8</td>
+      <td>3.826495e+09</td>
+      <td>AustraliaAustraliaAustraliaAustraliaAustraliaA...</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>133.6</td>
+      <td>449.4</td>
+      <td>3.480366e+10</td>
+      <td>BrazilBrazilBrazilBrazilBrazilBrazilBrazilBraz...</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>178.0</td>
+      <td>302.0</td>
+      <td>6.178360e+09</td>
+      <td>CanadaCanadaCanadaCanadaCanadaCanadaCanadaCana...</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>117.2</td>
+      <td>325.6</td>
+      <td>2.539162e+11</td>
+      <td>ChinaChinaChinaChinaChinaChinaChinaChinaChinaC...</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>178.0</td>
+      <td>277.2</td>
+      <td>1.635945e+10</td>
+      <td>GermanyGermanyGermanyGermanyGermanyGermanyGerm...</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>165.6</td>
+      <td>242.0</td>
+      <td>8.203955e+09</td>
+      <td>SpainSpainSpainSpainSpainSpainSpainSpainSpainS...</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>168.8</td>
+      <td>375.2</td>
+      <td>1.189674e+10</td>
+      <td>FranceFranceFranceFranceFranceFranceFranceFran...</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>172.6</td>
+      <td>328.2</td>
+      <td>1.181147e+10</td>
+      <td>United KingdomUnited KingdomUnited KingdomUnit...</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>98.0</td>
+      <td>670.0</td>
+      <td>2.115845e+11</td>
+      <td>IndiaIndiaIndiaIndiaIndiaIndiaIndiaIndiaIndiaI...</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>168.4</td>
+      <td>249.8</td>
+      <td>1.145444e+10</td>
+      <td>ItalyItalyItalyItalyItalyItalyItalyItalyItalyI...</td>
+    </tr>
+    <tr>
+      <th>JPN</th>
+      <td>176.6</td>
+      <td>269.2</td>
+      <td>2.540556e+10</td>
+      <td>JapanJapanJapanJapanJapanJapanJapanJapanJapanJ...</td>
+    </tr>
+    <tr>
+      <th>KOR</th>
+      <td>164.8</td>
+      <td>293.4</td>
+      <td>9.353332e+09</td>
+      <td>South KoreaSouth KoreaSouth KoreaSouth KoreaSo...</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>141.8</td>
+      <td>542.8</td>
+      <td>1.972511e+10</td>
+      <td>MexicoMexicoMexicoMexicoMexicoMexicoMexicoMexi...</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>146.6</td>
+      <td>238.0</td>
+      <td>2.934356e+10</td>
+      <td>RussiaRussiaRussiaRussiaRussiaRussiaRussiaRuss...</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>178.8</td>
+      <td>406.0</td>
+      <td>5.629683e+10</td>
+      <td>United StatesUnited StatesUnited StatesUnited ...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>More sensibly, we will most likely want to perform numerical operations on specific columns. We may want to standardize the values relative to a mean of 0 and standard deviation of 1, for instance.</p>
+<p>Pandas methods can be used to perform this computation, and again, the operation will be performed on each element in the <code class="docutils literal notranslate"><span class="pre">values</span></code> array of the specific Series/column that we grab:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># standardize the `Population` scores</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Population_z&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Population&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Population&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span><span class="o">/</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Population&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+      <th>Population_z</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>1.913247e+07</td>
+      <td>Australia</td>
+      <td>-0.565922</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>1.740183e+08</td>
+      <td>Brazil</td>
+      <td>-0.163080</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>3.089180e+07</td>
+      <td>Canada</td>
+      <td>-0.535337</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1.269581e+09</td>
+      <td>China</td>
+      <td>2.686362</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>8.179726e+07</td>
+      <td>Germany</td>
+      <td>-0.402937</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>4.101977e+07</td>
+      <td>Spain</td>
+      <td>-0.508995</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>5.948372e+07</td>
+      <td>France</td>
+      <td>-0.460972</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>0.863</td>
+      <td>1.641</td>
+      <td>5.905734e+07</td>
+      <td>United Kingdom</td>
+      <td>-0.462081</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1.057923e+09</td>
+      <td>India</td>
+      <td>2.135861</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>0.842</td>
+      <td>1.249</td>
+      <td>5.727220e+07</td>
+      <td>Italy</td>
+      <td>-0.466724</td>
+    </tr>
+    <tr>
+      <th>JPN</th>
+      <td>0.883</td>
+      <td>1.346</td>
+      <td>1.270278e+08</td>
+      <td>Japan</td>
+      <td>-0.285297</td>
+    </tr>
+    <tr>
+      <th>KOR</th>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>4.676666e+07</td>
+      <td>South Korea</td>
+      <td>-0.494048</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>9.862555e+07</td>
+      <td>Mexico</td>
+      <td>-0.359169</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>1.467178e+08</td>
+      <td>Russia</td>
+      <td>-0.234086</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>2.814841e+08</td>
+      <td>United States</td>
+      <td>0.116427</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>On this page we have further explored the idea that Pandas Data Frames, Pandas Series and Numpy arrays have a nested structure.</p>
+<p>Data Frames are <em>dictionary-like collections of Series</em>. Series are a combination of a Numpy array (<code class="docutils literal notranslate"><span class="pre">.values</span></code>) with other attributes (<code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">index</span></code>). As a result, many methods we can use on a Series are inherited from Numpy arrays, and many  Data Frame methods are likewise inherited from the Pandas Series that constitute the Data Frame.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="0_1_to_loc_or_iloc.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">To <code class="docutils literal notranslate"><span class="pre">.loc</span></code> or <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> - more on Pandas indexes</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="0_3_constructing_dataframes.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Let There Be Data : Creating Data Frames</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-pandas-from-numpy">More Pandas from Numpy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-attributes-of-numpy-arrays">Statistical Attributes of Numpy arrays</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-series-attributes-and-methods">Pandas Series attributes and methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-dataframe-attributes">Pandas DataFrame attributes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-dataframe-methods">Pandas Dataframe Methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-methods">Plotting Methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-note-on-numerical-operations">A note on numerical operations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Peter Rush, Matthew Brett
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

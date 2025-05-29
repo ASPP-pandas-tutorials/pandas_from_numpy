@@ -1,0 +1,2887 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Filtering Data Frames with Boolean Series &#8212; Pandas from Numpy</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '0_5_filtering_data_with_pandas';</script>
+    <link rel="canonical" href="https://pxr687.github.io/ASPP_pandas_tutorials/0_5_filtering_data_with_pandas.html" />
+    <link rel="icon" href="_static/pandas_numpy.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="More Pandas methods" href="0_6_more_pandas_methods_strings.html" />
+    <link rel="prev" title="Dealing with NaNs" href="0_4_dealing_with_missing_data_in_pandas.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/pandas_numpy.jpg" class="logo__image only-light" alt="Pandas from Numpy - Home"/>
+    <img src="_static/pandas_numpy.jpg" class="logo__image only-dark pst-js-only" alt="Pandas from Numpy - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Pandas from Numpy</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="0_0_pandas_intro.html">Pandas from Numpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_1_to_loc_or_iloc.html">To <code class="docutils literal notranslate"><span class="pre">.loc</span></code> or <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> - more on Pandas indexes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_2_pandas_dataframes_attributes_methods.html">Pandas DataFrames: Attributes and Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_3_constructing_dataframes.html">Let There Be Data : Creating Data Frames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_4_dealing_with_missing_data_in_pandas.html">Dealing with NaNs</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Filtering Data Frames with Boolean Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_6_more_pandas_methods_strings.html">More Pandas methods</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="interact/lab/index.html?path=0_5_filtering_data_with_pandas.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch via JupyterLite"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="JupyterLite logo" src="_static/images/logo_jupyterlite.svg">
+  </span>
+<span class="btn__text-container">JupyterLite</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/pxr687/ASPP_pandas_tutorials" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pxr687/ASPP_pandas_tutorials/edit/main/0_5_filtering_data_with_pandas.Rmd" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pxr687/ASPP_pandas_tutorials/issues/new?title=Issue%20on%20page%20%2F0_5_filtering_data_with_pandas.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/0_5_filtering_data_with_pandas.Rmd" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.Rmd</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Filtering Data Frames with Boolean Series</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-from-numpy-once-more">Pandas from Numpy, once more</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-in-pandas">Filtering in Pandas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cleaning-summarizing-and-plotting-data-with-boolean-indexing">Cleaning, summarizing and plotting data with Boolean Indexing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="filtering-data-frames-with-boolean-series">
+<h1>Filtering Data Frames with Boolean Series<a class="headerlink" href="#filtering-data-frames-with-boolean-series" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p>📝 NOTE: from meeting with Matthew: Boolean series (and matching of row labels there) e.g. Boolean array will operate like iloc, Boolean Series will match row labels.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Add a separate page for Boolean indexing in a sensible place (build with numpy first first then show with Series) - show that order doesn’t matter e.g. Booleans are matched by label not by position. Show this error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;birth_weights.csv&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">female_mf</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span>
+<span class="n">female_mf</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;sex&#39;</span><span class="p">)</span>
+<span class="n">df2</span>
+<span class="n">df2</span><span class="p">[</span><span class="n">female_mf</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+<span class="n">df</span><span class="p">[</span><span class="n">female_mf</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">female_mf</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">female_mf</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Covered on this page:</p>
+<ul class="simple">
+<li><p>filtering (ex: df[df[‘age’] &gt; 30])</p></li>
+<li><p>Boolean indexing, with Boolean series (and matching of row labels there); range indexing on labels (inclusive of last element)</p></li>
+</ul>
+<p>Structure of this page:</p>
+<ul class="simple">
+<li><p>show Boolean arrays and boolean filtering of arrays</p></li>
+<li><p>build a Series, show Boolean series and filtering Series with Boolean arrays/series</p></li>
+<li><p>show Boolean filtering with DataFrames</p></li>
+</ul>
+</div></blockquote>
+<p>Once we have got our data into a Pandas Data Frame, no doubt we will want to filter and select specific portions of it for visualisation and analysis.</p>
+<p>On this page we will look at different methods of filtering. Again, we will focus on how Pandas is built from Numpy, and assess the similarities and differences in how filtering works on objects from both libraries.</p>
+<section id="pandas-from-numpy-once-more">
+<h2>Pandas from Numpy, once more<a class="headerlink" href="#pandas-from-numpy-once-more" title="Link to this heading">#</a></h2>
+<p>To explore filtering, let’s create some Numpy arrays, containing the <a class="reference external" href="https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index">HDI data</a>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import libraries for this page</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># country codes</span>
+<span class="n">country_codes_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;AUS&#39;</span><span class="p">,</span> <span class="s1">&#39;BRA&#39;</span><span class="p">,</span> <span class="s1">&#39;CAN&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;CHN&#39;</span><span class="p">,</span> <span class="s1">&#39;DEU&#39;</span><span class="p">,</span> <span class="s1">&#39;ESP&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;FRA&#39;</span><span class="p">,</span> <span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;IND&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;ITA&#39;</span><span class="p">,</span> <span class="s1">&#39;JPN&#39;</span><span class="p">,</span> <span class="s1">&#39;KOR&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;MEX&#39;</span><span class="p">,</span> <span class="s1">&#39;RUS&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">])</span>
+<span class="n">country_codes_array</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;AUS&#39;, &#39;BRA&#39;, &#39;CAN&#39;, &#39;CHN&#39;, &#39;DEU&#39;, &#39;ESP&#39;, &#39;FRA&#39;, &#39;GBR&#39;, &#39;IND&#39;,
+       &#39;ITA&#39;, &#39;JPN&#39;, &#39;KOR&#39;, &#39;MEX&#39;, &#39;RUS&#39;, &#39;USA&#39;], dtype=&#39;&lt;U3&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Human Development Index Scores for each country</span>
+<span class="n">hdis_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.896</span><span class="p">,</span> <span class="mf">0.668</span><span class="p">,</span> <span class="mf">0.89</span> <span class="p">,</span> <span class="mf">0.586</span><span class="p">,</span> 
+                 <span class="mf">0.844</span><span class="p">,</span> <span class="mf">0.89</span> <span class="p">,</span> <span class="mf">0.49</span> <span class="p">,</span> <span class="mf">0.842</span><span class="p">,</span> 
+                 <span class="mf">0.883</span><span class="p">,</span> <span class="mf">0.709</span><span class="p">,</span> <span class="mf">0.733</span><span class="p">,</span> <span class="mf">0.824</span><span class="p">,</span>
+                 <span class="mf">0.828</span><span class="p">,</span> <span class="mf">0.863</span><span class="p">,</span> <span class="mf">0.894</span><span class="p">])</span>
+
+<span class="n">hdis_array</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.896, 0.668, 0.89 , 0.586, 0.844, 0.89 , 0.49 , 0.842, 0.883,
+       0.709, 0.733, 0.824, 0.828, 0.863, 0.894])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s say we want to view HDI values that are bigger than the median HDI value.</p>
+<p>First, we can inspect what the median is, using the <code class="docutils literal notranslate"><span class="pre">np.median()</span></code> function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the median HDI</span>
+<span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">hdis_array</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.842)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, we can create a <em>Boolean array</em> by using a comparison operator.</p>
+<p>In this case <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> is the operator we want, with the <code class="docutils literal notranslate"><span class="pre">hdis_array</span></code> on the left hand side, and the median value of the array on the right hand side:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a Boolean array</span>
+<span class="n">hdis_array</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">hdis_array</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ True, False,  True, False,  True,  True, False, False,  True,
+       False, False, False, False,  True,  True])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The array in the output of the cell above is the same length as the <code class="docutils literal notranslate"><span class="pre">hdis_array</span></code> and it contains <code class="docutils literal notranslate"><span class="pre">True</span></code> value where the element in <code class="docutils literal notranslate"><span class="pre">hdis_array</span></code> is larger than the median HDI score (and <code class="docutils literal notranslate"><span class="pre">False</span></code> values otherwise).</p>
+<p>Let’s run this operation again, and save this Boolean array (of <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code> values), and save it in it’s own variable, to make it easier to use a filter:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># filter using the Boolean array</span>
+<span class="n">hdis_array_grtr_median_bool</span> <span class="o">=</span> <span class="n">hdis_array</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">hdis_array</span><span class="p">)</span>
+
+<span class="n">hdis_array_grtr_median_bool</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ True, False,  True, False,  True,  True, False, False,  True,
+       False, False, False, False,  True,  True])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Our Boolean array can now be used to retrieve elements of the <code class="docutils literal notranslate"><span class="pre">hdis_array</span></code> that are greater than the median HDI value. We just place our filter in between square brackers used to index the array. The <code class="docutils literal notranslate"><span class="pre">True</span></code> values act as “on switches” (keeping that element in the output array) and the <code class="docutils literal notranslate"><span class="pre">False</span></code> values act as “off switches” (removing that element from the output array):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># filter the `hdis_array`</span>
+<span class="n">hdis_array</span><span class="p">[</span><span class="n">hdis_array_grtr_median_bool</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.896, 0.89 , 0.844, 0.89 , 0.883, 0.863, 0.894])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># check we have what we want</span>
+<span class="nb">all</span><span class="p">(</span><span class="n">hdis_array</span><span class="p">[</span><span class="n">hdis_array_grtr_median_bool</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">hdis_array</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>Because Python treats <code class="docutils literal notranslate"><span class="pre">True</span></code> values as being equal to 1 and <code class="docutils literal notranslate"><span class="pre">False</span></code> values as being equal to 0, taking the mean of a Boolean array works out the same as calculating the proportion of <code class="docutils literal notranslate"><span class="pre">True</span></code> values.</p>
+<p>Using <code class="docutils literal notranslate"><span class="pre">np.mean()</span></code> we can quickly count the proportion of <code class="docutils literal notranslate"><span class="pre">True</span></code> values, which as expected, because we are dealing with a median, is close to 0.5:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># count the proportion of `True` values</span>
+<span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">hdis_array_grtr_median_bool</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.4666666666666667)
+</pre></div>
+</div>
+</div>
+</div>
+<p>This can be very useful when counting the proportion of participants or observations with a particular categorical feature (proportion of males/females, proportion of democratic countries etc).</p>
+<p>We can also, if we wish, turn our Boolean array into a Boolean <em>Series</em> using the <code class="docutils literal notranslate"><span class="pre">pd.Series()</span></code> constructor.</p>
+<p>This has the benefit of the Series <code class="docutils literal notranslate"><span class="pre">index</span></code>. In the present context, when we put the three-letter country codes as the <code class="docutils literal notranslate"><span class="pre">index</span></code>, we can keep track of the country that each filtered value corresponds to.</p>
+<p>Let’s create a Boolean Series:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># make a pandas Series</span>
+<span class="n">hdis_array_bool_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">hdis_array_grtr_median_bool</span><span class="p">,</span> 
+                                   <span class="n">index</span><span class="o">=</span><span class="n">country_codes_array</span><span class="p">)</span>
+
+<span class="n">hdis_array_bool_series</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUS     True
+BRA    False
+CAN     True
+CHN    False
+DEU     True
+ESP     True
+FRA    False
+GBR    False
+IND     True
+ITA    False
+JPN    False
+KOR    False
+MEX    False
+RUS     True
+USA     True
+dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<p>Even better, let’s manually specificy the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute - to make it clearer down the line what the <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code> values mean e.g. whether each country has a higher-than-median HDI score:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set the `name` attribute</span>
+<span class="n">hdis_array_bool_series</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;hdi_grtr_thn_median&#39;</span>
+
+<span class="n">hdis_array_bool_series</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUS     True
+BRA    False
+CAN     True
+CHN    False
+DEU     True
+ESP     True
+FRA    False
+GBR    False
+IND     True
+ITA    False
+JPN    False
+KOR    False
+MEX    False
+RUS     True
+USA     True
+Name: hdi_grtr_thn_median, dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<p>This has advantages over the Numpy Boolean array in terms of interpretability (it’s less easy to forget the meaning of what is in the <code class="docutils literal notranslate"><span class="pre">values</span></code> component of the Series!).</p>
+<p>We also have access to all of the Pandas Series methods:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># max</span>
+<span class="n">hdis_array_bool_series</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.True_
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># min</span>
+<span class="n">hdis_array_bool_series</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.False_
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># mean (returns the proportion of `True` values)</span>
+<span class="n">hdis_array_bool_series</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.4666666666666667)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use the Boolean Series to filter, exactly as we would with a Numpy array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># same result when we filter with the Boolean series</span>
+<span class="n">hdis_array</span><span class="p">[</span><span class="n">hdis_array_bool_series</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.896, 0.89 , 0.844, 0.89 , 0.883, 0.863, 0.894])
+</pre></div>
+</div>
+</div>
+</div>
+<p>However, we’re not really getting the benefit of having an index, if we just use the Series to filter a Numpy array.</p>
+<p>The real benefit comes from using Boolean Series to filter values in a Data Frame. We will look at this in the next section.</p>
+</section>
+<section id="filtering-in-pandas">
+<h2>Filtering in Pandas<a class="headerlink" href="#filtering-in-pandas" title="Link to this heading">#</a></h2>
+<p>You know by now that <em>Data Frames are a dictionary-like collection of Series</em>.</p>
+<p>Because Series are built (in part) from Numpy arrays, filtering the Data Frame works very much like filtering with Boolean Numpy arrays and Pandas Series.</p>
+<p>As with Series, the real advantage comes in having a shared index, as it keeps the filtering process highly interpretable and non-error prone.</p>
+<p>To explore further, let’s import the HDI data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import our dataset</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/year_2000_hdi_fert.csv&quot;</span><span class="p">)</span>
+
+<span class="c1"># set the index</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;Code&quot;</span><span class="p">)</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>1.913247e+07</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>1.740183e+08</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>3.089180e+07</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1.269581e+09</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>8.179726e+07</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>4.101977e+07</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>5.948372e+07</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>0.863</td>
+      <td>1.641</td>
+      <td>5.905734e+07</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1.057923e+09</td>
+      <td>India</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>0.842</td>
+      <td>1.249</td>
+      <td>5.727220e+07</td>
+      <td>Italy</td>
+    </tr>
+    <tr>
+      <th>JPN</th>
+      <td>0.883</td>
+      <td>1.346</td>
+      <td>1.270278e+08</td>
+      <td>Japan</td>
+    </tr>
+    <tr>
+      <th>KOR</th>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>4.676666e+07</td>
+      <td>South Korea</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>9.862555e+07</td>
+      <td>Mexico</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>1.467178e+08</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>2.814841e+08</td>
+      <td>United States</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Now, to view the median we can use the <code class="docutils literal notranslate"><span class="pre">.median()</span></code> Series method, rather than calling the <code class="docutils literal notranslate"><span class="pre">np.median()</span></code> function as we did earlier:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the median HDI</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.842)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Because Data Frames force all their constituent Series (columns) to share an <code class="docutils literal notranslate"><span class="pre">index</span></code>, creating a Boolean Series has the desirable characteristic of associating a row label with each Booelan.</p>
+<p>For instance, let’s use direct indexing with a column name (<code class="docutils literal notranslate"><span class="pre">df['Human</span> <span class="pre">Development</span> <span class="pre">Index']</span></code>) to create a Boolean Series which is <code class="docutils literal notranslate"><span class="pre">True</span></code> where the country has a HDI score above the median HDI score:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a Boolean Series</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Code
+AUS     True
+BRA    False
+CAN     True
+CHN    False
+DEU     True
+ESP    False
+FRA     True
+GBR     True
+IND    False
+ITA    False
+JPN     True
+KOR    False
+MEX    False
+RUS    False
+USA     True
+Name: Human Development Index, dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<p>As mentioned above, this is more interpretable that a Numpy array just containing Booleans, with no <code class="docutils literal notranslate"><span class="pre">index</span></code>.</p>
+<p>Again, to increase interpretabiity, we can assign this Boolean Series a new <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a Boolean Series by using a comparison operator on the DataFrame column</span>
+<span class="n">boolean_series_from_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+
+<span class="n">boolean_series_from_df</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;HDI_grtr_than_median&#39;</span>
+
+<span class="n">boolean_series_from_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Code
+AUS     True
+BRA    False
+CAN     True
+CHN    False
+DEU     True
+ESP    False
+FRA     True
+GBR     True
+IND    False
+ITA    False
+JPN     True
+KOR    False
+MEX    False
+RUS    False
+USA     True
+Name: HDI_grtr_than_median, dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can now use our Boolean Series to filter the whole Data Frame. This let’s use view entire rows, but only for rows corresponding to countries with greater than median HDI scores:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># filter the DataFrame using the Boolean Series we got from using a comparison operator on the DataFrame column</span>
+<span class="n">df</span><span class="p">[</span><span class="n">boolean_series_from_df</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>19132473.0</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30891800.0</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>81797255.0</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>59483716.0</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>0.863</td>
+      <td>1.641</td>
+      <td>59057336.0</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>JPN</th>
+      <td>0.883</td>
+      <td>1.346</td>
+      <td>127027796.0</td>
+      <td>Japan</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>281484127.0</td>
+      <td>United States</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>This filtering operation was done via a Boolean Series which was created using direct indexing on the Data Frame itself (<code class="docutils literal notranslate"><span class="pre">df['Human</span> <span class="pre">Development</span> <span class="pre">Index']</span></code>).</p>
+<p>Earlier, we “hand built” a Boolean Series from a Numpy array, another array for the index, and a manually specified <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute. Here is that Series:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># our &quot;handmade&quot; Boolean Series</span>
+<span class="n">hdis_array_bool_series</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUS     True
+BRA    False
+CAN     True
+CHN    False
+DEU     True
+ESP     True
+FRA    False
+GBR    False
+IND     True
+ITA    False
+JPN    False
+KOR    False
+MEX    False
+RUS     True
+USA     True
+Name: hdi_grtr_thn_median, dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<p>This hand-built Series returns the same rows of the Data Frame as Series we got by using only Data Frame columns:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we can also filter with our &quot;handmade&quot; Series</span>
+<span class="n">df</span><span class="p">[</span><span class="n">hdis_array_bool_series</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>1.913247e+07</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>3.089180e+07</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>8.179726e+07</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>4.101977e+07</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1.057923e+09</td>
+      <td>India</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>1.467178e+08</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>2.814841e+08</td>
+      <td>United States</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can use the Boolean Series to create a new Data Frame. This let’s us use statistical and plotting methods on subset of the data.</p>
+<p>For instance, we may want to look for differences between countries <em>above</em> the median HDI, and countries <em>below</em> the median HDI.</p>
+<p>We can use our Boolean filter as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show countries with greater than median HDI</span>
+<span class="n">above_median_HDI</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">boolean_series_from_df</span><span class="p">]</span>
+
+<span class="n">above_median_HDI</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>19132473.0</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30891800.0</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>81797255.0</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>59483716.0</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>0.863</td>
+      <td>1.641</td>
+      <td>59057336.0</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>JPN</th>
+      <td>0.883</td>
+      <td>1.346</td>
+      <td>127027796.0</td>
+      <td>Japan</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>281484127.0</td>
+      <td>United States</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can “flip” the <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code> values in the Boolean using the <code class="docutils literal notranslate"><span class="pre">~</span></code> operator (which we can read as “NOT”).</p>
+<p>So, here is our Boolean Series:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the Boolean Series</span>
+<span class="n">boolean_series_from_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Code
+AUS     True
+BRA    False
+CAN     True
+CHN    False
+DEU     True
+ESP    False
+FRA     True
+GBR     True
+IND    False
+ITA    False
+JPN     True
+KOR    False
+MEX    False
+RUS    False
+USA     True
+Name: HDI_grtr_than_median, dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can reverse each <code class="docutils literal notranslate"><span class="pre">True</span></code> to a <code class="docutils literal notranslate"><span class="pre">False</span></code> and vice versa by placing the <code class="docutils literal notranslate"><span class="pre">~</span></code> symbol in front of the Boolean Series, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># &quot;flip&quot; the Boolean Series with the &quot;~&quot; operator</span>
+<span class="o">~</span><span class="n">boolean_series_from_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Code
+AUS    False
+BRA     True
+CAN    False
+CHN     True
+DEU    False
+ESP     True
+FRA    False
+GBR    False
+IND     True
+ITA     True
+JPN    False
+KOR     True
+MEX     True
+RUS     True
+USA    False
+Name: HDI_grtr_than_median, dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s use this operation (with <code class="docutils literal notranslate"><span class="pre">~</span></code>) to make a new Data Frame containing only the countries scoring below the median HDI:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># use the `~` operator to show countries with BELOW median HDI</span>
+<span class="n">below_median_HDI</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">boolean_series_from_df</span><span class="p">]</span>
+
+<span class="n">below_median_HDI</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>1.740183e+08</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1.269581e+09</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>4.101977e+07</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1.057923e+09</td>
+      <td>India</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>0.842</td>
+      <td>1.249</td>
+      <td>5.727220e+07</td>
+      <td>Italy</td>
+    </tr>
+    <tr>
+      <th>KOR</th>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>4.676666e+07</td>
+      <td>South Korea</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>9.862555e+07</td>
+      <td>Mexico</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>1.467178e+08</td>
+      <td>Russia</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Now, on each Data Frame, we can call the <code class="docutils literal notranslate"><span class="pre">.describe()</span></code> method separately, to inspect the differences:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># use the `.describe()` method with countries with above the median HDI</span>
+<span class="n">above_median_HDI</span><span class="p">[</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count    7.000000
+mean     1.650429
+std      0.255037
+min      1.346000
+25%      1.448000
+50%      1.641000
+75%      1.820000
+max      2.030000
+Name: Fertility Rate, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># use the `.describe()` method with countries with below the median HDI</span>
+<span class="n">below_median_HDI</span><span class="p">[</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count    8.000000
+mean     1.881875
+std      0.806080
+min      1.190000
+25%      1.239250
+50%      1.547500
+75%      2.363750
+max      3.350000
+Name: Fertility Rate, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="cleaning-summarizing-and-plotting-data-with-boolean-indexing">
+<h2>Cleaning, summarizing and plotting data with Boolean Indexing<a class="headerlink" href="#cleaning-summarizing-and-plotting-data-with-boolean-indexing" title="Link to this heading">#</a></h2>
+<p>Remember, the data we have looked at on this page so far is just a fraction of the countries in the full HDI dataset. Let’s import the full dataset, so we can use Boolean filtering to graphically inspect trends for countries above and below the median HDI. We will look at the data from all of the countries, but just for the year 2000, to keep the plot interpretable.</p>
+<p>We’ll also use multiple methods from the <a class="reference internal" href="0_2_pandas_dataframes_attributes_methods.html"><span class="std std-doc">Pandas methods</span></a> page, to get the full data ready to generate these plots.</p>
+<p>First, let’s import the data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import the full dataset</span>
+<span class="n">full_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/children-per-woman-vs-human-development-index.csv&#39;</span><span class="p">)</span>
+
+<span class="n">full_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Entity</th>
+      <th>Code</th>
+      <th>Year</th>
+      <th>Fertility Rate</th>
+      <th>Human Development Index</th>
+      <th>Population</th>
+      <th>Region</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1950</td>
+      <td>7.248</td>
+      <td>NaN</td>
+      <td>7776133.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1951</td>
+      <td>7.260</td>
+      <td>NaN</td>
+      <td>7879295.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1952</td>
+      <td>7.260</td>
+      <td>NaN</td>
+      <td>7987737.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1953</td>
+      <td>7.266</td>
+      <td>NaN</td>
+      <td>8096656.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1954</td>
+      <td>7.254</td>
+      <td>NaN</td>
+      <td>8207910.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>59906</th>
+      <td>Zimbabwe</td>
+      <td>ZWE</td>
+      <td>1945</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2519116.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>59907</th>
+      <td>Zimbabwe</td>
+      <td>ZWE</td>
+      <td>1946</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2567459.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>59908</th>
+      <td>Zimbabwe</td>
+      <td>ZWE</td>
+      <td>1947</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2616729.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>59909</th>
+      <td>Zimbabwe</td>
+      <td>ZWE</td>
+      <td>1948</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2666945.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>59910</th>
+      <td>Zimbabwe</td>
+      <td>ZWE</td>
+      <td>1949</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2725021.0</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>59911 rows × 7 columns</p>
+</div></div></div>
+</div>
+<p>This data is in <em>long format</em> - each row is an observation of one country, but each country appears in multiple rows. E.g. there are repeated observations from the same countries. If you look at the last few rows, you’ll see repeated observations on Zimbabwe, over multiple years.</p>
+<p>You’ll also notice (an unfortunate commonality of many datasets) that the full data contains many <code class="docutils literal notranslate"><span class="pre">NaN</span></code> values (we’ll deal with some of these shortly).</p>
+<p>As mentioned above, we will look at data from the year 2000, but using the full complement of countries. This will keep the plots interpretable.</p>
+<p>We can use Boolean filtering to strip the Data Frame down to just observations from the year 2000:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># filter out all years apart from the year 2000</span>
+<span class="n">full_df_2000</span> <span class="o">=</span> <span class="n">full_df</span><span class="p">[</span><span class="n">full_df</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2000</span><span class="p">]</span>
+
+<span class="n">full_df_2000</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Entity</th>
+      <th>Code</th>
+      <th>Year</th>
+      <th>Fertility Rate</th>
+      <th>Human Development Index</th>
+      <th>Population</th>
+      <th>Region</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>50</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2000</td>
+      <td>7.566</td>
+      <td>0.340000</td>
+      <td>2.013028e+07</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>261</th>
+      <td>Africa</td>
+      <td>NaN</td>
+      <td>2000</td>
+      <td>NaN</td>
+      <td>0.372737</td>
+      <td>8.305800e+08</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>576</th>
+      <td>Africa (UN)</td>
+      <td>NaN</td>
+      <td>2000</td>
+      <td>5.203</td>
+      <td>NaN</td>
+      <td>8.305825e+08</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>654</th>
+      <td>Albania</td>
+      <td>ALB</td>
+      <td>2000</td>
+      <td>2.217</td>
+      <td>0.678000</td>
+      <td>3.166104e+06</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>915</th>
+      <td>Algeria</td>
+      <td>DZA</td>
+      <td>2000</td>
+      <td>2.590</td>
+      <td>0.652000</td>
+      <td>3.090385e+07</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>58811</th>
+      <td>Western Sahara</td>
+      <td>ESH</td>
+      <td>2000</td>
+      <td>3.487</td>
+      <td>NaN</td>
+      <td>2.718990e+05</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>58926</th>
+      <td>World</td>
+      <td>OWID_WRL</td>
+      <td>2000</td>
+      <td>2.754</td>
+      <td>0.645000</td>
+      <td>6.171703e+09</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>59052</th>
+      <td>Yemen</td>
+      <td>YEM</td>
+      <td>2000</td>
+      <td>6.317</td>
+      <td>0.434000</td>
+      <td>1.962409e+07</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>59439</th>
+      <td>Zambia</td>
+      <td>ZMB</td>
+      <td>2000</td>
+      <td>5.921</td>
+      <td>0.418000</td>
+      <td>1.001758e+07</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>59700</th>
+      <td>Zimbabwe</td>
+      <td>ZWE</td>
+      <td>2000</td>
+      <td>4.009</td>
+      <td>0.426000</td>
+      <td>1.189200e+07</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>277 rows × 7 columns</p>
+</div></div></div>
+</div>
+<p>You can see that after this operation, the index labels (numbers from th default <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code>) no longer line up from 0 to the maximum value.</p>
+<p>Let’s make a more usable index, but setting the <code class="docutils literal notranslate"><span class="pre">index</span></code> to be the three-letter country codes in the <code class="docutils literal notranslate"><span class="pre">Code</span></code> column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set the index</span>
+<span class="n">full_df_2000</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">full_df_2000</span><span class="p">[</span><span class="s1">&#39;Code&#39;</span><span class="p">]</span>
+
+<span class="n">full_df_2000</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Entity</th>
+      <th>Code</th>
+      <th>Year</th>
+      <th>Fertility Rate</th>
+      <th>Human Development Index</th>
+      <th>Population</th>
+      <th>Region</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AFG</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2000</td>
+      <td>7.566</td>
+      <td>0.340000</td>
+      <td>2.013028e+07</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>NaN</th>
+      <td>Africa</td>
+      <td>NaN</td>
+      <td>2000</td>
+      <td>NaN</td>
+      <td>0.372737</td>
+      <td>8.305800e+08</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>NaN</th>
+      <td>Africa (UN)</td>
+      <td>NaN</td>
+      <td>2000</td>
+      <td>5.203</td>
+      <td>NaN</td>
+      <td>8.305825e+08</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>ALB</th>
+      <td>Albania</td>
+      <td>ALB</td>
+      <td>2000</td>
+      <td>2.217</td>
+      <td>0.678000</td>
+      <td>3.166104e+06</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>DZA</th>
+      <td>Algeria</td>
+      <td>DZA</td>
+      <td>2000</td>
+      <td>2.590</td>
+      <td>0.652000</td>
+      <td>3.090385e+07</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>ESH</th>
+      <td>Western Sahara</td>
+      <td>ESH</td>
+      <td>2000</td>
+      <td>3.487</td>
+      <td>NaN</td>
+      <td>2.718990e+05</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>OWID_WRL</th>
+      <td>World</td>
+      <td>OWID_WRL</td>
+      <td>2000</td>
+      <td>2.754</td>
+      <td>0.645000</td>
+      <td>6.171703e+09</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>YEM</th>
+      <td>Yemen</td>
+      <td>YEM</td>
+      <td>2000</td>
+      <td>6.317</td>
+      <td>0.434000</td>
+      <td>1.962409e+07</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>ZMB</th>
+      <td>Zambia</td>
+      <td>ZMB</td>
+      <td>2000</td>
+      <td>5.921</td>
+      <td>0.418000</td>
+      <td>1.001758e+07</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>ZWE</th>
+      <td>Zimbabwe</td>
+      <td>ZWE</td>
+      <td>2000</td>
+      <td>4.009</td>
+      <td>0.426000</td>
+      <td>1.189200e+07</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>277 rows × 7 columns</p>
+</div></div></div>
+</div>
+<p>You might notice that now we have <code class="docutils literal notranslate"><span class="pre">NaN</span></code> values in the index. We don’t want this, so let’s remove those observations.</p>
+<p>We can again do this via Boolean filtering:</p>
+<p><em>NOTE:</em> the <code class="docutils literal notranslate"><span class="pre">~</span></code> operator, we are asking for rows with index labels that are NOT <code class="docutils literal notranslate"><span class="pre">NaN</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># remove NaN data </span>
+<span class="n">full_df_2000</span> <span class="o">=</span> <span class="n">full_df_2000</span><span class="p">[</span><span class="o">~</span><span class="n">full_df_2000</span><span class="p">[</span><span class="s1">&#39;Code&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()]</span>
+
+<span class="n">full_df_2000</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Entity</th>
+      <th>Code</th>
+      <th>Year</th>
+      <th>Fertility Rate</th>
+      <th>Human Development Index</th>
+      <th>Population</th>
+      <th>Region</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AFG</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2000</td>
+      <td>7.566</td>
+      <td>0.340</td>
+      <td>2.013028e+07</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>ALB</th>
+      <td>Albania</td>
+      <td>ALB</td>
+      <td>2000</td>
+      <td>2.217</td>
+      <td>0.678</td>
+      <td>3.166104e+06</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>DZA</th>
+      <td>Algeria</td>
+      <td>DZA</td>
+      <td>2000</td>
+      <td>2.590</td>
+      <td>0.652</td>
+      <td>3.090385e+07</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>ASM</th>
+      <td>American Samoa</td>
+      <td>ASM</td>
+      <td>2000</td>
+      <td>3.890</td>
+      <td>NaN</td>
+      <td>5.682800e+04</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>AND</th>
+      <td>Andorra</td>
+      <td>AND</td>
+      <td>2000</td>
+      <td>1.273</td>
+      <td>0.815</td>
+      <td>6.565300e+04</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>ESH</th>
+      <td>Western Sahara</td>
+      <td>ESH</td>
+      <td>2000</td>
+      <td>3.487</td>
+      <td>NaN</td>
+      <td>2.718990e+05</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>OWID_WRL</th>
+      <td>World</td>
+      <td>OWID_WRL</td>
+      <td>2000</td>
+      <td>2.754</td>
+      <td>0.645</td>
+      <td>6.171703e+09</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>YEM</th>
+      <td>Yemen</td>
+      <td>YEM</td>
+      <td>2000</td>
+      <td>6.317</td>
+      <td>0.434</td>
+      <td>1.962409e+07</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>ZMB</th>
+      <td>Zambia</td>
+      <td>ZMB</td>
+      <td>2000</td>
+      <td>5.921</td>
+      <td>0.418</td>
+      <td>1.001758e+07</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>ZWE</th>
+      <td>Zimbabwe</td>
+      <td>ZWE</td>
+      <td>2000</td>
+      <td>4.009</td>
+      <td>0.426</td>
+      <td>1.189200e+07</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>241 rows × 7 columns</p>
+</div></div></div>
+</div>
+<p>Let’s inspect the index, to see what countries are left after removing the NaN values:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># inspect the index</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">full_df_2000</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;AFG&#39;,
+ &#39;ALB&#39;,
+ &#39;DZA&#39;,
+ &#39;ASM&#39;,
+ &#39;AND&#39;,
+ &#39;AGO&#39;,
+ &#39;AIA&#39;,
+ &#39;ATG&#39;,
+ &#39;ARG&#39;,
+ &#39;ARM&#39;,
+ &#39;ABW&#39;,
+ &#39;AUS&#39;,
+ &#39;AUT&#39;,
+ &#39;AZE&#39;,
+ &#39;BHS&#39;,
+ &#39;BHR&#39;,
+ &#39;BGD&#39;,
+ &#39;BRB&#39;,
+ &#39;BLR&#39;,
+ &#39;BEL&#39;,
+ &#39;BLZ&#39;,
+ &#39;BEN&#39;,
+ &#39;BMU&#39;,
+ &#39;BTN&#39;,
+ &#39;BOL&#39;,
+ &#39;BES&#39;,
+ &#39;BIH&#39;,
+ &#39;BWA&#39;,
+ &#39;BRA&#39;,
+ &#39;VGB&#39;,
+ &#39;BRN&#39;,
+ &#39;BGR&#39;,
+ &#39;BFA&#39;,
+ &#39;BDI&#39;,
+ &#39;KHM&#39;,
+ &#39;CMR&#39;,
+ &#39;CAN&#39;,
+ &#39;CPV&#39;,
+ &#39;CYM&#39;,
+ &#39;CAF&#39;,
+ &#39;TCD&#39;,
+ &#39;CHL&#39;,
+ &#39;CHN&#39;,
+ &#39;COL&#39;,
+ &#39;COM&#39;,
+ &#39;COG&#39;,
+ &#39;COK&#39;,
+ &#39;CRI&#39;,
+ &#39;CIV&#39;,
+ &#39;HRV&#39;,
+ &#39;CUB&#39;,
+ &#39;CUW&#39;,
+ &#39;CYP&#39;,
+ &#39;CZE&#39;,
+ &#39;COD&#39;,
+ &#39;DNK&#39;,
+ &#39;DJI&#39;,
+ &#39;DMA&#39;,
+ &#39;DOM&#39;,
+ &#39;TLS&#39;,
+ &#39;ECU&#39;,
+ &#39;EGY&#39;,
+ &#39;SLV&#39;,
+ &#39;GNQ&#39;,
+ &#39;ERI&#39;,
+ &#39;EST&#39;,
+ &#39;SWZ&#39;,
+ &#39;ETH&#39;,
+ &#39;FLK&#39;,
+ &#39;FRO&#39;,
+ &#39;FJI&#39;,
+ &#39;FIN&#39;,
+ &#39;FRA&#39;,
+ &#39;GUF&#39;,
+ &#39;PYF&#39;,
+ &#39;GAB&#39;,
+ &#39;GMB&#39;,
+ &#39;GEO&#39;,
+ &#39;DEU&#39;,
+ &#39;GHA&#39;,
+ &#39;GIB&#39;,
+ &#39;GRC&#39;,
+ &#39;GRL&#39;,
+ &#39;GRD&#39;,
+ &#39;GLP&#39;,
+ &#39;GUM&#39;,
+ &#39;GTM&#39;,
+ &#39;GGY&#39;,
+ &#39;GIN&#39;,
+ &#39;GNB&#39;,
+ &#39;GUY&#39;,
+ &#39;HTI&#39;,
+ &#39;HND&#39;,
+ &#39;HKG&#39;,
+ &#39;HUN&#39;,
+ &#39;ISL&#39;,
+ &#39;IND&#39;,
+ &#39;IDN&#39;,
+ &#39;IRN&#39;,
+ &#39;IRQ&#39;,
+ &#39;IRL&#39;,
+ &#39;IMN&#39;,
+ &#39;ISR&#39;,
+ &#39;ITA&#39;,
+ &#39;JAM&#39;,
+ &#39;JPN&#39;,
+ &#39;JEY&#39;,
+ &#39;JOR&#39;,
+ &#39;KAZ&#39;,
+ &#39;KEN&#39;,
+ &#39;KIR&#39;,
+ &#39;OWID_KOS&#39;,
+ &#39;KWT&#39;,
+ &#39;KGZ&#39;,
+ &#39;LAO&#39;,
+ &#39;LVA&#39;,
+ &#39;LBN&#39;,
+ &#39;LSO&#39;,
+ &#39;LBR&#39;,
+ &#39;LBY&#39;,
+ &#39;LIE&#39;,
+ &#39;LTU&#39;,
+ &#39;LUX&#39;,
+ &#39;MAC&#39;,
+ &#39;MDG&#39;,
+ &#39;MWI&#39;,
+ &#39;MYS&#39;,
+ &#39;MDV&#39;,
+ &#39;MLI&#39;,
+ &#39;MLT&#39;,
+ &#39;MHL&#39;,
+ &#39;MTQ&#39;,
+ &#39;MRT&#39;,
+ &#39;MUS&#39;,
+ &#39;MYT&#39;,
+ &#39;MEX&#39;,
+ &#39;FSM&#39;,
+ &#39;MDA&#39;,
+ &#39;MCO&#39;,
+ &#39;MNG&#39;,
+ &#39;MNE&#39;,
+ &#39;MSR&#39;,
+ &#39;MAR&#39;,
+ &#39;MOZ&#39;,
+ &#39;MMR&#39;,
+ &#39;NAM&#39;,
+ &#39;NRU&#39;,
+ &#39;NPL&#39;,
+ &#39;NLD&#39;,
+ &#39;ANT&#39;,
+ &#39;NCL&#39;,
+ &#39;NZL&#39;,
+ &#39;NIC&#39;,
+ &#39;NER&#39;,
+ &#39;NGA&#39;,
+ &#39;NIU&#39;,
+ &#39;PRK&#39;,
+ &#39;MKD&#39;,
+ &#39;MNP&#39;,
+ &#39;NOR&#39;,
+ &#39;OMN&#39;,
+ &#39;PAK&#39;,
+ &#39;PLW&#39;,
+ &#39;PSE&#39;,
+ &#39;PAN&#39;,
+ &#39;PNG&#39;,
+ &#39;PRY&#39;,
+ &#39;PER&#39;,
+ &#39;PHL&#39;,
+ &#39;POL&#39;,
+ &#39;PRT&#39;,
+ &#39;PRI&#39;,
+ &#39;QAT&#39;,
+ &#39;REU&#39;,
+ &#39;ROU&#39;,
+ &#39;RUS&#39;,
+ &#39;RWA&#39;,
+ &#39;BLM&#39;,
+ &#39;SHN&#39;,
+ &#39;KNA&#39;,
+ &#39;LCA&#39;,
+ &#39;MAF&#39;,
+ &#39;SPM&#39;,
+ &#39;VCT&#39;,
+ &#39;WSM&#39;,
+ &#39;SMR&#39;,
+ &#39;STP&#39;,
+ &#39;SAU&#39;,
+ &#39;SEN&#39;,
+ &#39;SRB&#39;,
+ &#39;OWID_SRM&#39;,
+ &#39;SYC&#39;,
+ &#39;SLE&#39;,
+ &#39;SGP&#39;,
+ &#39;SXM&#39;,
+ &#39;SVK&#39;,
+ &#39;SVN&#39;,
+ &#39;SLB&#39;,
+ &#39;SOM&#39;,
+ &#39;ZAF&#39;,
+ &#39;KOR&#39;,
+ &#39;SSD&#39;,
+ &#39;ESP&#39;,
+ &#39;LKA&#39;,
+ &#39;SDN&#39;,
+ &#39;SUR&#39;,
+ &#39;SJM&#39;,
+ &#39;SWE&#39;,
+ &#39;CHE&#39;,
+ &#39;SYR&#39;,
+ &#39;TWN&#39;,
+ &#39;TJK&#39;,
+ &#39;TZA&#39;,
+ &#39;THA&#39;,
+ &#39;TGO&#39;,
+ &#39;TKL&#39;,
+ &#39;TON&#39;,
+ &#39;TTO&#39;,
+ &#39;TUN&#39;,
+ &#39;TUR&#39;,
+ &#39;TKM&#39;,
+ &#39;TCA&#39;,
+ &#39;TUV&#39;,
+ &#39;UGA&#39;,
+ &#39;UKR&#39;,
+ &#39;ARE&#39;,
+ &#39;GBR&#39;,
+ &#39;USA&#39;,
+ &#39;VIR&#39;,
+ &#39;URY&#39;,
+ &#39;UZB&#39;,
+ &#39;VUT&#39;,
+ &#39;VAT&#39;,
+ &#39;VEN&#39;,
+ &#39;VNM&#39;,
+ &#39;WLF&#39;,
+ &#39;ESH&#39;,
+ &#39;OWID_WRL&#39;,
+ &#39;YEM&#39;,
+ &#39;ZMB&#39;,
+ &#39;ZWE&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you scroll down this list, you can see that we have some rows that <em>maybe</em> do not correspond to countries (<code class="docutils literal notranslate"><span class="pre">OWID_WRL</span></code>, <code class="docutils literal notranslate"><span class="pre">OWID_KOS</span></code>, <code class="docutils literal notranslate"><span class="pre">OWID_SRM</span></code>).</p>
+<p>Let’s inspect these rows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># inspect rows with non-standard codes</span>
+<span class="n">full_df_2000</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s1">&#39;OWID_WRL&#39;</span><span class="p">,</span> <span class="s1">&#39;OWID_KOS&#39;</span><span class="p">,</span> <span class="s1">&#39;OWID_SRM&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Entity</th>
+      <th>Code</th>
+      <th>Year</th>
+      <th>Fertility Rate</th>
+      <th>Human Development Index</th>
+      <th>Population</th>
+      <th>Region</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>OWID_WRL</th>
+      <td>World</td>
+      <td>OWID_WRL</td>
+      <td>2000</td>
+      <td>2.754</td>
+      <td>0.645</td>
+      <td>6.171703e+09</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>OWID_KOS</th>
+      <td>Kosovo</td>
+      <td>OWID_KOS</td>
+      <td>2000</td>
+      <td>2.698</td>
+      <td>NaN</td>
+      <td>1.802435e+06</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>OWID_SRM</th>
+      <td>Serbia and Montenegro</td>
+      <td>OWID_SRM</td>
+      <td>2000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>9.975028e+06</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Ok, so we probably want to keep <code class="docutils literal notranslate"><span class="pre">Kosovo</span></code> and <code class="docutils literal notranslate"><span class="pre">Serbia</span> <span class="pre">and</span> <span class="pre">Montenegro</span></code>, but will drop the row with the data for the whole world.</p>
+<p>We can use the <code class="docutils literal notranslate"><span class="pre">.drop()</span></code> method, with the <code class="docutils literal notranslate"><span class="pre">labels=</span></code> argument to tell Pandas to drop the row with the <code class="docutils literal notranslate"><span class="pre">'OWID_WRL'</span></code> label:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># remove junk rows with the `.drop()` method</span>
+<span class="n">full_df_2000</span> <span class="o">=</span> <span class="n">full_df_2000</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;OWID_WRL&#39;</span><span class="p">])</span>
+
+<span class="n">full_df_2000</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Entity</th>
+      <th>Code</th>
+      <th>Year</th>
+      <th>Fertility Rate</th>
+      <th>Human Development Index</th>
+      <th>Population</th>
+      <th>Region</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AFG</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2000</td>
+      <td>7.566</td>
+      <td>0.340</td>
+      <td>20130279.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>ALB</th>
+      <td>Albania</td>
+      <td>ALB</td>
+      <td>2000</td>
+      <td>2.217</td>
+      <td>0.678</td>
+      <td>3166104.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>DZA</th>
+      <td>Algeria</td>
+      <td>DZA</td>
+      <td>2000</td>
+      <td>2.590</td>
+      <td>0.652</td>
+      <td>30903850.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>ASM</th>
+      <td>American Samoa</td>
+      <td>ASM</td>
+      <td>2000</td>
+      <td>3.890</td>
+      <td>NaN</td>
+      <td>56828.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>AND</th>
+      <td>Andorra</td>
+      <td>AND</td>
+      <td>2000</td>
+      <td>1.273</td>
+      <td>0.815</td>
+      <td>65653.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>WLF</th>
+      <td>Wallis and Futuna</td>
+      <td>WLF</td>
+      <td>2000</td>
+      <td>2.451</td>
+      <td>NaN</td>
+      <td>14755.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>ESH</th>
+      <td>Western Sahara</td>
+      <td>ESH</td>
+      <td>2000</td>
+      <td>3.487</td>
+      <td>NaN</td>
+      <td>271899.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>YEM</th>
+      <td>Yemen</td>
+      <td>YEM</td>
+      <td>2000</td>
+      <td>6.317</td>
+      <td>0.434</td>
+      <td>19624093.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>ZMB</th>
+      <td>Zambia</td>
+      <td>ZMB</td>
+      <td>2000</td>
+      <td>5.921</td>
+      <td>0.418</td>
+      <td>10017580.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>ZWE</th>
+      <td>Zimbabwe</td>
+      <td>ZWE</td>
+      <td>2000</td>
+      <td>4.009</td>
+      <td>0.426</td>
+      <td>11892005.0</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>240 rows × 7 columns</p>
+</div></div></div>
+</div>
+<p>We now have a clean Data Frame. Let’s plot HDI against fertility rate, to graphically inspect the trend:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the data</span>
+<span class="n">full_df_2000</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">,</span>
+                  <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">,</span>
+                  <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;Human Development Index&#39;, ylabel=&#39;Fertility Rate&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/eb853e62b2ce7092f2c4db1064ba33cec0c75762e378825513bc6dd0725107cb.png" src="_images/eb853e62b2ce7092f2c4db1064ba33cec0c75762e378825513bc6dd0725107cb.png" />
+</div>
+</div>
+<p>To plot the trend either side of the HDI median, let’s create a Boolean Series based on the median HDI value.</p>
+<p>This Series is <code class="docutils literal notranslate"><span class="pre">True</span></code> where the country has a greater than median HDI score, and <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># make a Boolean Series based on the median HDI</span>
+<span class="n">full_df_2000_gtr_than_median_HDI_bool</span> <span class="o">=</span> <span class="n">full_df_2000</span><span class="p">[</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">full_df_2000</span><span class="p">[</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+
+<span class="n">full_df_2000_gtr_than_median_HDI_bool</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Code
+AFG    False
+ALB     True
+DZA    False
+ASM    False
+AND     True
+       ...  
+WLF    False
+ESH    False
+YEM    False
+ZMB    False
+ZWE    False
+Name: Human Development Index, Length: 240, dtype: bool
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use this filter, and the <code class="docutils literal notranslate"><span class="pre">.plot()</span></code> method, to inspect the trend either side of the median HDI:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot countries with above median HDI</span>
+<span class="n">full_df_2000</span><span class="p">[</span><span class="n">full_df_2000_gtr_than_median_HDI_bool</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">,</span>
+                                                          <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">,</span>
+                                                          <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;Human Development Index&#39;, ylabel=&#39;Fertility Rate&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/646eceb7428a31ee2d5d220279d9e6c6849bc9a466a66e62f2a595febf0260f4.png" src="_images/646eceb7428a31ee2d5d220279d9e6c6849bc9a466a66e62f2a595febf0260f4.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot countries with below median HDI</span>
+<span class="n">full_df_2000</span><span class="p">[</span><span class="o">~</span><span class="n">full_df_2000_gtr_than_median_HDI_bool</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">,</span>
+                                                          <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">,</span>
+                                                          <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;Human Development Index&#39;, ylabel=&#39;Fertility Rate&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/a432b2dd813c76336a9d22329106523546ba69c975451dc188670cf4241cca18.png" src="_images/a432b2dd813c76336a9d22329106523546ba69c975451dc188670cf4241cca18.png" />
+</div>
+</div>
+<p>We can see graphically that the trends differ either side of the median, in a way that is clearer than looking at the full data on one plot.</p>
+<p>We can also use the same filtering procedure to view statistics on the subsets of countries either side of the median HDI:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># `.describe()` stats for `Fertility Rate` from countries above the median HDI</span>
+<span class="n">full_df_2000</span><span class="p">[</span><span class="n">full_df_2000_gtr_than_median_HDI_bool</span><span class="p">][</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count    88.000000
+mean      2.014159
+std       0.760439
+min       1.027000
+25%       1.385250
+50%       1.836500
+75%       2.401750
+max       4.523000
+Name: Fertility Rate, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># `.describe()` stats for `Fertility Rate` from countries below the median HDI (again, note the `~` operator)</span>
+<span class="n">full_df_2000</span><span class="p">[</span><span class="o">~</span><span class="n">full_df_2000_gtr_than_median_HDI_bool</span><span class="p">][</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count    149.000000
+mean       3.753148
+std        1.735496
+min        0.933000
+25%        2.337000
+50%        3.505000
+75%        5.227000
+max        7.829000
+Name: Fertility Rate, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>This page has looked at the similarities/differences in filtering data with collections of Booleans in Numpy and Pandas.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="0_4_dealing_with_missing_data_in_pandas.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Dealing with NaNs</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="0_6_more_pandas_methods_strings.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">More Pandas methods</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-from-numpy-once-more">Pandas from Numpy, once more</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-in-pandas">Filtering in Pandas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cleaning-summarizing-and-plotting-data-with-boolean-indexing">Cleaning, summarizing and plotting data with Boolean Indexing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Peter Rush, Matthew Brett
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
