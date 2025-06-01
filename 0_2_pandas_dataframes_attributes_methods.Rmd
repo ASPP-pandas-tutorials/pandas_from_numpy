@@ -1,0 +1,647 @@
+---
+jupyter:
+  jupytext:
+    formats: ipynb,Rmd
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.15.2
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
+# Pandas DataFrames: Attributes and Methods
+
+<!---
+📝 NOTE-  Covered here:
+
+Columns in a dataframe  can be of different dtypes
+* Operations are on columns by default (describe, sum, min, max)
+* attributes of df (shape, dtypes columns, index)
+* methods of df (unique, describe, counts, value_counts, min, max, std, sort_values, sort_index)
+
+Structure of page:
+
+* show all relevant methods/attributes of numpy arrays
+
+* reinforce that "Series = array + index + name". Then show relevant methods/attributes of Series.
+
+* reinforce that "DataFrame = dictionary-like collection of Series". Then show all relevant methods/attributes of DataFrames.
+-->
+
+On the [previous](0_0_pandas_intro.Rmd) [pages](0_1_to_loc_or_iloc.Rmd) we have seen how Pandas Series are constructed by combining numpy arrays (the `.values` attribute of a Series) with other attributes (a `.name` string and and array-like `.index`). We have then examined how Pandas Data Frames are built from a collection of Series, in a dictionary-like structure.
+
+This page will dive deeper into Data Frames. Once we have constructed our Data Frame, Pandas provides many useful methods for cleaning, aggregating, plotting and (subsequently) analysing our data.
+
+We will begin by showing that Pandas Series and Data Frames inherit many of their methods from the Numpy arrays that they are in part constructed from, though the methods are adapted to work in the context of Pandas objects.
+
+## More Pandas from Numpy
+
+Let's examine some of the methods we can use on numpy arrays.
+
+Remember, a *method* is a function attached to an object. 
+
+In this case, our object is a Numpy array (later it will be a Pandas Series or Data Frame).
+
+We'll build a numpy array using the `np.array([])` constructor, containing our familiar three-letter country codes. As before, you can see the [Our World in Data page](https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index) for more detail:
+
+```{python}
+# import libraries
+import numpy as np
+import pandas as pd
+
+# standard three-letter code for each country
+country_codes_array = np.array(['AUS', 'BRA', 'CAN',
+                          'CHN', 'DEU', 'ESP',
+                          'FRA', 'GBR', 'IND',
+                          'ITA', 'JPN', 'KOR',
+                          'MEX', 'RUS', 'USA'])
+country_codes_array
+```
+
+And another array containing the Human Development Index scores for each of the countries:
+
+```{python}
+# Human Development Index Scores for each country
+hdis_array = np.array([0.896, 0.668, 0.89 , 0.586, 
+                 0.844, 0.89 , 0.49 , 0.842, 
+                 0.883, 0.709, 0.733, 0.824,
+                 0.828, 0.863, 0.894])
+
+hdis_array
+```
+
+And for good measure, another array containing the full country names:
+
+```{python}
+# country names array
+country_names_array = np.array(['Australia', 'Brazil', 'Canada',
+                          'China', 'Germany', 'Spain',
+                          'France', 'United Kingdom', 'India',
+                          'Italy', 'Japan', 'South Korea',
+                          'Mexico', 'Russia', 'United States'])
+country_names_array
+```
+
+When dealing with any object in python, it can be useful to use the in-built python `dir()` function. This shows every attribute and method that we can access/call from the object, though the printout it produces is messy:
+
+```{python}
+# show all available attributes/methods
+dir(hdis_array)
+```
+
+For now we will ignore the elements in the printout that contain `__` - these are called "dunders", which is short for "double underscore"; they are not the attributes and methods in which we are currently interested.
+
+Ignoring the dunders, we can see a large number of attributes and methods that we can access from this or any other Numpy array.
+
+One of these attributes is called `shape`. We will almost always want to know the `shape` of our data, as it tells us how many observations we have.
+
+Let's take a look at the `.shape` attribute:
+
+```{python}
+# shape
+hdis_array.shape
+```
+
+We can read this output as "15 elements in one row". By contrast, let's look at an array with more than one dimension:
+
+```{python}
+# arrays with more dimensions
+zeros_array = np.zeros([2, 2])
+zeros_array
+```
+
+This array - which in mathematical terms is a *matrix* - has the following shape:
+
+```{python}
+# arrays with more dimensions
+zeros_array.shape
+```
+
+We an read this as "2 rows and 2 columns" (which equates to 4 elements).
+
+If we want to count the number of individual elements in an array (across all dimensions) we can use the `.size` attribute:
+
+```{python}
+# how many elements in the (15, ) `hdi` array?
+hdis_array.size
+```
+
+```{python}
+# how many elements in the (2, 2) `zeros_array`?
+zeros_array.size
+```
+
+Predictably, both of these attributes can be accessed for arrays of any dimensionality:
+
+```{python}
+# an array with more dimensions
+two_rows_ten_columns_array = np.zeros([2, 10])
+two_rows_ten_columns_array
+```
+
+```{python}
+# arrays with more dimensions
+two_rows_ten_columns_array.shape
+```
+
+```{python}
+# the number of elements in the `two_rows_ten_columns` array?
+two_rows_ten_columns_array.size
+```
+
+We always also want to know what type of data is in our array, as it will affect what graphs we can create and what analyses we can perform. Are we dealing with numbers or text, for instance? 
+
+To access this information, we can view the `dtype` attribute. 
+
+Let's look at the `dtype` for the `country_codes` array:
+
+```{python}
+# dtype
+country_codes_array.dtype
+```
+
+The `dtype` attribute here is just telling us that this is string data. For an explanation of the meaning, see the image below.
+
+![](images/numpy_string_dtypes.JPG)
+
+
+Let's look at the `dtype` of the `hdis_array`:
+
+```{python}
+# dtype (again)
+hdis_array.dtype
+```
+
+For this array, the `dtype` tells us that we are dealing with numerical data - specifically float data represented with 64 bits.
+
+
+### Statistical Attributes of Numpy arrays
+
+Numpy also provides a variety of what we can call "statistical attributes" which tell us statistics about the data inside the array. As with the methods we looked at in the previous section, Pandas inherits many of these methods, as we will see later in the page.
+
+Let's again look at the `hdis_array`, which contains the HDI score of each country. 
+
+```{python}
+hdis_array
+```
+
+We can use the `.min()` method to view the minimum (smallest) value in the array.
+
+```{python}
+# min
+hdis_array.min()
+```
+
+Likewise, we can view the maximum (largest) value in the array using `.max()`:
+
+```{python}
+# max
+hdis_array.max()
+```
+
+Other routine statistics, like the mean and standard deviation, can be accessed using the `.mean()` and `.std()` methods, respectively:
+
+```{python}
+# mean
+hdis_array.mean()
+```
+
+```{python}
+# std
+hdis_array.std()
+```
+
+Numpy arrays also let us sort the data within the array in ascending or descending order (ascending is the default). To do this, we can use the `.sort()` method:
+
+```{python}
+# sorting the `hdis_array`
+hdis_array.sort()
+```
+
+Hmmm, that is strange, there was no output from the cell. This is because a quirk of the `.sort()` method is that it operates "in place". Sure enough, if we check the `hdis_array`, the data has been sorted in ascending order:
+
+```{python}
+hdis_array
+```
+
+## Pandas Series attributes and methods
+
+Remember our maxim that *"a Pandas Series is a numpy array, plus a `name` attribute and an array-like `index`"*?
+
+We will see that because of this, we can use many of the same methods we have just seen for Numpy arrays on Pandas Series.
+
+Let's make a series from the HDI scores, called `hdi_series`. We do this using the now familiar `pd.Series()` constructor. Again, we will use the `country_codes` array as an index:
+
+```{python}
+# show again from Series, then show for df below
+hdi_series =  pd.Series(hdis_array, 
+                        index=country_codes_array)
+
+hdi_series
+```
+
+As we know, we can view the `index`, `name` and `values` attributes of the Series using the familiar accessors:
+
+```{python}
+# the `index` component of the Series
+hdi_series.index
+```
+
+```{python}
+# the `name` component (currently is None)
+hdi_series.name is None
+```
+
+```{python}
+# the numpy array (aka `.values`) component of the Series
+hdi_series.values
+```
+
+Let's verify that we can use the Numpy methods we saw above. Predictably, these methods operate on the Numpy array component of the series (e.g. the `.values` attribute). 
+
+First, let's look at the `shape`, `size` and `dtype`:
+
+```{python}
+# show the `shape` of the `hdi_series`
+hdi_series.shape
+```
+
+```{python}
+# show the `size` of the `hdi_series`
+hdi_series.size
+```
+
+```{python}
+# show the `dtype` of the `hdi_series`
+hdi_series.dtype
+```
+
+Because a Series is nothing but a Numpy array plus some additional attributes/methods, these methods function on the Series in the exact same manner as they function on a Numpy array.
+
+This is the same for the statistical methods. Let's get the `.min()` and `.max()` values from the `hdi_series`.
+
+```{python}
+# min
+hdi_series.min()
+```
+
+```{python}
+# max
+hdi_series.max()
+```
+
+These operations return the same values as when we call the method directly on the `hdis_array` (unsurprising, as each object contains the same data)!:
+
+```{python}
+# get the `max()` value from the `hdis_array`, for comparison
+hdis_array.max()
+```
+
+Ok, so these familiar Numpy methods are available. However, Pandas also introduces some additional methods (you may want to compare the output of `dir()` for the `hdis_array` vs the `hdi_series` to see the overlap/differences - as the printout is messy, we will not show it again here).
+
+One very useful Series method is `.describe()`. This will give us a variety of statistics about the data in the `.values` array of the Series:
+
+```{python}
+# `.describe()` the `hdi_series`
+hdi_series.describe()
+```
+
+Neat, an easy summary of the number of observations, the mean, the standard deviation around the mean, and then the range/interquartile range.
+
+Conversely, the `.value_counts()` method will count the occurrence of each *unique* value in the Series:
+
+```{python}
+# use the `value_counts()` method
+hdi_series.value_counts()
+```
+
+These methods can also be applied to arrays containing categorical/string data:
+
+```{python}
+# constructing a Series containing categorical data
+country_names_series = pd.Series(country_names_array,
+                                 index=country_codes_array)
+
+country_names_series
+```
+
+```{python}
+# .describe()
+country_names_series.describe()
+```
+
+Helpfully, Pandas has adjusted the `.describe()` summary in light of the `values` array of the `country_names_series` containing categorical/string data.
+
+We now see summaries of the number values, number of unique values etc, rather than numerical statistics like the mean and standard deviation.
+
+The `.value_counts()` method behaves the same as with numerical data, as both numbers and strings can be unique in an array:
+
+```{python}
+country_names_series.value_counts()
+```
+
+If we want to see the *unique* values only, regardless of the number of times each value occurs, we can use the `.unique()` method:
+
+```{python}
+# show the unique values in the Series
+hdi_series.unique()
+```
+
+```{python}
+# show the unique values in the Series
+country_names_series.unique()
+```
+
+## Pandas DataFrame attributes
+
+Now, remember again our other maxim that *"a Pandas DataFrame is just a *dictionary-like collection of Series"*? 
+
+Because of this, we can use all the methods we have seen so far on any Data Frame column. Each column is a Series, and therefore contains a Numpy array as it's `.values` attribute.
+
+However, Data Frames have some (useful!) extra methods (including statistical methods) not available for Series.
+
+First, let's import the [HDI/fertility rate data](https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index):
+
+```{python}
+# import our dataset
+df = pd.read_csv("data/year_2000_hdi_fert.csv")
+
+df
+```
+
+Although it is messy (and we did say we wouldn't use it again earlier...oops), we will use `dir()` on this Data Frame, to view all of the available attributes and methods:
+
+```{python}
+# show all available operations on the dataframe
+dir(df)
+```
+
+If you peruse the list (again, ignoring the "dunder" entries), you'll notice that some of the methods are the same as for both Numpy arrays and Series. For instance, we can retrieve the `.shape` of the entire Data Frame:
+
+```{python}
+# get the shape attribute (n_rows, n_columns)
+df.shape
+```
+
+We can also pull out an individual Series/column and view the `.shape` of that specific Series:
+
+```{python}
+# view the `shape` of a specific column
+df['Fertility Rate'].shape
+```
+
+When accessed for the entire Data Frame, the `size` attribute works in the same way as we have seen for Numpy arrays and Pandas Series e.g. it will tell us the total number of *elements* in the entire Data Frame (e.g. the number of elements in the rows multiplied by the number of elements in the columns):
+
+```{python}
+# show the `size` of the Data Frame
+df.size
+```
+
+Once we know how many observations we have, in any data analysis context, we will always want to know what variables we have in the Data Frame columns, and (again) what type of data is in each.
+
+The `.columns` attribute will tell us the name of each column:
+
+```{python}
+# show the column names
+df.columns
+```
+
+...and we can use the `.dtypes` attribute to quickly inspect the type of data in each column:
+
+```{python}
+# show the dtype in each column
+df.dtypes
+```
+
+The `object` data type means that the column contains either mixed data or string data (in this case string data). The numeric data in this Data Frame is represented as a 64-bit float (`float64`).
+
+Ok, so now we know how much data we have, and what type of data it is. Currently, if we want to access a specific row of the Data Frame (remember, each row here is one country), we will have to navigate the default `RangeIndex`. We did not specify an index when we loaded in the Data Frame, so, as we learned previously, Pandas will automatically supply one:
+
+```{python}
+# show the index (currently (basically) 0 to 15)
+df.index
+```
+
+We have [already discussed](0_1_to_loc_or_iloc.Rmd) the downsides of using the default index. As we have seen before, we can use the `.set_index()` method to choose a column containing values which we will use as index labels. We have come across Data Frame methods previouslt (`.sort_values()`) and will look at more in the next section. For now, just remember that these differ from *attributes* in that they are a *function attached to an object* rather than just a value/values attached to an object. Methods  often do something to the data rather than just report a value or set of values, like an attribute does.
+
+Let's set the `Code` column (containing the three-letter country codes) to be our index labels:
+
+```{python}
+# set the index as country name
+df = df.set_index("Code")
+
+df
+```
+
+As expected, when we now view the `index` attribute, we see that the country codes are the values that populate the index:
+
+```{python}
+# show that the index is now country names
+df.index
+```
+
+...and we can use the now familiar (and less error-prone) label-based indexing to retrieve specific rows:
+
+```{python}
+# remember what having the codes in the index lets us do
+df.loc[['USA', 'ITA']]
+```
+
+## Pandas Dataframe Methods
+
+The `.sort_values()` method we just used is one of many methods attached to Pandas Data Frames. We saw that many Numpy array methods are inherited by Pandas Series and this principle also applies to Data Frames.
+
+For instance, should we want to see the unique values in a given column (e.g. Series), we can use the `.unique()` method on just that column:
+
+```{python}
+# unique values in a given column
+df['Country Name'].unique()
+```
+
+Other Data Frame methods will report information from the Data Frame *as a whole*.
+
+For instance, we can call the `.describe()` method on the whole Data Frame. We saw this method used on a single Series earlier. The same useful statistical summary is shown for every column when we use the method on the whole Data Frame:
+
+```{python}
+# describe numerical variables
+df.describe()
+```
+
+We can also use direct indexing to `describe` a specific subset of columns:
+
+```{python}
+# for categorical variables
+df[['Fertility Rate', 'Human Development Index']].describe()
+```
+
+Because each Data Frame column is just a Pandas Series, all of the Series methods we saw above can be used on individual Series:
+
+```{python}
+# specific methods for specific statistics
+df['Fertility Rate'].min()
+```
+
+```{python}
+# specific methods for specific statistics
+df['Fertility Rate'].max()
+```
+
+```{python}
+# specific methods for specific statistics
+df['Fertility Rate'].std()
+```
+
+```{python}
+# specific methods for specific statistics
+df['Fertility Rate'].mean()
+```
+
+```{python}
+# value counts of a single variable
+df['Country Name'].value_counts()
+```
+
+Other methods, like `.sort_values()` take a column name as an argument, but have effects on the entire Data Frame.
+
+For instance, if we want to sort by `Human Development Index` scores:
+
+```{python}
+# sort values by HDI
+df.sort_values(by = 'Human Development Index')
+```
+
+```{python}
+# sort values by HDI (the other way)
+df.sort_values(by = 'Human Development Index',
+               ascending=False) # `ascending=False` reverses the sorting order
+```
+
+We can also sort the index using `.sort_index()`, by default this will arrange the rows of the Data Frame in alphabetical order, if we are using string labels (numerical order if we are using the default `RangeIndex`):
+
+```{python}
+# sort index (in alphabetical order)
+df.sort_index()
+```
+
+```{python}
+# sort index (reverse alphabetical order)
+df.sort_index(ascending=False)
+```
+
+Another useful method, which is very powerful in tandem with label-based indexing, is `.drop()`. This lets use specify using index labels rows which we want to remove from the Data Frame. For instance, if we want to remove the data for Australia we can use:
+
+```{python}
+df.drop(labels = 'AUS')
+```
+
+If you compare this to the output from the last cell you will see that, as if by magic, the row for `AUS` has disappeared.
+
+
+## Plotting Methods
+
+The Data Frame plotting *methods* that we have seen on the previous pages actually also apply to Series.
+
+When working with a Series, it makes most sense most of the time to use the `kind = 'hist'` argument to inspect the distribution of the data in that Series:
+
+```{python}
+hdi_series.plot(kind='hist');
+```
+
+Other kinds of plot require bivariate data, and so can only be used with Data Frames:
+
+```{python tags=c("raises-exception")}
+# A ValueError from trying to scatter plot a Series
+hdi_series.plot(kind='scatter')
+```
+
+```{python}
+# show a scatter plot
+df.plot(x = 'Human Development Index',
+        y = 'Fertility Rate',
+        kind = 'scatter');
+```
+
+## A note on numerical operations
+
+Any numerical operations performed on the Data Frame *as a whole* will be default be performed on the `values` in the Series that make up each column.
+
+So, if we want to do something weird/stupid like multiplying the entire Data Frame by a single number, this operation will be performed separately on each element in the Data Frame:
+
+```{python}
+# do not do this 
+df * 200
+```
+
+More sensibly, we will most likely want to perform numerical operations on specific columns. We may want to standardize the values relative to a mean of 0 and standard deviation of 1, for instance.
+
+Pandas methods can be used to perform this computation, and again, the operation will be performed on each element in the `values` array of the specific Series/column that we grab.
+
+For instance, to subtract the mean value from every element in the `.values` array we can use:
+
+```{python}
+# subtract the mean from every element in the Series
+df['Population'] - df['Population'].mean()
+```
+
+We can perform the full z-score standardization using the code in the cell below. Note that `df['Population'].mean()` and `df['Population'].std()` both return single values. Each of these values is used in the same way on every element in the `Population` column:
+
+```{python}
+# standardize the `Population` scores
+df['Population_z'] = (df['Population'] - df['Population'].mean())/df['Population'].std()
+
+df
+```
+
+Because this feature (numerical operations performed on each element) is shared across all Pandas Series, and we are using Pandas methods, we can write a function which will compute the z-scores for any column containing numerical data: 
+
+```{python}
+# define a function to calculate the z-scores for a specific numeric column
+def get_z(df_column):
+    "A function which takes a Data Frame column and returns a series containing the z-score of each element."
+    z_col = (df_column - df_column.mean())/df_column.std()
+    return z_col
+```
+
+```{python}
+# test our function
+get_z(df['Human Development Index'])
+```
+
+Again, each numerical operation that the function performs has been performed on every element of the `.values` array of the Data Frame column `Human Development Index`.
+
+Let's add this new standardized data to the Data Frame, and plot it using the now familiar `.plot()` method:
+
+```{python}
+# add standard scores for HDI
+df['HDI_z'] = df['Human Development Index']
+
+# show the Data Frame
+display(df)
+
+# plot the standardized variables
+df.plot(kind='scatter',
+        x='Population_z',
+        y='HDI_z');
+```
+
+We can see from this procedure that we have two bivariate outliers, with respect to `Population` and `HDI`.
+
+This dataset is small enough that we can see that these values correspond to India and China...
+
+```{python}
+# inspect the `Population_z` column to identify the outliers
+df['Population_z']
+```
+
+...but for a larger dataset we could find them using [Boolean filtering - a topic we will come to in a later page](0_5_filtering_data_with_pandas.Rmd).
+
+
+## Summary
+
+On this page we have further explored the idea that Pandas Data Frames, Pandas Series and Numpy arrays have a nested structure.
+
+Data Frames are *dictionary-like collections of Series*. Series are a combination of a Numpy array (`.values`) with other attributes (`name` and `index`). As a result, many methods we can use on a Series are inherited from Numpy arrays, and many  Data Frame methods are likewise inherited from the Pandas Series that constitute the Data Frame.

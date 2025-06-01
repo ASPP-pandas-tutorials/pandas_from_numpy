@@ -1,0 +1,8 @@
+# Requirements for notebooks / Binderhub
+matplotlib
+pandas >= 1.5
+xlrd
+openpyxl
+scipy
+jupytext
+statsmodels

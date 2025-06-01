@@ -1,0 +1,13 @@
+# Built website
+_build/
+# Output for cfdcode install.
+build/
+*.egg-info/
+__pycache__/
+_references.bib
+.ipynb_checkpoints/
+.ok_storage
+*.ipynb
+*.orig
+node_modules/
+.jupyterlite.doit.db

@@ -1,0 +1,12 @@
+format: jb-book
+root: intro
+parts:
+  - caption: Pandas from Numpy
+    chapters:
+      - file: 0_0_pandas_intro
+      - file: 0_1_to_loc_or_iloc
+      - file: 0_2_pandas_dataframes_attributes_methods
+      - file: 0_3_constructing_dataframes
+      - file: 0_4_dealing_with_missing_data_in_pandas
+      - file: 0_5_filtering_data_with_pandas
+      - file: 0_6_more_pandas_methods_strings
