@@ -523,7 +523,7 @@ named_df
 
 In fact, now if we want to use integer indexing, we are forced to use `.iloc`, as else we get an error:
 
-```{python}
+```{python tags=c("raises-exception")}
 # this will not work if each column has a `name` string
 named_df[0]
 ```
