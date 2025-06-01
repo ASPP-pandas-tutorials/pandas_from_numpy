@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.15.2
+      jupytext_version: 1.14.5
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -364,7 +364,7 @@ If you use direct indexing, e.g. `[4]` without using `.iloc` or `.loc`, then Pan
 
 ## Strange and `name`less Data Frame columns
 
-When we include Series as columns in Data Frames - remember, that a Data Frame is just a dictionary-like collection of Series - it becomes eminently sensisble to specify a `name` attribute for each Series.
+When we include Series as columns in Data Frames - remember, that a Data Frame is just a dictionary-like collection of Series - it becomes eminently sensible to specify a `name` attribute for each Series.
 
 Pandas will not *force* us to do this, but it leads to some error-prone consequences if we do not. In fact, the `RangeIndex` crops up again here, and can create confusion in similar ways to the ones we have seen in the last section.
 
@@ -466,7 +466,7 @@ country_names_array = np.array(['Australia', 'Brazil', 'Canada',
 country_names_array
 ```
 
-Let's add this into the `no_name_df`, uisng the `name` "Country Names":
+Let's add this into the `no_name_df`, using the `name` "Country Names":
 
 ```{python}
 no_name_df['Country Names'] = country_names_array
@@ -490,7 +490,7 @@ no_name_df
 We now have a column with the `name` "0" that is not at the 0-th location of the `.columns` attribute:
 
 ```{python}
-# show the 0-th element of the `.columns` atttribute
+# show the 0-th element of the `.columns` attribute
 no_name_df.columns[0]
 ```
 
