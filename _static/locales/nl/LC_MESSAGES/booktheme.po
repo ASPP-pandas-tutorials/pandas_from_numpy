@@ -8,20 +8,11 @@ msgstr ""
 "Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "next page"
-msgstr "volgende bladzijde"
+msgid "Toggle navigation"
+msgstr "Schakel navigatie"
 
-msgid "previous page"
-msgstr "vorige pagina"
-
-msgid "Last updated on"
-msgstr "Laatst geupdate op"
-
-msgid "Sphinx Book Theme"
-msgstr "Sphinx-boekthema"
-
-msgid "Edit this page"
-msgstr "bewerk deze pagina"
+msgid "Download this page"
+msgstr "Download deze pagina"
 
 msgid "By the"
 msgstr "Door de"
@@ -29,32 +20,44 @@ msgstr "Door de"
 msgid "Print to PDF"
 msgstr "Afdrukken naar pdf"
 
+msgid "open issue"
+msgstr "open probleem"
+
 msgid "repository"
 msgstr "repository"
 
-msgid "Download this page"
-msgstr "Download deze pagina"
+msgid "Edit this page"
+msgstr "bewerk deze pagina"
+
+msgid "Copyright"
+msgstr "auteursrechten"
+
+msgid "previous page"
+msgstr "vorige pagina"
+
+msgid "By"
+msgstr "Door"
+
+msgid "Last updated on"
+msgstr "Laatst geupdate op"
 
 msgid "Download source file"
 msgstr "Download het bronbestand"
 
-msgid "Toggle navigation"
-msgstr "Schakel navigatie"
-
-msgid "Open an issue"
-msgstr "Open een probleem"
+msgid "Sphinx Book Theme"
+msgstr "Sphinx-boekthema"
 
 msgid "Source repository"
 msgstr "Bronopslagplaats"
 
+msgid "Fullscreen mode"
+msgstr "Volledig scherm"
+
 msgid "Contents"
 msgstr "Inhoud"
 
-msgid "Theme by the"
-msgstr "Thema door de"
-
-msgid "Fullscreen mode"
-msgstr "Volledig scherm"
+msgid "next page"
+msgstr "volgende bladzijde"
 
 msgid "Download notebook file"
 msgstr "Download notebookbestand"
@@ -62,14 +65,11 @@ msgstr "Download notebookbestand"
 msgid "Launch"
 msgstr "Lancering"
 
-msgid "Copyright"
-msgstr "auteursrechten"
-
-msgid "By"
-msgstr "Door"
-
-msgid "open issue"
-msgstr "open probleem"
+msgid "Open an issue"
+msgstr "Open een probleem"
 
 msgid "suggest edit"
 msgstr "suggereren bewerken"
+
+msgid "Theme by the"
+msgstr "Thema door de"

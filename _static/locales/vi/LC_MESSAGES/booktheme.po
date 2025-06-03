@@ -8,20 +8,11 @@ msgstr ""
 "Language: vi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "next page"
-msgstr "Trang tiếp theo"
+msgid "Toggle navigation"
+msgstr "Chuyển đổi điều hướng thành"
 
-msgid "previous page"
-msgstr "trang trước"
-
-msgid "Last updated on"
-msgstr "Cập nhật lần cuối vào"
-
-msgid "Sphinx Book Theme"
-msgstr "Chủ đề sách nhân sư"
-
-msgid "Edit this page"
-msgstr "chỉnh sửa trang này"
+msgid "Download this page"
+msgstr "Tải xuống trang này"
 
 msgid "By the"
 msgstr "Bằng"
@@ -29,32 +20,44 @@ msgstr "Bằng"
 msgid "Print to PDF"
 msgstr "In sang PDF"
 
+msgid "open issue"
+msgstr "vấn đề mở"
+
 msgid "repository"
 msgstr "kho"
 
-msgid "Download this page"
-msgstr "Tải xuống trang này"
+msgid "Edit this page"
+msgstr "chỉnh sửa trang này"
+
+msgid "Copyright"
+msgstr "Bản quyền"
+
+msgid "previous page"
+msgstr "trang trước"
+
+msgid "By"
+msgstr "Bởi"
+
+msgid "Last updated on"
+msgstr "Cập nhật lần cuối vào"
 
 msgid "Download source file"
 msgstr "Tải xuống tệp nguồn"
 
-msgid "Toggle navigation"
-msgstr "Chuyển đổi điều hướng thành"
-
-msgid "Open an issue"
-msgstr "Mở một vấn đề"
+msgid "Sphinx Book Theme"
+msgstr "Chủ đề sách nhân sư"
 
 msgid "Source repository"
 msgstr "Kho nguồn"
 
+msgid "Fullscreen mode"
+msgstr "Chế độ toàn màn hình"
+
 msgid "Contents"
 msgstr "Nội dung"
 
-msgid "Theme by the"
-msgstr "Chủ đề của"
-
-msgid "Fullscreen mode"
-msgstr "Chế độ toàn màn hình"
+msgid "next page"
+msgstr "Trang tiếp theo"
 
 msgid "Download notebook file"
 msgstr "Tải xuống tệp sổ tay"
@@ -62,14 +65,11 @@ msgstr "Tải xuống tệp sổ tay"
 msgid "Launch"
 msgstr "Phóng"
 
-msgid "Copyright"
-msgstr "Bản quyền"
-
-msgid "By"
-msgstr "Bởi"
-
-msgid "open issue"
-msgstr "vấn đề mở"
+msgid "Open an issue"
+msgstr "Mở một vấn đề"
 
 msgid "suggest edit"
 msgstr "đề nghị chỉnh sửa"
+
+msgid "Theme by the"
+msgstr "Chủ đề của"

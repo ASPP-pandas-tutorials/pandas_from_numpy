@@ -8,20 +8,11 @@ msgstr ""
 "Language: no\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "next page"
-msgstr "neste side"
+msgid "Toggle navigation"
+msgstr "Bytt navigasjon"
 
-msgid "previous page"
-msgstr "forrige side"
-
-msgid "Last updated on"
-msgstr "Sist oppdatert den"
-
-msgid "Sphinx Book Theme"
-msgstr "Sphinx boktema"
-
-msgid "Edit this page"
-msgstr "Rediger denne siden"
+msgid "Download this page"
+msgstr "Last ned denne siden"
 
 msgid "By the"
 msgstr "Ved"
@@ -29,32 +20,44 @@ msgstr "Ved"
 msgid "Print to PDF"
 msgstr "Skriv ut til PDF"
 
+msgid "open issue"
+msgstr "åpent nummer"
+
 msgid "repository"
 msgstr "oppbevaringssted"
 
-msgid "Download this page"
-msgstr "Last ned denne siden"
+msgid "Edit this page"
+msgstr "Rediger denne siden"
+
+msgid "Copyright"
+msgstr "opphavsrett"
+
+msgid "previous page"
+msgstr "forrige side"
+
+msgid "By"
+msgstr "Av"
+
+msgid "Last updated on"
+msgstr "Sist oppdatert den"
 
 msgid "Download source file"
 msgstr "Last ned kildefilen"
 
-msgid "Toggle navigation"
-msgstr "Bytt navigasjon"
-
-msgid "Open an issue"
-msgstr "Åpne et problem"
+msgid "Sphinx Book Theme"
+msgstr "Sphinx boktema"
 
 msgid "Source repository"
 msgstr "Kildedepot"
 
+msgid "Fullscreen mode"
+msgstr "Fullskjerm-modus"
+
 msgid "Contents"
 msgstr "Innhold"
 
-msgid "Theme by the"
-msgstr "Tema av"
-
-msgid "Fullscreen mode"
-msgstr "Fullskjerm-modus"
+msgid "next page"
+msgstr "neste side"
 
 msgid "Download notebook file"
 msgstr "Last ned notatbokfilen"
@@ -62,14 +65,11 @@ msgstr "Last ned notatbokfilen"
 msgid "Launch"
 msgstr "Start"
 
-msgid "Copyright"
-msgstr "opphavsrett"
-
-msgid "By"
-msgstr "Av"
-
-msgid "open issue"
-msgstr "åpent nummer"
+msgid "Open an issue"
+msgstr "Åpne et problem"
 
 msgid "suggest edit"
 msgstr "foreslå redigering"
+
+msgid "Theme by the"
+msgstr "Tema av"

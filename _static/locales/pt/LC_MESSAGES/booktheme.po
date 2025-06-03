@@ -8,20 +8,11 @@ msgstr ""
 "Language: pt\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "next page"
-msgstr "próxima página"
+msgid "Toggle navigation"
+msgstr "Alternar de navegação"
 
-msgid "previous page"
-msgstr "página anterior"
-
-msgid "Last updated on"
-msgstr "Última atualização em"
-
-msgid "Sphinx Book Theme"
-msgstr "Tema do livro Sphinx"
-
-msgid "Edit this page"
-msgstr "Edite essa página"
+msgid "Download this page"
+msgstr "Baixe esta página"
 
 msgid "By the"
 msgstr "Pelo"
@@ -29,32 +20,44 @@ msgstr "Pelo"
 msgid "Print to PDF"
 msgstr "Imprimir em PDF"
 
+msgid "open issue"
+msgstr "questão aberta"
+
 msgid "repository"
 msgstr "repositório"
 
-msgid "Download this page"
-msgstr "Baixe esta página"
+msgid "Edit this page"
+msgstr "Edite essa página"
+
+msgid "Copyright"
+msgstr "direito autoral"
+
+msgid "previous page"
+msgstr "página anterior"
+
+msgid "By"
+msgstr "De"
+
+msgid "Last updated on"
+msgstr "Última atualização em"
 
 msgid "Download source file"
 msgstr "Baixar arquivo fonte"
 
-msgid "Toggle navigation"
-msgstr "Alternar de navegação"
-
-msgid "Open an issue"
-msgstr "Abra um problema"
+msgid "Sphinx Book Theme"
+msgstr "Tema do livro Sphinx"
 
 msgid "Source repository"
 msgstr "Repositório fonte"
 
+msgid "Fullscreen mode"
+msgstr "Modo tela cheia"
+
 msgid "Contents"
 msgstr "Conteúdo"
 
-msgid "Theme by the"
-msgstr "Tema por"
-
-msgid "Fullscreen mode"
-msgstr "Modo tela cheia"
+msgid "next page"
+msgstr "próxima página"
 
 msgid "Download notebook file"
 msgstr "Baixar arquivo de notebook"
@@ -62,14 +65,11 @@ msgstr "Baixar arquivo de notebook"
 msgid "Launch"
 msgstr "Lançamento"
 
-msgid "Copyright"
-msgstr "direito autoral"
-
-msgid "By"
-msgstr "De"
-
-msgid "open issue"
-msgstr "questão aberta"
+msgid "Open an issue"
+msgstr "Abra um problema"
 
 msgid "suggest edit"
 msgstr "sugerir edição"
+
+msgid "Theme by the"
+msgstr "Tema por"
