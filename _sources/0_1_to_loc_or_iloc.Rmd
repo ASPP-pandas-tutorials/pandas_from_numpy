@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.1
+      jupytext_version: 1.14.5
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -23,7 +23,7 @@ From the [previous page](0_0_pandas_intro.Rmd), remember our maxims that:
 
 - *"a Pandas Data Frame is just a *dictionary-like collection of Series*"? 
 
-On this page we will examine differences between Data Frame attributes. We will demonstrate that the `name` attribute is optional - the default `name` is `None` and the `name` attribute can be left unspecified in any given Series with minimal consequences. We will show, however, that it is essential to specify the `name` attribute as a column name when a Series is part of a Pandas Data Frame. 
+On this page we will examine differences between Data Frame attributes. We will demonstrate that the `name` attribute is optional. The default `name` is `None` and the `name` attribute can be left unspecified in any given Series with minimal consequences. We will show, however, that it is important to specify the `name` attribute as a column name when a Series is part of a Pandas Data Frame. 
 
 In contrast, an `index` is essential - if no `index` is specified then Pandas will create one. However, we will show that it is sensible to replace Pandas' default index with a custom index, to avoid accidental errors when indexing. 
 
@@ -42,10 +42,10 @@ First, an array containing the three-letter codes for each country:
 ```{python}
 # three letter codes for each country
 country_codes_array = np.array(['AUS', 'BRA', 'CAN',
-                          'CHN', 'DEU', 'ESP',
-                          'FRA', 'GBR', 'IND',
-                          'ITA', 'JPN', 'KOR',
-                          'MEX', 'RUS', 'USA'])
+                                'CHN', 'DEU', 'ESP',
+                                'FRA', 'GBR', 'IND',
+                                'ITA', 'JPN', 'KOR',
+                                'MEX', 'RUS', 'USA'])
 country_codes_array
 ```
 
@@ -84,13 +84,20 @@ hdi_series.index
 ```
 
 ```{python}
+# show that `name` is None (e.g. does not exist - this cell will produce no output)
+hdi_series.name
+```
+
+```{python}
 # show that `name` is None (e.g. does not exist)
 hdi_series.name is None
 ```
 
-The `name` attribute is optional when considering Series which are not part of Data Frames. The default `name` attribute  is `None`. E.g. if we do not specifiy a `name`, Pandas will set `name` to be `None`.
+The `name` attribute is optional when considering Series which are not part of Data Frames. If we do not specify a `name`, Pandas will set `name` to be `None`.
 
-However, the name attribute can be useful for tracking what data is inside the `values` array. Let's make a new Series - called `hdi_series_with_name_and_index` - where we **do** specify a `name` attribute when calling the `pd.Series()` constructor. 
+However, the name attribute can be useful for tracking what data is inside the `values` array. 
+
+Let's make a new Series - called `hdi_series_with_name_and_index` - where we **do** specify a `name` attribute when calling the `pd.Series()` constructor. 
 
 To specify the `name` attribute we use the `name = ` argument inside the `pd.DataFrame()` constructor:
 
@@ -114,6 +121,8 @@ hdi_series_with_name_and_index.name
 # `name` is not None
 hdi_series_with_name_and_index.name is None
 ```
+
+## What's in an `index`?
 
 So far so good, we have seen what happens if we make a Series with no `name` attribute. But what if we make a Series without specifying an `index`? 
 
@@ -193,7 +202,7 @@ hdi_series_no_name_no_index.index[0:-1]
 hdi_series_no_name_no_index.index[0:4]
 ```
 
-This might seem like pretty weird behaviour. This is because the `RangeIndex` behaves similarly to the in-built python `range()` function, rather than as a list or numpy array (e.g. we cannot slice it using the familar `start:stop` syntax).
+This might seem like pretty weird behaviour. This is because the `RangeIndex` behaves similarly to the in-built python `range()` function, rather than as a list or numpy array (e.g. we cannot slice it using the familiar `start:stop` syntax).
 
 To view all the values inside the `RangeIndex` we can loop over it:
 
@@ -353,8 +362,181 @@ However, a good additional maxim is: **use `.loc` and `iloc` unless there is a g
 If you use direct indexing, e.g. `[4]` without using `.iloc` or `.loc`, then Pandas assumes you want to use integer indexing.  if this is the case it is better to be explicit and use the `.iloc` method *especially if the Series has a `RangeIndex` with numeric labels*.
 
 
+## Strange and `name`less Data Frame columns
+
+When we include Series as columns in Data Frames - remember, that a Data Frame is just a dictionary-like collection of Series - it becomes eminently sensible to specify a `name` attribute for each Series.
+
+Pandas will not *force* us to do this, but it leads to some error-prone consequences if we do not. In fact, the `RangeIndex` crops up again here, and can create confusion in similar ways to the ones we have seen in the last section.
+
+As shown above, our `hdi_series` does not have a `name` attribute. Let's pass this Series to the `pd.DataFrame()` constructor, to see the consequence of a `name`less Series in this context. We will call the resulting Data Frame `no_name_df`:
+
+```{python}
+# verify again that the `hdi_series` has no `name` attribute
+hdi_series.name is None
+```
+
+```{python}
+# a Data Frame made of a Series with no `name` attribute
+no_name_df = pd.DataFrame(hdi_series)
+
+no_name_df
+```
+
+Ok, so in the absence of a `name` attribute Pandas has labelled the column with a `0`. If we inspect more deeply, we find that actually Pandas, in the absence of being instructed otherwise, has created a `RangeIndex`, but this time for the `columns` (e.g. the column names) of the Data Frame. If you look at the Data Frame above, you can see that the `index` attribute is the three-letter country codes. However, the `.columns` are a `RangeIndex`:
+
+```{python}
+# look at the column names via the `.columns` attribute
+no_name_df.columns
+```
+
+Sure enough, if we check the `type` of the fist element in this `RangeIndex` it is a of a numeric type - e.g. we can think of it not as a column *name* but a number standing in for a column name:
+
+```{python}
+# check the type of the first element in the `.columns` attribute
+type(no_name_df.columns[0])
+```
+
+It may be obvious why this naming convention for Data Frame columns can lead to errors for reasons of low interpretability. We typically want our column names to be descriptive of the data in the column, to ourselves and to other people reading our code. If we do not specify a `name` attribute for our Series when creating Data Frames, the default numerical column names supplied by Pandas are hard to interpret, and it is easy to misinterpret, or to forget what data is in that column, leading to human errors.
+
+They can also lead to indexing errors, similar to those we saw in the previous section. To demonstrate this, let's compare the `name`less Data Frame above to a Data Frame created from a Series with a `name`.
+
+Our aptly named `hdi_series_with_name_and_index` has a `name` attribute - (look at the last line of the output from the cell below, the `Name: Human Development Index`):
+
+```{python}
+# a Series with a `name`
+hdi_series_with_name_and_index
+```
+
+Let's call the `pd.DataFrame()` constructor on this Series - we'll call the resultant Data Frame `named_df`:
+
+```{python}
+# create a new Data Frame, with a sensible name for the column
+named_df = pd.DataFrame(hdi_series_with_name_and_index)
+
+named_df
+```
+
+We see that Pandas has automatically used the `name` attribute as the column name, hugely increasing the interpretability of the resulting Data Frame.
+
+We can see the `name` in the `.columns` attribute of the new  `named_df` Data Frame:
+
+```{python}
+# show the column names from the `named_df` Data Frame
+named_df.columns
+```
+
+Now, let's try using direct indexing with each Data Frame, using the column names.
+
+This is very straightforward for the `named_df`:
+
+```{python}
+# direct indexing to retrieve a column by name
+named_df['Human Development Index']
+```
+
+What about for `no_name_df`? Well, the column name there is `0`, of `int` type.
+
+What happens if use direct indexing? We are hoping we see something like the output of the cell above, albeit with a `0` for the `name`, rather than `Human Development Index`:
+
+```{python}
+# direct indexing with no `name` attribute
+no_name_df[0]
+```
+
+Sure enough that is what we see. But the operation we have used looks very much like *integer* indexing on a Series, which will return a single value:
+
+```{python}
+# integer indexing a Series (without using `.iloc`)
+hdi_series[0]
+```
+
+This can be confusing.
+
+In addition, the numerical label can also be confusing if we introduce more columns, especially if we mix in columns which do have `name` attributes that we specify.
+
+For instance, if we add in the full name of each country:
+
+```{python}
+# country names array
+country_names_array = np.array(['Australia', 'Brazil', 'Canada',
+                          'China', 'Germany', 'Spain',
+                          'France', 'United Kingdom', 'India',
+                          'Italy', 'Japan', 'South Korea',
+                          'Mexico', 'Russia', 'United States'])
+country_names_array
+```
+
+Let's add this into the `no_name_df`, using the `name` "Country Names":
+
+```{python}
+no_name_df['Country Names'] = country_names_array
+
+no_name_df
+```
+
+We now have one column that has an `int` as it's column name, and another with a string.
+
+In the same way as for a numerical `index`, this situation can become confusing if the numerical labels become misaligned with their integer location in the `.columns` attribute.
+
+For instance, if we re-arrange the columns:
+
+```{python}
+# re-arrange the columns
+no_name_df = no_name_df[["Country Names", 0]]
+
+no_name_df
+```
+
+We now have a column with the `name` "0" that is not at the 0-th location of the `.columns` attribute:
+
+```{python}
+# show the 0-th element of the `.columns` attribute
+no_name_df.columns[0]
+```
+
+We are now in the precarious situation of using a `int` `0` both as a *label* and as a *location*. In the cell above, it is a location, it the cell below it serves as a label:
+
+```{python}
+# direct index the `0` column
+no_name_df[0]
+```
+
+Ideally, we want a clear separation between integer indexes (like `0`) and *column names*. 
+
+This confusing situation can be completely avoided in the case of `named_df`. Let's add the country names to this Data Frame also:
+
+```{python}
+# add the country names
+named_df['Country Names'] = country_names_array
+
+named_df
+```
+
+We don't introduce any confusion or error-proneness by re-arranging these columns which have sensible string names:
+
+```{python}
+# re-arrange the columns
+named_df = named_df[["Country Names", "Human Development Index"]]
+
+named_df
+```
+
+In fact, now if we want to use integer indexing, we are forced to use `.iloc`, as else we get an error:
+
+```{python tags=c("raises-exception")}
+# this will not work if each column has a `name` string
+named_df[0]
+```
+
+This compels us to stick to the good practice maxim we introduced above: **use `.loc` and `iloc` unless there is a good reason not to!**. 
+
+Giving every column a sensible string as a `name` is one situation where direct indexing (e.g. in the present context using `named_df['Human Development Index']` etc.) is safe and non-error prone. As we have seen, issues can arise if we do not specify `name` attributes, and let Pandas automatically generate numeric labels for our Data Frame columns...
+
+
 ## Summary
 
 On this page we have looked at the differences between attributes of the Pandas Series - the `name` is optional, but a default `RangeIndex` will be supplied if no custom `index` is specified.
 
-We have seen that the `RangeIndex` can lead to errors if the numeric row labels become misaligned with the integer location of a given row.
+We have seen that the `RangeIndex` can lead to errors if the numeric row labels become misaligned with the integer location of a given row. Similarly, if we do not specify a `name` attribute for Data Frame columns, Pandas will generate numeric labels which can create confusion between integer-based and direct indexing.
+
+For best results, we should specify both an interpretable `index` and interpretable `name` attributes for our Series, especially when they are part of Data Frames.

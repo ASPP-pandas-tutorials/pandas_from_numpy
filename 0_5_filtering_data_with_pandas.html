@@ -428,36 +428,38 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="filtering-data-frames-with-boolean-series">
 <h1>Filtering Data Frames with Boolean Series<a class="headerlink" href="#filtering-data-frames-with-boolean-series" title="Link to this heading">#</a></h1>
-<blockquote>
-<div><p>📝 NOTE: from meeting with Matthew: Boolean series (and matching of row labels there) e.g. Boolean array will operate like iloc, Boolean Series will match row labels.</p>
-</div></blockquote>
-<blockquote>
-<div><p>Add a separate page for Boolean indexing in a sensible place (build with numpy first first then show with Series) - show that order doesn’t matter e.g. Booleans are matched by label not by position. Show this error:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;birth_weights.csv&#39;</span><span class="p">)</span>
-<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-<span class="n">female_mf</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span>
-<span class="n">female_mf</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-<span class="n">df2</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;sex&#39;</span><span class="p">)</span>
-<span class="n">df2</span>
-<span class="n">df2</span><span class="p">[</span><span class="n">female_mf</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
-<span class="n">df</span><span class="p">[</span><span class="n">female_mf</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
-<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">female_mf</span><span class="p">]</span>
-<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">female_mf</span><span class="p">]</span>
-</pre></div>
-</div>
-<p>Covered on this page:</p>
-<ul class="simple">
-<li><p>filtering (ex: df[df[‘age’] &gt; 30])</p></li>
-<li><p>Boolean indexing, with Boolean series (and matching of row labels there); range indexing on labels (inclusive of last element)</p></li>
-</ul>
-<p>Structure of this page:</p>
-<ul class="simple">
-<li><p>show Boolean arrays and boolean filtering of arrays</p></li>
-<li><p>build a Series, show Boolean series and filtering Series with Boolean arrays/series</p></li>
-<li><p>show Boolean filtering with DataFrames</p></li>
-</ul>
-</div></blockquote>
+<!---
+📝 NOTE: from meeting with Matthew: Boolean series (and matching of row labels there) e.g. Boolean array will operate like iloc, Boolean Series will match row labels.
+
+Add a separate page for Boolean indexing in a sensible place (build with numpy first first then show with Series) - show that order doesn't matter e.g. Booleans are matched by label not by position. Show this error:
+
+```
+import pandas as pd
+df = pd.read_csv('birth_weights.csv')
+df.head()
+female_mf = df['sex'] == 2
+female_mf.head()
+df2 = df.sort_values('sex')
+df2
+df2[female_mf].describe()
+df[female_mf].describe()
+df.loc[female_mf]
+df.iloc[female_mf]
+```
+
+Covered on this page:
+
+* filtering (ex: df[df['age'] > 30])
+* Boolean indexing, with Boolean series (and matching of row labels there); range indexing on labels (inclusive of last element)
+
+Structure of this page:
+
+* show Boolean arrays and boolean filtering of arrays
+
+* build a Series, show Boolean series and filtering Series with Boolean arrays/series
+
+* show Boolean filtering with DataFrames
+-->
 <p>Once we have got our data into a Pandas Data Frame, no doubt we will want to filter and select specific portions of it for visualisation and analysis.</p>
 <p>On this page we will look at different methods of filtering. Again, we will focus on how Pandas is built from Numpy, and assess the similarities and differences in how filtering works on objects from both libraries.</p>
 <section id="pandas-from-numpy-once-more">
@@ -631,7 +633,9 @@ dtype: bool
 </div>
 </div>
 </div>
-<p>Even better, let’s manually specificy the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute - to make it clearer down the line what the <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code> values mean e.g. whether each country has a higher-than-median HDI score:</p>
+<p>Even better, let’s manually specify the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute - to make it clearer
+down the line what the <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code> values mean e.g. whether each
+country has a higher-than-median HDI score:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set the `name` attribute</span>

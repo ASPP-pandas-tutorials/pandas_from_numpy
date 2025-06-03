@@ -412,7 +412,9 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-s-in-a-name">What’s in a <code class="docutils literal notranslate"><span class="pre">name</span></code>?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-s-in-an-index">What’s in an <code class="docutils literal notranslate"><span class="pre">index</span></code>?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-the-default-index-can-be-confusing">Why the “default” index can be confusing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strange-and-nameless-data-frame-columns">Strange and <code class="docutils literal notranslate"><span class="pre">name</span></code>less Data Frame columns</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 </ul>
             </nav>
@@ -435,7 +437,7 @@
 <ul class="simple">
 <li><p>*”a Pandas Data Frame is just a <em>dictionary-like collection of Series</em>”?</p></li>
 </ul>
-<p>On this page we will examine differences between Data Frame attributes. We will demonstrate that the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute is optional - the default <code class="docutils literal notranslate"><span class="pre">name</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code> and the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute can be left unspecified in any given Series with minimal consequences. We will show, however, that it is essential to specify the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute as a column name when a Series is part of a Pandas Data Frame.</p>
+<p>On this page we will examine differences between Data Frame attributes. We will demonstrate that the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute is optional. The default <code class="docutils literal notranslate"><span class="pre">name</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code> and the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute can be left unspecified in any given Series with minimal consequences. We will show, however, that it is important to specify the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute as a column name when a Series is part of a Pandas Data Frame.</p>
 <p>In contrast, an <code class="docutils literal notranslate"><span class="pre">index</span></code> is essential - if no <code class="docutils literal notranslate"><span class="pre">index</span></code> is specified then Pandas will create one. However, we will show that it is sensible to replace Pandas’ default index with a custom index, to avoid accidental errors when indexing.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -454,10 +456,10 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># three letter codes for each country</span>
 <span class="n">country_codes_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;AUS&#39;</span><span class="p">,</span> <span class="s1">&#39;BRA&#39;</span><span class="p">,</span> <span class="s1">&#39;CAN&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;CHN&#39;</span><span class="p">,</span> <span class="s1">&#39;DEU&#39;</span><span class="p">,</span> <span class="s1">&#39;ESP&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;FRA&#39;</span><span class="p">,</span> <span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;IND&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;ITA&#39;</span><span class="p">,</span> <span class="s1">&#39;JPN&#39;</span><span class="p">,</span> <span class="s1">&#39;KOR&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;MEX&#39;</span><span class="p">,</span> <span class="s1">&#39;RUS&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">])</span>
+                                <span class="s1">&#39;CHN&#39;</span><span class="p">,</span> <span class="s1">&#39;DEU&#39;</span><span class="p">,</span> <span class="s1">&#39;ESP&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;FRA&#39;</span><span class="p">,</span> <span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;IND&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;ITA&#39;</span><span class="p">,</span> <span class="s1">&#39;JPN&#39;</span><span class="p">,</span> <span class="s1">&#39;KOR&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;MEX&#39;</span><span class="p">,</span> <span class="s1">&#39;RUS&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">])</span>
 <span class="n">country_codes_array</span>
 </pre></div>
 </div>
@@ -553,6 +555,14 @@ dtype: float64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show that `name` is None (e.g. does not exist - this cell will produce no output)</span>
+<span class="n">hdi_series</span><span class="o">.</span><span class="n">name</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show that `name` is None (e.g. does not exist)</span>
 <span class="n">hdi_series</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span>
 </pre></div>
@@ -564,8 +574,9 @@ dtype: float64
 </div>
 </div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute is optional when considering Series which are not part of Data Frames. The default <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute  is <code class="docutils literal notranslate"><span class="pre">None</span></code>. E.g. if we do not specifiy a <code class="docutils literal notranslate"><span class="pre">name</span></code>, Pandas will set <code class="docutils literal notranslate"><span class="pre">name</span></code> to be <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
-<p>However, the name attribute can be useful for tracking what data is inside the <code class="docutils literal notranslate"><span class="pre">values</span></code> array. Let’s make a new Series - called <code class="docutils literal notranslate"><span class="pre">hdi_series_with_name_and_index</span></code> - where we <strong>do</strong> specify a <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute when calling the <code class="docutils literal notranslate"><span class="pre">pd.Series()</span></code> constructor.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute is optional when considering Series which are not part of Data Frames. If we do not specify a <code class="docutils literal notranslate"><span class="pre">name</span></code>, Pandas will set <code class="docutils literal notranslate"><span class="pre">name</span></code> to be <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<p>However, the name attribute can be useful for tracking what data is inside the <code class="docutils literal notranslate"><span class="pre">values</span></code> array.</p>
+<p>Let’s make a new Series - called <code class="docutils literal notranslate"><span class="pre">hdi_series_with_name_and_index</span></code> - where we <strong>do</strong> specify a <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute when calling the <code class="docutils literal notranslate"><span class="pre">pd.Series()</span></code> constructor.</p>
 <p>To specify the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute we use the <code class="docutils literal notranslate"><span class="pre">name</span> <span class="pre">=</span> </code> argument inside the <code class="docutils literal notranslate"><span class="pre">pd.DataFrame()</span></code> constructor:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -626,6 +637,9 @@ Name: Human Development Index, dtype: float64
 </div>
 </div>
 </div>
+</section>
+<section id="what-s-in-an-index">
+<h2>What’s in an <code class="docutils literal notranslate"><span class="pre">index</span></code>?<a class="headerlink" href="#what-s-in-an-index" title="Link to this heading">#</a></h2>
 <p>So far so good, we have seen what happens if we make a Series with no <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute. But what if we make a Series without specifying an <code class="docutils literal notranslate"><span class="pre">index</span></code>?</p>
 <p>To do this, we simply call the <code class="docutils literal notranslate"><span class="pre">pd.Series()</span></code> constructor without using the <code class="docutils literal notranslate"><span class="pre">index</span> <span class="pre">=</span> </code> argument:</p>
 <div class="cell docutils container">
@@ -801,7 +815,7 @@ dtype: float64
 </div>
 </div>
 </div>
-<p>This might seem like pretty weird behaviour. This is because the <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code> behaves similarly to the in-built python <code class="docutils literal notranslate"><span class="pre">range()</span></code> function, rather than as a list or numpy array (e.g. we cannot slice it using the familar <code class="docutils literal notranslate"><span class="pre">start:stop</span></code> syntax).</p>
+<p>This might seem like pretty weird behaviour. This is because the <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code> behaves similarly to the in-built python <code class="docutils literal notranslate"><span class="pre">range()</span></code> function, rather than as a list or numpy array (e.g. we cannot slice it using the familiar <code class="docutils literal notranslate"><span class="pre">start:stop</span></code> syntax).</p>
 <p>To view all the values inside the <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code> we can loop over it:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1069,7 +1083,7 @@ Name: Human Development Index, dtype: float64
 <span class="n">The</span> <span class="n">above</span> <span class="n">exception</span> <span class="n">was</span> <span class="n">the</span> <span class="n">direct</span> <span class="n">cause</span> <span class="n">of</span> <span class="n">the</span> <span class="n">following</span> <span class="n">exception</span><span class="p">:</span>
 
 <span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">33</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">34</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># label indexing raises a KeyError ...</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">hdi_series_with_name_and_index</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
 
@@ -1136,7 +1150,7 @@ Name: Human Development Index, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/hd/rfxyn9gx4bl39bvwzrgn3rtr0000gn/T/ipykernel_37255/1692167703.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/hd/rfxyn9gx4bl39bvwzrgn3rtr0000gn/T/ipykernel_29884/1692167703.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   hdi_series_with_name_and_index[4]
 </pre></div>
 </div>
@@ -1201,7 +1215,7 @@ Name: Human Development Index, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/hd/rfxyn9gx4bl39bvwzrgn3rtr0000gn/T/ipykernel_37255/1541050731.py:3: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/hd/rfxyn9gx4bl39bvwzrgn3rtr0000gn/T/ipykernel_29884/1541050731.py:3: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   hdi_series_with_name_and_index_sorted[4]
 </pre></div>
 </div>
@@ -1227,10 +1241,955 @@ Name: Human Development Index, dtype: float64
 <p>However, a good additional maxim is: <strong>use <code class="docutils literal notranslate"><span class="pre">.loc</span></code> and <code class="docutils literal notranslate"><span class="pre">iloc</span></code> unless there is a good reason not to!</strong>.</p>
 <p>If you use direct indexing, e.g. <code class="docutils literal notranslate"><span class="pre">[4]</span></code> without using <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> or <code class="docutils literal notranslate"><span class="pre">.loc</span></code>, then Pandas assumes you want to use integer indexing.  if this is the case it is better to be explicit and use the <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> method <em>especially if the Series has a <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code> with numeric labels</em>.</p>
 </section>
+<section id="strange-and-nameless-data-frame-columns">
+<h2>Strange and <code class="docutils literal notranslate"><span class="pre">name</span></code>less Data Frame columns<a class="headerlink" href="#strange-and-nameless-data-frame-columns" title="Link to this heading">#</a></h2>
+<p>When we include Series as columns in Data Frames - remember, that a Data Frame is just a dictionary-like collection of Series - it becomes eminently sensible to specify a <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute for each Series.</p>
+<p>Pandas will not <em>force</em> us to do this, but it leads to some error-prone consequences if we do not. In fact, the <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code> crops up again here, and can create confusion in similar ways to the ones we have seen in the last section.</p>
+<p>As shown above, our <code class="docutils literal notranslate"><span class="pre">hdi_series</span></code> does not have a <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute. Let’s pass this Series to the <code class="docutils literal notranslate"><span class="pre">pd.DataFrame()</span></code> constructor, to see the consequence of a <code class="docutils literal notranslate"><span class="pre">name</span></code>less Series in this context. We will call the resulting Data Frame <code class="docutils literal notranslate"><span class="pre">no_name_df</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># verify again that the `hdi_series` has no `name` attribute</span>
+<span class="n">hdi_series</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># a Data Frame made of a Series with no `name` attribute</span>
+<span class="n">no_name_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">hdi_series</span><span class="p">)</span>
+
+<span class="n">no_name_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.844</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.890</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>0.490</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>0.842</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.883</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>0.709</td>
+    </tr>
+    <tr>
+      <th>JPN</th>
+      <td>0.733</td>
+    </tr>
+    <tr>
+      <th>KOR</th>
+      <td>0.824</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>0.828</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.863</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Ok, so in the absence of a <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute Pandas has labelled the column with a <code class="docutils literal notranslate"><span class="pre">0</span></code>. If we inspect more deeply, we find that actually Pandas, in the absence of being instructed otherwise, has created a <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code>, but this time for the <code class="docutils literal notranslate"><span class="pre">columns</span></code> (e.g. the column names) of the Data Frame. If you look at the Data Frame above, you can see that the <code class="docutils literal notranslate"><span class="pre">index</span></code> attribute is the three-letter country codes. However, the <code class="docutils literal notranslate"><span class="pre">.columns</span></code> are a <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># look at the column names via the `.columns` attribute</span>
+<span class="n">no_name_df</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RangeIndex(start=0, stop=1, step=1)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Sure enough, if we check the <code class="docutils literal notranslate"><span class="pre">type</span></code> of the fist element in this <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code> it is a of a numeric type - e.g. we can think of it not as a column <em>name</em> but a number standing in for a column name:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># check the type of the first element in the `.columns` attribute</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">no_name_df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>int
+</pre></div>
+</div>
+</div>
+</div>
+<p>It may be obvious why this naming convention for Data Frame columns can lead to errors for reasons of low interpretability. We typically want our column names to be descriptive of the data in the column, to ourselves and to other people reading our code. If we do not specify a <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute for our Series when creating Data Frames, the default numerical column names supplied by Pandas are hard to interpret, and it is easy to misinterpret, or to forget what data is in that column, leading to human errors.</p>
+<p>They can also lead to indexing errors, similar to those we saw in the previous section. To demonstrate this, let’s compare the <code class="docutils literal notranslate"><span class="pre">name</span></code>less Data Frame above to a Data Frame created from a Series with a <code class="docutils literal notranslate"><span class="pre">name</span></code>.</p>
+<p>Our aptly named <code class="docutils literal notranslate"><span class="pre">hdi_series_with_name_and_index</span></code> has a <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute - (look at the last line of the output from the cell below, the <code class="docutils literal notranslate"><span class="pre">Name:</span> <span class="pre">Human</span> <span class="pre">Development</span> <span class="pre">Index</span></code>):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># a Series with a `name`</span>
+<span class="n">hdi_series_with_name_and_index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUS    0.896
+BRA    0.668
+CAN    0.890
+CHN    0.586
+DEU    0.844
+ESP    0.890
+FRA    0.490
+GBR    0.842
+IND    0.883
+ITA    0.709
+JPN    0.733
+KOR    0.824
+MEX    0.828
+RUS    0.863
+USA    0.894
+Name: Human Development Index, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s call the <code class="docutils literal notranslate"><span class="pre">pd.DataFrame()</span></code> constructor on this Series - we’ll call the resultant Data Frame <code class="docutils literal notranslate"><span class="pre">named_df</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a new Data Frame, with a sensible name for the column</span>
+<span class="n">named_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">hdi_series_with_name_and_index</span><span class="p">)</span>
+
+<span class="n">named_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.844</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.890</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>0.490</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>0.842</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.883</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>0.709</td>
+    </tr>
+    <tr>
+      <th>JPN</th>
+      <td>0.733</td>
+    </tr>
+    <tr>
+      <th>KOR</th>
+      <td>0.824</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>0.828</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.863</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We see that Pandas has automatically used the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute as the column name, hugely increasing the interpretability of the resulting Data Frame.</p>
+<p>We can see the <code class="docutils literal notranslate"><span class="pre">name</span></code> in the <code class="docutils literal notranslate"><span class="pre">.columns</span></code> attribute of the new  <code class="docutils literal notranslate"><span class="pre">named_df</span></code> Data Frame:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the column names from the `named_df` Data Frame</span>
+<span class="n">named_df</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;Human Development Index&#39;], dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, let’s try using direct indexing with each Data Frame, using the column names.</p>
+<p>This is very straightforward for the <code class="docutils literal notranslate"><span class="pre">named_df</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># direct indexing to retrieve a column by name</span>
+<span class="n">named_df</span><span class="p">[</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUS    0.896
+BRA    0.668
+CAN    0.890
+CHN    0.586
+DEU    0.844
+ESP    0.890
+FRA    0.490
+GBR    0.842
+IND    0.883
+ITA    0.709
+JPN    0.733
+KOR    0.824
+MEX    0.828
+RUS    0.863
+USA    0.894
+Name: Human Development Index, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>What about for <code class="docutils literal notranslate"><span class="pre">no_name_df</span></code>? Well, the column name there is <code class="docutils literal notranslate"><span class="pre">0</span></code>, of <code class="docutils literal notranslate"><span class="pre">int</span></code> type.</p>
+<p>What happens if use direct indexing? We are hoping we see something like the output of the cell above, albeit with a <code class="docutils literal notranslate"><span class="pre">0</span></code> for the <code class="docutils literal notranslate"><span class="pre">name</span></code>, rather than <code class="docutils literal notranslate"><span class="pre">Human</span> <span class="pre">Development</span> <span class="pre">Index</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># direct indexing with no `name` attribute</span>
+<span class="n">no_name_df</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUS    0.896
+BRA    0.668
+CAN    0.890
+CHN    0.586
+DEU    0.844
+ESP    0.890
+FRA    0.490
+GBR    0.842
+IND    0.883
+ITA    0.709
+JPN    0.733
+KOR    0.824
+MEX    0.828
+RUS    0.863
+USA    0.894
+Name: 0, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Sure enough that is what we see. But the operation we have used looks very much like <em>integer</em> indexing on a Series, which will return a single value:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># integer indexing a Series (without using `.iloc`)</span>
+<span class="n">hdi_series</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/hd/rfxyn9gx4bl39bvwzrgn3rtr0000gn/T/ipykernel_29884/2632670009.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+  hdi_series[0]
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.896)
+</pre></div>
+</div>
+</div>
+</div>
+<p>This can be confusing.</p>
+<p>In addition, the numerical label can also be confusing if we introduce more columns, especially if we mix in columns which do have <code class="docutils literal notranslate"><span class="pre">name</span></code> attributes that we specify.</p>
+<p>For instance, if we add in the full name of each country:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># country names array</span>
+<span class="n">country_names_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;Australia&#39;</span><span class="p">,</span> <span class="s1">&#39;Brazil&#39;</span><span class="p">,</span> <span class="s1">&#39;Canada&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;China&#39;</span><span class="p">,</span> <span class="s1">&#39;Germany&#39;</span><span class="p">,</span> <span class="s1">&#39;Spain&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;France&#39;</span><span class="p">,</span> <span class="s1">&#39;United Kingdom&#39;</span><span class="p">,</span> <span class="s1">&#39;India&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;Italy&#39;</span><span class="p">,</span> <span class="s1">&#39;Japan&#39;</span><span class="p">,</span> <span class="s1">&#39;South Korea&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;Mexico&#39;</span><span class="p">,</span> <span class="s1">&#39;Russia&#39;</span><span class="p">,</span> <span class="s1">&#39;United States&#39;</span><span class="p">])</span>
+<span class="n">country_names_array</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;Australia&#39;, &#39;Brazil&#39;, &#39;Canada&#39;, &#39;China&#39;, &#39;Germany&#39;, &#39;Spain&#39;,
+       &#39;France&#39;, &#39;United Kingdom&#39;, &#39;India&#39;, &#39;Italy&#39;, &#39;Japan&#39;,
+       &#39;South Korea&#39;, &#39;Mexico&#39;, &#39;Russia&#39;, &#39;United States&#39;], dtype=&#39;&lt;U14&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s add this into the <code class="docutils literal notranslate"><span class="pre">no_name_df</span></code>, using the <code class="docutils literal notranslate"><span class="pre">name</span></code> “Country Names”:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">no_name_df</span><span class="p">[</span><span class="s1">&#39;Country Names&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">country_names_array</span>
+
+<span class="n">no_name_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>Country Names</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.844</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.890</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>0.490</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>0.842</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.883</td>
+      <td>India</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>0.709</td>
+      <td>Italy</td>
+    </tr>
+    <tr>
+      <th>JPN</th>
+      <td>0.733</td>
+      <td>Japan</td>
+    </tr>
+    <tr>
+      <th>KOR</th>
+      <td>0.824</td>
+      <td>South Korea</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>0.828</td>
+      <td>Mexico</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.863</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>United States</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We now have one column that has an <code class="docutils literal notranslate"><span class="pre">int</span></code> as it’s column name, and another with a string.</p>
+<p>In the same way as for a numerical <code class="docutils literal notranslate"><span class="pre">index</span></code>, this situation can become confusing if the numerical labels become misaligned with their integer location in the <code class="docutils literal notranslate"><span class="pre">.columns</span></code> attribute.</p>
+<p>For instance, if we re-arrange the columns:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># re-arrange the columns</span>
+<span class="n">no_name_df</span> <span class="o">=</span> <span class="n">no_name_df</span><span class="p">[[</span><span class="s2">&quot;Country Names&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+
+<span class="n">no_name_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Country Names</th>
+      <th>0</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AUS</th>
+      <td>Australia</td>
+      <td>0.896</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>Brazil</td>
+      <td>0.668</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>Canada</td>
+      <td>0.890</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>China</td>
+      <td>0.586</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>Germany</td>
+      <td>0.844</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>Spain</td>
+      <td>0.890</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>France</td>
+      <td>0.490</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>United Kingdom</td>
+      <td>0.842</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>India</td>
+      <td>0.883</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>Italy</td>
+      <td>0.709</td>
+    </tr>
+    <tr>
+      <th>JPN</th>
+      <td>Japan</td>
+      <td>0.733</td>
+    </tr>
+    <tr>
+      <th>KOR</th>
+      <td>South Korea</td>
+      <td>0.824</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>Mexico</td>
+      <td>0.828</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>Russia</td>
+      <td>0.863</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>United States</td>
+      <td>0.894</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We now have a column with the <code class="docutils literal notranslate"><span class="pre">name</span></code> “0” that is not at the 0-th location of the <code class="docutils literal notranslate"><span class="pre">.columns</span></code> attribute:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the 0-th element of the `.columns` attribute</span>
+<span class="n">no_name_df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Country Names&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>We are now in the precarious situation of using a <code class="docutils literal notranslate"><span class="pre">int</span></code> <code class="docutils literal notranslate"><span class="pre">0</span></code> both as a <em>label</em> and as a <em>location</em>. In the cell above, it is a location, it the cell below it serves as a label:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># direct index the `0` column</span>
+<span class="n">no_name_df</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUS    0.896
+BRA    0.668
+CAN    0.890
+CHN    0.586
+DEU    0.844
+ESP    0.890
+FRA    0.490
+GBR    0.842
+IND    0.883
+ITA    0.709
+JPN    0.733
+KOR    0.824
+MEX    0.828
+RUS    0.863
+USA    0.894
+Name: 0, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Ideally, we want a clear separation between integer indexes (like <code class="docutils literal notranslate"><span class="pre">0</span></code>) and <em>column names</em>.</p>
+<p>This confusing situation can be completely avoided in the case of <code class="docutils literal notranslate"><span class="pre">named_df</span></code>. Let’s add the country names to this Data Frame also:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># add the country names</span>
+<span class="n">named_df</span><span class="p">[</span><span class="s1">&#39;Country Names&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">country_names_array</span>
+
+<span class="n">named_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+      <th>Country Names</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.844</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.890</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>0.490</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>0.842</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.883</td>
+      <td>India</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>0.709</td>
+      <td>Italy</td>
+    </tr>
+    <tr>
+      <th>JPN</th>
+      <td>0.733</td>
+      <td>Japan</td>
+    </tr>
+    <tr>
+      <th>KOR</th>
+      <td>0.824</td>
+      <td>South Korea</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>0.828</td>
+      <td>Mexico</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.863</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>United States</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We don’t introduce any confusion or error-proneness by re-arranging these columns which have sensible string names:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># re-arrange the columns</span>
+<span class="n">named_df</span> <span class="o">=</span> <span class="n">named_df</span><span class="p">[[</span><span class="s2">&quot;Country Names&quot;</span><span class="p">,</span> <span class="s2">&quot;Human Development Index&quot;</span><span class="p">]]</span>
+
+<span class="n">named_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Country Names</th>
+      <th>Human Development Index</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AUS</th>
+      <td>Australia</td>
+      <td>0.896</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>Brazil</td>
+      <td>0.668</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>Canada</td>
+      <td>0.890</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>China</td>
+      <td>0.586</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>Germany</td>
+      <td>0.844</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>Spain</td>
+      <td>0.890</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>France</td>
+      <td>0.490</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>United Kingdom</td>
+      <td>0.842</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>India</td>
+      <td>0.883</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>Italy</td>
+      <td>0.709</td>
+    </tr>
+    <tr>
+      <th>JPN</th>
+      <td>Japan</td>
+      <td>0.733</td>
+    </tr>
+    <tr>
+      <th>KOR</th>
+      <td>South Korea</td>
+      <td>0.824</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>Mexico</td>
+      <td>0.828</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>Russia</td>
+      <td>0.863</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>United States</td>
+      <td>0.894</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>In fact, now if we want to use integer indexing, we are forced to use <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>, as else we get an error:</p>
+<div class="cell tag_raises-exception docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># this will not work if each column has a `name` string</span>
+<span class="n">named_df</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="nn">File /Volumes/zorg/mb312/.virtualenvs/pandas-pages/lib/python3.12/site-packages/pandas/core/indexes/base.py:3805,</span> in <span class="ni">Index.get_loc</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3804</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">3805</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">casted_key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3806</span> <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+
+<span class="nn">File index.pyx:167,</span> in <span class="ni">pandas._libs.index.IndexEngine.get_loc</span><span class="nt">()</span>
+
+<span class="nn">File index.pyx:196,</span> in <span class="ni">pandas._libs.index.IndexEngine.get_loc</span><span class="nt">()</span>
+
+<span class="nn">File pandas/_libs/hashtable_class_helper.pxi:7081,</span> in <span class="ni">pandas._libs.hashtable.PyObjectHashTable.get_item</span><span class="nt">()</span>
+
+<span class="nn">File pandas/_libs/hashtable_class_helper.pxi:7089,</span> in <span class="ni">pandas._libs.hashtable.PyObjectHashTable.get_item</span><span class="nt">()</span>
+
+<span class="ne">KeyError</span>: 0
+
+<span class="n">The</span> <span class="n">above</span> <span class="n">exception</span> <span class="n">was</span> <span class="n">the</span> <span class="n">direct</span> <span class="n">cause</span> <span class="n">of</span> <span class="n">the</span> <span class="n">following</span> <span class="n">exception</span><span class="p">:</span>
+
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">58</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># this will not work if each column has a `name` string</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">named_df</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nn">File /Volumes/zorg/mb312/.virtualenvs/pandas-pages/lib/python3.12/site-packages/pandas/core/frame.py:4102,</span> in <span class="ni">DataFrame.__getitem__</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">4100</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">nlevels</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">4101</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getitem_multilevel</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">4102</span> <span class="n">indexer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">4103</span> <span class="k">if</span> <span class="n">is_integer</span><span class="p">(</span><span class="n">indexer</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">4104</span>     <span class="n">indexer</span> <span class="o">=</span> <span class="p">[</span><span class="n">indexer</span><span class="p">]</span>
+
+<span class="nn">File /Volumes/zorg/mb312/.virtualenvs/pandas-pages/lib/python3.12/site-packages/pandas/core/indexes/base.py:3812,</span> in <span class="ni">Index.get_loc</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3807</span>     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">casted_key</span><span class="p">,</span> <span class="nb">slice</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">3808</span>         <span class="nb">isinstance</span><span class="p">(</span><span class="n">casted_key</span><span class="p">,</span> <span class="n">abc</span><span class="o">.</span><span class="n">Iterable</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3809</span>         <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">slice</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">casted_key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3810</span>     <span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">3811</span>         <span class="k">raise</span> <span class="n">InvalidIndexError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">3812</span>     <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">err</span>
+<span class="g g-Whitespace">   </span><span class="mi">3813</span> <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">3814</span>     <span class="c1"># If we have a listlike key, _check_indexing_error will raise</span>
+<span class="g g-Whitespace">   </span><span class="mi">3815</span>     <span class="c1">#  InvalidIndexError. Otherwise we fall through and re-raise</span>
+<span class="g g-Whitespace">   </span><span class="mi">3816</span>     <span class="c1">#  the TypeError.</span>
+<span class="g g-Whitespace">   </span><span class="mi">3817</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_check_indexing_error</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+<span class="ne">KeyError</span>: 0
+</pre></div>
+</div>
+</div>
+</div>
+<p>This compels us to stick to the good practice maxim we introduced above: <strong>use <code class="docutils literal notranslate"><span class="pre">.loc</span></code> and <code class="docutils literal notranslate"><span class="pre">iloc</span></code> unless there is a good reason not to!</strong>.</p>
+<p>Giving every column a sensible string as a <code class="docutils literal notranslate"><span class="pre">name</span></code> is one situation where direct indexing (e.g. in the present context using <code class="docutils literal notranslate"><span class="pre">named_df['Human</span> <span class="pre">Development</span> <span class="pre">Index']</span></code> etc.) is safe and non-error prone. As we have seen, issues can arise if we do not specify <code class="docutils literal notranslate"><span class="pre">name</span></code> attributes, and let Pandas automatically generate numeric labels for our Data Frame columns…</p>
+</section>
 <section id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
 <p>On this page we have looked at the differences between attributes of the Pandas Series - the <code class="docutils literal notranslate"><span class="pre">name</span></code> is optional, but a default <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code> will be supplied if no custom <code class="docutils literal notranslate"><span class="pre">index</span></code> is specified.</p>
-<p>We have seen that the <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code> can lead to errors if the numeric row labels become misaligned with the integer location of a given row.</p>
+<p>We have seen that the <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code> can lead to errors if the numeric row labels become misaligned with the integer location of a given row. Similarly, if we do not specify a <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute for Data Frame columns, Pandas will generate numeric labels which can create confusion between integer-based and direct indexing.</p>
+<p>For best results, we should specify both an interpretable <code class="docutils literal notranslate"><span class="pre">index</span></code> and interpretable <code class="docutils literal notranslate"><span class="pre">name</span></code> attributes for our Series, especially when they are part of Data Frames.</p>
 </section>
 </section>
 
@@ -1300,7 +2259,9 @@ Name: Human Development Index, dtype: float64
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-s-in-a-name">What’s in a <code class="docutils literal notranslate"><span class="pre">name</span></code>?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-s-in-an-index">What’s in an <code class="docutils literal notranslate"><span class="pre">index</span></code>?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-the-default-index-can-be-confusing">Why the “default” index can be confusing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strange-and-nameless-data-frame-columns">Strange and <code class="docutils literal notranslate"><span class="pre">name</span></code>less Data Frame columns</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 </ul>
   </nav></div>

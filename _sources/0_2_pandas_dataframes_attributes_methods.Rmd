@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.1
+      jupytext_version: 1.15.2
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -15,20 +15,22 @@ jupyter:
 
 # Pandas DataFrames: Attributes and Methods
 
-> 📝 NOTE-  Covered here:
->
->Columns in a dataframe  can be of different dtypes
->* Operations are on columns by default (describe, sum, min, max)
->* attributes of df (shape, dtypes columns, index)
->* methods of df (unique, describe, counts, value_counts, min, max, std, sort_values, sort_index)
->
->Structure of page:
->
->* show all relevant methods/attributes of numpy arrays
->
->* reinforce that "Series = array + index + name". Then show relevant methods/attributes of Series.
->
->* reinforce that "DataFrame = dictionary-like collection of Series". Then show all relevant methods/attributes of DataFrames.
+<!---
+📝 NOTE-  Covered here:
+
+Columns in a dataframe  can be of different dtypes
+* Operations are on columns by default (describe, sum, min, max)
+* attributes of df (shape, dtypes columns, index)
+* methods of df (unique, describe, counts, value_counts, min, max, std, sort_values, sort_index)
+
+Structure of page:
+
+* show all relevant methods/attributes of numpy arrays
+
+* reinforce that "Series = array + index + name". Then show relevant methods/attributes of Series.
+
+* reinforce that "DataFrame = dictionary-like collection of Series". Then show all relevant methods/attributes of DataFrames.
+-->
 
 On the [previous](0_0_pandas_intro.Rmd) [pages](0_1_to_loc_or_iloc.Rmd) we have seen how Pandas Series are constructed by combining numpy arrays (the `.values` attribute of a Series) with other attributes (a `.name` string and and array-like `.index`). We have then examined how Pandas Data Frames are built from a collection of Series, in a dictionary-like structure.
 
@@ -147,7 +149,7 @@ two_rows_ten_columns_array.shape
 ```
 
 ```{python}
-# the number of elements inthe `two_rows_ten_columns` array?
+# the number of elements in the `two_rows_ten_columns` array?
 two_rows_ten_columns_array.size
 ```
 
@@ -304,13 +306,13 @@ Ok, so these familiar Numpy methods are available. However, Pandas also introduc
 One very useful Series method is `.describe()`. This will give us a variety of statistics about the data in the `.values` array of the Series:
 
 ```{python}
-# `.decribe()` the `hdi_series`
+# `.describe()` the `hdi_series`
 hdi_series.describe()
 ```
 
 Neat, an easy summary of the number of observations, the mean, the standard deviation around the mean, and then the range/interquartile range.
 
-Conversely, the `.value_counts()` method will count the occurence of each *unique* value in the Series:
+Conversely, the `.value_counts()` method will count the occurrence of each *unique* value in the Series:
 
 ```{python}
 # use the `value_counts()` method
@@ -321,7 +323,6 @@ These methods can also be applied to arrays containing categorical/string data:
 
 ```{python}
 # constructing a Series containing categorical data
-
 country_names_series = pd.Series(country_names_array,
                                  index=country_codes_array)
 
@@ -357,7 +358,7 @@ country_names_series.unique()
 
 ## Pandas DataFrame attributes
 
-Now, remember again our other maxim that *"a Pandas DataFrame is just a *dictionary-like collection of Series*"? 
+Now, remember again our other maxim that *"a Pandas DataFrame is just a *dictionary-like collection of Series"*? 
 
 Because of this, we can use all the methods we have seen so far on any Data Frame column. Each column is a Series, and therefore contains a Numpy array as it's `.values` attribute.
 
@@ -466,7 +467,7 @@ Other Data Frame methods will report information from the Data Frame *as a whole
 For instance, we can call the `.describe()` method on the whole Data Frame. We saw this method used on a single Series earlier. The same useful statistical summary is shown for every column when we use the method on the whole Data Frame:
 
 ```{python}
-# descibe numerical variables
+# describe numerical variables
 df.describe()
 ```
 
@@ -515,7 +516,8 @@ df.sort_values(by = 'Human Development Index')
 
 ```{python}
 # sort values by HDI (the other way)
-df.sort_values(by = 'Human Development Index', ascending=False)
+df.sort_values(by = 'Human Development Index',
+               ascending=False) # `ascending=False` reverses the sorting order
 ```
 
 We can also sort the index using `.sort_index()`, by default this will arrange the rows of the Data Frame in alphabetical order, if we are using string labels (numerical order if we are using the default `RangeIndex`):
@@ -576,7 +578,16 @@ df * 200
 
 More sensibly, we will most likely want to perform numerical operations on specific columns. We may want to standardize the values relative to a mean of 0 and standard deviation of 1, for instance.
 
-Pandas methods can be used to perform this computation, and again, the operation will be performed on each element in the `values` array of the specific Series/column that we grab:
+Pandas methods can be used to perform this computation, and again, the operation will be performed on each element in the `values` array of the specific Series/column that we grab.
+
+For instance, to subtract the mean value from every element in the `.values` array we can use:
+
+```{python}
+# subtract the mean from every element in the Series
+df['Population'] - df['Population'].mean()
+```
+
+We can perform the full z-score standardization using the code in the cell below. Note that `df['Population'].mean()` and `df['Population'].std()` both return single values. Each of these values is used in the same way on every element in the `Population` column:
 
 ```{python}
 # standardize the `Population` scores
@@ -584,6 +595,50 @@ df['Population_z'] = (df['Population'] - df['Population'].mean())/df['Population
 
 df
 ```
+
+Because this feature (numerical operations performed on each element) is shared across all Pandas Series, and we are using Pandas methods, we can write a function which will compute the z-scores for any column containing numerical data: 
+
+```{python}
+# define a function to calculate the z-scores for a specific numeric column
+def get_z(df_column):
+    "A function which takes a Data Frame column and returns a series containing the z-score of each element."
+    z_col = (df_column - df_column.mean())/df_column.std()
+    return z_col
+```
+
+```{python}
+# test our function
+get_z(df['Human Development Index'])
+```
+
+Again, each numerical operation that the function performs has been performed on every element of the `.values` array of the Data Frame column `Human Development Index`.
+
+Let's add this new standardized data to the Data Frame, and plot it using the now familiar `.plot()` method:
+
+```{python}
+# add standard scores for HDI
+df['HDI_z'] = df['Human Development Index']
+
+# show the Data Frame
+display(df)
+
+# plot the standardized variables
+df.plot(kind='scatter',
+        x='Population_z',
+        y='HDI_z');
+```
+
+We can see from this procedure that we have two bivariate outliers, with respect to `Population` and `HDI`.
+
+This dataset is small enough that we can see that these values correspond to India and China...
+
+```{python}
+# inspect the `Population_z` column to identify the outliers
+df['Population_z']
+```
+
+...but for a larger dataset we could find them using [Boolean filtering - a topic we will come to in a later page](0_5_filtering_data_with_pandas.Rmd).
+
 
 ## Summary
 

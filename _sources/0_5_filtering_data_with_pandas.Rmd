@@ -15,34 +15,38 @@ jupyter:
 
 # Filtering Data Frames with Boolean Series
 
-> 📝 NOTE: from meeting with Matthew: Boolean series (and matching of row labels there) e.g. Boolean array will operate like iloc, Boolean Series will match row labels.
+<!---
+📝 NOTE: from meeting with Matthew: Boolean series (and matching of row labels there) e.g. Boolean array will operate like iloc, Boolean Series will match row labels.
 
-> Add a separate page for Boolean indexing in a sensible place (build with numpy first first then show with Series) - show that order doesn't matter e.g. Booleans are matched by label not by position. Show this error:
-> ```
-> import pandas as pd
-> df = pd.read_csv('birth_weights.csv')
-> df.head()
-> female_mf = df['sex'] == 2
-> female_mf.head()
-> df2 = df.sort_values('sex')
-> df2
-> df2[female_mf].describe()
-> df[female_mf].describe()
-> df.loc[female_mf]
-> df.iloc[female_mf]
-> ```
-> Covered on this page:
-> 
-> * filtering (ex: df[df['age'] > 30])
-> * Boolean indexing, with Boolean series (and matching of row labels there); range indexing on labels (inclusive of last element)
-> 
-> Structure of this page:
-> 
-> * show Boolean arrays and boolean filtering of arrays
-> 
-> * build a Series, show Boolean series and filtering Series with Boolean arrays/series
-> 
-> * show Boolean filtering with DataFrames
+Add a separate page for Boolean indexing in a sensible place (build with numpy first first then show with Series) - show that order doesn't matter e.g. Booleans are matched by label not by position. Show this error:
+
+```
+import pandas as pd
+df = pd.read_csv('birth_weights.csv')
+df.head()
+female_mf = df['sex'] == 2
+female_mf.head()
+df2 = df.sort_values('sex')
+df2
+df2[female_mf].describe()
+df[female_mf].describe()
+df.loc[female_mf]
+df.iloc[female_mf]
+```
+
+Covered on this page:
+
+* filtering (ex: df[df['age'] > 30])
+* Boolean indexing, with Boolean series (and matching of row labels there); range indexing on labels (inclusive of last element)
+
+Structure of this page:
+
+* show Boolean arrays and boolean filtering of arrays
+
+* build a Series, show Boolean series and filtering Series with Boolean arrays/series
+
+* show Boolean filtering with DataFrames
+-->
 
 Once we have got our data into a Pandas Data Frame, no doubt we will want to filter and select specific portions of it for visualisation and analysis. 
 
@@ -143,7 +147,9 @@ hdis_array_bool_series = pd.Series(hdis_array_grtr_median_bool,
 hdis_array_bool_series
 ```
 
-Even better, let's manually specificy the `name` attribute - to make it clearer down the line what the `True` and `False` values mean e.g. whether each country has a higher-than-median HDI score:
+Even better, let's manually specify the `name` attribute - to make it clearer
+down the line what the `True` and `False` values mean e.g. whether each
+country has a higher-than-median HDI score:
 
 ```{python}
 # set the `name` attribute

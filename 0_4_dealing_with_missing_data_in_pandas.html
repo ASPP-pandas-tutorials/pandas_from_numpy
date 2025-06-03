@@ -427,30 +427,30 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="dealing-with-nans">
 <h1>Dealing with NaNs<a class="headerlink" href="#dealing-with-nans" title="Link to this heading">#</a></h1>
-<blockquote>
-<div><p>📝 NOTE:
-Covered on this page/structure of this page:</p>
-<ul class="simple">
-<li><p>Make an array and series containing NaNs and show how pandas and numpy treat them differently</p></li>
-<li><p>Populating the region column? E.g. replacing the missing data?</p></li>
-</ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># drop NaNs gives the same mean</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;ZWE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-</pre></div>
-</div>
-<ul class="simple">
-<li><p>NaNs are interpreted as missing data and ignored in most operations</p></li>
-<li><p>Pandas uses NaN as a flag, not as an indication of a failed floating point
-operation</p></li>
-<li><p>Numpy does not have a concept of a missing value, NaNs propagate.</p></li>
-<li><p>In Pandas NaN is an  indcation of missing data - Pandas will by default
-drop nans from most operations).s</p></li>
-</ul>
-</div></blockquote>
+<!---
+📝 NOTE:
+Covered on this page/structure of this page:
+
+* Make an array and series containing NaNs and show how pandas and numpy treat them differently
+
+* Populating the region column? E.g. replacing the missing data?
+
+``
+# drop NaNs gives the same mean
+df['Fertility Rate'].loc['ZWE'].dropna().mean()
+``
+
+* NaNs are interpreted as missing data and ignored in most operations
+* Pandas uses NaN as a flag, not as an indication of a failed floating point
+  operation
+* Numpy does not have a concept of a missing value, NaNs propagate.
+* In Pandas NaN is an indication of missing data - Pandas will by default
+  drop nans from most operations).s
+-->
 <p>This page will compare how NaNs (Not a Number) values differ between Numpy and
 Pandas. You are probably aware that Numpy will produce NaNs from invalid
 floating point operations, such as <code class="docutils literal notranslate"><span class="pre">np.inf</span> <span class="pre">/</span> <span class="pre">np.inf</span></code>. In Pandas, NaNs are more
-commonly a flag to indicate the abscence of data, for floating point and other
+commonly a flag to indicate the absence of data, for floating point and other
 data types.</p>
 <p>We will also look at how to handle NaNs safely in Pandas.</p>
 <p>First, let’s remind ourselves how NaNs work in Numpy…</p>
@@ -470,7 +470,7 @@ data types.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/hd/rfxyn9gx4bl39bvwzrgn3rtr0000gn/T/ipykernel_37268/557159319.py:6: RuntimeWarning: invalid value encountered in divide
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/hd/rfxyn9gx4bl39bvwzrgn3rtr0000gn/T/ipykernel_29896/557159319.py:6: RuntimeWarning: invalid value encountered in divide
   array_with_nans = np.array([0, 0]) / np.array([0, 0])
 </pre></div>
 </div>
@@ -979,7 +979,7 @@ Name: Fertility Rate, Length: 59911, dtype: float64
 </div>
 </div>
 </div>
-<p>Because we are dealing with just one column, we can safely use <code class="docutils literal notranslate"><span class="pre">.dropna()</span></code> without losing every row (becaue not every row of the <em>Series</em> contains a NaN value):</p>
+<p>Because we are dealing with just one column, we can safely use <code class="docutils literal notranslate"><span class="pre">.dropna()</span></code> without losing every row (because not every row of the <em>Series</em> contains a NaN value):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the column</span>

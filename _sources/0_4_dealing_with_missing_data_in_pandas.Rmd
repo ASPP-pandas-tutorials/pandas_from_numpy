@@ -15,29 +15,31 @@ jupyter:
 
 # Dealing with NaNs
 
-> 📝 NOTE:
-> Covered on this page/structure of this page:
->
-> * Make an array and series containing NaNs and show how pandas and numpy treat them differently
->
-> * Populating the region column? E.g. replacing the missing data?
->
->```
-> # drop NaNs gives the same mean
-> df['Fertility Rate'].loc['ZWE'].dropna().mean()
->```
->
-> * NaNs are interpreted as missing data and ignored in most operations
-> * Pandas uses NaN as a flag, not as an indication of a failed floating point
->    operation
-> * Numpy does not have a concept of a missing value, NaNs propagate.
-> * In Pandas NaN is an  indcation of missing data - Pandas will by default
->   drop nans from most operations).s
+<!---
+📝 NOTE:
+Covered on this page/structure of this page:
+
+* Make an array and series containing NaNs and show how pandas and numpy treat them differently
+
+* Populating the region column? E.g. replacing the missing data?
+
+``
+# drop NaNs gives the same mean
+df['Fertility Rate'].loc['ZWE'].dropna().mean()
+``
+
+* NaNs are interpreted as missing data and ignored in most operations
+* Pandas uses NaN as a flag, not as an indication of a failed floating point
+  operation
+* Numpy does not have a concept of a missing value, NaNs propagate.
+* In Pandas NaN is an indication of missing data - Pandas will by default
+  drop nans from most operations).s
+-->
 
 This page will compare how NaNs (Not a Number) values differ between Numpy and
 Pandas. You are probably aware that Numpy will produce NaNs from invalid
 floating point operations, such as `np.inf / np.inf`. In Pandas, NaNs are more
-commonly a flag to indicate the abscence of data, for floating point and other
+commonly a flag to indicate the absence of data, for floating point and other
 data types.
 
 We will also look at how to handle NaNs safely in Pandas.
@@ -237,7 +239,7 @@ Let's look at the `Fertility Rate` column, which contains numerical data:
 df['Fertility Rate']
 ```
 
-Because we are dealing with just one column, we can safely use `.dropna()` without losing every row (becaue not every row of the *Series* contains a NaN value):
+Because we are dealing with just one column, we can safely use `.dropna()` without losing every row (because not every row of the *Series* contains a NaN value):
 
 ```{python}
 # show the column

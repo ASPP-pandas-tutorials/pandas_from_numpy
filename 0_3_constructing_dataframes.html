@@ -427,9 +427,12 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <blockquote>
-<div><p>📝 NOTE: this page will show important ways/considerations when constructing DataFrames via different pathways (e.g pd.concat() on named Series); and will further explain the DataFrame constructor. This page is just to to re-iterate the “DataFrames are just dictionary-like collections of Series”</p>
-</div></blockquote>
+  <!---
+📝 NOTE: this page will show important ways/considerations when constructing
+DataFrames via different pathways (e.g pd.concat() on named Series); and will
+further explain the DataFrame constructor. This page is just to to re-iterate
+the "DataFrames are just dictionary-like collections of Series"
+-->
 <section class="tex2jax_ignore mathjax_ignore" id="let-there-be-data-creating-data-frames">
 <h1>Let There Be Data : Creating Data Frames<a class="headerlink" href="#let-there-be-data-creating-data-frames" title="Link to this heading">#</a></h1>
 <p>In <a class="reference internal" href="0_0_pandas_intro.html"><span class="std std-doc">the</span></a> <a class="reference internal" href="0_1_to_loc_or_iloc.html"><span class="std std-doc">previous</span></a> <a class="reference internal" href="0_2_pandas_dataframes_attributes_methods.html"><span class="std std-doc">tutorials</span></a> we showed how the Pandas class objects (Series and Data Frames) are constructed from Numpy objects (arrays) and other attributes (<code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">index</span></code>).</p>
@@ -1025,7 +1028,7 @@
 </table>
 </div></div></div>
 </div>
-<p>Becuase all Series/columns in the Data Frame must share an <code class="docutils literal notranslate"><span class="pre">index</span></code>, Pandas will predictably throw an error if try to use something that is the wrong length/shape to be a valid <code class="docutils literal notranslate"><span class="pre">index</span></code>:</p>
+<p>Because all Series/columns in the Data Frame must share an <code class="docutils literal notranslate"><span class="pre">index</span></code>, Pandas will predictably throw an error if try to use something that is the wrong length/shape to be a valid <code class="docutils literal notranslate"><span class="pre">index</span></code>:</p>
 <div class="cell tag_raises-exception docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ValueError because we have specified the wrong number of index elements.</span>

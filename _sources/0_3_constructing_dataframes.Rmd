@@ -13,7 +13,12 @@ jupyter:
     name: python3
 ---
 
-> 📝 NOTE: this page will show important ways/considerations when constructing DataFrames via different pathways (e.g pd.concat() on named Series); and will further explain the DataFrame constructor. This page is just to to re-iterate the "DataFrames are just dictionary-like collections of Series"
+<!---
+📝 NOTE: this page will show important ways/considerations when constructing
+DataFrames via different pathways (e.g pd.concat() on named Series); and will
+further explain the DataFrame constructor. This page is just to to re-iterate
+the "DataFrames are just dictionary-like collections of Series"
+-->
 
 # Let There Be Data : Creating Data Frames
 
@@ -195,7 +200,7 @@ df_again['new_column'] = np.array([1, 2, 3])
 df_again
 ```
 
-Becuase all Series/columns in the Data Frame must share an `index`, Pandas will predictably throw an error if try to use something that is the wrong length/shape to be a valid `index`:
+Because all Series/columns in the Data Frame must share an `index`, Pandas will predictably throw an error if try to use something that is the wrong length/shape to be a valid `index`:
 
 ```{python tags=c("raises-exception")}
 # ValueError because we have specified the wrong number of index elements.

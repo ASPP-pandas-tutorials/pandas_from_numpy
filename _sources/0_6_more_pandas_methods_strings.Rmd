@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.1
+      jupytext_version: 1.15.2
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -15,26 +15,32 @@ jupyter:
 
 # More Pandas methods
 
-> 📝 NOTE: Covered here:
->
-> * string operations, ex: df[‘name’].str[2:4], df[‘name’].str.count('a') [For this, compare different country names between Mat > Mort data and Dev/Fertility data, e.g. different names for Russia and South Korea])
-> 
-> * Strings (and dates) have a special accessor to perform vectorized
-> string (or date) operations
-> 
-> * specialized accessor methods Series.str
-> 
-> **Matthew Notes: do everything on a Series first. Series.str follow the pandas from numpy structure**
-> 
-> **For any string operations, show different routes to the same outcome e.g. via Boolean indexing and then replace etc.**
-> 
-> Structure of this page:
-> 
-> * show python string methods/string methods with numpy arrays
-> 
-> * build a Series and show Series.str methods
-> 
-> * show str methods with a dataframe + how this can be very useful when cleaning data
+<!---
+📝 NOTE: Covered here:
+
+* string operations, ex: df[‘name’].str[2:4], df[‘name’].str.count('a') [For
+  this, compare different country names between Mat > Mort data and
+  Dev/Fertility data, e.g. different names for Russia and South Korea])
+
+* Strings (and dates) have a special accessor to perform vectorized string (or
+  date) operations
+
+* specialized accessor methods Series.str
+
+**Matthew Notes: do everything on a Series first. Series.str follow the pandas
+from numpy structure**
+
+**For any string operations, show different routes to the same outcome e.g. via Boolean indexing and then replace etc.**
+
+Structure of this page:
+
+* show python string methods/string methods with numpy arrays
+
+* build a Series and show Series.str methods
+
+* show str methods with a dataframe + how this can be very useful when
+  cleaning data
+-->
 
 String/text data is often used to represent categorical variables, and commonly appears in data analyses in a variety of contexts. When dealing with string/text data we will frequently find that we need to alter the strings to correct errors, improve clarity, make formatting uniform, or a host of other reasons.
 
@@ -293,7 +299,7 @@ df = pd.read_csv("data/year_2000_hdi_fert.csv")
 df
 ```
 
-Because each Data Frame column is nothing other than a Pandas Series, we can use string methods in the same way as we saw in the last secton:
+Because each Data Frame column is nothing other than a Pandas Series, we can use string methods in the same way as we saw in the last section:
 
 ```{python}
 # use the `.replace()` method

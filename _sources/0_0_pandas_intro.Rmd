@@ -8,7 +8,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.1
+      jupytext_version: 1.15.2
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -28,7 +28,7 @@ This tutorial will show the fundamental structure of pandas Data Frames. We will
 Pandas is an open-source python library for data manipulation and analysis. 
 
 ```{note}
-Why is Pandas called Pandas?`
+Why is Pandas called Pandas?
 
 The “Pandas” name is short for “panel data”. The library was named after the type of econometrics panel data that it was designed to analyse. [Panel data](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwijqt63p9eMAxUExzgGHcYrLE8QFnoECCIQAw&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FPanel_data%23%3A~%3Atext%3DPanel%2520data%2520is%2520a%2520subset%2Ctime%2520point%2520for%2520the%2520latter.&usg=AOvVaw2LP6yj5mwB4_1164F8n-Bt&opi=89978449) is longitudinal data where the same observational units (e.g. countries) are observed over multiple instances across time. 
 ```
@@ -72,7 +72,7 @@ For each of these countries, we have a Human Development Index (HDI) score. The 
 
 ![](images/hdiRoadMap.png)
 
-(Image from [here.](https://hdr.undp.org/data-center/human-development-index#/indicies/HDI))
+(Image from [here.](https://hdr.undp.org/data-center/human-development-index#/indices/HDI))
 
 ```{python}
 # Human Development Index Scores for each country
@@ -98,7 +98,7 @@ fert_rates_array = np.array([1.764, 2.247, 1.51 , 1.628,
 fert_rates_array
 ```
 
-We probably will want to inspect this relationship graphically,  which we can do easily using the matplotlib library. Later we will see that pandas offers us some streamlined ways of plotting data, without importing other libraries.
+We probably will want to inspect this relationship graphically,  which we can do easily using the [Matplotlib library](https://matplotlib.org). Later, we will see that pandas offers us some streamlined ways of plotting data, without importing other libraries.
 
 ```{python}
 # some basic plotting with matplotlib
