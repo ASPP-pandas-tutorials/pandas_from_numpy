@@ -467,16 +467,22 @@ Structure of this page:
 <p>To explore filtering, let’s create some Numpy arrays, containing the <a class="reference external" href="https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index">HDI data</a>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import libraries for this page</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import libraries for this page</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-
-<span class="c1"># country codes</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We build the constituent arrays:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Standard three-letter code for each country</span>
 <span class="n">country_codes_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;AUS&#39;</span><span class="p">,</span> <span class="s1">&#39;BRA&#39;</span><span class="p">,</span> <span class="s1">&#39;CAN&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;CHN&#39;</span><span class="p">,</span> <span class="s1">&#39;DEU&#39;</span><span class="p">,</span> <span class="s1">&#39;ESP&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;FRA&#39;</span><span class="p">,</span> <span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;IND&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;ITA&#39;</span><span class="p">,</span> <span class="s1">&#39;JPN&#39;</span><span class="p">,</span> <span class="s1">&#39;KOR&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;MEX&#39;</span><span class="p">,</span> <span class="s1">&#39;RUS&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">])</span>
+                                <span class="s1">&#39;CHN&#39;</span><span class="p">,</span> <span class="s1">&#39;DEU&#39;</span><span class="p">,</span> <span class="s1">&#39;ESP&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;FRA&#39;</span><span class="p">,</span> <span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;IND&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;ITA&#39;</span><span class="p">,</span> <span class="s1">&#39;JPN&#39;</span><span class="p">,</span> <span class="s1">&#39;KOR&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;MEX&#39;</span><span class="p">,</span> <span class="s1">&#39;RUS&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">])</span>
 <span class="n">country_codes_array</span>
 </pre></div>
 </div>
@@ -491,24 +497,25 @@ Structure of this page:
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Human Development Index Scores for each country</span>
-<span class="n">hdis_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.896</span><span class="p">,</span> <span class="mf">0.668</span><span class="p">,</span> <span class="mf">0.89</span> <span class="p">,</span> <span class="mf">0.586</span><span class="p">,</span> 
-                 <span class="mf">0.844</span><span class="p">,</span> <span class="mf">0.89</span> <span class="p">,</span> <span class="mf">0.49</span> <span class="p">,</span> <span class="mf">0.842</span><span class="p">,</span> 
-                 <span class="mf">0.883</span><span class="p">,</span> <span class="mf">0.709</span><span class="p">,</span> <span class="mf">0.733</span><span class="p">,</span> <span class="mf">0.824</span><span class="p">,</span>
-                 <span class="mf">0.828</span><span class="p">,</span> <span class="mf">0.863</span><span class="p">,</span> <span class="mf">0.894</span><span class="p">])</span>
-
+<span class="n">hdis_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.896</span><span class="p">,</span> <span class="mf">0.668</span><span class="p">,</span> <span class="mf">0.89</span><span class="p">,</span>
+                       <span class="mf">0.586</span><span class="p">,</span> <span class="mf">0.89</span><span class="p">,</span>  <span class="mf">0.828</span><span class="p">,</span>
+                       <span class="mf">0.844</span><span class="p">,</span> <span class="mf">0.863</span><span class="p">,</span> <span class="mf">0.49</span><span class="p">,</span>
+                       <span class="mf">0.842</span><span class="p">,</span> <span class="mf">0.883</span><span class="p">,</span> <span class="mf">0.824</span><span class="p">,</span>
+                       <span class="mf">0.709</span><span class="p">,</span> <span class="mf">0.733</span><span class="p">,</span> <span class="mf">0.894</span><span class="p">])</span>
 <span class="n">hdis_array</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.896, 0.668, 0.89 , 0.586, 0.844, 0.89 , 0.49 , 0.842, 0.883,
-       0.709, 0.733, 0.824, 0.828, 0.863, 0.894])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.896, 0.668, 0.89 , 0.586, 0.89 , 0.828, 0.844, 0.863, 0.49 ,
+       0.842, 0.883, 0.824, 0.709, 0.733, 0.894])
 </pre></div>
 </div>
 </div>
 </div>
-<p>Let’s say we want to view HDI values that are bigger than the median HDI value.</p>
-<p>First, we can inspect what the median is, using the <code class="docutils literal notranslate"><span class="pre">np.median()</span></code> function:</p>
+<p>Let’s say we want to view HDI values that are bigger than the median HDI
+value.</p>
+<p>First, we can calculate the median, using the <code class="docutils literal notranslate"><span class="pre">np.median()</span></code> function:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the median HDI</span>
@@ -527,36 +534,22 @@ Structure of this page:
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a Boolean array</span>
-<span class="n">hdis_array</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">hdis_array</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ True, False,  True, False,  True,  True, False, False,  True,
-       False, False, False, False,  True,  True])
-</pre></div>
-</div>
-</div>
-</div>
-<p>The array in the output of the cell above is the same length as the <code class="docutils literal notranslate"><span class="pre">hdis_array</span></code> and it contains <code class="docutils literal notranslate"><span class="pre">True</span></code> value where the element in <code class="docutils literal notranslate"><span class="pre">hdis_array</span></code> is larger than the median HDI score (and <code class="docutils literal notranslate"><span class="pre">False</span></code> values otherwise).</p>
-<p>Let’s run this operation again, and save this Boolean array (of <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code> values), and save it in it’s own variable, to make it easier to use a filter:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># filter using the Boolean array</span>
-<span class="n">hdis_array_grtr_median_bool</span> <span class="o">=</span> <span class="n">hdis_array</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">hdis_array</span><span class="p">)</span>
-
+<span class="n">hdis_array_grtr_median_bool</span> <span class="o">=</span>  <span class="n">hdis_array</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">hdis_array</span><span class="p">)</span>
 <span class="n">hdis_array_grtr_median_bool</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ True, False,  True, False,  True,  True, False, False,  True,
-       False, False, False, False,  True,  True])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ True, False,  True, False,  True, False,  True,  True, False,
+       False,  True, False, False, False,  True])
 </pre></div>
 </div>
 </div>
 </div>
-<p>Our Boolean array can now be used to retrieve elements of the <code class="docutils literal notranslate"><span class="pre">hdis_array</span></code> that are greater than the median HDI value. We just place our filter in between square brackers used to index the array. The <code class="docutils literal notranslate"><span class="pre">True</span></code> values act as “on switches” (keeping that element in the output array) and the <code class="docutils literal notranslate"><span class="pre">False</span></code> values act as “off switches” (removing that element from the output array):</p>
+<p>The array in the output of the cell above is the same length as the
+<code class="docutils literal notranslate"><span class="pre">hdis_array</span></code> and it contains <code class="docutils literal notranslate"><span class="pre">True</span></code> value where the element in <code class="docutils literal notranslate"><span class="pre">hdis_array</span></code> is
+larger than the median HDI score (and <code class="docutils literal notranslate"><span class="pre">False</span></code> values otherwise).</p>
+<p>Our Boolean array can now be used to retrieve elements of the <code class="docutils literal notranslate"><span class="pre">hdis_array</span></code> that are greater than the median HDI value. We just place our filter in between square brackets used to index the array. The <code class="docutils literal notranslate"><span class="pre">True</span></code> values act as “on switches” (keeping that element in the output array) and the <code class="docutils literal notranslate"><span class="pre">False</span></code> values act as “off switches” (removing that element from the output array):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># filter the `hdis_array`</span>
@@ -565,7 +558,7 @@ Structure of this page:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.896, 0.89 , 0.844, 0.89 , 0.883, 0.863, 0.894])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.896, 0.89 , 0.89 , 0.844, 0.863, 0.883, 0.894])
 </pre></div>
 </div>
 </div>
@@ -607,7 +600,6 @@ Structure of this page:
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># make a pandas Series</span>
 <span class="n">hdis_array_bool_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">hdis_array_grtr_median_bool</span><span class="p">,</span> 
                                    <span class="n">index</span><span class="o">=</span><span class="n">country_codes_array</span><span class="p">)</span>
-
 <span class="n">hdis_array_bool_series</span>
 </pre></div>
 </div>
@@ -618,15 +610,15 @@ BRA    False
 CAN     True
 CHN    False
 DEU     True
-ESP     True
-FRA    False
-GBR    False
-IND     True
+ESP    False
+FRA     True
+GBR     True
+IND    False
 ITA    False
-JPN    False
+JPN     True
 KOR    False
 MEX    False
-RUS     True
+RUS    False
 USA     True
 dtype: bool
 </pre></div>
@@ -651,15 +643,15 @@ BRA    False
 CAN     True
 CHN    False
 DEU     True
-ESP     True
-FRA    False
-GBR    False
-IND     True
+ESP    False
+FRA     True
+GBR     True
+IND    False
 ITA    False
-JPN    False
+JPN     True
 KOR    False
 MEX    False
-RUS     True
+RUS    False
 USA     True
 Name: hdi_grtr_thn_median, dtype: bool
 </pre></div>
@@ -716,7 +708,7 @@ Name: hdi_grtr_thn_median, dtype: bool
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.896, 0.89 , 0.844, 0.89 , 0.883, 0.863, 0.894])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.896, 0.89 , 0.89 , 0.844, 0.863, 0.883, 0.894])
 </pre></div>
 </div>
 </div>
@@ -734,10 +726,8 @@ Name: hdi_grtr_thn_median, dtype: bool
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import our dataset</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/year_2000_hdi_fert.csv&quot;</span><span class="p">)</span>
-
 <span class="c1"># set the index</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;Code&quot;</span><span class="p">)</span>
-
 <span class="n">df</span>
 </pre></div>
 </div>
@@ -779,105 +769,105 @@ Name: hdi_grtr_thn_median, dtype: bool
       <th>AUS</th>
       <td>0.896</td>
       <td>1.764</td>
-      <td>1.913247e+07</td>
+      <td>19.1324</td>
       <td>Australia</td>
     </tr>
     <tr>
       <th>BRA</th>
       <td>0.668</td>
       <td>2.247</td>
-      <td>1.740183e+08</td>
+      <td>174.0182</td>
       <td>Brazil</td>
     </tr>
     <tr>
       <th>CAN</th>
       <td>0.890</td>
       <td>1.510</td>
-      <td>3.089180e+07</td>
+      <td>30.8918</td>
       <td>Canada</td>
     </tr>
     <tr>
       <th>CHN</th>
       <td>0.586</td>
       <td>1.628</td>
-      <td>1.269581e+09</td>
+      <td>1269.5811</td>
       <td>China</td>
     </tr>
     <tr>
       <th>DEU</th>
       <td>0.890</td>
       <td>1.386</td>
-      <td>8.179726e+07</td>
+      <td>81.7972</td>
       <td>Germany</td>
     </tr>
     <tr>
       <th>ESP</th>
       <td>0.828</td>
       <td>1.210</td>
-      <td>4.101977e+07</td>
+      <td>41.0197</td>
       <td>Spain</td>
     </tr>
     <tr>
       <th>FRA</th>
       <td>0.844</td>
       <td>1.876</td>
-      <td>5.948372e+07</td>
+      <td>59.4837</td>
       <td>France</td>
     </tr>
     <tr>
       <th>GBR</th>
       <td>0.863</td>
       <td>1.641</td>
-      <td>5.905734e+07</td>
+      <td>59.0573</td>
       <td>United Kingdom</td>
     </tr>
     <tr>
       <th>IND</th>
       <td>0.490</td>
       <td>3.350</td>
-      <td>1.057923e+09</td>
+      <td>1057.9227</td>
       <td>India</td>
     </tr>
     <tr>
       <th>ITA</th>
       <td>0.842</td>
       <td>1.249</td>
-      <td>5.727220e+07</td>
+      <td>57.2722</td>
       <td>Italy</td>
     </tr>
     <tr>
       <th>JPN</th>
       <td>0.883</td>
       <td>1.346</td>
-      <td>1.270278e+08</td>
+      <td>127.0278</td>
       <td>Japan</td>
     </tr>
     <tr>
       <th>KOR</th>
       <td>0.824</td>
       <td>1.467</td>
-      <td>4.676666e+07</td>
+      <td>46.7666</td>
       <td>South Korea</td>
     </tr>
     <tr>
       <th>MEX</th>
       <td>0.709</td>
       <td>2.714</td>
-      <td>9.862555e+07</td>
+      <td>98.6255</td>
       <td>Mexico</td>
     </tr>
     <tr>
       <th>RUS</th>
       <td>0.733</td>
       <td>1.190</td>
-      <td>1.467178e+08</td>
+      <td>146.7177</td>
       <td>Russia</td>
     </tr>
     <tr>
       <th>USA</th>
       <td>0.894</td>
       <td>2.030</td>
-      <td>2.814841e+08</td>
+      <td>281.4841</td>
       <td>United States</td>
     </tr>
   </tbody>
@@ -1009,49 +999,49 @@ Name: HDI_grtr_than_median, dtype: bool
       <th>AUS</th>
       <td>0.896</td>
       <td>1.764</td>
-      <td>19132473.0</td>
+      <td>19.1324</td>
       <td>Australia</td>
     </tr>
     <tr>
       <th>CAN</th>
       <td>0.890</td>
       <td>1.510</td>
-      <td>30891800.0</td>
+      <td>30.8918</td>
       <td>Canada</td>
     </tr>
     <tr>
       <th>DEU</th>
       <td>0.890</td>
       <td>1.386</td>
-      <td>81797255.0</td>
+      <td>81.7972</td>
       <td>Germany</td>
     </tr>
     <tr>
       <th>FRA</th>
       <td>0.844</td>
       <td>1.876</td>
-      <td>59483716.0</td>
+      <td>59.4837</td>
       <td>France</td>
     </tr>
     <tr>
       <th>GBR</th>
       <td>0.863</td>
       <td>1.641</td>
-      <td>59057336.0</td>
+      <td>59.0573</td>
       <td>United Kingdom</td>
     </tr>
     <tr>
       <th>JPN</th>
       <td>0.883</td>
       <td>1.346</td>
-      <td>127027796.0</td>
+      <td>127.0278</td>
       <td>Japan</td>
     </tr>
     <tr>
       <th>USA</th>
       <td>0.894</td>
       <td>2.030</td>
-      <td>281484127.0</td>
+      <td>281.4841</td>
       <td>United States</td>
     </tr>
   </tbody>
@@ -1073,15 +1063,15 @@ BRA    False
 CAN     True
 CHN    False
 DEU     True
-ESP     True
-FRA    False
-GBR    False
-IND     True
+ESP    False
+FRA     True
+GBR     True
+IND    False
 ITA    False
-JPN    False
+JPN     True
 KOR    False
 MEX    False
-RUS     True
+RUS    False
 USA     True
 Name: hdi_grtr_thn_median, dtype: bool
 </pre></div>
@@ -1133,49 +1123,49 @@ Name: hdi_grtr_thn_median, dtype: bool
       <th>AUS</th>
       <td>0.896</td>
       <td>1.764</td>
-      <td>1.913247e+07</td>
+      <td>19.1324</td>
       <td>Australia</td>
     </tr>
     <tr>
       <th>CAN</th>
       <td>0.890</td>
       <td>1.510</td>
-      <td>3.089180e+07</td>
+      <td>30.8918</td>
       <td>Canada</td>
     </tr>
     <tr>
       <th>DEU</th>
       <td>0.890</td>
       <td>1.386</td>
-      <td>8.179726e+07</td>
+      <td>81.7972</td>
       <td>Germany</td>
     </tr>
     <tr>
-      <th>ESP</th>
-      <td>0.828</td>
-      <td>1.210</td>
-      <td>4.101977e+07</td>
-      <td>Spain</td>
+      <th>FRA</th>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>59.4837</td>
+      <td>France</td>
     </tr>
     <tr>
-      <th>IND</th>
-      <td>0.490</td>
-      <td>3.350</td>
-      <td>1.057923e+09</td>
-      <td>India</td>
+      <th>GBR</th>
+      <td>0.863</td>
+      <td>1.641</td>
+      <td>59.0573</td>
+      <td>United Kingdom</td>
     </tr>
     <tr>
-      <th>RUS</th>
-      <td>0.733</td>
-      <td>1.190</td>
-      <td>1.467178e+08</td>
-      <td>Russia</td>
+      <th>JPN</th>
+      <td>0.883</td>
+      <td>1.346</td>
+      <td>127.0278</td>
+      <td>Japan</td>
     </tr>
     <tr>
       <th>USA</th>
       <td>0.894</td>
       <td>2.030</td>
-      <td>2.814841e+08</td>
+      <td>281.4841</td>
       <td>United States</td>
     </tr>
   </tbody>
@@ -1231,49 +1221,49 @@ Name: hdi_grtr_thn_median, dtype: bool
       <th>AUS</th>
       <td>0.896</td>
       <td>1.764</td>
-      <td>19132473.0</td>
+      <td>19.1324</td>
       <td>Australia</td>
     </tr>
     <tr>
       <th>CAN</th>
       <td>0.890</td>
       <td>1.510</td>
-      <td>30891800.0</td>
+      <td>30.8918</td>
       <td>Canada</td>
     </tr>
     <tr>
       <th>DEU</th>
       <td>0.890</td>
       <td>1.386</td>
-      <td>81797255.0</td>
+      <td>81.7972</td>
       <td>Germany</td>
     </tr>
     <tr>
       <th>FRA</th>
       <td>0.844</td>
       <td>1.876</td>
-      <td>59483716.0</td>
+      <td>59.4837</td>
       <td>France</td>
     </tr>
     <tr>
       <th>GBR</th>
       <td>0.863</td>
       <td>1.641</td>
-      <td>59057336.0</td>
+      <td>59.0573</td>
       <td>United Kingdom</td>
     </tr>
     <tr>
       <th>JPN</th>
       <td>0.883</td>
       <td>1.346</td>
-      <td>127027796.0</td>
+      <td>127.0278</td>
       <td>Japan</td>
     </tr>
     <tr>
       <th>USA</th>
       <td>0.894</td>
       <td>2.030</td>
-      <td>281484127.0</td>
+      <td>281.4841</td>
       <td>United States</td>
     </tr>
   </tbody>
@@ -1388,56 +1378,56 @@ Name: HDI_grtr_than_median, dtype: bool
       <th>BRA</th>
       <td>0.668</td>
       <td>2.247</td>
-      <td>1.740183e+08</td>
+      <td>174.0182</td>
       <td>Brazil</td>
     </tr>
     <tr>
       <th>CHN</th>
       <td>0.586</td>
       <td>1.628</td>
-      <td>1.269581e+09</td>
+      <td>1269.5811</td>
       <td>China</td>
     </tr>
     <tr>
       <th>ESP</th>
       <td>0.828</td>
       <td>1.210</td>
-      <td>4.101977e+07</td>
+      <td>41.0197</td>
       <td>Spain</td>
     </tr>
     <tr>
       <th>IND</th>
       <td>0.490</td>
       <td>3.350</td>
-      <td>1.057923e+09</td>
+      <td>1057.9227</td>
       <td>India</td>
     </tr>
     <tr>
       <th>ITA</th>
       <td>0.842</td>
       <td>1.249</td>
-      <td>5.727220e+07</td>
+      <td>57.2722</td>
       <td>Italy</td>
     </tr>
     <tr>
       <th>KOR</th>
       <td>0.824</td>
       <td>1.467</td>
-      <td>4.676666e+07</td>
+      <td>46.7666</td>
       <td>South Korea</td>
     </tr>
     <tr>
       <th>MEX</th>
       <td>0.709</td>
       <td>2.714</td>
-      <td>9.862555e+07</td>
+      <td>98.6255</td>
       <td>Mexico</td>
     </tr>
     <tr>
       <th>RUS</th>
       <td>0.733</td>
       <td>1.190</td>
-      <td>1.467178e+08</td>
+      <td>146.7177</td>
       <td>Russia</td>
     </tr>
   </tbody>

@@ -429,14 +429,15 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="to-loc-or-iloc-more-on-pandas-indexes">
 <h1>To <code class="docutils literal notranslate"><span class="pre">.loc</span></code> or <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> - more on Pandas indexes<a class="headerlink" href="#to-loc-or-iloc-more-on-pandas-indexes" title="Link to this heading">#</a></h1>
-<p>From the <a class="reference internal" href="0_0_pandas_intro.html"><span class="std std-doc">previous page</span></a>, remember our maxims that:</p>
+<p>From the <a class="reference internal" href="0_0_pandas_intro.html"><span class="std std-doc">previous page</span></a>, remember our maxims:</p>
+<blockquote>
+<div><p>A <em>Series</em> is the association of:</p>
 <ul class="simple">
-<li><p><em>“a Pandas Series is a numpy array, plus a <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute and an array-like <code class="docutils literal notranslate"><span class="pre">index</span></code>”</em></p></li>
+<li><p>An array of values (<code class="docutils literal notranslate"><span class="pre">.values</span></code>)</p></li>
+<li><p>A sequence of labels for each value (<code class="docutils literal notranslate"><span class="pre">.index</span></code>)</p></li>
+<li><p>A name (which can be <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
 </ul>
-<p>…and…</p>
-<ul class="simple">
-<li><p>*”a Pandas Data Frame is just a <em>dictionary-like collection of Series</em>”?</p></li>
-</ul>
+</div></blockquote>
 <p>On this page we will examine differences between Data Frame attributes. We will demonstrate that the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute is optional. The default <code class="docutils literal notranslate"><span class="pre">name</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code> and the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute can be left unspecified in any given Series with minimal consequences. We will show, however, that it is important to specify the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute as a column name when a Series is part of a Pandas Data Frame.</p>
 <p>In contrast, an <code class="docutils literal notranslate"><span class="pre">index</span></code> is essential - if no <code class="docutils literal notranslate"><span class="pre">index</span></code> is specified then Pandas will create one. However, we will show that it is sensible to replace Pandas’ default index with a custom index, to avoid accidental errors when indexing.</p>
 <div class="cell docutils container">
@@ -475,18 +476,18 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Human Development Index Scores for each country</span>
-<span class="n">hdis_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.896</span><span class="p">,</span> <span class="mf">0.668</span><span class="p">,</span> <span class="mf">0.89</span> <span class="p">,</span> <span class="mf">0.586</span><span class="p">,</span> 
-                       <span class="mf">0.844</span><span class="p">,</span> <span class="mf">0.89</span> <span class="p">,</span> <span class="mf">0.49</span> <span class="p">,</span> <span class="mf">0.842</span><span class="p">,</span> 
-                       <span class="mf">0.883</span><span class="p">,</span> <span class="mf">0.709</span><span class="p">,</span> <span class="mf">0.733</span><span class="p">,</span> <span class="mf">0.824</span><span class="p">,</span>
-                       <span class="mf">0.828</span><span class="p">,</span> <span class="mf">0.863</span><span class="p">,</span> <span class="mf">0.894</span><span class="p">])</span>
-
+<span class="n">hdis_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.896</span><span class="p">,</span> <span class="mf">0.668</span><span class="p">,</span> <span class="mf">0.89</span><span class="p">,</span>
+                       <span class="mf">0.586</span><span class="p">,</span> <span class="mf">0.89</span><span class="p">,</span>  <span class="mf">0.828</span><span class="p">,</span>
+                       <span class="mf">0.844</span><span class="p">,</span> <span class="mf">0.863</span><span class="p">,</span> <span class="mf">0.49</span><span class="p">,</span>
+                       <span class="mf">0.842</span><span class="p">,</span> <span class="mf">0.883</span><span class="p">,</span> <span class="mf">0.824</span><span class="p">,</span>
+                       <span class="mf">0.709</span><span class="p">,</span> <span class="mf">0.733</span><span class="p">,</span> <span class="mf">0.894</span><span class="p">])</span>
 <span class="n">hdis_array</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.896, 0.668, 0.89 , 0.586, 0.844, 0.89 , 0.49 , 0.842, 0.883,
-       0.709, 0.733, 0.824, 0.828, 0.863, 0.894])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.896, 0.668, 0.89 , 0.586, 0.89 , 0.828, 0.844, 0.863, 0.49 ,
+       0.842, 0.883, 0.824, 0.709, 0.733, 0.894])
 </pre></div>
 </div>
 </div>
@@ -497,7 +498,6 @@
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># make a series from the `hdis` array</span>
 <span class="n">hdi_series</span> <span class="o">=</span>  <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">hdis_array</span><span class="p">,</span> 
                         <span class="n">index</span><span class="o">=</span><span class="n">country_codes_array</span><span class="p">)</span>
-
 <span class="n">hdi_series</span>
 </pre></div>
 </div>
@@ -507,23 +507,23 @@
 BRA    0.668
 CAN    0.890
 CHN    0.586
-DEU    0.844
-ESP    0.890
-FRA    0.490
-GBR    0.842
-IND    0.883
-ITA    0.709
-JPN    0.733
+DEU    0.890
+ESP    0.828
+FRA    0.844
+GBR    0.863
+IND    0.490
+ITA    0.842
+JPN    0.883
 KOR    0.824
-MEX    0.828
-RUS    0.863
+MEX    0.709
+RUS    0.733
 USA    0.894
 dtype: float64
 </pre></div>
 </div>
 </div>
 </div>
-<p>Currently, our Series has data (<code class="docutils literal notranslate"><span class="pre">values</span></code>) and and an <code class="docutils literal notranslate"><span class="pre">index</span></code>, but no <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute:</p>
+<p>Currently, our Series has data (<code class="docutils literal notranslate"><span class="pre">values</span></code>) and an <code class="docutils literal notranslate"><span class="pre">index</span></code>, but no <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the `values`</span>
@@ -532,8 +532,8 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.896, 0.668, 0.89 , 0.586, 0.844, 0.89 , 0.49 , 0.842, 0.883,
-       0.709, 0.733, 0.824, 0.828, 0.863, 0.894])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.896, 0.668, 0.89 , 0.586, 0.89 , 0.828, 0.844, 0.863, 0.49 ,
+       0.842, 0.883, 0.824, 0.709, 0.733, 0.894])
 </pre></div>
 </div>
 </div>
@@ -580,11 +580,10 @@ dtype: float64
 <p>To specify the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute we use the <code class="docutils literal notranslate"><span class="pre">name</span> <span class="pre">=</span> </code> argument inside the <code class="docutils literal notranslate"><span class="pre">pd.DataFrame()</span></code> constructor:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># make a series from the `hdis` array</span>
-<span class="n">hdi_series_with_name_and_index</span> <span class="o">=</span>  <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">hdis_array</span><span class="p">,</span> 
-                                  <span class="n">index</span><span class="o">=</span><span class="n">country_codes_array</span><span class="p">,</span>
-                                  <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Human Development Index&#39;</span><span class="p">)</span> <span class="c1"># specifying the `name` attribute</span>
-
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make a series from the `hdis` array, specifying the `name` attribute.</span>
+<span class="n">hdi_series_with_name_and_index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">hdis_array</span><span class="p">,</span>
+                                           <span class="n">index</span><span class="o">=</span><span class="n">country_codes_array</span><span class="p">,</span>
+                                           <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Human Development Index&#39;</span><span class="p">)</span>
 <span class="n">hdi_series_with_name_and_index</span>
 </pre></div>
 </div>
@@ -594,16 +593,16 @@ dtype: float64
 BRA    0.668
 CAN    0.890
 CHN    0.586
-DEU    0.844
-ESP    0.890
-FRA    0.490
-GBR    0.842
-IND    0.883
-ITA    0.709
-JPN    0.733
+DEU    0.890
+ESP    0.828
+FRA    0.844
+GBR    0.863
+IND    0.490
+ITA    0.842
+JPN    0.883
 KOR    0.824
-MEX    0.828
-RUS    0.863
+MEX    0.709
+RUS    0.733
 USA    0.894
 Name: Human Development Index, dtype: float64
 </pre></div>
@@ -613,7 +612,7 @@ Name: Human Development Index, dtype: float64
 <p>Now, <code class="docutils literal notranslate"><span class="pre">name</span></code> is no longer equal to <code class="docutils literal notranslate"><span class="pre">None</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the `name` attribute</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the `name` attribute</span>
 <span class="n">hdi_series_with_name_and_index</span><span class="o">.</span><span class="n">name</span>
 </pre></div>
 </div>
@@ -646,7 +645,6 @@ Name: Human Development Index, dtype: float64
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># make a series from the `hdis` array, with no `name` and no `index` specified</span>
 <span class="n">hdi_series_no_name_no_index</span> <span class="o">=</span>  <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">hdis_array</span><span class="p">)</span>
-
 <span class="n">hdi_series_no_name_no_index</span>
 </pre></div>
 </div>
@@ -656,16 +654,16 @@ Name: Human Development Index, dtype: float64
 1     0.668
 2     0.890
 3     0.586
-4     0.844
-5     0.890
-6     0.490
-7     0.842
-8     0.883
-9     0.709
-10    0.733
+4     0.890
+5     0.828
+6     0.844
+7     0.863
+8     0.490
+9     0.842
+10    0.883
 11    0.824
-12    0.828
-13    0.863
+12    0.709
+13    0.733
 14    0.894
 dtype: float64
 </pre></div>
@@ -685,26 +683,27 @@ dtype: float64
 1     0.668
 2     0.890
 3     0.586
-4     0.844
-5     0.890
-6     0.490
-7     0.842
-8     0.883
-9     0.709
-10    0.733
+4     0.890
+5     0.828
+6     0.844
+7     0.863
+8     0.490
+9     0.842
+10    0.883
 11    0.824
-12    0.828
-13    0.863
+12    0.709
+13    0.733
 14    0.894
 dtype: float64
 </pre></div>
 </div>
 </div>
 </div>
-<p>Let’s take a closer look at this <code class="docutils literal notranslate"><span class="pre">index</span></code> by directly accessing the <code class="docutils literal notranslate"><span class="pre">.index</span></code> attribute:</p>
+<p>Let’s take a closer look at this <code class="docutils literal notranslate"><span class="pre">index</span></code> by directly accessing the <code class="docutils literal notranslate"><span class="pre">.index</span></code>
+attribute:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the default Pandas index</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The default Pandas index</span>
 <span class="n">hdi_series_no_name_no_index</span><span class="o">.</span><span class="n">index</span>
 </pre></div>
 </div>
@@ -715,7 +714,9 @@ dtype: float64
 </div>
 </div>
 </div>
-<p>Hmmm, it is quite strange-looking relative to the index of country codes (which visually resembles a numpy array). Let’s use to the <code class="docutils literal notranslate"><span class="pre">type()</span></code> function to investigate further:</p>
+<p>Hmm, it is quite strange-looking relative to the index of country codes (which
+visually resembles a numpy array). Let’s use to the <code class="docutils literal notranslate"><span class="pre">type()</span></code> function to
+investigate further:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># so the type of the default index</span>
@@ -877,16 +878,16 @@ dtype: float64
 1     0.668
 2     0.890
 3     0.586
-4     0.844
-5     0.890
-6     0.490
-7     0.842
-8     0.883
-9     0.709
-10    0.733
+4     0.890
+5     0.828
+6     0.844
+7     0.863
+8     0.490
+9     0.842
+10    0.883
 11    0.824
-12    0.828
-13    0.863
+12    0.709
+13    0.733
 14    0.894
 dtype: float64
 </pre></div>
@@ -902,7 +903,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.844)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.89)
 </pre></div>
 </div>
 </div>
@@ -915,7 +916,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.844)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.89)
 </pre></div>
 </div>
 </div>
@@ -929,7 +930,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.844)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.89)
 </pre></div>
 </div>
 </div>
@@ -947,19 +948,19 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6     0.490
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8     0.490
 3     0.586
 1     0.668
-9     0.709
-10    0.733
+12    0.709
+13    0.733
 11    0.824
-12    0.828
-7     0.842
-4     0.844
-13    0.863
-8     0.883
+5     0.828
+9     0.842
+6     0.844
+7     0.863
+10    0.883
 2     0.890
-5     0.890
+4     0.890
 14    0.894
 0     0.896
 dtype: float64
@@ -991,7 +992,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.844)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.89)
 </pre></div>
 </div>
 </div>
@@ -1004,7 +1005,7 @@ dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.844)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.89)
 </pre></div>
 </div>
 </div>
@@ -1024,16 +1025,16 @@ dtype: float64
 BRA    0.668
 CAN    0.890
 CHN    0.586
-DEU    0.844
-ESP    0.890
-FRA    0.490
-GBR    0.842
-IND    0.883
-ITA    0.709
-JPN    0.733
+DEU    0.890
+ESP    0.828
+FRA    0.844
+GBR    0.863
+IND    0.490
+ITA    0.842
+JPN    0.883
 KOR    0.824
-MEX    0.828
-RUS    0.863
+MEX    0.709
+RUS    0.733
 USA    0.894
 Name: Human Development Index, dtype: float64
 </pre></div>
@@ -1049,7 +1050,7 @@ Name: Human Development Index, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.844)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.89)
 </pre></div>
 </div>
 </div>
@@ -1136,7 +1137,7 @@ Name: Human Development Index, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.844)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.89)
 </pre></div>
 </div>
 </div>
@@ -1150,11 +1151,11 @@ Name: Human Development Index, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2432/1692167703.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2408/1692167703.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   hdi_series_with_name_and_index[4]
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.844)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.89)
 </pre></div>
 </div>
 </div>
@@ -1171,19 +1172,19 @@ Name: Human Development Index, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FRA    0.490
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>IND    0.490
 CHN    0.586
 BRA    0.668
-ITA    0.709
-JPN    0.733
+MEX    0.709
+RUS    0.733
 KOR    0.824
-MEX    0.828
-GBR    0.842
-DEU    0.844
-RUS    0.863
-IND    0.883
+ESP    0.828
+ITA    0.842
+FRA    0.844
+GBR    0.863
+JPN    0.883
 CAN    0.890
-ESP    0.890
+DEU    0.890
 USA    0.894
 AUS    0.896
 Name: Human Development Index, dtype: float64
@@ -1215,7 +1216,7 @@ Name: Human Development Index, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2432/1541050731.py:3: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2408/1541050731.py:3: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   hdi_series_with_name_and_index_sorted[4]
 </pre></div>
 </div>
@@ -1233,7 +1234,7 @@ Name: Human Development Index, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.844)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.89)
 </pre></div>
 </div>
 </div>
@@ -1309,31 +1310,31 @@ Name: Human Development Index, dtype: float64
     </tr>
     <tr>
       <th>DEU</th>
-      <td>0.844</td>
-    </tr>
-    <tr>
-      <th>ESP</th>
       <td>0.890</td>
     </tr>
     <tr>
+      <th>ESP</th>
+      <td>0.828</td>
+    </tr>
+    <tr>
       <th>FRA</th>
-      <td>0.490</td>
+      <td>0.844</td>
     </tr>
     <tr>
       <th>GBR</th>
-      <td>0.842</td>
+      <td>0.863</td>
     </tr>
     <tr>
       <th>IND</th>
-      <td>0.883</td>
+      <td>0.490</td>
     </tr>
     <tr>
       <th>ITA</th>
-      <td>0.709</td>
+      <td>0.842</td>
     </tr>
     <tr>
       <th>JPN</th>
-      <td>0.733</td>
+      <td>0.883</td>
     </tr>
     <tr>
       <th>KOR</th>
@@ -1341,11 +1342,11 @@ Name: Human Development Index, dtype: float64
     </tr>
     <tr>
       <th>MEX</th>
-      <td>0.828</td>
+      <td>0.709</td>
     </tr>
     <tr>
       <th>RUS</th>
-      <td>0.863</td>
+      <td>0.733</td>
     </tr>
     <tr>
       <th>USA</th>
@@ -1398,16 +1399,16 @@ Name: Human Development Index, dtype: float64
 BRA    0.668
 CAN    0.890
 CHN    0.586
-DEU    0.844
-ESP    0.890
-FRA    0.490
-GBR    0.842
-IND    0.883
-ITA    0.709
-JPN    0.733
+DEU    0.890
+ESP    0.828
+FRA    0.844
+GBR    0.863
+IND    0.490
+ITA    0.842
+JPN    0.883
 KOR    0.824
-MEX    0.828
-RUS    0.863
+MEX    0.709
+RUS    0.733
 USA    0.894
 Name: Human Development Index, dtype: float64
 </pre></div>
@@ -1465,31 +1466,31 @@ Name: Human Development Index, dtype: float64
     </tr>
     <tr>
       <th>DEU</th>
-      <td>0.844</td>
-    </tr>
-    <tr>
-      <th>ESP</th>
       <td>0.890</td>
     </tr>
     <tr>
+      <th>ESP</th>
+      <td>0.828</td>
+    </tr>
+    <tr>
       <th>FRA</th>
-      <td>0.490</td>
+      <td>0.844</td>
     </tr>
     <tr>
       <th>GBR</th>
-      <td>0.842</td>
+      <td>0.863</td>
     </tr>
     <tr>
       <th>IND</th>
-      <td>0.883</td>
+      <td>0.490</td>
     </tr>
     <tr>
       <th>ITA</th>
-      <td>0.709</td>
+      <td>0.842</td>
     </tr>
     <tr>
       <th>JPN</th>
-      <td>0.733</td>
+      <td>0.883</td>
     </tr>
     <tr>
       <th>KOR</th>
@@ -1497,11 +1498,11 @@ Name: Human Development Index, dtype: float64
     </tr>
     <tr>
       <th>MEX</th>
-      <td>0.828</td>
+      <td>0.709</td>
     </tr>
     <tr>
       <th>RUS</th>
-      <td>0.863</td>
+      <td>0.733</td>
     </tr>
     <tr>
       <th>USA</th>
@@ -1540,16 +1541,16 @@ Name: Human Development Index, dtype: float64
 BRA    0.668
 CAN    0.890
 CHN    0.586
-DEU    0.844
-ESP    0.890
-FRA    0.490
-GBR    0.842
-IND    0.883
-ITA    0.709
-JPN    0.733
+DEU    0.890
+ESP    0.828
+FRA    0.844
+GBR    0.863
+IND    0.490
+ITA    0.842
+JPN    0.883
 KOR    0.824
-MEX    0.828
-RUS    0.863
+MEX    0.709
+RUS    0.733
 USA    0.894
 Name: Human Development Index, dtype: float64
 </pre></div>
@@ -1570,16 +1571,16 @@ Name: Human Development Index, dtype: float64
 BRA    0.668
 CAN    0.890
 CHN    0.586
-DEU    0.844
-ESP    0.890
-FRA    0.490
-GBR    0.842
-IND    0.883
-ITA    0.709
-JPN    0.733
+DEU    0.890
+ESP    0.828
+FRA    0.844
+GBR    0.863
+IND    0.490
+ITA    0.842
+JPN    0.883
 KOR    0.824
-MEX    0.828
-RUS    0.863
+MEX    0.709
+RUS    0.733
 USA    0.894
 Name: 0, dtype: float64
 </pre></div>
@@ -1595,7 +1596,7 @@ Name: 0, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2432/2632670009.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2408/2632670009.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   hdi_series[0]
 </pre></div>
 </div>
@@ -1682,37 +1683,37 @@ Name: 0, dtype: float64
     </tr>
     <tr>
       <th>DEU</th>
-      <td>0.844</td>
+      <td>0.890</td>
       <td>Germany</td>
     </tr>
     <tr>
       <th>ESP</th>
-      <td>0.890</td>
+      <td>0.828</td>
       <td>Spain</td>
     </tr>
     <tr>
       <th>FRA</th>
-      <td>0.490</td>
+      <td>0.844</td>
       <td>France</td>
     </tr>
     <tr>
       <th>GBR</th>
-      <td>0.842</td>
+      <td>0.863</td>
       <td>United Kingdom</td>
     </tr>
     <tr>
       <th>IND</th>
-      <td>0.883</td>
+      <td>0.490</td>
       <td>India</td>
     </tr>
     <tr>
       <th>ITA</th>
-      <td>0.709</td>
+      <td>0.842</td>
       <td>Italy</td>
     </tr>
     <tr>
       <th>JPN</th>
-      <td>0.733</td>
+      <td>0.883</td>
       <td>Japan</td>
     </tr>
     <tr>
@@ -1722,12 +1723,12 @@ Name: 0, dtype: float64
     </tr>
     <tr>
       <th>MEX</th>
-      <td>0.828</td>
+      <td>0.709</td>
       <td>Mexico</td>
     </tr>
     <tr>
       <th>RUS</th>
-      <td>0.863</td>
+      <td>0.733</td>
       <td>Russia</td>
     </tr>
     <tr>
@@ -1798,37 +1799,37 @@ Name: 0, dtype: float64
     <tr>
       <th>DEU</th>
       <td>Germany</td>
-      <td>0.844</td>
+      <td>0.890</td>
     </tr>
     <tr>
       <th>ESP</th>
       <td>Spain</td>
-      <td>0.890</td>
+      <td>0.828</td>
     </tr>
     <tr>
       <th>FRA</th>
       <td>France</td>
-      <td>0.490</td>
+      <td>0.844</td>
     </tr>
     <tr>
       <th>GBR</th>
       <td>United Kingdom</td>
-      <td>0.842</td>
+      <td>0.863</td>
     </tr>
     <tr>
       <th>IND</th>
       <td>India</td>
-      <td>0.883</td>
+      <td>0.490</td>
     </tr>
     <tr>
       <th>ITA</th>
       <td>Italy</td>
-      <td>0.709</td>
+      <td>0.842</td>
     </tr>
     <tr>
       <th>JPN</th>
       <td>Japan</td>
-      <td>0.733</td>
+      <td>0.883</td>
     </tr>
     <tr>
       <th>KOR</th>
@@ -1838,12 +1839,12 @@ Name: 0, dtype: float64
     <tr>
       <th>MEX</th>
       <td>Mexico</td>
-      <td>0.828</td>
+      <td>0.709</td>
     </tr>
     <tr>
       <th>RUS</th>
       <td>Russia</td>
-      <td>0.863</td>
+      <td>0.733</td>
     </tr>
     <tr>
       <th>USA</th>
@@ -1881,16 +1882,16 @@ Name: 0, dtype: float64
 BRA    0.668
 CAN    0.890
 CHN    0.586
-DEU    0.844
-ESP    0.890
-FRA    0.490
-GBR    0.842
-IND    0.883
-ITA    0.709
-JPN    0.733
+DEU    0.890
+ESP    0.828
+FRA    0.844
+GBR    0.863
+IND    0.490
+ITA    0.842
+JPN    0.883
 KOR    0.824
-MEX    0.828
-RUS    0.863
+MEX    0.709
+RUS    0.733
 USA    0.894
 Name: 0, dtype: float64
 </pre></div>
@@ -1954,37 +1955,37 @@ Name: 0, dtype: float64
     </tr>
     <tr>
       <th>DEU</th>
-      <td>0.844</td>
+      <td>0.890</td>
       <td>Germany</td>
     </tr>
     <tr>
       <th>ESP</th>
-      <td>0.890</td>
+      <td>0.828</td>
       <td>Spain</td>
     </tr>
     <tr>
       <th>FRA</th>
-      <td>0.490</td>
+      <td>0.844</td>
       <td>France</td>
     </tr>
     <tr>
       <th>GBR</th>
-      <td>0.842</td>
+      <td>0.863</td>
       <td>United Kingdom</td>
     </tr>
     <tr>
       <th>IND</th>
-      <td>0.883</td>
+      <td>0.490</td>
       <td>India</td>
     </tr>
     <tr>
       <th>ITA</th>
-      <td>0.709</td>
+      <td>0.842</td>
       <td>Italy</td>
     </tr>
     <tr>
       <th>JPN</th>
-      <td>0.733</td>
+      <td>0.883</td>
       <td>Japan</td>
     </tr>
     <tr>
@@ -1994,12 +1995,12 @@ Name: 0, dtype: float64
     </tr>
     <tr>
       <th>MEX</th>
-      <td>0.828</td>
+      <td>0.709</td>
       <td>Mexico</td>
     </tr>
     <tr>
       <th>RUS</th>
-      <td>0.863</td>
+      <td>0.733</td>
       <td>Russia</td>
     </tr>
     <tr>
@@ -2068,37 +2069,37 @@ Name: 0, dtype: float64
     <tr>
       <th>DEU</th>
       <td>Germany</td>
-      <td>0.844</td>
+      <td>0.890</td>
     </tr>
     <tr>
       <th>ESP</th>
       <td>Spain</td>
-      <td>0.890</td>
+      <td>0.828</td>
     </tr>
     <tr>
       <th>FRA</th>
       <td>France</td>
-      <td>0.490</td>
+      <td>0.844</td>
     </tr>
     <tr>
       <th>GBR</th>
       <td>United Kingdom</td>
-      <td>0.842</td>
+      <td>0.863</td>
     </tr>
     <tr>
       <th>IND</th>
       <td>India</td>
-      <td>0.883</td>
+      <td>0.490</td>
     </tr>
     <tr>
       <th>ITA</th>
       <td>Italy</td>
-      <td>0.709</td>
+      <td>0.842</td>
     </tr>
     <tr>
       <th>JPN</th>
       <td>Japan</td>
-      <td>0.733</td>
+      <td>0.883</td>
     </tr>
     <tr>
       <th>KOR</th>
@@ -2108,12 +2109,12 @@ Name: 0, dtype: float64
     <tr>
       <th>MEX</th>
       <td>Mexico</td>
-      <td>0.828</td>
+      <td>0.709</td>
     </tr>
     <tr>
       <th>RUS</th>
       <td>Russia</td>
-      <td>0.863</td>
+      <td>0.733</td>
     </tr>
     <tr>
       <th>USA</th>

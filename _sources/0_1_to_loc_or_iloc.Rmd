@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.14.5
+      jupytext_version: 1.17.1
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -15,13 +15,13 @@ jupyter:
 
 # To `.loc` or `.iloc` - more on Pandas indexes
 
-From the [previous page](0_0_pandas_intro.Rmd), remember our maxims that:
+From the [previous page](0_0_pandas_intro.Rmd), remember our maxims:
 
-- *"a Pandas Series is a numpy array, plus a `name` attribute and an array-like `index`"* 
-
-...and...
-
-- *"a Pandas Data Frame is just a *dictionary-like collection of Series*"? 
+> A *Series* is the association of:
+>
+> * An array of values (`.values`)
+> * A sequence of labels for each value (`.index`)
+> * A name (which can be `None`).
 
 On this page we will examine differences between Data Frame attributes. We will demonstrate that the `name` attribute is optional. The default `name` is `None` and the `name` attribute can be left unspecified in any given Series with minimal consequences. We will show, however, that it is important to specify the `name` attribute as a column name when a Series is part of a Pandas Data Frame. 
 
@@ -53,11 +53,11 @@ Second, an array containing the Human Development Index (HDI) scores for each co
 
 ```{python}
 # Human Development Index Scores for each country
-hdis_array = np.array([0.896, 0.668, 0.89 , 0.586, 
-                       0.844, 0.89 , 0.49 , 0.842, 
-                       0.883, 0.709, 0.733, 0.824,
-                       0.828, 0.863, 0.894])
-
+hdis_array = np.array([0.896, 0.668, 0.89,
+                       0.586, 0.89,  0.828,
+                       0.844, 0.863, 0.49,
+                       0.842, 0.883, 0.824,
+                       0.709, 0.733, 0.894])
 hdis_array
 ```
 
@@ -67,11 +67,10 @@ We can make a Series using the `pd.Series()` constructor. Our `.values` array is
 # make a series from the `hdis` array
 hdi_series =  pd.Series(hdis_array, 
                         index=country_codes_array)
-
 hdi_series
 ```
 
-Currently, our Series has data (`values`) and and an `index`, but no `name` attribute:
+Currently, our Series has data (`values`) and an `index`, but no `name` attribute:
 
 ```{python}
 # show the `values`
@@ -102,18 +101,17 @@ Let's make a new Series - called `hdi_series_with_name_and_index` - where we **d
 To specify the `name` attribute we use the `name = ` argument inside the `pd.DataFrame()` constructor:
 
 ```{python}
-# make a series from the `hdis` array
-hdi_series_with_name_and_index =  pd.Series(hdis_array, 
-                                  index=country_codes_array,
-                                  name = 'Human Development Index') # specifying the `name` attribute
-
+# Make a series from the `hdis` array, specifying the `name` attribute.
+hdi_series_with_name_and_index = pd.Series(hdis_array,
+                                           index=country_codes_array,
+                                           name = 'Human Development Index')
 hdi_series_with_name_and_index
 ```
 
 Now, `name` is no longer equal to `None`:
 
 ```{python}
-# show the `name` attribute
+# Show the `name` attribute
 hdi_series_with_name_and_index.name
 ```
 
@@ -131,7 +129,6 @@ To do this, we simply call the `pd.Series()` constructor without using the `inde
 ```{python}
 # make a series from the `hdis` array, with no `name` and no `index` specified
 hdi_series_no_name_no_index =  pd.Series(hdis_array)
-
 hdi_series_no_name_no_index
 ```
 
@@ -142,14 +139,17 @@ Here, you can see that while we did not specify an `index` Pandas has automatica
 hdi_series_no_name_no_index
 ```
 
-Let's take a closer look at this `index` by directly accessing the `.index` attribute:
+Let's take a closer look at this `index` by directly accessing the `.index`
+attribute:
 
 ```{python}
-# the default Pandas index
+# The default Pandas index
 hdi_series_no_name_no_index.index
 ```
 
-Hmmm, it is quite strange-looking relative to the index of country codes (which visually resembles a numpy array). Let's use to the `type()` function to investigate further:
+Hmm, it is quite strange-looking relative to the index of country codes (which
+visually resembles a numpy array). Let's use to the `type()` function to
+investigate further:
 
 ```{python}
 # so the type of the default index

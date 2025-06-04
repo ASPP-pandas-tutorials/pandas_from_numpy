@@ -417,7 +417,7 @@
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-series-attributes-and-methods">Pandas Series attributes and methods</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-dataframe-attributes">Pandas DataFrame attributes</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-dataframe-methods">Pandas Dataframe Methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-dataframe-methods">Pandas Dataframe methods</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-methods">Plotting Methods</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-note-on-numerical-operations">A note on numerical operations</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
@@ -450,7 +450,7 @@ Structure of page:
 
 * reinforce that "DataFrame = dictionary-like collection of Series". Then show all relevant methods/attributes of DataFrames.
 -->
-<p>On the <a class="reference internal" href="0_0_pandas_intro.html"><span class="std std-doc">previous</span></a> <a class="reference internal" href="0_1_to_loc_or_iloc.html"><span class="std std-doc">pages</span></a> we have seen how Pandas Series are constructed by combining numpy arrays (the <code class="docutils literal notranslate"><span class="pre">.values</span></code> attribute of a Series) with other attributes (a <code class="docutils literal notranslate"><span class="pre">.name</span></code> string and and array-like <code class="docutils literal notranslate"><span class="pre">.index</span></code>). We have then examined how Pandas Data Frames are built from a collection of Series, in a dictionary-like structure.</p>
+<p>On the <a class="reference internal" href="0_0_pandas_intro.html"><span class="std std-doc">previous</span></a> <a class="reference internal" href="0_1_to_loc_or_iloc.html"><span class="std std-doc">pages</span></a> we have seen how Pandas Series are constructed by combining Numpy arrays (the <code class="docutils literal notranslate"><span class="pre">.values</span></code> attribute of a Series) with other attributes (a <code class="docutils literal notranslate"><span class="pre">.name</span></code> string and and array-like <code class="docutils literal notranslate"><span class="pre">.index</span></code>). We have then examined how Pandas Data Frames are built from a collection of Series, in a dictionary-like structure.</p>
 <p>This page will dive deeper into Data Frames. Once we have constructed our Data Frame, Pandas provides many useful methods for cleaning, aggregating, plotting and (subsequently) analysing our data.</p>
 <p>We will begin by showing that Pandas Series and Data Frames inherit many of their methods from the Numpy arrays that they are in part constructed from, though the methods are adapted to work in the context of Pandas objects.</p>
 <section id="more-pandas-from-numpy">
@@ -464,13 +464,19 @@ Structure of page:
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import libraries</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-
-<span class="c1"># standard three-letter code for each country</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We build the constituent arrays:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Standard three-letter code for each country</span>
 <span class="n">country_codes_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;AUS&#39;</span><span class="p">,</span> <span class="s1">&#39;BRA&#39;</span><span class="p">,</span> <span class="s1">&#39;CAN&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;CHN&#39;</span><span class="p">,</span> <span class="s1">&#39;DEU&#39;</span><span class="p">,</span> <span class="s1">&#39;ESP&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;FRA&#39;</span><span class="p">,</span> <span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;IND&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;ITA&#39;</span><span class="p">,</span> <span class="s1">&#39;JPN&#39;</span><span class="p">,</span> <span class="s1">&#39;KOR&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;MEX&#39;</span><span class="p">,</span> <span class="s1">&#39;RUS&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">])</span>
+                                <span class="s1">&#39;CHN&#39;</span><span class="p">,</span> <span class="s1">&#39;DEU&#39;</span><span class="p">,</span> <span class="s1">&#39;ESP&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;FRA&#39;</span><span class="p">,</span> <span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;IND&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;ITA&#39;</span><span class="p">,</span> <span class="s1">&#39;JPN&#39;</span><span class="p">,</span> <span class="s1">&#39;KOR&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;MEX&#39;</span><span class="p">,</span> <span class="s1">&#39;RUS&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">])</span>
 <span class="n">country_codes_array</span>
 </pre></div>
 </div>
@@ -482,35 +488,33 @@ Structure of page:
 </div>
 </div>
 </div>
-<p>And another array containing the Human Development Index scores for each of the countries:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Human Development Index Scores for each country</span>
-<span class="n">hdis_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.896</span><span class="p">,</span> <span class="mf">0.668</span><span class="p">,</span> <span class="mf">0.89</span> <span class="p">,</span> <span class="mf">0.586</span><span class="p">,</span> 
-                 <span class="mf">0.844</span><span class="p">,</span> <span class="mf">0.89</span> <span class="p">,</span> <span class="mf">0.49</span> <span class="p">,</span> <span class="mf">0.842</span><span class="p">,</span> 
-                 <span class="mf">0.883</span><span class="p">,</span> <span class="mf">0.709</span><span class="p">,</span> <span class="mf">0.733</span><span class="p">,</span> <span class="mf">0.824</span><span class="p">,</span>
-                 <span class="mf">0.828</span><span class="p">,</span> <span class="mf">0.863</span><span class="p">,</span> <span class="mf">0.894</span><span class="p">])</span>
-
+<span class="n">hdis_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.896</span><span class="p">,</span> <span class="mf">0.668</span><span class="p">,</span> <span class="mf">0.89</span><span class="p">,</span>
+                       <span class="mf">0.586</span><span class="p">,</span> <span class="mf">0.89</span><span class="p">,</span>  <span class="mf">0.828</span><span class="p">,</span>
+                       <span class="mf">0.844</span><span class="p">,</span> <span class="mf">0.863</span><span class="p">,</span> <span class="mf">0.49</span><span class="p">,</span>
+                       <span class="mf">0.842</span><span class="p">,</span> <span class="mf">0.883</span><span class="p">,</span> <span class="mf">0.824</span><span class="p">,</span>
+                       <span class="mf">0.709</span><span class="p">,</span> <span class="mf">0.733</span><span class="p">,</span> <span class="mf">0.894</span><span class="p">])</span>
 <span class="n">hdis_array</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.896, 0.668, 0.89 , 0.586, 0.844, 0.89 , 0.49 , 0.842, 0.883,
-       0.709, 0.733, 0.824, 0.828, 0.863, 0.894])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.896, 0.668, 0.89 , 0.586, 0.89 , 0.828, 0.844, 0.863, 0.49 ,
+       0.842, 0.883, 0.824, 0.709, 0.733, 0.894])
 </pre></div>
 </div>
 </div>
 </div>
-<p>And for good measure, another array containing the full country names:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># country names array</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Full names of each country.</span>
 <span class="n">country_names_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;Australia&#39;</span><span class="p">,</span> <span class="s1">&#39;Brazil&#39;</span><span class="p">,</span> <span class="s1">&#39;Canada&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;China&#39;</span><span class="p">,</span> <span class="s1">&#39;Germany&#39;</span><span class="p">,</span> <span class="s1">&#39;Spain&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;France&#39;</span><span class="p">,</span> <span class="s1">&#39;United Kingdom&#39;</span><span class="p">,</span> <span class="s1">&#39;India&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;Italy&#39;</span><span class="p">,</span> <span class="s1">&#39;Japan&#39;</span><span class="p">,</span> <span class="s1">&#39;South Korea&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;Mexico&#39;</span><span class="p">,</span> <span class="s1">&#39;Russia&#39;</span><span class="p">,</span> <span class="s1">&#39;United States&#39;</span><span class="p">])</span>
+                                <span class="s1">&#39;China&#39;</span><span class="p">,</span> <span class="s1">&#39;Germany&#39;</span><span class="p">,</span> <span class="s1">&#39;Spain&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;France&#39;</span><span class="p">,</span> <span class="s1">&#39;United Kingdom&#39;</span><span class="p">,</span> <span class="s1">&#39;India&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;Italy&#39;</span><span class="p">,</span> <span class="s1">&#39;Japan&#39;</span><span class="p">,</span> <span class="s1">&#39;South Korea&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;Mexico&#39;</span><span class="p">,</span> <span class="s1">&#39;Russia&#39;</span><span class="p">,</span> <span class="s1">&#39;United States&#39;</span><span class="p">])</span>
 <span class="n">country_names_array</span>
 </pre></div>
 </div>
@@ -706,8 +710,14 @@ Structure of page:
 </div>
 </div>
 </div>
-<p>For now we will ignore the elements in the printout that contain <code class="docutils literal notranslate"><span class="pre">__</span></code> - these are called “dunders”, which is short for “double underscore”; they are not the attributes and methods in which we are currently interested.</p>
-<p>Ignoring the dunders, we can see a large number of attributes and methods that we can access from this or any other Numpy array.</p>
+<p>For now we will ignore the elements in the printout that contain <code class="docutils literal notranslate"><span class="pre">__</span></code>.  These
+double underscores are called “dunders” (short for double underscores);
+attributes and methods starting and ending with <code class="docutils literal notranslate"><span class="pre">__</span></code> are often called <em>dunder
+attributes</em> and <em>dunder methods</em>.  Python uses the dunder naming scheme as
+a convention to indicate that these methods and attributes are part of the
+internal machinery of an object.</p>
+<p>Ignoring the dunder attributes and methods, we can see a large number of
+attributes and methods that we can access from this or any other Numpy array.</p>
 <p>One of these attributes is called <code class="docutils literal notranslate"><span class="pre">shape</span></code>. We will almost always want to know the <code class="docutils literal notranslate"><span class="pre">shape</span></code> of our data, as it tells us how many observations we have.</p>
 <p>Let’s take a look at the <code class="docutils literal notranslate"><span class="pre">.shape</span></code> attribute:</p>
 <div class="cell docutils container">
@@ -867,8 +877,8 @@ Structure of page:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.896, 0.668, 0.89 , 0.586, 0.844, 0.89 , 0.49 , 0.842, 0.883,
-       0.709, 0.733, 0.824, 0.828, 0.863, 0.894])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.896, 0.668, 0.89 , 0.586, 0.89 , 0.828, 0.844, 0.863, 0.49 ,
+       0.842, 0.883, 0.824, 0.709, 0.733, 0.894])
 </pre></div>
 </div>
 </div>
@@ -910,7 +920,7 @@ Structure of page:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.7893333333333332)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.7893333333333333)
 </pre></div>
 </div>
 </div>
@@ -955,13 +965,23 @@ Structure of page:
 </section>
 <section id="pandas-series-attributes-and-methods">
 <h2>Pandas Series attributes and methods<a class="headerlink" href="#pandas-series-attributes-and-methods" title="Link to this heading">#</a></h2>
-<p>Remember our maxim that <em>“a Pandas Series is a numpy array, plus a <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute and an array-like <code class="docutils literal notranslate"><span class="pre">index</span></code>”</em>?</p>
-<p>We will see that because of this, we can use many of the same methods we have just seen for Numpy arrays on Pandas Series.</p>
+<p>Remember our answer to “What is a Series”?:</p>
+<blockquote>
+<div><p>A <em>Series</em> is the association of:</p>
+<ul class="simple">
+<li><p>An array of values (<code class="docutils literal notranslate"><span class="pre">.values</span></code>)</p></li>
+<li><p>A sequence of labels for each value (<code class="docutils literal notranslate"><span class="pre">.index</span></code>)</p></li>
+<li><p>A name (which can be <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
+</ul>
+</div></blockquote>
+<p>Because Series have arrays as their underlying model for storing values, it is
+not surprising that we can use many of the same methods we have just seen for
+Numpy arrays on Pandas Series.</p>
 <p>Let’s make a series from the HDI scores, called <code class="docutils literal notranslate"><span class="pre">hdi_series</span></code>. We do this using the now familiar <code class="docutils literal notranslate"><span class="pre">pd.Series()</span></code> constructor. Again, we will use the <code class="docutils literal notranslate"><span class="pre">country_codes</span></code> array as an index:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show again from Series, then show for df below</span>
-<span class="n">hdi_series</span> <span class="o">=</span>  <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">hdis_array</span><span class="p">,</span> 
+<span class="n">hdi_series</span> <span class="o">=</span>  <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">hdis_array</span><span class="p">,</span>
                         <span class="n">index</span><span class="o">=</span><span class="n">country_codes_array</span><span class="p">)</span>
 
 <span class="n">hdi_series</span>
@@ -1115,8 +1135,13 @@ dtype: float64
 </div>
 </div>
 </div>
-<p>Ok, so these familiar Numpy methods are available. However, Pandas also introduces some additional methods (you may want to compare the output of <code class="docutils literal notranslate"><span class="pre">dir()</span></code> for the <code class="docutils literal notranslate"><span class="pre">hdis_array</span></code> vs the <code class="docutils literal notranslate"><span class="pre">hdi_series</span></code> to see the overlap/differences - as the printout is messy, we will not show it again here).</p>
-<p>One very useful Series method is <code class="docutils literal notranslate"><span class="pre">.describe()</span></code>. This will give us a variety of statistics about the data in the <code class="docutils literal notranslate"><span class="pre">.values</span></code> array of the Series:</p>
+<p>Ok, so these methods are available with names that are familiar from Numpy.
+However, Pandas also introduces some additional methods.  You may want to
+compare the output of <code class="docutils literal notranslate"><span class="pre">dir()</span></code> for the <code class="docutils literal notranslate"><span class="pre">hdis_array</span></code> vs the <code class="docutils literal notranslate"><span class="pre">hdi_series</span></code> to see
+the overlap/differences - as the printout is messy, we will not show it again
+here.</p>
+<p>One very useful Series method is <code class="docutils literal notranslate"><span class="pre">.describe()</span></code>. This will give us a variety of
+statistics about the data in the <code class="docutils literal notranslate"><span class="pre">.values</span></code> array of the Series:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># `.describe()` the `hdi_series`</span>
@@ -1167,10 +1192,11 @@ Name: count, dtype: int64
 </div>
 </div>
 </div>
-<p>These methods can also be applied to arrays containing categorical/string data:</p>
+<p>These methods can also be applied to arrays containing categorical/string
+data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># constructing a Series containing categorical data</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Constructing a Series containing categorical data</span>
 <span class="n">country_names_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">country_names_array</span><span class="p">,</span>
                                  <span class="n">index</span><span class="o">=</span><span class="n">country_codes_array</span><span class="p">)</span>
 
@@ -1216,9 +1242,13 @@ dtype: object
 </div>
 </div>
 </div>
-<p>Helpfully, Pandas has adjusted the <code class="docutils literal notranslate"><span class="pre">.describe()</span></code> summary in light of the <code class="docutils literal notranslate"><span class="pre">values</span></code> array of the <code class="docutils literal notranslate"><span class="pre">country_names_series</span></code> containing categorical/string data.</p>
-<p>We now see summaries of the number values, number of unique values etc, rather than numerical statistics like the mean and standard deviation.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">.value_counts()</span></code> method behaves the same as with numerical data, as both numbers and strings can be unique in an array:</p>
+<p>Helpfully, Pandas has adjusted the <code class="docutils literal notranslate"><span class="pre">.describe()</span></code> summary in light of the
+<code class="docutils literal notranslate"><span class="pre">values</span></code> array of the <code class="docutils literal notranslate"><span class="pre">country_names_series</span></code> containing categorical/string
+data.</p>
+<p>We now see summaries of the number of values, number of unique values etc,
+rather than numerical statistics like the mean and standard deviation.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">.value_counts()</span></code> method behaves the same as with numerical data, as both
+numbers and strings can be unique in an array:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">country_names_series</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
@@ -1279,15 +1309,14 @@ Name: count, dtype: int64
 </section>
 <section id="pandas-dataframe-attributes">
 <h2>Pandas DataFrame attributes<a class="headerlink" href="#pandas-dataframe-attributes" title="Link to this heading">#</a></h2>
-<p>Now, remember again our other maxim that *”a Pandas DataFrame is just a <em>dictionary-like collection of Series”</em>?</p>
-<p>Because of this, we can use all the methods we have seen so far on any Data Frame column. Each column is a Series, and therefore contains a Numpy array as it’s <code class="docutils literal notranslate"><span class="pre">.values</span></code> attribute.</p>
+<p>Now, remember again our other maxim that <em>A <em>Data Frame</em> is a dictionary-like collection of Series.</em></p>
+<p>Because of this, we can use all the methods we have seen so far on any Data Frame column. Each column is a Series, and therefore contains a Numpy array as its <code class="docutils literal notranslate"><span class="pre">.values</span></code> attribute.</p>
 <p>However, Data Frames have some (useful!) extra methods (including statistical methods) not available for Series.</p>
 <p>First, let’s import the <a class="reference external" href="https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index">HDI/fertility rate data</a>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import our dataset</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/year_2000_hdi_fert.csv&quot;</span><span class="p">)</span>
-
 <span class="n">df</span>
 </pre></div>
 </div>
@@ -1324,7 +1353,7 @@ Name: count, dtype: int64
       <td>AUS</td>
       <td>0.896</td>
       <td>1.764</td>
-      <td>1.913247e+07</td>
+      <td>19.1324</td>
       <td>Australia</td>
     </tr>
     <tr>
@@ -1332,7 +1361,7 @@ Name: count, dtype: int64
       <td>BRA</td>
       <td>0.668</td>
       <td>2.247</td>
-      <td>1.740183e+08</td>
+      <td>174.0182</td>
       <td>Brazil</td>
     </tr>
     <tr>
@@ -1340,7 +1369,7 @@ Name: count, dtype: int64
       <td>CAN</td>
       <td>0.890</td>
       <td>1.510</td>
-      <td>3.089180e+07</td>
+      <td>30.8918</td>
       <td>Canada</td>
     </tr>
     <tr>
@@ -1348,7 +1377,7 @@ Name: count, dtype: int64
       <td>CHN</td>
       <td>0.586</td>
       <td>1.628</td>
-      <td>1.269581e+09</td>
+      <td>1269.5811</td>
       <td>China</td>
     </tr>
     <tr>
@@ -1356,7 +1385,7 @@ Name: count, dtype: int64
       <td>DEU</td>
       <td>0.890</td>
       <td>1.386</td>
-      <td>8.179726e+07</td>
+      <td>81.7972</td>
       <td>Germany</td>
     </tr>
     <tr>
@@ -1364,7 +1393,7 @@ Name: count, dtype: int64
       <td>ESP</td>
       <td>0.828</td>
       <td>1.210</td>
-      <td>4.101977e+07</td>
+      <td>41.0197</td>
       <td>Spain</td>
     </tr>
     <tr>
@@ -1372,7 +1401,7 @@ Name: count, dtype: int64
       <td>FRA</td>
       <td>0.844</td>
       <td>1.876</td>
-      <td>5.948372e+07</td>
+      <td>59.4837</td>
       <td>France</td>
     </tr>
     <tr>
@@ -1380,7 +1409,7 @@ Name: count, dtype: int64
       <td>GBR</td>
       <td>0.863</td>
       <td>1.641</td>
-      <td>5.905734e+07</td>
+      <td>59.0573</td>
       <td>United Kingdom</td>
     </tr>
     <tr>
@@ -1388,7 +1417,7 @@ Name: count, dtype: int64
       <td>IND</td>
       <td>0.490</td>
       <td>3.350</td>
-      <td>1.057923e+09</td>
+      <td>1057.9227</td>
       <td>India</td>
     </tr>
     <tr>
@@ -1396,7 +1425,7 @@ Name: count, dtype: int64
       <td>ITA</td>
       <td>0.842</td>
       <td>1.249</td>
-      <td>5.727220e+07</td>
+      <td>57.2722</td>
       <td>Italy</td>
     </tr>
     <tr>
@@ -1404,7 +1433,7 @@ Name: count, dtype: int64
       <td>JPN</td>
       <td>0.883</td>
       <td>1.346</td>
-      <td>1.270278e+08</td>
+      <td>127.0278</td>
       <td>Japan</td>
     </tr>
     <tr>
@@ -1412,7 +1441,7 @@ Name: count, dtype: int64
       <td>KOR</td>
       <td>0.824</td>
       <td>1.467</td>
-      <td>4.676666e+07</td>
+      <td>46.7666</td>
       <td>South Korea</td>
     </tr>
     <tr>
@@ -1420,7 +1449,7 @@ Name: count, dtype: int64
       <td>MEX</td>
       <td>0.709</td>
       <td>2.714</td>
-      <td>9.862555e+07</td>
+      <td>98.6255</td>
       <td>Mexico</td>
     </tr>
     <tr>
@@ -1428,7 +1457,7 @@ Name: count, dtype: int64
       <td>RUS</td>
       <td>0.733</td>
       <td>1.190</td>
-      <td>1.467178e+08</td>
+      <td>146.7177</td>
       <td>Russia</td>
     </tr>
     <tr>
@@ -1436,14 +1465,16 @@ Name: count, dtype: int64
       <td>USA</td>
       <td>0.894</td>
       <td>2.030</td>
-      <td>2.814841e+08</td>
+      <td>281.4841</td>
       <td>United States</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>Although it is messy (and we did say we wouldn’t use it again earlier…oops), we will use <code class="docutils literal notranslate"><span class="pre">dir()</span></code> on this Data Frame, to view all of the available attributes and methods:</p>
+<p>Although it is messy (and we did say we wouldn’t use it again earlier…oops),
+we will use <code class="docutils literal notranslate"><span class="pre">dir()</span></code> on this Data Frame, to view all of the available
+attributes and methods:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show all available operations on the dataframe</span>
@@ -1977,7 +2008,11 @@ dtype: object
 </div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">object</span></code> data type means that the column contains either mixed data or string data (in this case string data). The numeric data in this Data Frame is represented as a 64-bit float (<code class="docutils literal notranslate"><span class="pre">float64</span></code>).</p>
-<p>Ok, so now we know how much data we have, and what type of data it is. Currently, if we want to access a specific row of the Data Frame (remember, each row here is one country), we will have to navigate the default <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code>. We did not specify an index when we loaded in the Data Frame, so, as we learned previously, Pandas will automatically supply one:</p>
+<p>Now we know how much data we have, and what type of data it is. Currently, if
+we want to access a specific row of the Data Frame (remember, each row here is
+one country), we will have to navigate the default <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code>. We did not
+specify an index when we loaded in the Data Frame, so, as we learned
+previously, Pandas will automatically supply one:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the index (currently (basically) 0 to 15)</span>
@@ -2039,105 +2074,105 @@ dtype: object
       <th>AUS</th>
       <td>0.896</td>
       <td>1.764</td>
-      <td>1.913247e+07</td>
+      <td>19.1324</td>
       <td>Australia</td>
     </tr>
     <tr>
       <th>BRA</th>
       <td>0.668</td>
       <td>2.247</td>
-      <td>1.740183e+08</td>
+      <td>174.0182</td>
       <td>Brazil</td>
     </tr>
     <tr>
       <th>CAN</th>
       <td>0.890</td>
       <td>1.510</td>
-      <td>3.089180e+07</td>
+      <td>30.8918</td>
       <td>Canada</td>
     </tr>
     <tr>
       <th>CHN</th>
       <td>0.586</td>
       <td>1.628</td>
-      <td>1.269581e+09</td>
+      <td>1269.5811</td>
       <td>China</td>
     </tr>
     <tr>
       <th>DEU</th>
       <td>0.890</td>
       <td>1.386</td>
-      <td>8.179726e+07</td>
+      <td>81.7972</td>
       <td>Germany</td>
     </tr>
     <tr>
       <th>ESP</th>
       <td>0.828</td>
       <td>1.210</td>
-      <td>4.101977e+07</td>
+      <td>41.0197</td>
       <td>Spain</td>
     </tr>
     <tr>
       <th>FRA</th>
       <td>0.844</td>
       <td>1.876</td>
-      <td>5.948372e+07</td>
+      <td>59.4837</td>
       <td>France</td>
     </tr>
     <tr>
       <th>GBR</th>
       <td>0.863</td>
       <td>1.641</td>
-      <td>5.905734e+07</td>
+      <td>59.0573</td>
       <td>United Kingdom</td>
     </tr>
     <tr>
       <th>IND</th>
       <td>0.490</td>
       <td>3.350</td>
-      <td>1.057923e+09</td>
+      <td>1057.9227</td>
       <td>India</td>
     </tr>
     <tr>
       <th>ITA</th>
       <td>0.842</td>
       <td>1.249</td>
-      <td>5.727220e+07</td>
+      <td>57.2722</td>
       <td>Italy</td>
     </tr>
     <tr>
       <th>JPN</th>
       <td>0.883</td>
       <td>1.346</td>
-      <td>1.270278e+08</td>
+      <td>127.0278</td>
       <td>Japan</td>
     </tr>
     <tr>
       <th>KOR</th>
       <td>0.824</td>
       <td>1.467</td>
-      <td>4.676666e+07</td>
+      <td>46.7666</td>
       <td>South Korea</td>
     </tr>
     <tr>
       <th>MEX</th>
       <td>0.709</td>
       <td>2.714</td>
-      <td>9.862555e+07</td>
+      <td>98.6255</td>
       <td>Mexico</td>
     </tr>
     <tr>
       <th>RUS</th>
       <td>0.733</td>
       <td>1.190</td>
-      <td>1.467178e+08</td>
+      <td>146.7177</td>
       <td>Russia</td>
     </tr>
     <tr>
       <th>USA</th>
       <td>0.894</td>
       <td>2.030</td>
-      <td>2.814841e+08</td>
+      <td>281.4841</td>
       <td>United States</td>
     </tr>
   </tbody>
@@ -2205,14 +2240,14 @@ dtype: object
       <th>USA</th>
       <td>0.894</td>
       <td>2.030</td>
-      <td>281484127.0</td>
+      <td>281.4841</td>
       <td>United States</td>
     </tr>
     <tr>
       <th>ITA</th>
       <td>0.842</td>
       <td>1.249</td>
-      <td>57272200.0</td>
+      <td>57.2722</td>
       <td>Italy</td>
     </tr>
   </tbody>
@@ -2221,7 +2256,7 @@ dtype: object
 </div>
 </section>
 <section id="pandas-dataframe-methods">
-<h2>Pandas Dataframe Methods<a class="headerlink" href="#pandas-dataframe-methods" title="Link to this heading">#</a></h2>
+<h2>Pandas Dataframe methods<a class="headerlink" href="#pandas-dataframe-methods" title="Link to this heading">#</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">.sort_values()</span></code> method we just used is one of many methods attached to Pandas Data Frames. We saw that many Numpy array methods are inherited by Pandas Series and this principle also applies to Data Frames.</p>
 <p>For instance, should we want to see the unique values in a given column (e.g. Series), we can use the <code class="docutils literal notranslate"><span class="pre">.unique()</span></code> method on just that column:</p>
 <div class="cell docutils container">
@@ -2277,49 +2312,49 @@ dtype: object
       <th>count</th>
       <td>15.000000</td>
       <td>15.000000</td>
-      <td>1.500000e+01</td>
+      <td>15.000000</td>
     </tr>
     <tr>
       <th>mean</th>
       <td>0.789333</td>
       <td>1.773867</td>
-      <td>2.367199e+08</td>
+      <td>236.719867</td>
     </tr>
     <tr>
       <th>std</th>
       <td>0.125514</td>
       <td>0.605841</td>
-      <td>3.844833e+08</td>
+      <td>384.483326</td>
     </tr>
     <tr>
       <th>min</th>
       <td>0.490000</td>
       <td>1.190000</td>
-      <td>1.913247e+07</td>
+      <td>19.132400</td>
     </tr>
     <tr>
       <th>25%</th>
       <td>0.721000</td>
       <td>1.366000</td>
-      <td>5.201943e+07</td>
+      <td>52.019400</td>
     </tr>
     <tr>
       <th>50%</th>
       <td>0.842000</td>
       <td>1.628000</td>
-      <td>8.179726e+07</td>
+      <td>81.797200</td>
     </tr>
     <tr>
       <th>75%</th>
       <td>0.886500</td>
       <td>1.953000</td>
-      <td>1.603680e+08</td>
+      <td>160.367950</td>
     </tr>
     <tr>
       <th>max</th>
       <td>0.896000</td>
       <td>3.350000</td>
-      <td>1.269581e+09</td>
+      <td>1269.581100</td>
     </tr>
   </tbody>
 </table>
@@ -2529,105 +2564,105 @@ Name: count, dtype: int64
       <th>IND</th>
       <td>0.490</td>
       <td>3.350</td>
-      <td>1.057923e+09</td>
+      <td>1057.9227</td>
       <td>India</td>
     </tr>
     <tr>
       <th>CHN</th>
       <td>0.586</td>
       <td>1.628</td>
-      <td>1.269581e+09</td>
+      <td>1269.5811</td>
       <td>China</td>
     </tr>
     <tr>
       <th>BRA</th>
       <td>0.668</td>
       <td>2.247</td>
-      <td>1.740183e+08</td>
+      <td>174.0182</td>
       <td>Brazil</td>
     </tr>
     <tr>
       <th>MEX</th>
       <td>0.709</td>
       <td>2.714</td>
-      <td>9.862555e+07</td>
+      <td>98.6255</td>
       <td>Mexico</td>
     </tr>
     <tr>
       <th>RUS</th>
       <td>0.733</td>
       <td>1.190</td>
-      <td>1.467178e+08</td>
+      <td>146.7177</td>
       <td>Russia</td>
     </tr>
     <tr>
       <th>KOR</th>
       <td>0.824</td>
       <td>1.467</td>
-      <td>4.676666e+07</td>
+      <td>46.7666</td>
       <td>South Korea</td>
     </tr>
     <tr>
       <th>ESP</th>
       <td>0.828</td>
       <td>1.210</td>
-      <td>4.101977e+07</td>
+      <td>41.0197</td>
       <td>Spain</td>
     </tr>
     <tr>
       <th>ITA</th>
       <td>0.842</td>
       <td>1.249</td>
-      <td>5.727220e+07</td>
+      <td>57.2722</td>
       <td>Italy</td>
     </tr>
     <tr>
       <th>FRA</th>
       <td>0.844</td>
       <td>1.876</td>
-      <td>5.948372e+07</td>
+      <td>59.4837</td>
       <td>France</td>
     </tr>
     <tr>
       <th>GBR</th>
       <td>0.863</td>
       <td>1.641</td>
-      <td>5.905734e+07</td>
+      <td>59.0573</td>
       <td>United Kingdom</td>
     </tr>
     <tr>
       <th>JPN</th>
       <td>0.883</td>
       <td>1.346</td>
-      <td>1.270278e+08</td>
+      <td>127.0278</td>
       <td>Japan</td>
     </tr>
     <tr>
       <th>CAN</th>
       <td>0.890</td>
       <td>1.510</td>
-      <td>3.089180e+07</td>
+      <td>30.8918</td>
       <td>Canada</td>
     </tr>
     <tr>
       <th>DEU</th>
       <td>0.890</td>
       <td>1.386</td>
-      <td>8.179726e+07</td>
+      <td>81.7972</td>
       <td>Germany</td>
     </tr>
     <tr>
       <th>USA</th>
       <td>0.894</td>
       <td>2.030</td>
-      <td>2.814841e+08</td>
+      <td>281.4841</td>
       <td>United States</td>
     </tr>
     <tr>
       <th>AUS</th>
       <td>0.896</td>
       <td>1.764</td>
-      <td>1.913247e+07</td>
+      <td>19.1324</td>
       <td>Australia</td>
     </tr>
   </tbody>
@@ -2679,105 +2714,105 @@ Name: count, dtype: int64
       <th>AUS</th>
       <td>0.896</td>
       <td>1.764</td>
-      <td>1.913247e+07</td>
+      <td>19.1324</td>
       <td>Australia</td>
     </tr>
     <tr>
       <th>USA</th>
       <td>0.894</td>
       <td>2.030</td>
-      <td>2.814841e+08</td>
+      <td>281.4841</td>
       <td>United States</td>
     </tr>
     <tr>
       <th>CAN</th>
       <td>0.890</td>
       <td>1.510</td>
-      <td>3.089180e+07</td>
+      <td>30.8918</td>
       <td>Canada</td>
     </tr>
     <tr>
       <th>DEU</th>
       <td>0.890</td>
       <td>1.386</td>
-      <td>8.179726e+07</td>
+      <td>81.7972</td>
       <td>Germany</td>
     </tr>
     <tr>
       <th>JPN</th>
       <td>0.883</td>
       <td>1.346</td>
-      <td>1.270278e+08</td>
+      <td>127.0278</td>
       <td>Japan</td>
     </tr>
     <tr>
       <th>GBR</th>
       <td>0.863</td>
       <td>1.641</td>
-      <td>5.905734e+07</td>
+      <td>59.0573</td>
       <td>United Kingdom</td>
     </tr>
     <tr>
       <th>FRA</th>
       <td>0.844</td>
       <td>1.876</td>
-      <td>5.948372e+07</td>
+      <td>59.4837</td>
       <td>France</td>
     </tr>
     <tr>
       <th>ITA</th>
       <td>0.842</td>
       <td>1.249</td>
-      <td>5.727220e+07</td>
+      <td>57.2722</td>
       <td>Italy</td>
     </tr>
     <tr>
       <th>ESP</th>
       <td>0.828</td>
       <td>1.210</td>
-      <td>4.101977e+07</td>
+      <td>41.0197</td>
       <td>Spain</td>
     </tr>
     <tr>
       <th>KOR</th>
       <td>0.824</td>
       <td>1.467</td>
-      <td>4.676666e+07</td>
+      <td>46.7666</td>
       <td>South Korea</td>
     </tr>
     <tr>
       <th>RUS</th>
       <td>0.733</td>
       <td>1.190</td>
-      <td>1.467178e+08</td>
+      <td>146.7177</td>
       <td>Russia</td>
     </tr>
     <tr>
       <th>MEX</th>
       <td>0.709</td>
       <td>2.714</td>
-      <td>9.862555e+07</td>
+      <td>98.6255</td>
       <td>Mexico</td>
     </tr>
     <tr>
       <th>BRA</th>
       <td>0.668</td>
       <td>2.247</td>
-      <td>1.740183e+08</td>
+      <td>174.0182</td>
       <td>Brazil</td>
     </tr>
     <tr>
       <th>CHN</th>
       <td>0.586</td>
       <td>1.628</td>
-      <td>1.269581e+09</td>
+      <td>1269.5811</td>
       <td>China</td>
     </tr>
     <tr>
       <th>IND</th>
       <td>0.490</td>
       <td>3.350</td>
-      <td>1.057923e+09</td>
+      <td>1057.9227</td>
       <td>India</td>
     </tr>
   </tbody>
@@ -2829,105 +2864,105 @@ Name: count, dtype: int64
       <th>AUS</th>
       <td>0.896</td>
       <td>1.764</td>
-      <td>1.913247e+07</td>
+      <td>19.1324</td>
       <td>Australia</td>
     </tr>
     <tr>
       <th>BRA</th>
       <td>0.668</td>
       <td>2.247</td>
-      <td>1.740183e+08</td>
+      <td>174.0182</td>
       <td>Brazil</td>
     </tr>
     <tr>
       <th>CAN</th>
       <td>0.890</td>
       <td>1.510</td>
-      <td>3.089180e+07</td>
+      <td>30.8918</td>
       <td>Canada</td>
     </tr>
     <tr>
       <th>CHN</th>
       <td>0.586</td>
       <td>1.628</td>
-      <td>1.269581e+09</td>
+      <td>1269.5811</td>
       <td>China</td>
     </tr>
     <tr>
       <th>DEU</th>
       <td>0.890</td>
       <td>1.386</td>
-      <td>8.179726e+07</td>
+      <td>81.7972</td>
       <td>Germany</td>
     </tr>
     <tr>
       <th>ESP</th>
       <td>0.828</td>
       <td>1.210</td>
-      <td>4.101977e+07</td>
+      <td>41.0197</td>
       <td>Spain</td>
     </tr>
     <tr>
       <th>FRA</th>
       <td>0.844</td>
       <td>1.876</td>
-      <td>5.948372e+07</td>
+      <td>59.4837</td>
       <td>France</td>
     </tr>
     <tr>
       <th>GBR</th>
       <td>0.863</td>
       <td>1.641</td>
-      <td>5.905734e+07</td>
+      <td>59.0573</td>
       <td>United Kingdom</td>
     </tr>
     <tr>
       <th>IND</th>
       <td>0.490</td>
       <td>3.350</td>
-      <td>1.057923e+09</td>
+      <td>1057.9227</td>
       <td>India</td>
     </tr>
     <tr>
       <th>ITA</th>
       <td>0.842</td>
       <td>1.249</td>
-      <td>5.727220e+07</td>
+      <td>57.2722</td>
       <td>Italy</td>
     </tr>
     <tr>
       <th>JPN</th>
       <td>0.883</td>
       <td>1.346</td>
-      <td>1.270278e+08</td>
+      <td>127.0278</td>
       <td>Japan</td>
     </tr>
     <tr>
       <th>KOR</th>
       <td>0.824</td>
       <td>1.467</td>
-      <td>4.676666e+07</td>
+      <td>46.7666</td>
       <td>South Korea</td>
     </tr>
     <tr>
       <th>MEX</th>
       <td>0.709</td>
       <td>2.714</td>
-      <td>9.862555e+07</td>
+      <td>98.6255</td>
       <td>Mexico</td>
     </tr>
     <tr>
       <th>RUS</th>
       <td>0.733</td>
       <td>1.190</td>
-      <td>1.467178e+08</td>
+      <td>146.7177</td>
       <td>Russia</td>
     </tr>
     <tr>
       <th>USA</th>
       <td>0.894</td>
       <td>2.030</td>
-      <td>2.814841e+08</td>
+      <td>281.4841</td>
       <td>United States</td>
     </tr>
   </tbody>
@@ -2978,105 +3013,105 @@ Name: count, dtype: int64
       <th>USA</th>
       <td>0.894</td>
       <td>2.030</td>
-      <td>2.814841e+08</td>
+      <td>281.4841</td>
       <td>United States</td>
     </tr>
     <tr>
       <th>RUS</th>
       <td>0.733</td>
       <td>1.190</td>
-      <td>1.467178e+08</td>
+      <td>146.7177</td>
       <td>Russia</td>
     </tr>
     <tr>
       <th>MEX</th>
       <td>0.709</td>
       <td>2.714</td>
-      <td>9.862555e+07</td>
+      <td>98.6255</td>
       <td>Mexico</td>
     </tr>
     <tr>
       <th>KOR</th>
       <td>0.824</td>
       <td>1.467</td>
-      <td>4.676666e+07</td>
+      <td>46.7666</td>
       <td>South Korea</td>
     </tr>
     <tr>
       <th>JPN</th>
       <td>0.883</td>
       <td>1.346</td>
-      <td>1.270278e+08</td>
+      <td>127.0278</td>
       <td>Japan</td>
     </tr>
     <tr>
       <th>ITA</th>
       <td>0.842</td>
       <td>1.249</td>
-      <td>5.727220e+07</td>
+      <td>57.2722</td>
       <td>Italy</td>
     </tr>
     <tr>
       <th>IND</th>
       <td>0.490</td>
       <td>3.350</td>
-      <td>1.057923e+09</td>
+      <td>1057.9227</td>
       <td>India</td>
     </tr>
     <tr>
       <th>GBR</th>
       <td>0.863</td>
       <td>1.641</td>
-      <td>5.905734e+07</td>
+      <td>59.0573</td>
       <td>United Kingdom</td>
     </tr>
     <tr>
       <th>FRA</th>
       <td>0.844</td>
       <td>1.876</td>
-      <td>5.948372e+07</td>
+      <td>59.4837</td>
       <td>France</td>
     </tr>
     <tr>
       <th>ESP</th>
       <td>0.828</td>
       <td>1.210</td>
-      <td>4.101977e+07</td>
+      <td>41.0197</td>
       <td>Spain</td>
     </tr>
     <tr>
       <th>DEU</th>
       <td>0.890</td>
       <td>1.386</td>
-      <td>8.179726e+07</td>
+      <td>81.7972</td>
       <td>Germany</td>
     </tr>
     <tr>
       <th>CHN</th>
       <td>0.586</td>
       <td>1.628</td>
-      <td>1.269581e+09</td>
+      <td>1269.5811</td>
       <td>China</td>
     </tr>
     <tr>
       <th>CAN</th>
       <td>0.890</td>
       <td>1.510</td>
-      <td>3.089180e+07</td>
+      <td>30.8918</td>
       <td>Canada</td>
     </tr>
     <tr>
       <th>BRA</th>
       <td>0.668</td>
       <td>2.247</td>
-      <td>1.740183e+08</td>
+      <td>174.0182</td>
       <td>Brazil</td>
     </tr>
     <tr>
       <th>AUS</th>
       <td>0.896</td>
       <td>1.764</td>
-      <td>1.913247e+07</td>
+      <td>19.1324</td>
       <td>Australia</td>
     </tr>
   </tbody>
@@ -3086,7 +3121,7 @@ Name: count, dtype: int64
 <p>Another useful method, which is very powerful in tandem with label-based indexing, is <code class="docutils literal notranslate"><span class="pre">.drop()</span></code>. This lets use specify using index labels rows which we want to remove from the Data Frame. For instance, if we want to remove the data for Australia we can use:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">labels</span> <span class="o">=</span> <span class="s1">&#39;AUS&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="s1">&#39;AUS&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -3127,98 +3162,98 @@ Name: count, dtype: int64
       <th>BRA</th>
       <td>0.668</td>
       <td>2.247</td>
-      <td>1.740183e+08</td>
+      <td>174.0182</td>
       <td>Brazil</td>
     </tr>
     <tr>
       <th>CAN</th>
       <td>0.890</td>
       <td>1.510</td>
-      <td>3.089180e+07</td>
+      <td>30.8918</td>
       <td>Canada</td>
     </tr>
     <tr>
       <th>CHN</th>
       <td>0.586</td>
       <td>1.628</td>
-      <td>1.269581e+09</td>
+      <td>1269.5811</td>
       <td>China</td>
     </tr>
     <tr>
       <th>DEU</th>
       <td>0.890</td>
       <td>1.386</td>
-      <td>8.179726e+07</td>
+      <td>81.7972</td>
       <td>Germany</td>
     </tr>
     <tr>
       <th>ESP</th>
       <td>0.828</td>
       <td>1.210</td>
-      <td>4.101977e+07</td>
+      <td>41.0197</td>
       <td>Spain</td>
     </tr>
     <tr>
       <th>FRA</th>
       <td>0.844</td>
       <td>1.876</td>
-      <td>5.948372e+07</td>
+      <td>59.4837</td>
       <td>France</td>
     </tr>
     <tr>
       <th>GBR</th>
       <td>0.863</td>
       <td>1.641</td>
-      <td>5.905734e+07</td>
+      <td>59.0573</td>
       <td>United Kingdom</td>
     </tr>
     <tr>
       <th>IND</th>
       <td>0.490</td>
       <td>3.350</td>
-      <td>1.057923e+09</td>
+      <td>1057.9227</td>
       <td>India</td>
     </tr>
     <tr>
       <th>ITA</th>
       <td>0.842</td>
       <td>1.249</td>
-      <td>5.727220e+07</td>
+      <td>57.2722</td>
       <td>Italy</td>
     </tr>
     <tr>
       <th>JPN</th>
       <td>0.883</td>
       <td>1.346</td>
-      <td>1.270278e+08</td>
+      <td>127.0278</td>
       <td>Japan</td>
     </tr>
     <tr>
       <th>KOR</th>
       <td>0.824</td>
       <td>1.467</td>
-      <td>4.676666e+07</td>
+      <td>46.7666</td>
       <td>South Korea</td>
     </tr>
     <tr>
       <th>MEX</th>
       <td>0.709</td>
       <td>2.714</td>
-      <td>9.862555e+07</td>
+      <td>98.6255</td>
       <td>Mexico</td>
     </tr>
     <tr>
       <th>RUS</th>
       <td>0.733</td>
       <td>1.190</td>
-      <td>1.467178e+08</td>
+      <td>146.7177</td>
       <td>Russia</td>
     </tr>
     <tr>
       <th>USA</th>
       <td>0.894</td>
       <td>2.030</td>
-      <td>2.814841e+08</td>
+      <td>281.4841</td>
       <td>United States</td>
     </tr>
   </tbody>
@@ -3252,7 +3287,7 @@ Name: count, dtype: int64
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">64</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">65</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># A ValueError from trying to scatter plot a Series</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">hdi_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
 
@@ -3330,105 +3365,105 @@ Name: count, dtype: int64
       <th>AUS</th>
       <td>179.2</td>
       <td>352.8</td>
-      <td>3.826495e+09</td>
+      <td>3826.48</td>
       <td>AustraliaAustraliaAustraliaAustraliaAustraliaA...</td>
     </tr>
     <tr>
       <th>BRA</th>
       <td>133.6</td>
       <td>449.4</td>
-      <td>3.480366e+10</td>
+      <td>34803.64</td>
       <td>BrazilBrazilBrazilBrazilBrazilBrazilBrazilBraz...</td>
     </tr>
     <tr>
       <th>CAN</th>
       <td>178.0</td>
       <td>302.0</td>
-      <td>6.178360e+09</td>
+      <td>6178.36</td>
       <td>CanadaCanadaCanadaCanadaCanadaCanadaCanadaCana...</td>
     </tr>
     <tr>
       <th>CHN</th>
       <td>117.2</td>
       <td>325.6</td>
-      <td>2.539162e+11</td>
+      <td>253916.22</td>
       <td>ChinaChinaChinaChinaChinaChinaChinaChinaChinaC...</td>
     </tr>
     <tr>
       <th>DEU</th>
       <td>178.0</td>
       <td>277.2</td>
-      <td>1.635945e+10</td>
+      <td>16359.44</td>
       <td>GermanyGermanyGermanyGermanyGermanyGermanyGerm...</td>
     </tr>
     <tr>
       <th>ESP</th>
       <td>165.6</td>
       <td>242.0</td>
-      <td>8.203955e+09</td>
+      <td>8203.94</td>
       <td>SpainSpainSpainSpainSpainSpainSpainSpainSpainS...</td>
     </tr>
     <tr>
       <th>FRA</th>
       <td>168.8</td>
       <td>375.2</td>
-      <td>1.189674e+10</td>
+      <td>11896.74</td>
       <td>FranceFranceFranceFranceFranceFranceFranceFran...</td>
     </tr>
     <tr>
       <th>GBR</th>
       <td>172.6</td>
       <td>328.2</td>
-      <td>1.181147e+10</td>
+      <td>11811.46</td>
       <td>United KingdomUnited KingdomUnited KingdomUnit...</td>
     </tr>
     <tr>
       <th>IND</th>
       <td>98.0</td>
       <td>670.0</td>
-      <td>2.115845e+11</td>
+      <td>211584.54</td>
       <td>IndiaIndiaIndiaIndiaIndiaIndiaIndiaIndiaIndiaI...</td>
     </tr>
     <tr>
       <th>ITA</th>
       <td>168.4</td>
       <td>249.8</td>
-      <td>1.145444e+10</td>
+      <td>11454.44</td>
       <td>ItalyItalyItalyItalyItalyItalyItalyItalyItalyI...</td>
     </tr>
     <tr>
       <th>JPN</th>
       <td>176.6</td>
       <td>269.2</td>
-      <td>2.540556e+10</td>
+      <td>25405.56</td>
       <td>JapanJapanJapanJapanJapanJapanJapanJapanJapanJ...</td>
     </tr>
     <tr>
       <th>KOR</th>
       <td>164.8</td>
       <td>293.4</td>
-      <td>9.353332e+09</td>
+      <td>9353.32</td>
       <td>South KoreaSouth KoreaSouth KoreaSouth KoreaSo...</td>
     </tr>
     <tr>
       <th>MEX</th>
       <td>141.8</td>
       <td>542.8</td>
-      <td>1.972511e+10</td>
+      <td>19725.10</td>
       <td>MexicoMexicoMexicoMexicoMexicoMexicoMexicoMexi...</td>
     </tr>
     <tr>
       <th>RUS</th>
       <td>146.6</td>
       <td>238.0</td>
-      <td>2.934356e+10</td>
+      <td>29343.54</td>
       <td>RussiaRussiaRussiaRussiaRussiaRussiaRussiaRuss...</td>
     </tr>
     <tr>
       <th>USA</th>
       <td>178.8</td>
       <td>406.0</td>
-      <td>5.629683e+10</td>
+      <td>56296.82</td>
       <td>United StatesUnited StatesUnited StatesUnited ...</td>
     </tr>
   </tbody>
@@ -3447,21 +3482,21 @@ Name: count, dtype: int64
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Code
-AUS   -2.175874e+08
-BRA   -6.270163e+07
-CAN   -2.058281e+08
-CHN    1.032861e+09
-DEU   -1.549227e+08
-ESP   -1.957001e+08
-FRA   -1.772362e+08
-GBR   -1.776626e+08
-IND    8.212028e+08
-ITA   -1.794477e+08
-JPN   -1.096921e+08
-KOR   -1.899533e+08
-MEX   -1.380944e+08
-RUS   -9.000213e+07
-USA    4.476422e+07
+AUS    -217.587467
+BRA     -62.701667
+CAN    -205.828067
+CHN    1032.861233
+DEU    -154.922667
+ESP    -195.700167
+FRA    -177.236167
+GBR    -177.662567
+IND     821.202833
+ITA    -179.447667
+JPN    -109.692067
+KOR    -189.953267
+MEX    -138.094367
+RUS     -90.002167
+USA      44.764233
 Name: Population, dtype: float64
 </pre></div>
 </div>
@@ -3516,7 +3551,7 @@ Name: Population, dtype: float64
       <th>AUS</th>
       <td>0.896</td>
       <td>1.764</td>
-      <td>1.913247e+07</td>
+      <td>19.1324</td>
       <td>Australia</td>
       <td>-0.565922</td>
     </tr>
@@ -3524,7 +3559,7 @@ Name: Population, dtype: float64
       <th>BRA</th>
       <td>0.668</td>
       <td>2.247</td>
-      <td>1.740183e+08</td>
+      <td>174.0182</td>
       <td>Brazil</td>
       <td>-0.163080</td>
     </tr>
@@ -3532,7 +3567,7 @@ Name: Population, dtype: float64
       <th>CAN</th>
       <td>0.890</td>
       <td>1.510</td>
-      <td>3.089180e+07</td>
+      <td>30.8918</td>
       <td>Canada</td>
       <td>-0.535337</td>
     </tr>
@@ -3540,7 +3575,7 @@ Name: Population, dtype: float64
       <th>CHN</th>
       <td>0.586</td>
       <td>1.628</td>
-      <td>1.269581e+09</td>
+      <td>1269.5811</td>
       <td>China</td>
       <td>2.686362</td>
     </tr>
@@ -3548,7 +3583,7 @@ Name: Population, dtype: float64
       <th>DEU</th>
       <td>0.890</td>
       <td>1.386</td>
-      <td>8.179726e+07</td>
+      <td>81.7972</td>
       <td>Germany</td>
       <td>-0.402937</td>
     </tr>
@@ -3556,7 +3591,7 @@ Name: Population, dtype: float64
       <th>ESP</th>
       <td>0.828</td>
       <td>1.210</td>
-      <td>4.101977e+07</td>
+      <td>41.0197</td>
       <td>Spain</td>
       <td>-0.508995</td>
     </tr>
@@ -3564,7 +3599,7 @@ Name: Population, dtype: float64
       <th>FRA</th>
       <td>0.844</td>
       <td>1.876</td>
-      <td>5.948372e+07</td>
+      <td>59.4837</td>
       <td>France</td>
       <td>-0.460972</td>
     </tr>
@@ -3572,7 +3607,7 @@ Name: Population, dtype: float64
       <th>GBR</th>
       <td>0.863</td>
       <td>1.641</td>
-      <td>5.905734e+07</td>
+      <td>59.0573</td>
       <td>United Kingdom</td>
       <td>-0.462081</td>
     </tr>
@@ -3580,7 +3615,7 @@ Name: Population, dtype: float64
       <th>IND</th>
       <td>0.490</td>
       <td>3.350</td>
-      <td>1.057923e+09</td>
+      <td>1057.9227</td>
       <td>India</td>
       <td>2.135861</td>
     </tr>
@@ -3588,7 +3623,7 @@ Name: Population, dtype: float64
       <th>ITA</th>
       <td>0.842</td>
       <td>1.249</td>
-      <td>5.727220e+07</td>
+      <td>57.2722</td>
       <td>Italy</td>
       <td>-0.466724</td>
     </tr>
@@ -3596,7 +3631,7 @@ Name: Population, dtype: float64
       <th>JPN</th>
       <td>0.883</td>
       <td>1.346</td>
-      <td>1.270278e+08</td>
+      <td>127.0278</td>
       <td>Japan</td>
       <td>-0.285297</td>
     </tr>
@@ -3604,7 +3639,7 @@ Name: Population, dtype: float64
       <th>KOR</th>
       <td>0.824</td>
       <td>1.467</td>
-      <td>4.676666e+07</td>
+      <td>46.7666</td>
       <td>South Korea</td>
       <td>-0.494048</td>
     </tr>
@@ -3612,7 +3647,7 @@ Name: Population, dtype: float64
       <th>MEX</th>
       <td>0.709</td>
       <td>2.714</td>
-      <td>9.862555e+07</td>
+      <td>98.6255</td>
       <td>Mexico</td>
       <td>-0.359169</td>
     </tr>
@@ -3620,7 +3655,7 @@ Name: Population, dtype: float64
       <th>RUS</th>
       <td>0.733</td>
       <td>1.190</td>
-      <td>1.467178e+08</td>
+      <td>146.7177</td>
       <td>Russia</td>
       <td>-0.234086</td>
     </tr>
@@ -3628,7 +3663,7 @@ Name: Population, dtype: float64
       <th>USA</th>
       <td>0.894</td>
       <td>2.030</td>
-      <td>2.814841e+08</td>
+      <td>281.4841</td>
       <td>United States</td>
       <td>0.116427</td>
     </tr>
@@ -3639,11 +3674,12 @@ Name: Population, dtype: float64
 <p>Because this feature (numerical operations performed on each element) is shared across all Pandas Series, and we are using Pandas methods, we can write a function which will compute the z-scores for any column containing numerical data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define a function to calculate the z-scores for a specific numeric column</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">get_z</span><span class="p">(</span><span class="n">df_column</span><span class="p">):</span>
-    <span class="s2">&quot;A function which takes a Data Frame column and returns a series containing the z-score of each element.&quot;</span>
-    <span class="n">z_col</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_column</span> <span class="o">-</span> <span class="n">df_column</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span><span class="o">/</span><span class="n">df_column</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">z_col</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define a function to calculate the z-scores for a numeric Series.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_z</span><span class="p">(</span><span class="n">in_series</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Returns a Series containing the z-score of each element of `in_series`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Formula for Z-score.</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">in_series</span> <span class="o">-</span> <span class="n">in_series</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">in_series</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -3681,16 +3717,9 @@ Name: Human Development Index, dtype: float64
 <p>Let’s add this new standardized data to the Data Frame, and plot it using the now familiar <code class="docutils literal notranslate"><span class="pre">.plot()</span></code> method:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># add standard scores for HDI</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add standard scores for HDI</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;HDI_z&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">]</span>
-
-<span class="c1"># show the Data Frame</span>
-<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-
-<span class="c1"># plot the standardized variables</span>
-<span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">,</span>
-        <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Population_z&#39;</span><span class="p">,</span>
-        <span class="n">y</span><span class="o">=</span><span class="s1">&#39;HDI_z&#39;</span><span class="p">);</span>
+<span class="n">df</span>
 </pre></div>
 </div>
 </div>
@@ -3735,7 +3764,7 @@ Name: Human Development Index, dtype: float64
       <th>AUS</th>
       <td>0.896</td>
       <td>1.764</td>
-      <td>1.913247e+07</td>
+      <td>19.1324</td>
       <td>Australia</td>
       <td>-0.565922</td>
       <td>0.896</td>
@@ -3744,7 +3773,7 @@ Name: Human Development Index, dtype: float64
       <th>BRA</th>
       <td>0.668</td>
       <td>2.247</td>
-      <td>1.740183e+08</td>
+      <td>174.0182</td>
       <td>Brazil</td>
       <td>-0.163080</td>
       <td>0.668</td>
@@ -3753,7 +3782,7 @@ Name: Human Development Index, dtype: float64
       <th>CAN</th>
       <td>0.890</td>
       <td>1.510</td>
-      <td>3.089180e+07</td>
+      <td>30.8918</td>
       <td>Canada</td>
       <td>-0.535337</td>
       <td>0.890</td>
@@ -3762,7 +3791,7 @@ Name: Human Development Index, dtype: float64
       <th>CHN</th>
       <td>0.586</td>
       <td>1.628</td>
-      <td>1.269581e+09</td>
+      <td>1269.5811</td>
       <td>China</td>
       <td>2.686362</td>
       <td>0.586</td>
@@ -3771,7 +3800,7 @@ Name: Human Development Index, dtype: float64
       <th>DEU</th>
       <td>0.890</td>
       <td>1.386</td>
-      <td>8.179726e+07</td>
+      <td>81.7972</td>
       <td>Germany</td>
       <td>-0.402937</td>
       <td>0.890</td>
@@ -3780,7 +3809,7 @@ Name: Human Development Index, dtype: float64
       <th>ESP</th>
       <td>0.828</td>
       <td>1.210</td>
-      <td>4.101977e+07</td>
+      <td>41.0197</td>
       <td>Spain</td>
       <td>-0.508995</td>
       <td>0.828</td>
@@ -3789,7 +3818,7 @@ Name: Human Development Index, dtype: float64
       <th>FRA</th>
       <td>0.844</td>
       <td>1.876</td>
-      <td>5.948372e+07</td>
+      <td>59.4837</td>
       <td>France</td>
       <td>-0.460972</td>
       <td>0.844</td>
@@ -3798,7 +3827,7 @@ Name: Human Development Index, dtype: float64
       <th>GBR</th>
       <td>0.863</td>
       <td>1.641</td>
-      <td>5.905734e+07</td>
+      <td>59.0573</td>
       <td>United Kingdom</td>
       <td>-0.462081</td>
       <td>0.863</td>
@@ -3807,7 +3836,7 @@ Name: Human Development Index, dtype: float64
       <th>IND</th>
       <td>0.490</td>
       <td>3.350</td>
-      <td>1.057923e+09</td>
+      <td>1057.9227</td>
       <td>India</td>
       <td>2.135861</td>
       <td>0.490</td>
@@ -3816,7 +3845,7 @@ Name: Human Development Index, dtype: float64
       <th>ITA</th>
       <td>0.842</td>
       <td>1.249</td>
-      <td>5.727220e+07</td>
+      <td>57.2722</td>
       <td>Italy</td>
       <td>-0.466724</td>
       <td>0.842</td>
@@ -3825,7 +3854,7 @@ Name: Human Development Index, dtype: float64
       <th>JPN</th>
       <td>0.883</td>
       <td>1.346</td>
-      <td>1.270278e+08</td>
+      <td>127.0278</td>
       <td>Japan</td>
       <td>-0.285297</td>
       <td>0.883</td>
@@ -3834,7 +3863,7 @@ Name: Human Development Index, dtype: float64
       <th>KOR</th>
       <td>0.824</td>
       <td>1.467</td>
-      <td>4.676666e+07</td>
+      <td>46.7666</td>
       <td>South Korea</td>
       <td>-0.494048</td>
       <td>0.824</td>
@@ -3843,7 +3872,7 @@ Name: Human Development Index, dtype: float64
       <th>MEX</th>
       <td>0.709</td>
       <td>2.714</td>
-      <td>9.862555e+07</td>
+      <td>98.6255</td>
       <td>Mexico</td>
       <td>-0.359169</td>
       <td>0.709</td>
@@ -3852,7 +3881,7 @@ Name: Human Development Index, dtype: float64
       <th>RUS</th>
       <td>0.733</td>
       <td>1.190</td>
-      <td>1.467178e+08</td>
+      <td>146.7177</td>
       <td>Russia</td>
       <td>-0.234086</td>
       <td>0.733</td>
@@ -3861,14 +3890,26 @@ Name: Human Development Index, dtype: float64
       <th>USA</th>
       <td>0.894</td>
       <td>2.030</td>
-      <td>2.814841e+08</td>
+      <td>281.4841</td>
       <td>United States</td>
       <td>0.116427</td>
       <td>0.894</td>
     </tr>
   </tbody>
 </table>
-</div></div><img alt="_images/4bc08c31a1ddd634d7e7b287db9fdfec81d124db639fd94f65a8e3b328477883.png" src="_images/4bc08c31a1ddd634d7e7b287db9fdfec81d124db639fd94f65a8e3b328477883.png" />
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the standardized variables</span>
+<span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">,</span>
+        <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Population_z&#39;</span><span class="p">,</span>
+        <span class="n">y</span><span class="o">=</span><span class="s1">&#39;HDI_z&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4bc08c31a1ddd634d7e7b287db9fdfec81d124db639fd94f65a8e3b328477883.png" src="_images/4bc08c31a1ddd634d7e7b287db9fdfec81d124db639fd94f65a8e3b328477883.png" />
 </div>
 </div>
 <p>We can see from this procedure that we have two bivariate outliers, with respect to <code class="docutils literal notranslate"><span class="pre">Population</span></code> and <code class="docutils literal notranslate"><span class="pre">HDI</span></code>.</p>
@@ -3906,8 +3947,9 @@ Name: Population_z, dtype: float64
 </section>
 <section id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
-<p>On this page we have further explored the idea that Pandas Data Frames, Pandas Series and Numpy arrays have a nested structure.</p>
-<p>Data Frames are <em>dictionary-like collections of Series</em>. Series are a combination of a Numpy array (<code class="docutils literal notranslate"><span class="pre">.values</span></code>) with other attributes (<code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">index</span></code>). As a result, many methods we can use on a Series are inherited from Numpy arrays, and many  Data Frame methods are likewise inherited from the Pandas Series that constitute the Data Frame.</p>
+<p>On this page we have further explored the idea that Pandas Data Frames, Pandas
+Series and Numpy arrays have a nested structure.</p>
+<p>Data Frames are <em>dictionary-like collections of Series</em>. Series are a combination of a Numpy array (<code class="docutils literal notranslate"><span class="pre">.values</span></code>) with other attributes (<code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">index</span></code>). As a result, many methods we can use on a Series are similar to those available from Numpy arrays, and many Data Frame methods are likewise inherited from the Pandas Series that constitute the Data Frame.</p>
 </section>
 </section>
 
@@ -3982,7 +4024,7 @@ Name: Population_z, dtype: float64
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-series-attributes-and-methods">Pandas Series attributes and methods</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-dataframe-attributes">Pandas DataFrame attributes</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-dataframe-methods">Pandas Dataframe Methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-dataframe-methods">Pandas Dataframe methods</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-methods">Plotting Methods</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-note-on-numerical-operations">A note on numerical operations</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>

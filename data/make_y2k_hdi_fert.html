@@ -1,0 +1,1249 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Create year 2000 dataset from input data &#8212; Pandas from Numpy</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'data/make_y2k_hdi_fert';</script>
+    <link rel="canonical" href="https://pxr687.github.io/ASPP_pandas_tutorials/data/make_y2k_hdi_fert.html" />
+    <link rel="icon" href="../_static/pandas_numpy.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/pandas_numpy.jpg" class="logo__image only-light" alt="Pandas from Numpy - Home"/>
+    <img src="../_static/pandas_numpy.jpg" class="logo__image only-dark pst-js-only" alt="Pandas from Numpy - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Pandas from Numpy</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../0_0_pandas_intro.html">Pandas from Numpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0_1_to_loc_or_iloc.html">To <code class="docutils literal notranslate"><span class="pre">.loc</span></code> or <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> - more on Pandas indexes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0_2_pandas_dataframes_attributes_methods.html">Pandas DataFrames: Attributes and Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0_3_constructing_dataframes.html">Let There Be Data : Creating Data Frames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0_4_dealing_with_missing_data_in_pandas.html">Dealing with NaNs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0_5_filtering_data_with_pandas.html">Filtering Data Frames with Boolean Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../0_6_more_pandas_methods_strings.html">More Pandas methods</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="interact/lab/index.html?path=data/make_y2k_hdi_fert.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch via JupyterLite"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="JupyterLite logo" src="../_static/images/logo_jupyterlite.svg">
+  </span>
+<span class="btn__text-container">JupyterLite</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/pxr687/ASPP_pandas_tutorials" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pxr687/ASPP_pandas_tutorials/edit/main/data/make_y2k_hdi_fert.Rmd" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/pxr687/ASPP_pandas_tutorials/issues/new?title=Issue%20on%20page%20%2Fdata/make_y2k_hdi_fert.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/data/make_y2k_hdi_fert.Rmd" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.Rmd</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Create year 2000 dataset from input data</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="create-year-2000-dataset-from-input-data">
+<h1>Create year 2000 dataset from input data<a class="headerlink" href="#create-year-2000-dataset-from-input-data" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;copy_on_write&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;children-per-woman-vs-human-development-index.csv&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Entity</th>
+      <th>Code</th>
+      <th>Year</th>
+      <th>Fertility Rate</th>
+      <th>Human Development Index</th>
+      <th>Population</th>
+      <th>Region</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1950</td>
+      <td>7.248</td>
+      <td>NaN</td>
+      <td>7776133.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1951</td>
+      <td>7.260</td>
+      <td>NaN</td>
+      <td>7879295.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1952</td>
+      <td>7.260</td>
+      <td>NaN</td>
+      <td>7987737.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1953</td>
+      <td>7.266</td>
+      <td>NaN</td>
+      <td>8096656.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1954</td>
+      <td>7.254</td>
+      <td>NaN</td>
+      <td>8207910.0</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y2k_df</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2000</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Code&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()]</span>
+          <span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;Region&#39;</span><span class="p">)</span>
+          <span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Entity&#39;</span><span class="p">:</span> <span class="s1">&#39;Country Name&#39;</span><span class="p">})</span>
+          <span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+          <span class="p">[[</span><span class="s1">&#39;Code&#39;</span><span class="p">,</span> <span class="s1">&#39;Human Development Index&#39;</span><span class="p">,</span> <span class="s1">&#39;Fertility Rate&#39;</span><span class="p">,</span> <span class="s1">&#39;Population&#39;</span><span class="p">,</span> <span class="s1">&#39;Country Name&#39;</span><span class="p">]]</span>
+         <span class="p">)</span>
+<span class="n">y2k_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Code</th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>50</th>
+      <td>AFG</td>
+      <td>0.340</td>
+      <td>7.566</td>
+      <td>2.013028e+07</td>
+      <td>Afghanistan</td>
+    </tr>
+    <tr>
+      <th>654</th>
+      <td>ALB</td>
+      <td>0.678</td>
+      <td>2.217</td>
+      <td>3.166104e+06</td>
+      <td>Albania</td>
+    </tr>
+    <tr>
+      <th>915</th>
+      <td>DZA</td>
+      <td>0.652</td>
+      <td>2.590</td>
+      <td>3.090385e+07</td>
+      <td>Algeria</td>
+    </tr>
+    <tr>
+      <th>1366</th>
+      <td>AND</td>
+      <td>0.815</td>
+      <td>1.273</td>
+      <td>6.565300e+04</td>
+      <td>Andorra</td>
+    </tr>
+    <tr>
+      <th>1627</th>
+      <td>AGO</td>
+      <td>0.380</td>
+      <td>6.639</td>
+      <td>1.619481e+07</td>
+      <td>Angola</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>58465</th>
+      <td>VNM</td>
+      <td>0.599</td>
+      <td>2.028</td>
+      <td>7.715397e+07</td>
+      <td>Vietnam</td>
+    </tr>
+    <tr>
+      <th>58926</th>
+      <td>OWID_WRL</td>
+      <td>0.645</td>
+      <td>2.754</td>
+      <td>6.171703e+09</td>
+      <td>World</td>
+    </tr>
+    <tr>
+      <th>59052</th>
+      <td>YEM</td>
+      <td>0.434</td>
+      <td>6.317</td>
+      <td>1.962409e+07</td>
+      <td>Yemen</td>
+    </tr>
+    <tr>
+      <th>59439</th>
+      <td>ZMB</td>
+      <td>0.418</td>
+      <td>5.921</td>
+      <td>1.001758e+07</td>
+      <td>Zambia</td>
+    </tr>
+    <tr>
+      <th>59700</th>
+      <td>ZWE</td>
+      <td>0.426</td>
+      <td>4.009</td>
+      <td>1.189200e+07</td>
+      <td>Zimbabwe</td>
+    </tr>
+  </tbody>
+</table>
+<p>177 rows × 5 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get selected country codes.  These were from sorting the Gender Stats Data Frame by GDP.</span>
+<span class="n">wealthy_codes</span> <span class="o">=</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;gender_stats.csv&#39;</span><span class="p">)</span>
+                 <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;gdp_us_billion&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                 <span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+                 <span class="p">[</span><span class="s1">&#39;country_code&#39;</span><span class="p">]</span>
+                 <span class="o">.</span><span class="n">sort_values</span><span class="p">()</span>
+                <span class="p">)</span>
+<span class="n">wealthy_codes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10     AUS
+26     BRA
+32     CAN
+35     CHN
+49     DEU
+58     ESP
+63     FRA
+67     GBR
+88     IND
+94     ITA
+97     JPN
+104    KOR
+124    MEX
+164    RUS
+202    USA
+Name: country_code, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y2k_out</span> <span class="o">=</span> <span class="p">(</span><span class="n">y2k_df</span><span class="p">[</span><span class="n">y2k_df</span><span class="p">[</span><span class="s1">&#39;Code&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">wealthy_codes</span><span class="p">)]</span>
+           <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+           <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;Code&#39;</span><span class="p">))</span>
+<span class="n">y2k_out</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Code</th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>AUS</td>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>1.913243e+07</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>BRA</td>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>1.740182e+08</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>CAN</td>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>3.089176e+07</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>CHN</td>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1.269581e+09</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>DEU</td>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>8.179720e+07</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>ESP</td>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>4.101972e+07</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>FRA</td>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>5.948367e+07</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>GBR</td>
+      <td>0.863</td>
+      <td>1.641</td>
+      <td>5.905728e+07</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>IND</td>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1.057923e+09</td>
+      <td>India</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>ITA</td>
+      <td>0.842</td>
+      <td>1.249</td>
+      <td>5.727216e+07</td>
+      <td>Italy</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>JPN</td>
+      <td>0.883</td>
+      <td>1.346</td>
+      <td>1.270278e+08</td>
+      <td>Japan</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>KOR</td>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>4.676661e+07</td>
+      <td>South Korea</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>MEX</td>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>9.862552e+07</td>
+      <td>Mexico</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>RUS</td>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>1.467177e+08</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>USA</td>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>2.814841e+08</td>
+      <td>United States</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Population in millions, rounded to 4 DP.</span>
+<span class="n">y2k_out</span><span class="p">[</span><span class="s1">&#39;Population&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">y2k_out</span><span class="p">[</span><span class="s1">&#39;Population&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">1_000_000</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">y2k_out</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Code</th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>AUS</td>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>19.1324</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>BRA</td>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>174.0182</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>CAN</td>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>CHN</td>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1269.5811</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>DEU</td>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>81.7972</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>ESP</td>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>41.0197</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>FRA</td>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>59.4837</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>GBR</td>
+      <td>0.863</td>
+      <td>1.641</td>
+      <td>59.0573</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>IND</td>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1057.9227</td>
+      <td>India</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>ITA</td>
+      <td>0.842</td>
+      <td>1.249</td>
+      <td>57.2722</td>
+      <td>Italy</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>JPN</td>
+      <td>0.883</td>
+      <td>1.346</td>
+      <td>127.0278</td>
+      <td>Japan</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>KOR</td>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>46.7666</td>
+      <td>South Korea</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>MEX</td>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>98.6255</td>
+      <td>Mexico</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>RUS</td>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>146.7177</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>USA</td>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>281.4841</td>
+      <td>United States</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out_fname</span> <span class="o">=</span> <span class="s1">&#39;year_2000_hdi_fert.csv&#39;</span>
+<span class="n">y2k_out</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">out_fname</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">out_fname</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Code</th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>AUS</td>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>19.1324</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>BRA</td>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>174.0182</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>CAN</td>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>CHN</td>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1269.5811</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>DEU</td>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>81.7972</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>ESP</td>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>41.0197</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>FRA</td>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>59.4837</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>GBR</td>
+      <td>0.863</td>
+      <td>1.641</td>
+      <td>59.0573</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>IND</td>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1057.9227</td>
+      <td>India</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>ITA</td>
+      <td>0.842</td>
+      <td>1.249</td>
+      <td>57.2722</td>
+      <td>Italy</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>JPN</td>
+      <td>0.883</td>
+      <td>1.346</td>
+      <td>127.0278</td>
+      <td>Japan</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>KOR</td>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>46.7666</td>
+      <td>South Korea</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>MEX</td>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>98.6255</td>
+      <td>Mexico</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>RUS</td>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>146.7177</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>USA</td>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>281.4841</td>
+      <td>United States</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./data"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Peter Rush, Matthew Brett
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
