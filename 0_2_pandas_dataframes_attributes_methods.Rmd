@@ -52,8 +52,12 @@ We'll build a numpy array using the `np.array([])` constructor, containing our f
 # import libraries
 import numpy as np
 import pandas as pd
+```
 
-# standard three-letter code for each country
+We build the constituent arrays:
+
+```{python}
+# Standard three-letter code for each country
 country_codes_array = np.array(['AUS', 'BRA', 'CAN',
                                 'CHN', 'DEU', 'ESP',
                                 'FRA', 'GBR', 'IND',
@@ -61,8 +65,6 @@ country_codes_array = np.array(['AUS', 'BRA', 'CAN',
                                 'MEX', 'RUS', 'USA'])
 country_codes_array
 ```
-
-And another array containing the Human Development Index scores for each of the countries:
 
 ```{python}
 # Human Development Index Scores for each country
@@ -73,8 +75,6 @@ hdis_array = np.array([0.896, 0.668, 0.89,
                        0.709, 0.733, 0.894])
 hdis_array
 ```
-
-And for good measure, another array containing the full country names:
 
 ```{python}
 # Full names of each country.

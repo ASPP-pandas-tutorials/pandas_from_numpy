@@ -58,32 +58,37 @@ On this page we will look at different methods of filtering. Again, we will focu
 To explore filtering, let's create some Numpy arrays, containing the [HDI data](https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index):
 
 ```{python}
-# import libraries for this page
+# Import libraries for this page
 import numpy as np
 import pandas as pd
+```
 
-# country codes
+We build the constituent arrays:
+
+```{python}
+# Standard three-letter code for each country
 country_codes_array = np.array(['AUS', 'BRA', 'CAN',
-                          'CHN', 'DEU', 'ESP',
-                          'FRA', 'GBR', 'IND',
-                          'ITA', 'JPN', 'KOR',
-                          'MEX', 'RUS', 'USA'])
+                                'CHN', 'DEU', 'ESP',
+                                'FRA', 'GBR', 'IND',
+                                'ITA', 'JPN', 'KOR',
+                                'MEX', 'RUS', 'USA'])
 country_codes_array
 ```
 
 ```{python}
 # Human Development Index Scores for each country
-hdis_array = np.array([0.896, 0.668, 0.89 , 0.586, 
-                 0.844, 0.89 , 0.49 , 0.842, 
-                 0.883, 0.709, 0.733, 0.824,
-                 0.828, 0.863, 0.894])
-
+hdis_array = np.array([0.896, 0.668, 0.89,
+                       0.586, 0.89,  0.828,
+                       0.844, 0.863, 0.49,
+                       0.842, 0.883, 0.824,
+                       0.709, 0.733, 0.894])
 hdis_array
 ```
 
-Let's say we want to view HDI values that are bigger than the median HDI value.
+Let's say we want to view HDI values that are bigger than the median HDI
+value.
 
-First, we can inspect what the median is, using the `np.median()` function:
+First, we can calculate the median, using the `np.median()` function:
 
 ```{python}
 # get the median HDI
@@ -96,21 +101,16 @@ In this case `>` is the operator we want, with the `hdis_array` on the left hand
 
 ```{python}
 # create a Boolean array
-hdis_array > np.median(hdis_array)
-```
-
-The array in the output of the cell above is the same length as the `hdis_array` and it contains `True` value where the element in `hdis_array` is larger than the median HDI score (and `False` values otherwise).
-
-Let's run this operation again, and save this Boolean array (of `True` and `False` values), and save it in it's own variable, to make it easier to use a filter:
-
-```{python}
-# filter using the Boolean array
-hdis_array_grtr_median_bool = hdis_array > np.median(hdis_array)
-
+hdis_array_grtr_median_bool =  hdis_array > np.median(hdis_array)
 hdis_array_grtr_median_bool
 ```
 
-Our Boolean array can now be used to retrieve elements of the `hdis_array` that are greater than the median HDI value. We just place our filter in between square brackers used to index the array. The `True` values act as "on switches" (keeping that element in the output array) and the `False` values act as "off switches" (removing that element from the output array):
+The array in the output of the cell above is the same length as the
+`hdis_array` and it contains `True` value where the element in `hdis_array` is
+larger than the median HDI score (and `False` values otherwise).
+
+
+Our Boolean array can now be used to retrieve elements of the `hdis_array` that are greater than the median HDI value. We just place our filter in between square brackets used to index the array. The `True` values act as "on switches" (keeping that element in the output array) and the `False` values act as "off switches" (removing that element from the output array):
 
 ```{python}
 # filter the `hdis_array`
@@ -143,7 +143,6 @@ Let's create a Boolean Series:
 # make a pandas Series
 hdis_array_bool_series = pd.Series(hdis_array_grtr_median_bool, 
                                    index=country_codes_array)
-
 hdis_array_bool_series
 ```
 
@@ -202,10 +201,8 @@ To explore further, let's import the HDI data:
 ```{python}
 # import our dataset
 df = pd.read_csv("data/year_2000_hdi_fert.csv")
-
 # set the index
 df = df.set_index("Code")
-
 df
 ```
 
