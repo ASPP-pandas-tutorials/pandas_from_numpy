@@ -1,6 +1,5 @@
 ---
 jupyter:
-  orphan: true
   jupytext:
     text_representation:
       extension: .Rmd
@@ -11,6 +10,7 @@ jupyter:
     display_name: Python 3 (ipykernel)
     language: python
     name: python3
+  orphan: true
 ---
 
 # Create year 2000 dataset from input data
@@ -48,13 +48,15 @@ wealthy_codes
 ```
 
 ```{python}
-y2k_out = y2k_df[y2k_df['Code'].isin(wealthy_codes)].reset_index(drop=True)
+y2k_out = (y2k_df[y2k_df['Code'].isin(wealthy_codes)]
+           .reset_index(drop=True)
+           .sort_values('Code'))
 y2k_out
 ```
 
 ```{python}
-# Population in millions.
-y2k_out['Population'] = y2k_out['Population'] / 1_000_000
+# Population in millions, rounded to 4 DP.
+y2k_out['Population'] = (y2k_out['Population'] / 1_000_000).round(4)
 y2k_out
 ```
 
