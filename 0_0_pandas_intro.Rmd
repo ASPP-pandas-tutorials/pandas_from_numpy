@@ -306,15 +306,15 @@ Perhaps your agile mind is racing ahead, wondering what Pandas would do if the
 two Series had different Indices, and your speculations would likely be
 correct, but we will come onto that soon enough.
 
-We can get the `Human Development Index` (`hdi`) series by name, by indexing
-directly into the Data Frame, like this:
+## Selecting columns from a Data Frame
+
+We can get the `Human Development Index` (`hdi`) Series by name, by using *direct indexing* into the Data Frame, like this:
 
 ```{python}
-# getting the `hdi` series by name
+# Getting the `hdi` series by name
 hdi_from_df = df['Human Development Index']
 hdi_from_df
 ```
-
 
 <!-- #region language="note" -->
 ```{note}
@@ -340,19 +340,37 @@ indexing tends to be more similar to `.loc` than `.iloc`.
 ```
 <!-- #endregion -->
 
+Remember that a Data Frame is just a dictionary-like collection of Series".
 
-Notice that direct indexing into the Data Frame returns a Series, extracted
-from the Data Frame.
+The `Human Development Index` column is now a Series inside the `df` Data
+Frame.
+
+We have fetched that Series embedded in the Data Frame by using *direct
+indexing*.  We place the column name (`'Human Development Index'`) between
+square brackets following the data frame value, so `'Human Development Index'`
+specified what we want to select from the Data Frame:
+
+Direct indexing into the Data Frame like this returns a Series, extracted from
+the Data Frame.
 
 ```{python}
-# show the type of `hdi_from_df`
+# Show the type of `hdi_from_df`
 type(hdi_from_df)
 ```
 
-Notice too, that the extracted Series now has an extra attribute, which is the
-`name`.
+## Series have an optional name
 
-We said above that Series are the association between an array of `.values`, and a corresponding collection of labels, in `.index`.  Now we see that the Series also has a `.name`, that we had not set in our original series:
+You can see in the output display that the extracted Series now has an extra
+attribute, which is the `name`.
+
+```{python}
+# Show the extracted Series again.  Notice the Name.
+hdi_from_df
+```
+
+We said above that Series are the association between an array of `.values`,
+and a corresponding collection of labels, in `.index`.  Now we see that the
+Series also has a `.name`, that we had not set in our original series:
 
 ```{python}
 # The `name` attribute of the Series we've extracted from the Data Frame.
@@ -368,11 +386,13 @@ of `None`.
 hdi_series.name is None
 ```
 
-We can also use the `.loc` and `.iloc` accessor methods on the Data Frame, to
-get rows by label (index value) or by position:
+## Indirect indexing into Data Frames
+
+Indirect indexing occurs when we use the `.loc` and `.iloc` accessor methods
+on the Data Frame, to get rows by label (index value) or by position:
 
 ```{python}
-# Using `.loc` and the Series name
+# Using `.loc` indirect indexing on the Data Frame.
 df.loc['MEX']
 ```
 
@@ -408,7 +428,7 @@ For a Series, the `.index` has labels corresponding to the *values*.
 For a Data Frame, the `.index` has labels corresponding the *rows*.
 
 
-## Adding additional data to our Data Frame
+## Adding more columns to the Data Frame
 
 The dataset we have used for our "handmade" Data Frame contains more than two
 columns. Let's use the same "hand-building" process to add additional data
@@ -456,35 +476,31 @@ Remember the maxim that "a Data Frame is just a dictionary-like collection of
 Series"?
 
 Our new `Population` column has now become a Series inside the `df` Data
-Frame. We specified the `name` attribute in the left-hand-side (LHS) in our
+Frame.
+
+We can fetch new new Series embedded in the Data Frame by using *direct indexing*.  We place the column name (`'Population'`) between square brackets following the data frame value, so `'Population'` specified what we want to select from the Data Frame:
+
+```{python}
+# Fetch Series named 'Population' using direct indexing into the DataFrame.
+pop_from_df = df['Population']
+pop_from_df
+```
+
+We specified the `name` attribute in the left-hand-side (LHS) in our
 assignment above:`df['Population'] = population_array`.  This assignment says
 "take these values and make a new column (Series) named `'Population'` in the
 Data Frame".
 
 ```{python}
-# Show the .name attribute
+# Show the .name attribute of the new Series inside the Data Frame.
 df['Population'].name
 ```
 
-We also specified the `values`:
+The `values` of the new Series are the ones we put in in the assignment above:
 
 ```{python}
-# Show the array containing the data
+# Show the array containing the data for the new Series.
 df['Population'].values
-```
-
-<!---
-MB bookmark.
--->
-
-We can view both of these attributes, together with the `index` using the
-following syntax.  We are here using *direct indexing* into the Data Frame,
-with the column name between the indexing brackets, to specify what we want to
-select from the Data Frame:
-
-```{python}
-# Fetch Series named 'Population' using direct indexing into the DataFrame.
-df['Population']
 ```
 
 Notice that the `'Population` Series has an Index, and the Index is the same
