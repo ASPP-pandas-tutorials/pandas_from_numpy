@@ -453,13 +453,13 @@ Frame to a Data Frame Pandas generates by importing data from a file
 First, we make another Numpy array, containing the full name of each country.
 
 ```{python}
-# making an array containing the name of each country
-country_name_array = np.array(['Australia', 'Brazil', 'Canada',
-                               'China', 'Germany', 'Spain',
-                               'France', 'United Kingdom', 'India',
-                               'Italy', 'Japan', 'South Korea',
-                               'Mexico', 'Russia', 'United States'])
-country_name_array
+# Making an array containing the name of each country
+country_names_array = np.array(['Australia', 'Brazil', 'Canada',
+                                'China', 'Germany', 'Spain',
+                                'France', 'United Kingdom', 'India',
+                                'Italy', 'Japan', 'South Korea',
+                                'Mexico', 'Russia', 'United States'])
+country_names_array
 ```
 
 Now, we get the population of each country, in millions.

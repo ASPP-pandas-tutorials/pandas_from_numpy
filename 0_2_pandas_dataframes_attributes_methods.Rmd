@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.15.2
+      jupytext_version: 1.17.1
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -32,7 +32,7 @@ Structure of page:
 * reinforce that "DataFrame = dictionary-like collection of Series". Then show all relevant methods/attributes of DataFrames.
 -->
 
-On the [previous](0_0_pandas_intro.Rmd) [pages](0_1_to_loc_or_iloc.Rmd) we have seen how Pandas Series are constructed by combining numpy arrays (the `.values` attribute of a Series) with other attributes (a `.name` string and and array-like `.index`). We have then examined how Pandas Data Frames are built from a collection of Series, in a dictionary-like structure.
+On the [previous](0_0_pandas_intro.Rmd) [pages](0_1_to_loc_or_iloc.Rmd) we have seen how Pandas Series are constructed by combining Numpy arrays (the `.values` attribute of a Series) with other attributes (a `.name` string and and array-like `.index`). We have then examined how Pandas Data Frames are built from a collection of Series, in a dictionary-like structure.
 
 This page will dive deeper into Data Frames. Once we have constructed our Data Frame, Pandas provides many useful methods for cleaning, aggregating, plotting and (subsequently) analysing our data.
 
@@ -55,10 +55,10 @@ import pandas as pd
 
 # standard three-letter code for each country
 country_codes_array = np.array(['AUS', 'BRA', 'CAN',
-                          'CHN', 'DEU', 'ESP',
-                          'FRA', 'GBR', 'IND',
-                          'ITA', 'JPN', 'KOR',
-                          'MEX', 'RUS', 'USA'])
+                                'CHN', 'DEU', 'ESP',
+                                'FRA', 'GBR', 'IND',
+                                'ITA', 'JPN', 'KOR',
+                                'MEX', 'RUS', 'USA'])
 country_codes_array
 ```
 
@@ -66,23 +66,23 @@ And another array containing the Human Development Index scores for each of the 
 
 ```{python}
 # Human Development Index Scores for each country
-hdis_array = np.array([0.896, 0.668, 0.89 , 0.586, 
-                 0.844, 0.89 , 0.49 , 0.842, 
-                 0.883, 0.709, 0.733, 0.824,
-                 0.828, 0.863, 0.894])
-
+hdis_array = np.array([0.896, 0.668, 0.89,
+                       0.586, 0.89,  0.828,
+                       0.844, 0.863, 0.49,
+                       0.842, 0.883, 0.824,
+                       0.709, 0.733, 0.894])
 hdis_array
 ```
 
 And for good measure, another array containing the full country names:
 
 ```{python}
-# country names array
+# Full names of each country.
 country_names_array = np.array(['Australia', 'Brazil', 'Canada',
-                          'China', 'Germany', 'Spain',
-                          'France', 'United Kingdom', 'India',
-                          'Italy', 'Japan', 'South Korea',
-                          'Mexico', 'Russia', 'United States'])
+                                'China', 'Germany', 'Spain',
+                                'France', 'United Kingdom', 'India',
+                                'Italy', 'Japan', 'South Korea',
+                                'Mexico', 'Russia', 'United States'])
 country_names_array
 ```
 
@@ -93,9 +93,15 @@ When dealing with any object in python, it can be useful to use the in-built pyt
 dir(hdis_array)
 ```
 
-For now we will ignore the elements in the printout that contain `__` - these are called "dunders", which is short for "double underscore"; they are not the attributes and methods in which we are currently interested.
+For now we will ignore the elements in the printout that contain `__`.  These
+double underscores are called "dunders" (short for double underscores);
+attributes and methods starting and ending with `__` are often called *dunder
+attributes* and *dunder methods*.  Python uses the dunder naming scheme as
+a convention to indicate that these methods and attributes are part of the
+internal machinery of an object.
 
-Ignoring the dunders, we can see a large number of attributes and methods that we can access from this or any other Numpy array.
+Ignoring the dunder attributes and methods, we can see a large number of
+attributes and methods that we can access from this or any other Numpy array.
 
 One of these attributes is called `shape`. We will almost always want to know the `shape` of our data, as it tells us how many observations we have.
 
@@ -230,15 +236,23 @@ hdis_array
 
 ## Pandas Series attributes and methods
 
-Remember our maxim that *"a Pandas Series is a numpy array, plus a `name` attribute and an array-like `index`"*?
+Remember our answer to "What is a Series"?:
 
-We will see that because of this, we can use many of the same methods we have just seen for Numpy arrays on Pandas Series.
+> A *Series* is the association of:
+>
+> * An array of values (`.values`)
+> * A sequence of labels for each value (`.index`)
+> * A name (which can be `None`).
+
+Because Series have arrays as their underlying model for storing values, it is
+not surprising that we can use many of the same methods we have just seen for
+Numpy arrays on Pandas Series.
 
 Let's make a series from the HDI scores, called `hdi_series`. We do this using the now familiar `pd.Series()` constructor. Again, we will use the `country_codes` array as an index:
 
 ```{python}
 # show again from Series, then show for df below
-hdi_series =  pd.Series(hdis_array, 
+hdi_series =  pd.Series(hdis_array,
                         index=country_codes_array)
 
 hdi_series
@@ -301,9 +315,14 @@ These operations return the same values as when we call the method directly on t
 hdis_array.max()
 ```
 
-Ok, so these familiar Numpy methods are available. However, Pandas also introduces some additional methods (you may want to compare the output of `dir()` for the `hdis_array` vs the `hdi_series` to see the overlap/differences - as the printout is messy, we will not show it again here).
+Ok, so these methods are available with names that are familiar from Numpy.
+However, Pandas also introduces some additional methods.  You may want to
+compare the output of `dir()` for the `hdis_array` vs the `hdi_series` to see
+the overlap/differences - as the printout is messy, we will not show it again
+here.
 
-One very useful Series method is `.describe()`. This will give us a variety of statistics about the data in the `.values` array of the Series:
+One very useful Series method is `.describe()`. This will give us a variety of
+statistics about the data in the `.values` array of the Series:
 
 ```{python}
 # `.describe()` the `hdi_series`
@@ -319,10 +338,11 @@ Conversely, the `.value_counts()` method will count the occurrence of each *uniq
 hdi_series.value_counts()
 ```
 
-These methods can also be applied to arrays containing categorical/string data:
+These methods can also be applied to arrays containing categorical/string
+data:
 
 ```{python}
-# constructing a Series containing categorical data
+# Constructing a Series containing categorical data
 country_names_series = pd.Series(country_names_array,
                                  index=country_codes_array)
 
@@ -334,11 +354,15 @@ country_names_series
 country_names_series.describe()
 ```
 
-Helpfully, Pandas has adjusted the `.describe()` summary in light of the `values` array of the `country_names_series` containing categorical/string data.
+Helpfully, Pandas has adjusted the `.describe()` summary in light of the
+`values` array of the `country_names_series` containing categorical/string
+data.
 
-We now see summaries of the number values, number of unique values etc, rather than numerical statistics like the mean and standard deviation.
+We now see summaries of the number of values, number of unique values etc,
+rather than numerical statistics like the mean and standard deviation.
 
-The `.value_counts()` method behaves the same as with numerical data, as both numbers and strings can be unique in an array:
+The `.value_counts()` method behaves the same as with numerical data, as both
+numbers and strings can be unique in an array:
 
 ```{python}
 country_names_series.value_counts()
@@ -358,9 +382,9 @@ country_names_series.unique()
 
 ## Pandas DataFrame attributes
 
-Now, remember again our other maxim that *"a Pandas DataFrame is just a *dictionary-like collection of Series"*? 
+Now, remember again our other maxim that *A *Data Frame* is a dictionary-like collection of Series.*
 
-Because of this, we can use all the methods we have seen so far on any Data Frame column. Each column is a Series, and therefore contains a Numpy array as it's `.values` attribute.
+Because of this, we can use all the methods we have seen so far on any Data Frame column. Each column is a Series, and therefore contains a Numpy array as its `.values` attribute.
 
 However, Data Frames have some (useful!) extra methods (including statistical methods) not available for Series.
 
@@ -369,11 +393,12 @@ First, let's import the [HDI/fertility rate data](https://ourworldindata.org/gra
 ```{python}
 # import our dataset
 df = pd.read_csv("data/year_2000_hdi_fert.csv")
-
 df
 ```
 
-Although it is messy (and we did say we wouldn't use it again earlier...oops), we will use `dir()` on this Data Frame, to view all of the available attributes and methods:
+Although it is messy (and we did say we wouldn't use it again earlier...oops),
+we will use `dir()` on this Data Frame, to view all of the available
+attributes and methods:
 
 ```{python}
 # show all available operations on the dataframe
@@ -419,7 +444,11 @@ df.dtypes
 
 The `object` data type means that the column contains either mixed data or string data (in this case string data). The numeric data in this Data Frame is represented as a 64-bit float (`float64`).
 
-Ok, so now we know how much data we have, and what type of data it is. Currently, if we want to access a specific row of the Data Frame (remember, each row here is one country), we will have to navigate the default `RangeIndex`. We did not specify an index when we loaded in the Data Frame, so, as we learned previously, Pandas will automatically supply one:
+Now we know how much data we have, and what type of data it is. Currently, if
+we want to access a specific row of the Data Frame (remember, each row here is
+one country), we will have to navigate the default `RangeIndex`. We did not
+specify an index when we loaded in the Data Frame, so, as we learned
+previously, Pandas will automatically supply one:
 
 ```{python}
 # show the index (currently (basically) 0 to 15)
@@ -451,7 +480,7 @@ df.index
 df.loc[['USA', 'ITA']]
 ```
 
-## Pandas Dataframe Methods
+## Pandas Dataframe methods
 
 The `.sort_values()` method we just used is one of many methods attached to Pandas Data Frames. We saw that many Numpy array methods are inherited by Pandas Series and this principle also applies to Data Frames.
 
@@ -535,7 +564,7 @@ df.sort_index(ascending=False)
 Another useful method, which is very powerful in tandem with label-based indexing, is `.drop()`. This lets use specify using index labels rows which we want to remove from the Data Frame. For instance, if we want to remove the data for Australia we can use:
 
 ```{python}
-df.drop(labels = 'AUS')
+df.drop(labels='AUS')
 ```
 
 If you compare this to the output from the last cell you will see that, as if by magic, the row for `AUS` has disappeared.
@@ -599,11 +628,12 @@ df
 Because this feature (numerical operations performed on each element) is shared across all Pandas Series, and we are using Pandas methods, we can write a function which will compute the z-scores for any column containing numerical data: 
 
 ```{python}
-# define a function to calculate the z-scores for a specific numeric column
-def get_z(df_column):
-    "A function which takes a Data Frame column and returns a series containing the z-score of each element."
-    z_col = (df_column - df_column.mean())/df_column.std()
-    return z_col
+# Define a function to calculate the z-scores for a numeric Series.
+def get_z(in_series):
+    """ Returns a Series containing the z-score of each element of `in_series`.
+    """
+    # Formula for Z-score.
+    return (in_series - in_series.mean()) / in_series.std()
 ```
 
 ```{python}
@@ -616,13 +646,13 @@ Again, each numerical operation that the function performs has been performed on
 Let's add this new standardized data to the Data Frame, and plot it using the now familiar `.plot()` method:
 
 ```{python}
-# add standard scores for HDI
+# Add standard scores for HDI
 df['HDI_z'] = df['Human Development Index']
+df
+```
 
-# show the Data Frame
-display(df)
-
-# plot the standardized variables
+```{python}
+# Plot the standardized variables
 df.plot(kind='scatter',
         x='Population_z',
         y='HDI_z');
@@ -642,6 +672,7 @@ df['Population_z']
 
 ## Summary
 
-On this page we have further explored the idea that Pandas Data Frames, Pandas Series and Numpy arrays have a nested structure.
+On this page we have further explored the idea that Pandas Data Frames, Pandas
+Series and Numpy arrays have a nested structure.
 
-Data Frames are *dictionary-like collections of Series*. Series are a combination of a Numpy array (`.values`) with other attributes (`name` and `index`). As a result, many methods we can use on a Series are inherited from Numpy arrays, and many  Data Frame methods are likewise inherited from the Pandas Series that constitute the Data Frame.
+Data Frames are *dictionary-like collections of Series*. Series are a combination of a Numpy array (`.values`) with other attributes (`name` and `index`). As a result, many methods we can use on a Series are similar to those available from Numpy arrays, and many Data Frame methods are likewise inherited from the Pandas Series that constitute the Data Frame.
