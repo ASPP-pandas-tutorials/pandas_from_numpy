@@ -1051,11 +1051,20 @@ that handles the indexing request.</p>
 <em>accessor method</em> such as <code class="docutils literal notranslate"><span class="pre">loc</span></code> and <code class="docutils literal notranslate"><span class="pre">iloc</span></code>.  In this case, the square bracket
 follows the accessor method name, rather than the object itself.  Thus
 <code class="docutils literal notranslate"><span class="pre">df.iloc[0]</span></code> (see below) is indirect indexing, using the <code class="docutils literal notranslate"><span class="pre">iloc</span></code> accessor.
-Again, this is a detail, but this indirect indexing means it is the
-<code class="docutils literal notranslate"><span class="pre">df.iloc.__getitem__</span></code> method that handles the indexing request.</p>
-<p>In general, in Pandas, the output of direct indexing differs from that of
-indirect indexing with <code class="docutils literal notranslate"><span class="pre">.loc</span></code> or <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>, although the behavior of direct
-indexing tends to be more similar to <code class="docutils literal notranslate"><span class="pre">.loc</span></code> than <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>.</p>
+Again, this is a detail, but indirect indexing with e.g. <code class="docutils literal notranslate"><span class="pre">iloc</span></code> means it is
+the (e.g.) <code class="docutils literal notranslate"><span class="pre">df.iloc.__getitem__</span></code> method that handles the indexing request.</p>
+<p>In general, in Pandas, the behavior of direct indexing can differ from that of
+indirect indexing with <code class="docutils literal notranslate"><span class="pre">.loc</span></code> or <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>, particularly direct indexing of Data
+Frames.  As a general rule, it is wise to prefer indirect indexing with <code class="docutils literal notranslate"><span class="pre">.loc</span></code>
+and <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> unless you are confident about the behavior of direct indexing.</p>
+<p>You’ll notice that we restrict ourselves to using direct indexing on Data
+Frames (not Series), and when we do use direct indexing, we use it in two
+specific situations, for which is it very easy to reason about the results:</p>
+<ul class="simple">
+<li><p>Selection of columns by column name;</p></li>
+<li><p>Selection of rows with Boolean Series.</p></li>
+</ul>
+<p>More on this later.</p>
 </div>
 <p>Remember that a Data Frame is a dictionary-like collection of Series.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">Human</span> <span class="pre">Development</span> <span class="pre">Index</span></code> column is now a Series contained inside the <code class="docutils literal notranslate"><span class="pre">df</span></code>
