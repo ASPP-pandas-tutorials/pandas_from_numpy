@@ -65,7 +65,7 @@
     <link rel="icon" href="_static/pandas_numpy.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="To .loc or .iloc - more on Pandas indexes" href="0_1_to_loc_or_iloc.html" />
+    <link rel="next" title=".loc and .iloc indexing" href="0_1_to_loc_or_iloc.html" />
     <link rel="prev" title="Pandas from Numpy" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -165,7 +165,7 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Pandas from Numpy</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Pandas from Numpy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="0_1_to_loc_or_iloc.html">To <code class="docutils literal notranslate"><span class="pre">.loc</span></code> or <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> - more on Pandas indexes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_1_to_loc_or_iloc.html"><code class="docutils literal notranslate"><span class="pre">.loc</span></code> and <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> indexing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_2_pandas_dataframes_attributes_methods.html">Pandas DataFrames: Attributes and Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_3_constructing_dataframes.html">Let There Be Data : Creating Data Frames</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_4_dealing_with_missing_data_in_pandas.html">Dealing with NaNs</a></li>
@@ -442,7 +442,7 @@
 <p>Pandas is an open-source python library for data manipulation and analysis.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Why is Pandas called Pandas?</p>
+<p><strong>Why is Pandas called Pandas?</strong></p>
 <p>The “Pandas” name is short for “panel data”. The library was named after the
 type of econometrics panel data that it was designed to analyse. <a class="reference external" href="https://en.wikipedia.org/wiki/Panel_data">Panel
 data</a> are longitudinal data where
@@ -994,7 +994,7 @@ two Series had different Indices, and your speculations would likely be
 correct, but we will come onto that soon enough.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Data Frames from parts and from load</p>
+<p><strong>Data Frames from parts and from load</strong></p>
 <p>Before we continue, you notice that we have just built a Data Frame from
 constituent components, that are Numpy arrays.  We will call this our <em>built-
 from-parts</em> Data Frame, to contrast it with the more typical situation, where
@@ -1040,19 +1040,19 @@ Name: Human Development Index, dtype: float64
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Direct and indirect indexing</p>
+<p><strong>Direct and indirect indexing</strong></p>
 <p>We use the term <em>direct indexing</em> to mean indexing without going through an
 accessor.  Direct indexing therefore, is where the opening square bracket
-follows the value, as in: <code class="docutils literal notranslate"><span class="pre">df['Human</span> <span class="pre">Development</span> <span class="pre">Index']</span></code>.  There is no
-accessor method between the value <code class="docutils literal notranslate"><span class="pre">df</span></code> and the opening square bracket.  It is
-a detail for our purposes, but this means it is the <code class="docutils literal notranslate"><span class="pre">df.__getitem__</span></code> method
-that handles the indexing request.</p>
-<p>By contrast, <em>indirect indexing</em> is where we index into the object via an
-<em>accessor method</em> such as <code class="docutils literal notranslate"><span class="pre">loc</span></code> and <code class="docutils literal notranslate"><span class="pre">iloc</span></code>.  In this case, the square bracket
-follows the accessor method name, rather than the object itself.  Thus
-<code class="docutils literal notranslate"><span class="pre">df.iloc[0]</span></code> (see below) is indirect indexing, using the <code class="docutils literal notranslate"><span class="pre">iloc</span></code> accessor.
-Again, this is a detail, but indirect indexing with e.g. <code class="docutils literal notranslate"><span class="pre">iloc</span></code> means it is
-the (e.g.) <code class="docutils literal notranslate"><span class="pre">df.iloc.__getitem__</span></code> method that handles the indexing request.</p>
+follows the Data Frame or Series value, as in: <code class="docutils literal notranslate"><span class="pre">df['Human</span> <span class="pre">Development</span> <span class="pre">Index']</span></code>.  There is no accessor method between the Data Frame value <code class="docutils literal notranslate"><span class="pre">df</span></code> and
+the opening square bracket.  It is a detail for our purposes, but this means
+it is the <code class="docutils literal notranslate"><span class="pre">df.__getitem__</span></code> method that handles the indexing request.</p>
+<p>By contrast, <em>indirect indexing</em> is where we index into the Data Frame or
+Series object via an <em>accessor method</em> such as <code class="docutils literal notranslate"><span class="pre">loc</span></code> and <code class="docutils literal notranslate"><span class="pre">iloc</span></code>.  In this
+case, the square bracket follows the accessor method name, rather than the
+object itself.  Thus <code class="docutils literal notranslate"><span class="pre">df.iloc[0]</span></code> (see below) is indirect indexing, using the
+<code class="docutils literal notranslate"><span class="pre">iloc</span></code> accessor. Again, this is a detail, but indirect indexing with e.g.
+<code class="docutils literal notranslate"><span class="pre">iloc</span></code> means it is the (e.g.) <code class="docutils literal notranslate"><span class="pre">df.iloc.__getitem__</span></code> method that handles the
+indexing request.</p>
 <p>In general, in Pandas, the behavior of direct indexing can differ from that of
 indirect indexing with <code class="docutils literal notranslate"><span class="pre">.loc</span></code> or <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>, particularly direct indexing of Data
 Frames.  As a general rule, it is wise to prefer indirect indexing with <code class="docutils literal notranslate"><span class="pre">.loc</span></code>
@@ -1228,7 +1228,7 @@ Frame.</p>
 </div>
 </section>
 <section id="what-is-a-series-what-is-a-data-frame">
-<h2>What is a Series?  What is a Data Frame?<a class="headerlink" href="#what-is-a-series-what-is-a-data-frame" title="Link to this heading">#</a></h2>
+<span id="what-is-a-series"></span><h2>What is a Series?  What is a Data Frame?<a class="headerlink" href="#what-is-a-series-what-is-a-data-frame" title="Link to this heading">#</a></h2>
 <p>A <em>Series</em> is the association of:</p>
 <ul class="simple">
 <li><p>An array of values (<code class="docutils literal notranslate"><span class="pre">.values</span></code>)</p></li>
@@ -2263,7 +2263,7 @@ to the output from using Pandas <code class="docutils literal notranslate"><span
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">To <code class="docutils literal notranslate"><span class="pre">.loc</span></code> or <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> - more on Pandas indexes</p>
+        <p class="prev-next-title"><code class="docutils literal notranslate"><span class="pre">.loc</span></code> and <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> indexing</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

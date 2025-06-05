@@ -13,9 +13,9 @@ jupyter:
     name: python3
 ---
 
-# To `.loc` or `.iloc` - more on Pandas indexes
+# `.loc` and `.iloc` indexing
 
-From the [previous page](0_0_pandas_intro.Rmd), remember our maxims:
+From the [What is a Series section](what-is-a-series), remember our maxim:
 
 > A *Series* is the association of:
 >
@@ -23,7 +23,12 @@ From the [previous page](0_0_pandas_intro.Rmd), remember our maxims:
 > * A sequence of labels for each value (`.index`)
 > * A name (which can be `None`).
 
-On this page we will examine differences between Data Frame attributes. We will demonstrate that the `name` attribute is optional. The default `name` is `None` and the `name` attribute can be left unspecified in any given Series with minimal consequences. We will show, however, that it is important to specify the `name` attribute as a column name when a Series is part of a Pandas Data Frame. 
+On this page we will examine differences between Data Frame attributes. We
+will demonstrate that the `name` attribute is optional. The default `name` is
+`None` and the `name` attribute can be left unspecified in any given Series
+with minimal consequences. We will show, however, that it is important to
+specify the `name` attribute as a column name when a Series is part of
+a Pandas Data Frame.
 
 In contrast, an `index` is essential - if no `index` is specified then Pandas will create one. However, we will show that it is sensible to replace Pandas' default index with a custom index, to avoid accidental errors when indexing. 
 
@@ -35,7 +40,11 @@ import pandas as pd
 
 ## What's in a `name`?
 
-To consider the difference in importance/default behaviour between the `name` attribute and the `index` attribute, let's again build a Pandas Series "by hand", using numpy arrays. We'll use the [fertility and Human Development Index data once more](https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index).
+To consider the difference in importance/default behaviour between the `name`
+attribute and the `index` attribute, let's again build a Pandas Series from
+component parts, using Numpy arrays. We'll use the [fertility and Human
+Development Index data once
+more](https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index).
 
 First, an array containing the three-letter codes for each country:
 

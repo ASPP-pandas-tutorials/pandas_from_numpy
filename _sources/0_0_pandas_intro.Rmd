@@ -15,7 +15,6 @@ jupyter:
     name: python3
 ---
 
-<!-- #region -->
 # Pandas from Numpy
 
 
@@ -25,17 +24,19 @@ This tutorial will show the fundamental structure of Pandas Data Frames. We will
 
 ## What is Pandas?
 
-Pandas is an open-source python library for data manipulation and analysis. 
+Pandas is an open-source python library for data manipulation and analysis.
 
-```{note}
-Why is Pandas called Pandas?
+::: {note}
+
+**Why is Pandas called Pandas?**
 
 The “Pandas” name is short for “panel data”. The library was named after the
 type of econometrics panel data that it was designed to analyse. [Panel
 data](https://en.wikipedia.org/wiki/Panel_data) are longitudinal data where
 the same observational units (e.g. countries) are observed over multiple
 instances across time.
-```
+
+:::
 
 The Pandas Data Frame is the most important feature of the Pandas library. Data Frames, as the name suggests, contain not only the data for an analysis, but a toolkit of methods for cleaning, plotting and interacting with the data in flexible ways. For more information about Pandas see [this page](https://Pandas.pydata.org/about/).
 
@@ -43,7 +44,6 @@ The standard way to make a new Data Frame is to ask Pandas to read a data file
 (like a `.csv` file) into a Data Frame. Before we do that however, we will
 build our own Data Frame from scratch, beginning with the fundamental building
 block for Data Frames: Numpy arrays.
-<!-- #endregion -->
 
 ```{python}
 # import the libraries needed for this page
@@ -306,9 +306,9 @@ Perhaps your agile mind is racing ahead, wondering what Pandas would do if the
 two Series had different Indices, and your speculations would likely be
 correct, but we will come onto that soon enough.
 
-<!-- #region language="note" -->
-```{note}
-Data Frames from parts and from load
+::: {note}
+
+**Data Frames from parts and from load**
 
 Before we continue, you notice that we have just built a Data Frame from
 constituent components, that are Numpy arrays.  We will call this our *built-
@@ -320,8 +320,8 @@ Frames — *built-from-load* Data Frames.
 By the way, the terms *built-from-parts* and *built-from-load* are our own,
 for the purposes of this page.  Pandas makes no distinction at all between
 *built-from-parts* and *built-from-load* Data Frames.
-```
-<!-- #endregion -->
+
+:::
 
 ## Selecting columns from a Data Frame
 
@@ -333,23 +333,25 @@ hdi_from_df = df['Human Development Index']
 hdi_from_df
 ```
 
-<!-- #region language="note" -->
-```{note}
-Direct and indirect indexing
+
+::: {note}
+
+**Direct and indirect indexing**
 
 We use the term *direct indexing* to mean indexing without going through an
 accessor.  Direct indexing therefore, is where the opening square bracket
-follows the value, as in: `df['Human Development Index']`.  There is no
-accessor method between the value `df` and the opening square bracket.  It is
-a detail for our purposes, but this means it is the `df.__getitem__` method
-that handles the indexing request.
+follows the Data Frame or Series value, as in: `df['Human Development
+Index']`.  There is no accessor method between the Data Frame value `df` and
+the opening square bracket.  It is a detail for our purposes, but this means
+it is the `df.__getitem__` method that handles the indexing request.
 
-By contrast, *indirect indexing* is where we index into the object via an
-*accessor method* such as `loc` and `iloc`.  In this case, the square bracket
-follows the accessor method name, rather than the object itself.  Thus
-`df.iloc[0]` (see below) is indirect indexing, using the `iloc` accessor.
-Again, this is a detail, but indirect indexing with e.g. `iloc` means it is
-the (e.g.) `df.iloc.__getitem__` method that handles the indexing request.
+By contrast, *indirect indexing* is where we index into the Data Frame or
+Series object via an *accessor method* such as `loc` and `iloc`.  In this
+case, the square bracket follows the accessor method name, rather than the
+object itself.  Thus `df.iloc[0]` (see below) is indirect indexing, using the
+`iloc` accessor. Again, this is a detail, but indirect indexing with e.g.
+`iloc` means it is the (e.g.) `df.iloc.__getitem__` method that handles the
+indexing request.
 
 In general, in Pandas, the behavior of direct indexing can differ from that of
 indirect indexing with `.loc` or `.iloc`, particularly direct indexing of Data
@@ -364,8 +366,8 @@ specific situations, for which is it very easy to reason about the results:
 * Selection of rows with Boolean Series.
 
 More on this later.
-```
-<!-- #endregion -->
+
+:::
 
 Remember that a Data Frame is a dictionary-like collection of Series.
 
@@ -437,6 +439,7 @@ Frame.
 df.loc[['KOR', 'USA']]
 ```
 
+(what-is-a-series)=
 ## What is a Series?  What is a Data Frame?
 
 A *Series* is the association of:
