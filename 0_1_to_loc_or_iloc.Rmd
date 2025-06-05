@@ -43,8 +43,7 @@ import pandas as pd
 To consider the difference in importance/default behaviour between the `name`
 attribute and the `index` attribute, let's again build a Pandas Series from
 component parts, using Numpy arrays. We'll use the [fertility and Human
-Development Index data once
-more](https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index).
+Development Index data once more](data/data_notes).
 
 First, an array containing the three-letter codes for each country:
 

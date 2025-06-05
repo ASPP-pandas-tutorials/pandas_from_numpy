@@ -84,7 +84,7 @@ latex:
     targetname: odsti_textbook.tex
 
 bibtex_bibfiles:
-  - course_refs.bib
+  - pandas_pages.bib
 
 # HTML redirection
 # Pages linked, but then renamed.

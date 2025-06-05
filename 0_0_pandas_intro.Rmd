@@ -96,7 +96,9 @@ hdis_array = np.array([0.896, 0.668, 0.89,
 hdis_array
 ```
 
-By the way, these data are real; they come from statistics compiled by the United Nations. For simplicity, we are only looking at data from the year 2000.  Again, see the [Our World in Data page](https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index) for more detail.
+By the way, these data are real; they come from statistics compiled by the
+United Nations. For simplicity, we are only looking at data from the year
+2000.  See the [datasets and licenses page](data/data_notes) for more detail.
 
 Let's say we also have the fertility rate for each country.  The fertility
 rate is the average number of children born to to each woman. In due course,
