@@ -339,17 +339,18 @@ Direct and indirect indexing
 
 We use the term *direct indexing* to mean indexing without going through an
 accessor.  Direct indexing therefore, is where the opening square bracket
-follows the value, as in: `df['Human Development Index']`.  There is no
-accessor method between the value `df` and the opening square bracket.  It is
-a detail for our purposes, but this means it is the `df.__getitem__` method
-that handles the indexing request.
+follows the Data Frame or Series value, as in: `df['Human Development
+Index']`.  There is no accessor method between the Data Frame value `df` and
+the opening square bracket.  It is a detail for our purposes, but this means
+it is the `df.__getitem__` method that handles the indexing request.
 
-By contrast, *indirect indexing* is where we index into the object via an
-*accessor method* such as `loc` and `iloc`.  In this case, the square bracket
-follows the accessor method name, rather than the object itself.  Thus
-`df.iloc[0]` (see below) is indirect indexing, using the `iloc` accessor.
-Again, this is a detail, but indirect indexing with e.g. `iloc` means it is
-the (e.g.) `df.iloc.__getitem__` method that handles the indexing request.
+By contrast, *indirect indexing* is where we index into the Data Frame or
+Series object via an *accessor method* such as `loc` and `iloc`.  In this
+case, the square bracket follows the accessor method name, rather than the
+object itself.  Thus `df.iloc[0]` (see below) is indirect indexing, using the
+`iloc` accessor. Again, this is a detail, but indirect indexing with e.g.
+`iloc` means it is the (e.g.) `df.iloc.__getitem__` method that handles the
+indexing request.
 
 In general, in Pandas, the behavior of direct indexing can differ from that of
 indirect indexing with `.loc` or `.iloc`, particularly direct indexing of Data
