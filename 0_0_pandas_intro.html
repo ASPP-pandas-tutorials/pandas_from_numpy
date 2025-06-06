@@ -1013,12 +1013,12 @@ for the Data Frame is the same as the Index for the each and both Series:</p>
 <p>Perhaps your agile mind is racing ahead, wondering what Pandas would do if the
 two Series had different Indices.</p>
 <p>As an experiment, imagine now we have another Series that has a slightly
-different Index.  Let’s say for example, that we have taking the original
+different Index.  Let’s say for example, that we have taken the original
 <code class="docutils literal notranslate"><span class="pre">fert_rate_series</span></code>, and sorted it in reverse alphabetical order by Index
 value.  Here is the Pandas code to do that:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sort fert_rate_series in reverse alphabetical order by code.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sort fert_rate_series in reverse alphabetical order by Code.</span>
 <span class="n">fert_rate_reversed</span> <span class="o">=</span> <span class="n">fert_rate_series</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">fert_rate_reversed</span>
 </pre></div>
@@ -1064,7 +1064,7 @@ dtype: float64
 </div>
 </div>
 <p>Why do you think you see this outcome?</p>
-<p>To test your theory, consider a new Data Frame where we specify reversed
+<p>To test your theory, consider a new Data Frame where we specify the reversed
 Series first in the dictionary:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1075,7 +1075,7 @@ Series first in the dictionary:</p>
 </div>
 </div>
 </div>
-<p>Yes, the columns will be in the opposite order, <code class="docutils literal notranslate"><span class="pre">Fertility</span> <span class="pre">Rate</span></code> first, then <code class="docutils literal notranslate"><span class="pre">Human</span> <span class="pre">Development</span> <span class="pre">Index</span></code> second.  But what order will the rows be in (what will the Index order be?</p>
+<p>Yes, the columns will be in the opposite order, <code class="docutils literal notranslate"><span class="pre">Fertility</span> <span class="pre">Rate</span></code> first, then <code class="docutils literal notranslate"><span class="pre">Human</span> <span class="pre">Development</span> <span class="pre">Index</span></code> second.  But what order will the rows be in (what will the Index order be)?</p>
 <p>Reflect, then try running the cell below after removing the <code class="docutils literal notranslate"><span class="pre">#</span> </code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1123,7 +1123,7 @@ dtype: float64
 </div>
 </div>
 </div>
-<p>What does your new theory predict about the new <code class="docutils literal notranslate"><span class="pre">df4</span></code>.  Consider, then have a look.</p>
+<p>What does your new theory predict about the new <code class="docutils literal notranslate"><span class="pre">df4</span></code>?  Consider, then have a look.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df4</span>
@@ -1189,7 +1189,7 @@ Pandas uses to match the Indices of Series, when creating Data Frames?</p>
 <p>Here’s our hypothesis of the algorithm:</p>
 <ul class="simple">
 <li><p>First check if the Series Indices are the same.  If so, use the Index of any
-Series (probably the first).</p></li>
+Series.</p></li>
 <li><p>If they are not the same, first sort all Series by their Index values, and
 use the resulting sorted Index.</p></li>
 </ul>
