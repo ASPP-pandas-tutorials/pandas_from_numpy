@@ -317,12 +317,12 @@ Perhaps your agile mind is racing ahead, wondering what Pandas would do if the
 two Series had different Indices.
 
 As an experiment, imagine now we have another Series that has a slightly
-different Index.  Let's say for example, that we have taking the original
+different Index.  Let's say for example, that we have taken the original
 `fert_rate_series`, and sorted it in reverse alphabetical order by Index
 value.  Here is the Pandas code to do that:
 
 ```{python}
-# Sort fert_rate_series in reverse alphabetical order by code.
+# Sort fert_rate_series in reverse alphabetical order by Code.
 fert_rate_reversed = fert_rate_series.sort_index(ascending=False)
 fert_rate_reversed
 ```
@@ -343,7 +343,7 @@ What would you expect to see if you display `df2`?  Have a think, then uncomment
 
 Why do you think you see this outcome?
 
-To test your theory, consider a new Data Frame where we specify reversed
+To test your theory, consider a new Data Frame where we specify the reversed
 Series first in the dictionary:
 
 ```{python}
@@ -352,7 +352,7 @@ df3 = pd.DataFrame({'Fertility Rate': fert_rate_reversed,
                     'Human Development Index': hdi_series})
 ```
 
-Yes, the columns will be in the opposite order, `Fertility Rate` first, then `Human Development Index` second.  But what order will the rows be in (what will the Index order be?
+Yes, the columns will be in the opposite order, `Fertility Rate` first, then `Human Development Index` second.  But what order will the rows be in (what will the Index order be)?
 
 Reflect, then try running the cell below after removing the `# `:
 
@@ -375,7 +375,7 @@ df4 = pd.DataFrame({'Fertility Rate': fert_rate_reversed,
                     'Human Development Index': hdi_reversed})
 ```
 
-What does your new theory predict about the new `df4`.  Consider, then have a look.
+What does your new theory predict about the new `df4`?  Consider, then have a look.
 
 ```{python}
 # df4
@@ -413,7 +413,7 @@ Pandas uses to match the Indices of Series, when creating Data Frames?
 Here's our hypothesis of the algorithm:
 
 * First check if the Series Indices are the same.  If so, use the Index of any
-  Series (probably the first).
+  Series.
 * If they are not the same, first sort all Series by their Index values, and
   use the resulting sorted Index.
 
