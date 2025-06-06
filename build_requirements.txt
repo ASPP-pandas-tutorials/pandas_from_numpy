@@ -4,7 +4,7 @@
 # certifi
 # Also: https://stackoverflow.com/a/79235523
 # export SSL_CERT_FILE=$(python3 -m certifi)
-sphinx-book-theme@git+https://github.com/matthew-brett/sphinx-book-theme@jupyterlite-links
+sphinx-book-theme@git+https://github.com/executeablebooks/sphinx-book-theme@56874cb
 jupyter-book
 # To allow static build / upload
 ghp-import
