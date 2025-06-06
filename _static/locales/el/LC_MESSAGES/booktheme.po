@@ -8,59 +8,35 @@ msgstr ""
 "Language: el\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "Toggle navigation"
-msgstr "Εναλλαγή πλοήγησης"
-
-msgid "Download this page"
-msgstr "Λήψη αυτής της σελίδας"
-
 msgid "By the"
 msgstr "Από το"
-
-msgid "Print to PDF"
-msgstr "Εκτύπωση σε PDF"
-
-msgid "open issue"
-msgstr "ανοιχτό ζήτημα"
-
-msgid "repository"
-msgstr "αποθήκη"
-
-msgid "Edit this page"
-msgstr "Επεξεργαστείτε αυτήν τη σελίδα"
-
-msgid "Copyright"
-msgstr "Πνευματική ιδιοκτησία"
-
-msgid "previous page"
-msgstr "προηγούμενη σελίδα"
 
 msgid "By"
 msgstr "Με"
 
-msgid "Last updated on"
-msgstr "Τελευταία ενημέρωση στις"
+msgid "Contents"
+msgstr "Περιεχόμενα"
+
+msgid "Copyright"
+msgstr "Πνευματική ιδιοκτησία"
+
+msgid "Download notebook file"
+msgstr "Λήψη αρχείου σημειωματάριου"
 
 msgid "Download source file"
 msgstr "Λήψη αρχείου προέλευσης"
 
-msgid "Sphinx Book Theme"
-msgstr "Θέμα βιβλίου Sphinx"
+msgid "Download this page"
+msgstr "Λήψη αυτής της σελίδας"
 
-msgid "Source repository"
-msgstr "Αποθήκη πηγής"
+msgid "Edit this page"
+msgstr "Επεξεργαστείτε αυτήν τη σελίδα"
 
 msgid "Fullscreen mode"
 msgstr "ΛΕΙΤΟΥΡΓΙΑ ΠΛΗΡΟΥΣ ΟΘΟΝΗΣ"
 
-msgid "Contents"
-msgstr "Περιεχόμενα"
-
-msgid "next page"
-msgstr "επόμενη σελίδα"
-
-msgid "Download notebook file"
-msgstr "Λήψη αρχείου σημειωματάριου"
+msgid "Last updated on"
+msgstr "Τελευταία ενημέρωση στις"
 
 msgid "Launch"
 msgstr "Εκτόξευση"
@@ -68,8 +44,32 @@ msgstr "Εκτόξευση"
 msgid "Open an issue"
 msgstr "Ανοίξτε ένα ζήτημα"
 
-msgid "suggest edit"
-msgstr "προτείνω επεξεργασία"
+msgid "Print to PDF"
+msgstr "Εκτύπωση σε PDF"
+
+msgid "Source repository"
+msgstr "Αποθήκη πηγής"
+
+msgid "Sphinx Book Theme"
+msgstr "Θέμα βιβλίου Sphinx"
 
 msgid "Theme by the"
 msgstr "Θέμα από το"
+
+msgid "Toggle navigation"
+msgstr "Εναλλαγή πλοήγησης"
+
+msgid "next page"
+msgstr "επόμενη σελίδα"
+
+msgid "open issue"
+msgstr "ανοιχτό ζήτημα"
+
+msgid "previous page"
+msgstr "προηγούμενη σελίδα"
+
+msgid "repository"
+msgstr "αποθήκη"
+
+msgid "suggest edit"
+msgstr "προτείνω επεξεργασία"

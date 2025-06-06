@@ -16,33 +16,30 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
-  <!-- So that users can add custom icons -->
-  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
@@ -69,7 +66,6 @@
     <link rel="prev" title="Pandas from Numpy" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -85,8 +81,19 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <dialog id="pst-search-dialog">
-    
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -94,6 +101,7 @@
   <input type="search"
          class="form-control"
          name="q"
+         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -101,8 +109,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
+</form></div>
+  </div>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -118,8 +126,7 @@
       
       
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -149,17 +156,21 @@
     
     
     <img src="_static/pandas_numpy.jpg" class="logo__image only-light" alt="Pandas from Numpy - Home"/>
-    <img src="_static/pandas_numpy.jpg" class="logo__image only-dark pst-js-only" alt="Pandas from Numpy - Home"/>
+    <script>document.write(`<img src="_static/pandas_numpy.jpg" class="logo__image only-dark" alt="Pandas from Numpy - Home"/>`);</script>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Pandas from Numpy</span></p>
@@ -179,14 +190,9 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
   </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -378,16 +384,24 @@
 
 
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
 
 
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
+  </button>
+`);
+</script>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -420,7 +434,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indirect-indexing-into-data-frames">Indirect indexing into Data Frames</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-series-what-is-a-data-frame">What is a Series?  What is a Data Frame?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-more-columns-to-the-data-frame">Adding more columns to the Data Frame</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-our-built-from-parts-data-frame-to-a-built-from-load-data-frame">Comparing our built-from-parts Data Frame to a built-from-load Data Frame</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-the-built-and-loaded-data-frames">Comparing the built and loaded Data Frames</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convenient-plotting-with-data-frames">Convenient Plotting with Data Frames</a></li>
 </ul>
             </nav>
@@ -994,19 +1008,6 @@ the Index for the two Series.</p>
 <p>Perhaps your agile mind is racing ahead, wondering what Pandas would do if the
 two Series had different Indices, and your speculations would likely be
 correct, but we will come onto that soon enough.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><strong>Data Frames from parts and from load</strong></p>
-<p>Before we continue, you notice that we have just built a Data Frame from
-constituent components, that are Numpy arrays.  We will call this our <em>built-
-from-parts</em> Data Frame, to contrast it with the more typical situation, where
-we ask Pandas to <em>load</em> or <em>import</em> data from a data file, and, internally,
-fill a new Data Frame from the loaded data.  We will call these kinds of Data
-Frames — <em>built-from-load</em> Data Frames.</p>
-<p>By the way, the terms <em>built-from-parts</em> and <em>built-from-load</em> are our own,
-for the purposes of this page.  Pandas makes no distinction at all between
-<em>built-from-parts</em> and <em>built-from-load</em> Data Frames.</p>
-</div>
 </section>
 <section id="selecting-columns-from-a-data-frame">
 <h2>Selecting columns from a Data Frame<a class="headerlink" href="#selecting-columns-from-a-data-frame" title="Link to this heading">#</a></h2>
@@ -1243,11 +1244,9 @@ Frame.</p>
 </section>
 <section id="adding-more-columns-to-the-data-frame">
 <h2>Adding more columns to the Data Frame<a class="headerlink" href="#adding-more-columns-to-the-data-frame" title="Link to this heading">#</a></h2>
-<p>The dataset we have used for our <em>built-from-parts</em> Data Frame contains more
-than two columns. Let’s use the same component building process to add
-additional data into our Data Frame. We then compare the built-from-parts Data
-Frame to a Data Frame Pandas generates by importing data from a file
-— a <em>built-from-load</em> Data Frame.</p>
+<p>We have more data to add to our Data Frame. Let’s add those data as new
+columns, and then compare the result with the Data Frame we get from loading
+a data file containing the same data.</p>
 <p>First, we make another Numpy array, containing the full name of each country.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1707,8 +1706,8 @@ resplendent glory:</p>
 </div></div></div>
 </div>
 </section>
-<section id="comparing-our-built-from-parts-data-frame-to-a-built-from-load-data-frame">
-<h2>Comparing our built-from-parts Data Frame to a built-from-load Data Frame<a class="headerlink" href="#comparing-our-built-from-parts-data-frame-to-a-built-from-load-data-frame" title="Link to this heading">#</a></h2>
+<section id="comparing-the-built-and-loaded-data-frames">
+<h2>Comparing the built and loaded Data Frames<a class="headerlink" href="#comparing-the-built-and-loaded-data-frames" title="Link to this heading">#</a></h2>
 <p>This page built a Data Frame from scratch from Numpy components, to deepen our
 understanding of what a Data Frame is made from.</p>
 <p>The cell below shows a more typical method of making a Data Frame, that is
@@ -1873,14 +1872,18 @@ the <code class="docutils literal notranslate"><span class="pre">pd.read_csv()</
 </table>
 </div></div></div>
 </div>
-<p>You’ll notice that currently, the index of the Data Frame we just imported is
-a sequence of numbers. This is the Index that Pandas creates by default,
-unless you give it some other information on what the Index should be.  We’ll
-look more at this default Index on the next page.</p>
-<p>We can use the <code class="docutils literal notranslate"><span class="pre">.set_index()</span></code> method to take the column containing the
-three-letter country codes and set it to be the row labels of the Data Frame
-(the Index).  We will look more at Pandas methods in later pages.</p>
-<p>Here we tell <code class="docutils literal notranslate"><span class="pre">.set_index()</span></code> what column name we want to use as the <code class="docutils literal notranslate"><span class="pre">.index</span></code> - in this case we use the <code class="docutils literal notranslate"><span class="pre">'Code'</span></code> column, containing the country codes:</p>
+<p>You’ll notice that currently, the index of the Data Frame we just loaded is
+a sequence of numbers. This is the Index that Pandas creates by default, unless
+you give it some other information on what the Index should be.  We’ll look
+more at this default Index on the <a class="reference internal" href="0_1_to_loc_or_iloc.html"><span class="doc std std-doc">next page</span></a>.</p>
+<p>We can use the <code class="docutils literal notranslate"><span class="pre">.set_index()</span></code> method of the Data Frame to take the column
+containing the three-letter country codes and set it to be the row labels of
+the Data Frame (the Index).  We will look more at Pandas methods in later
+pages.</p>
+<p>Here we tell <code class="docutils literal notranslate"><span class="pre">.set_index()</span></code> the column name to use as the <code class="docutils literal notranslate"><span class="pre">.index</span></code></p>
+<ul class="simple">
+<li><p>in this case we use the <code class="docutils literal notranslate"><span class="pre">'Code'</span></code> column, containing the country codes:</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set the new Data Frame to have values from the &quot;Code&quot; column as labels.</span>
@@ -2031,7 +2034,8 @@ three-letter country codes and set it to be the row labels of the Data Frame
 </table>
 </div></div></div>
 </div>
-<p>Let’s compare this to our <em>built-from-parts</em> Data Frame:</p>
+<p>Let’s compare this loaded Data Frame to the Data Frame we built from Numpy
+components.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The Data Frame we built from its component parts.</span>
@@ -2174,10 +2178,12 @@ three-letter country codes and set it to be the row labels of the Data Frame
 </table>
 </div></div></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">loaded_labeled_df</span></code> Data Frame was automatically built by Pandas, when
-reading in a <code class="docutils literal notranslate"><span class="pre">.csv</span></code> file using <code class="docutils literal notranslate"><span class="pre">pd.read_csv()</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">loaded_labeled_df</span></code> Data Frame was built automatically by Pandas, when
+loading in a <code class="docutils literal notranslate"><span class="pre">.csv</span></code> file using <code class="docutils literal notranslate"><span class="pre">pd.read_csv()</span></code>.</p>
 <p>We built the <code class="docutils literal notranslate"><span class="pre">df</span></code> Data Frame from Numpy arrays and strings.</p>
-<p>Both Data Frames contain the same data, and the same labels.  In fact, we can use the <code class="docutils literal notranslate"><span class="pre">.equals</span></code> method of Data Frames to ask Pandas whether it agrees the Data Frames are equivalent:</p>
+<p>Both Data Frames contain the same data, and the same labels.  In fact, we can
+use the <code class="docutils literal notranslate"><span class="pre">.equals</span></code> method of Data Frames to ask Pandas whether it agrees the
+Data Frames are equivalent:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">loaded_labeled_df</span><span class="p">)</span>
@@ -2191,7 +2197,12 @@ reading in a <code class="docutils literal notranslate"><span class="pre">.csv</
 </div>
 </div>
 <p>They are equivalent.</p>
-<p><strong>Question: in fact these data frames are not exactly the same.  If you look very carefully at the notebook output for the two data frames, you may be able to spot the difference.  Pandas <code class="docutils literal notranslate"><span class="pre">.equals</span></code> does not care about this difference, but let’s imagine we did.  Try to work out how to change the <code class="docutils literal notranslate"><span class="pre">df</span></code> Data Frame to give <em>exactly</em> the same display as the <code class="docutils literal notranslate"><span class="pre">loaded_labeled_df</span></code>.</strong></p>
+<p><strong>Question: these Data Frames are <em>equivalent</em> but they are not exactly the
+same.  If you look very carefully at the notebook output for the two data
+frames, you may be able to spot the difference.  Pandas <code class="docutils literal notranslate"><span class="pre">.equals</span></code> does not care
+about this difference, but let’s imagine we did.  Try to work out how to change
+the <code class="docutils literal notranslate"><span class="pre">df</span></code> Data Frame to give <em>exactly</em> the same display as the
+<code class="docutils literal notranslate"><span class="pre">loaded_labeled_df</span></code>.</strong></p>
 </section>
 <section id="convenient-plotting-with-data-frames">
 <h2>Convenient Plotting with Data Frames<a class="headerlink" href="#convenient-plotting-with-data-frames" title="Link to this heading">#</a></h2>
@@ -2276,8 +2287,7 @@ to the output from using Pandas <code class="docutils literal notranslate"><span
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -2295,7 +2305,7 @@ to the output from using Pandas <code class="docutils literal notranslate"><span
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indirect-indexing-into-data-frames">Indirect indexing into Data Frames</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-series-what-is-a-data-frame">What is a Series?  What is a Data Frame?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-more-columns-to-the-data-frame">Adding more columns to the Data Frame</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-our-built-from-parts-data-frame-to-a-built-from-load-data-frame">Comparing our built-from-parts Data Frame to a built-from-load Data Frame</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-the-built-and-loaded-data-frames">Comparing the built and loaded Data Frames</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convenient-plotting-with-data-frames">Convenient Plotting with Data Frames</a></li>
 </ul>
   </nav></div>
@@ -2345,8 +2355,8 @@ By Peter Rush, Matthew Brett
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

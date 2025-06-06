@@ -308,22 +308,6 @@ Perhaps your agile mind is racing ahead, wondering what Pandas would do if the
 two Series had different Indices, and your speculations would likely be
 correct, but we will come onto that soon enough.
 
-::: {note}
-
-**Data Frames from parts and from load**
-
-Before we continue, you notice that we have just built a Data Frame from
-constituent components, that are Numpy arrays.  We will call this our *built-
-from-parts* Data Frame, to contrast it with the more typical situation, where
-we ask Pandas to *load* or *import* data from a data file, and, internally,
-fill a new Data Frame from the loaded data.  We will call these kinds of Data
-Frames — *built-from-load* Data Frames.
-
-By the way, the terms *built-from-parts* and *built-from-load* are our own,
-for the purposes of this page.  Pandas makes no distinction at all between
-*built-from-parts* and *built-from-load* Data Frames.
-
-:::
 
 ## Selecting columns from a Data Frame
 
@@ -459,11 +443,9 @@ For a Data Frame, the `.index` has labels corresponding the *rows*.
 
 ## Adding more columns to the Data Frame
 
-The dataset we have used for our *built-from-parts* Data Frame contains more
-than two columns. Let's use the same component building process to add
-additional data into our Data Frame. We then compare the built-from-parts Data
-Frame to a Data Frame Pandas generates by importing data from a file
-— a *built-from-load* Data Frame.
+We have more data to add to our Data Frame. Let's add those data as new
+columns, and then compare the result with the Data Frame we get from loading
+a data file containing the same data.
 
 First, we make another Numpy array, containing the full name of each country.
 
@@ -571,7 +553,7 @@ resplendent glory:
 df
 ```
 
-## Comparing our built-from-parts Data Frame to a built-from-load Data Frame
+## Comparing the built and loaded Data Frames
 
 This page built a Data Frame from scratch from Numpy components, to deepen our
 understanding of what a Data Frame is made from.
@@ -586,16 +568,18 @@ loaded_df = pd.read_csv("data/year_2000_hdi_fert.csv")
 loaded_df
 ```
 
-You'll notice that currently, the index of the Data Frame we just imported is
-a sequence of numbers. This is the Index that Pandas creates by default,
-unless you give it some other information on what the Index should be.  We'll
-look more at this default Index on the next page.
+You'll notice that currently, the index of the Data Frame we just loaded is
+a sequence of numbers. This is the Index that Pandas creates by default, unless
+you give it some other information on what the Index should be.  We'll look
+more at this default Index on the [next page](0_1_to_loc_or_iloc).
 
-We can use the `.set_index()` method to take the column containing the
-three-letter country codes and set it to be the row labels of the Data Frame
-(the Index).  We will look more at Pandas methods in later pages.
+We can use the `.set_index()` method of the Data Frame to take the column
+containing the three-letter country codes and set it to be the row labels of
+the Data Frame (the Index).  We will look more at Pandas methods in later
+pages.
 
-Here we tell `.set_index()` what column name we want to use as the `.index` - in this case we use the `'Code'` column, containing the country codes:
+Here we tell `.set_index()` the column name to use as the `.index`
+- in this case we use the `'Code'` column, containing the country codes:
 
 ```{python}
 # Set the new Data Frame to have values from the "Code" column as labels.
@@ -603,19 +587,22 @@ loaded_labeled_df = loaded_df.set_index('Code')
 loaded_labeled_df
 ```
 
-Let's compare this to our *built-from-parts* Data Frame:
+Let's compare this loaded Data Frame to the Data Frame we built from Numpy
+components.
 
 ```{python}
 # The Data Frame we built from its component parts.
 df
 ```
 
-The `loaded_labeled_df` Data Frame was automatically built by Pandas, when
-reading in a `.csv` file using `pd.read_csv()`.
+The `loaded_labeled_df` Data Frame was built automatically by Pandas, when
+loading in a `.csv` file using `pd.read_csv()`.
 
 We built the `df` Data Frame from Numpy arrays and strings.
 
-Both Data Frames contain the same data, and the same labels.  In fact, we can use the `.equals` method of Data Frames to ask Pandas whether it agrees the Data Frames are equivalent:
+Both Data Frames contain the same data, and the same labels.  In fact, we can
+use the `.equals` method of Data Frames to ask Pandas whether it agrees the
+Data Frames are equivalent:
 
 ```{python}
 df.equals(loaded_labeled_df)
@@ -623,7 +610,12 @@ df.equals(loaded_labeled_df)
 
 They are equivalent.
 
-**Question: in fact these data frames are not exactly the same.  If you look very carefully at the notebook output for the two data frames, you may be able to spot the difference.  Pandas `.equals` does not care about this difference, but let's imagine we did.  Try to work out how to change the `df` Data Frame to give *exactly* the same display as the `loaded_labeled_df`.**
+**Question: these Data Frames are *equivalent* but they are not exactly the
+same.  If you look very carefully at the notebook output for the two data
+frames, you may be able to spot the difference.  Pandas `.equals` does not care
+about this difference, but let's imagine we did.  Try to work out how to change
+the `df` Data Frame to give *exactly* the same display as the
+`loaded_labeled_df`.**
 
 ## Convenient Plotting with Data Frames
 
