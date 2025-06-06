@@ -17,7 +17,6 @@ jupyter:
 
 # Pandas from Numpy
 
-
 By Matthew Brett and Peter Rush
 
 This tutorial will show the fundamental structure of Pandas Data Frames. We will look at the components that constitute a Data Frame - for instance, numpy arrays - in order to gain a deeper understanding of the raw ingredients that more advanced Pandas methods and functions operate on.
@@ -50,6 +49,7 @@ block for Data Frames: Numpy arrays.
 import numpy as np
 import pandas as pd
 ```
+
 
 ## Numpy arrays
 
@@ -300,14 +300,126 @@ df.index
 ```
 
 Pandas created the Data Frame Index by looking at the Index of each of the
-Series from which we built the Data Frame.  In this case, the Series had the
-same values in their Indices, so the Index for the Data Frame is the same as
-the Index for the two Series.
+Series from which we built the Data Frame.
+
+In this case, the Series had the same values in their Indices, so the Index
+for the Data Frame is the same as the Index for the each and both Series:
+
+
+<!-- #region -->
+```{exercise-start}
+:label: differing-indices
+:class: dropdown
+```
+<!-- #endregion -->
 
 Perhaps your agile mind is racing ahead, wondering what Pandas would do if the
-two Series had different Indices, and your speculations would likely be
-correct, but we will come onto that soon enough.
+two Series had different Indices.
 
+As an experiment, imagine now we have another Series that has a slightly
+different Index.  Let's say for example, that we have taking the original
+`fert_rate_series`, and sorted it in reverse alphabetical order by Index
+value.  Here is the Pandas code to do that:
+
+```{python}
+# Sort fert_rate_series in reverse alphabetical order by code.
+fert_rate_reversed = fert_rate_series.sort_index(ascending=False)
+fert_rate_reversed
+```
+
+Now imagine we create a new Data Frame with the original `hdi` Series and `fert_rate_reversed`:
+
+```{python}
+# Creating a new DataFrame from a dictionary, with one Series reversed.
+df2 = pd.DataFrame({'Human Development Index': hdi_series,
+                    'Fertility Rate': fert_rate_reversed})
+```
+
+What would you expect to see if you display `df2`?  Have a think, then uncomment the cell below to display the value of `df2`:
+
+```{python}
+# df2
+```
+
+Why do you think you see this outcome?
+
+To test your theory, consider a new Data Frame where we specify reversed
+Series first in the dictionary:
+
+```{python}
+# New DataFrame from a dictionary, reversed Series first.
+df3 = pd.DataFrame({'Fertility Rate': fert_rate_reversed,
+                    'Human Development Index': hdi_series})
+```
+
+Yes, the columns will be in the opposite order, `Fertility Rate` first, then `Human Development Index` second.  But what order will the rows be in (what will the Index order be?
+
+Reflect, then try running the cell below after removing the `# `:
+
+```{python}
+# df3
+```
+
+Was your theory right?  If not, what is your new theory?
+
+Now consider this:
+
+```{python}
+# New DataFrame from a dictionary, reversed Series first.
+hdi_reversed = hdi_series.sort_index(ascending=False)
+hdi_reversed
+```
+
+```{python}
+df4 = pd.DataFrame({'Fertility Rate': fert_rate_reversed,
+                    'Human Development Index': hdi_reversed})
+```
+
+What does your new theory predict about the new `df4`.  Consider, then have a look.
+
+```{python}
+# df4
+```
+
+Maybe your theory does fit, maybe it does not.  If it does not, what is your
+new theory?  To test further, consider what would happen here:
+
+```{python}
+# Scramble the row order a bit.
+row_order = [0, 1, 2] + [14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3]
+fert_scrambled = fert_rate_series.iloc[row_order]
+fert_scrambled
+```
+
+```{python}
+df5 = pd.DataFrame({'Fertility Rate': fert_scrambled,
+                    'Human Development Index': hdi_reversed})
+```
+
+```{python}
+# df5
+```
+
+After these examples, what is your final working theory about the algorithm
+Pandas uses to match the Indices of Series, when creating Data Frames?
+
+<!-- #region -->
+```{exercise-end}
+```
+
+```{solution} differing-indices
+:class: dropdown
+
+Here's our hypothesis of the algorithm:
+
+* First check if the Series Indices are the same.  If so, use the Index of any
+  Series (probably the first).
+* If they are not the same, first sort all Series by their Index values, and
+  use the resulting sorted Index.
+
+What was your hypothesis?  If it was different from ours, why do you think yours fits the results better?  What tests would you do to test your theory against our theory?
+```
+<!-- #endregion -->
 
 ## Selecting columns from a Data Frame
 
@@ -318,7 +430,6 @@ We can get the `Human Development Index` (`hdi`) Series by name, by using *direc
 hdi_from_df = df['Human Development Index']
 hdi_from_df
 ```
-
 
 ::: {note}
 
@@ -610,12 +721,63 @@ df.equals(loaded_labeled_df)
 
 They are equivalent.
 
-**Question: these Data Frames are *equivalent* but they are not exactly the
-same.  If you look very carefully at the notebook output for the two data
-frames, you may be able to spot the difference.  Pandas `.equals` does not care
-about this difference, but let's imagine we did.  Try to work out how to change
-the `df` Data Frame to give *exactly* the same display as the
-`loaded_labeled_df`.**
+<!-- #region -->
+```{exercise-start}
+:label: index-in-display
+:class: dropdown
+```
+<!-- #endregion -->
+
+In fact the `df` and `loaded_labeled_df` data frames are not exactly the same.
+If you look very carefully at the notebook output for the two data frames, you
+may be able to spot the difference.  Pandas `.equals` does not care about this
+difference, but let's imagine we did.  Try to work out how to change the `df`
+Data Frame to give *exactly* the same display as we see for
+`loaded_labeled_df`.
+
+<!-- #region -->
+```{exercise-end}
+```
+<!-- #endregion -->
+
+<!-- #region -->
+```{solution-start} index-in-display
+:class: dropdown
+```
+<!-- #endregion -->
+
+You probably spotted that the `loaded_labeled_df` displays a `name` for the Index.  You can also see this displaying the `.index` on its own:
+
+```{python}
+loaded_labeled_df.index
+```
+
+compared to:
+
+```{python}
+df.index
+```
+
+We see that the `.name` attribute differs for the two Indices; to make the Data Frame displays match, we should set the `.name` on the `df` Data Frame.
+
+The simplest way to do that is:
+
+```{python}
+# Make a copy of the `df` Data Frame. This step is unnecessary to solving
+# the problem, it is just to be neat.
+df_copy = df.copy()
+```
+
+```{python}
+# Set the Index name.
+df_copy.index.name = 'Code'
+df_copy
+```
+
+<!-- #region -->
+```{solution-end}
+```
+<!-- #endregion -->
 
 ## Convenient Plotting with Data Frames
 

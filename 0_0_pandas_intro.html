@@ -34,6 +34,7 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -1002,12 +1003,199 @@ tables <em>Data Frames</em>.</p>
 </div>
 </div>
 <p>Pandas created the Data Frame Index by looking at the Index of each of the
-Series from which we built the Data Frame.  In this case, the Series had the
-same values in their Indices, so the Index for the Data Frame is the same as
-the Index for the two Series.</p>
+Series from which we built the Data Frame.</p>
+<p>In this case, the Series had the same values in their Indices, so the Index
+for the Data Frame is the same as the Index for the each and both Series:</p>
+<div class="exercise dropdown admonition" id="differing-indices">
+
+<p class="admonition-title"><span class="caption-number">Exercise 1 </span></p>
+<section id="exercise-content">
 <p>Perhaps your agile mind is racing ahead, wondering what Pandas would do if the
-two Series had different Indices, and your speculations would likely be
-correct, but we will come onto that soon enough.</p>
+two Series had different Indices.</p>
+<p>As an experiment, imagine now we have another Series that has a slightly
+different Index.  Let’s say for example, that we have taking the original
+<code class="docutils literal notranslate"><span class="pre">fert_rate_series</span></code>, and sorted it in reverse alphabetical order by Index
+value.  Here is the Pandas code to do that:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sort fert_rate_series in reverse alphabetical order by code.</span>
+<span class="n">fert_rate_reversed</span> <span class="o">=</span> <span class="n">fert_rate_series</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">fert_rate_reversed</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>USA    2.030
+RUS    1.190
+MEX    2.714
+KOR    1.467
+JPN    1.346
+ITA    1.249
+IND    3.350
+GBR    1.641
+FRA    1.876
+ESP    1.210
+DEU    1.386
+CHN    1.628
+CAN    1.510
+BRA    2.247
+AUS    1.764
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now imagine we create a new Data Frame with the original <code class="docutils literal notranslate"><span class="pre">hdi</span></code> Series and <code class="docutils literal notranslate"><span class="pre">fert_rate_reversed</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating a new DataFrame from a dictionary, with one Series reversed.</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">:</span> <span class="n">hdi_series</span><span class="p">,</span>
+                    <span class="s1">&#39;Fertility Rate&#39;</span><span class="p">:</span> <span class="n">fert_rate_reversed</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>What would you expect to see if you display <code class="docutils literal notranslate"><span class="pre">df2</span></code>?  Have a think, then uncomment the cell below to display the value of <code class="docutils literal notranslate"><span class="pre">df2</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Why do you think you see this outcome?</p>
+<p>To test your theory, consider a new Data Frame where we specify reversed
+Series first in the dictionary:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># New DataFrame from a dictionary, reversed Series first.</span>
+<span class="n">df3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">:</span> <span class="n">fert_rate_reversed</span><span class="p">,</span>
+                    <span class="s1">&#39;Human Development Index&#39;</span><span class="p">:</span> <span class="n">hdi_series</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Yes, the columns will be in the opposite order, <code class="docutils literal notranslate"><span class="pre">Fertility</span> <span class="pre">Rate</span></code> first, then <code class="docutils literal notranslate"><span class="pre">Human</span> <span class="pre">Development</span> <span class="pre">Index</span></code> second.  But what order will the rows be in (what will the Index order be?</p>
+<p>Reflect, then try running the cell below after removing the <code class="docutils literal notranslate"><span class="pre">#</span> </code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df3</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Was your theory right?  If not, what is your new theory?</p>
+<p>Now consider this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># New DataFrame from a dictionary, reversed Series first.</span>
+<span class="n">hdi_reversed</span> <span class="o">=</span> <span class="n">hdi_series</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">hdi_reversed</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>USA    0.894
+RUS    0.733
+MEX    0.709
+KOR    0.824
+JPN    0.883
+ITA    0.842
+IND    0.490
+GBR    0.863
+FRA    0.844
+ESP    0.828
+DEU    0.890
+CHN    0.586
+CAN    0.890
+BRA    0.668
+AUS    0.896
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df4</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">:</span> <span class="n">fert_rate_reversed</span><span class="p">,</span>
+                    <span class="s1">&#39;Human Development Index&#39;</span><span class="p">:</span> <span class="n">hdi_reversed</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>What does your new theory predict about the new <code class="docutils literal notranslate"><span class="pre">df4</span></code>.  Consider, then have a look.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df4</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Maybe your theory does fit, maybe it does not.  If it does not, what is your
+new theory?  To test further, consider what would happen here:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Scramble the row order a bit.</span>
+<span class="n">row_order</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">14</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">fert_scrambled</span> <span class="o">=</span> <span class="n">fert_rate_series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">row_order</span><span class="p">]</span>
+<span class="n">fert_scrambled</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUS    1.764
+BRA    2.247
+CAN    1.510
+USA    2.030
+RUS    1.190
+MEX    2.714
+KOR    1.467
+JPN    1.346
+ITA    1.249
+IND    3.350
+GBR    1.641
+FRA    1.876
+ESP    1.210
+DEU    1.386
+CHN    1.628
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">:</span> <span class="n">fert_scrambled</span><span class="p">,</span>
+                    <span class="s1">&#39;Human Development Index&#39;</span><span class="p">:</span> <span class="n">hdi_reversed</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df5</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>After these examples, what is your final working theory about the algorithm
+Pandas uses to match the Indices of Series, when creating Data Frames?</p>
+</section>
+</div>
+<div class="solution dropdown admonition" id="0_0_pandas_intro-solution-1">
+
+<p class="admonition-title">Solution to<a class="reference internal" href="#differing-indices"> Exercise 1</a></p>
+<section id="solution-content">
+<p>Here’s our hypothesis of the algorithm:</p>
+<ul class="simple">
+<li><p>First check if the Series Indices are the same.  If so, use the Index of any
+Series (probably the first).</p></li>
+<li><p>If they are not the same, first sort all Series by their Index values, and
+use the resulting sorted Index.</p></li>
+</ul>
+<p>What was your hypothesis?  If it was different from ours, why do you think yours fits the results better?  What tests would you do to test your theory against our theory?</p>
+</section>
+</div>
 </section>
 <section id="selecting-columns-from-a-data-frame">
 <h2>Selecting columns from a Data Frame<a class="headerlink" href="#selecting-columns-from-a-data-frame" title="Link to this heading">#</a></h2>
@@ -2197,12 +2385,215 @@ Data Frames are equivalent:</p>
 </div>
 </div>
 <p>They are equivalent.</p>
-<p><strong>Question: these Data Frames are <em>equivalent</em> but they are not exactly the
-same.  If you look very carefully at the notebook output for the two data
-frames, you may be able to spot the difference.  Pandas <code class="docutils literal notranslate"><span class="pre">.equals</span></code> does not care
-about this difference, but let’s imagine we did.  Try to work out how to change
-the <code class="docutils literal notranslate"><span class="pre">df</span></code> Data Frame to give <em>exactly</em> the same display as the
-<code class="docutils literal notranslate"><span class="pre">loaded_labeled_df</span></code>.</strong></p>
+<div class="exercise dropdown admonition" id="index-in-display">
+
+<p class="admonition-title"><span class="caption-number">Exercise 2 </span></p>
+<section id="exercise-content">
+<p>In fact the <code class="docutils literal notranslate"><span class="pre">df</span></code> and <code class="docutils literal notranslate"><span class="pre">loaded_labeled_df</span></code> data frames are not exactly the same.
+If you look very carefully at the notebook output for the two data frames, you
+may be able to spot the difference.  Pandas <code class="docutils literal notranslate"><span class="pre">.equals</span></code> does not care about this
+difference, but let’s imagine we did.  Try to work out how to change the <code class="docutils literal notranslate"><span class="pre">df</span></code>
+Data Frame to give <em>exactly</em> the same display as we see for
+<code class="docutils literal notranslate"><span class="pre">loaded_labeled_df</span></code>.</p>
+</section>
+</div>
+<div class="solution dropdown admonition" id="0_0_pandas_intro-solution-3">
+
+<p class="admonition-title">Solution to<a class="reference internal" href="#index-in-display"> Exercise 2</a></p>
+<section id="solution-content">
+<p>You probably spotted that the <code class="docutils literal notranslate"><span class="pre">loaded_labeled_df</span></code> displays a <code class="docutils literal notranslate"><span class="pre">name</span></code> for the Index.  You can also see this displaying the <code class="docutils literal notranslate"><span class="pre">.index</span></code> on its own:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">loaded_labeled_df</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;AUS&#39;, &#39;BRA&#39;, &#39;CAN&#39;, &#39;CHN&#39;, &#39;DEU&#39;, &#39;ESP&#39;, &#39;FRA&#39;, &#39;GBR&#39;, &#39;IND&#39;, &#39;ITA&#39;,
+       &#39;JPN&#39;, &#39;KOR&#39;, &#39;MEX&#39;, &#39;RUS&#39;, &#39;USA&#39;],
+      dtype=&#39;object&#39;, name=&#39;Code&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>compared to:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;AUS&#39;, &#39;BRA&#39;, &#39;CAN&#39;, &#39;CHN&#39;, &#39;DEU&#39;, &#39;ESP&#39;, &#39;FRA&#39;, &#39;GBR&#39;, &#39;IND&#39;, &#39;ITA&#39;,
+       &#39;JPN&#39;, &#39;KOR&#39;, &#39;MEX&#39;, &#39;RUS&#39;, &#39;USA&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We see that the <code class="docutils literal notranslate"><span class="pre">.name</span></code> attribute differs for the two Indices; to make the Data Frame displays match, we should set the <code class="docutils literal notranslate"><span class="pre">.name</span></code> on the <code class="docutils literal notranslate"><span class="pre">df</span></code> Data Frame.</p>
+<p>The simplest way to do that is:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make a copy of the `df` Data Frame. This step is unnecessary to solving</span>
+<span class="c1"># the problem, it is just to be neat.</span>
+<span class="n">df_copy</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set the Index name.</span>
+<span class="n">df_copy</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Code&#39;</span>
+<span class="n">df_copy</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>19.1324</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>174.0182</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1269.5811</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>81.7972</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>41.0197</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>59.4837</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>0.863</td>
+      <td>1.641</td>
+      <td>59.0573</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1057.9227</td>
+      <td>India</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>0.842</td>
+      <td>1.249</td>
+      <td>57.2722</td>
+      <td>Italy</td>
+    </tr>
+    <tr>
+      <th>JPN</th>
+      <td>0.883</td>
+      <td>1.346</td>
+      <td>127.0278</td>
+      <td>Japan</td>
+    </tr>
+    <tr>
+      <th>KOR</th>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>46.7666</td>
+      <td>South Korea</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>98.6255</td>
+      <td>Mexico</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>146.7177</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>281.4841</td>
+      <td>United States</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</div>
 </section>
 <section id="convenient-plotting-with-data-frames">
 <h2>Convenient Plotting with Data Frames<a class="headerlink" href="#convenient-plotting-with-data-frames" title="Link to this heading">#</a></h2>
