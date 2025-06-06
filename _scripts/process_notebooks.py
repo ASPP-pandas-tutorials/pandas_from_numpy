@@ -2,6 +2,10 @@
 """ Process notebooks
 
 * Replace local kernel with Pyodide kernel in metadata.
+* Filter:
+    * Note and admonition markers.
+    * Exercise markers.
+    * Solution blocks.
 * Write notebooks to output directory.
 * Write JSON jupyterlite file.
 """
@@ -20,6 +24,16 @@ _JL_JSON_FMT = r'''\
 }}
 '''
 
+def filter_nb(nb):
+    """ Strip various some JupyterBook markup
+
+    * Note and admonition markers.
+    * Exercise markers.
+    * Solution blocks.
+    """
+    return nb
+
+
 def process_dir(input_dir, output_dir, in_nb_suffix='.Rmd',
                 kernel_name='python',
                 kernel_dname='Python (Pyodide)',
@@ -28,6 +42,7 @@ def process_dir(input_dir, output_dir, in_nb_suffix='.Rmd',
     output_dir.mkdir(exist_ok=True, parents=True)
     for path in input_dir.glob('*' + in_nb_suffix):
         nb = jupytext.read(path)
+        nb = filter_nb(nb)
         nb['metadata']['kernelspec'] = {
             'name': kernel_name,
             'display_name': kernel_dname}
