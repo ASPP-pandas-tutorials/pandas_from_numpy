@@ -24,25 +24,53 @@ _JL_JSON_FMT = r'''\
 }}
 '''
 
-def filter_nb(nb):
-    """ Strip various some JupyterBook markup
+def proc_admonitions(nb_txt):
+    return nb_txt
+
+
+def proc_ex_sol(nb_txt):
+    return nb_txt
+
+
+def load_process_nb(nb_path, fmt='myst'):
+    """ Load and process notebook
+
+    Deal with:
 
     * Note and admonition markers.
     * Exercise markers.
     * Solution blocks.
+
+    Parameters
+    ----------
+    nb_path : file-like
+        Path to notebook
+    fmt : str, optional
+        Format of notebook (for Jupytext)
+
+    Returns
+    -------
+    nb : dict
+        Notebook as loaded and parsed.
     """
-    return nb
+    nb_path = Path(nb_path)
+    nb_text = nb_path.read_text()
+    p1 = proc_admonitions(nb_text)
+    p2 = proc_ex_sol(p1)
+    fmt = jupytext.formats.long_form_one_format(fmt)
+    fmt.update({"extension": nb_path.suffix})
+    return jupytext.reads(p2, fmt=fmt)
 
 
 def process_dir(input_dir, output_dir, in_nb_suffix='.Rmd',
+                nb_fmt='myst',
                 kernel_name='python',
                 kernel_dname='Python (Pyodide)',
                 out_nb_suffix='.ipynb'
                ):
     output_dir.mkdir(exist_ok=True, parents=True)
     for path in input_dir.glob('*' + in_nb_suffix):
-        nb = jupytext.read(path)
-        nb = filter_nb(nb)
+        nb = load_process_nb(path, nb_fmt)
         nb['metadata']['kernelspec'] = {
             'name': kernel_name,
             'display_name': kernel_dname}
