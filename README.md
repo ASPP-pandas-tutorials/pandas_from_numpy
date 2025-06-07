@@ -24,8 +24,9 @@ post-process the pages with a script `_scripts/process_notebooks.py` to load
 the pages as text notebooks, and write out `.ipynb` files with modified markup
 that looks better in a Jupyter interface.  Some of the authoring advice here
 is to allow that process to work smoothly, because the `process_notebooks.py`
-file reads the input Myst-MD format notebooks using `jupytext` before
-converting to Jupyter `.ipynb` files.
+file reads the input Myst-MD format notebooks using
+[Jupytext](https://jupytext.readthedocs.io) before converting to Jupyter
+`.ipynb` files.
 
 ## Notes and admonitions
 
@@ -35,11 +36,13 @@ this](https://jupyterbook.org/en/stable/content/content-blocks.html#markdown-fri
 So, for example, use:
 
 ~~~
+<!-- #region -->
 ``` {note}
 
 My note
 
 ```
+<!-- #endregion -->
 ~~~
 
 instead of:
@@ -55,6 +58,8 @@ My note
 This allows the notebook post-processing script in
 `_scripts/process_notebooks.py` to read these notebooks correctly.  It appears
 that `jupytext.read("my_nb.Rmd", fmt="myst")` does not honor the second form.
+
+Note the `region` and `endregion` markup; this makes more sure that Jupytext does not confuse the `{note}` with a code block.
 
 For the same reason, do not use:
 
