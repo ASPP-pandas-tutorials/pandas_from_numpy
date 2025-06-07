@@ -1,14 +1,114 @@
-# ASPP_pandas_tutorials
+---
+orphan: true
+---
 
-## Pandas from Numpy
+# ASPP Pandas tutorials
 
-This is a short tutorial series teaching the Pandas data science library,
-starting from the Numpy array library, on which Pandas is based.
+This repository houses the Pandas tutorials originally written for the
+Advanced Scientific Programming in Python course](https://aspp.school).
 
-## Many sections are interactive
+This file is for those writing or editing these pages.
 
-You can interact with many of the sections in this textbook, with the
-"Interact" button at the top of the page.  This will take you to a free online
-service that allows you to execute the code in the section, to generate the
-tables and figures.  We encourage you to play with these interactive sections
-by changing the code and running it.
+The repository uses [JupyterBook](https://jupyterbook.org) to make
+nice-looking HTML pages from the component `.md` text files and `.Rmd` (R
+Markdown) notebooks.
+
+## A note on processing
+
+The pages are designed both as pages for pretty HTML output, and to be used as interactive notebooks in e.g. JupyterLite.
+
+There is some markup that we need for the pretty HTML output that looks ugly
+in a Jupyter interface such as
+[JupyterLite](https://jupyterlite.readthedocs.io).  Accordingly, we
+post-process the pages with a script `_scripts/process_notebooks.py` to load
+the pages as text notebooks, and write out `.ipynb` files with modified markup
+that looks better in a Jupyter interface.  Some of the authoring advice here
+is to allow that process to work smoothly, because the `process_notebooks.py`
+file reads the input Myst-MD format notebooks using `jupytext` before
+converting to Jupyter `.ipynb` files.
+
+## Notes and admonitions
+
+Stick to standard Myst-MD syntax.  Don't use extensions like using `:::` for
+`<div>` blocks, although [JupyterBook allows
+this](https://jupyterbook.org/en/stable/content/content-blocks.html#markdown-friendly-directives-with).
+So, for example, use:
+
+~~~
+``` {note}
+
+My note
+
+```
+~~~
+
+instead of:
+
+~~~
+::: {note}
+
+My note
+
+:::
+~~~
+
+This allows the notebook post-processing script in
+`_scripts/process_notebooks.py` to read these notebooks correctly.  It appears
+that `jupytext.read("my_nb.Rmd", fmt="myst")` does not honor the second form.
+
+For the same reason, do not use:
+
+~~~
+``` {admonition} A custom title
+
+My admonition
+
+```
+~~~
+
+as `jupytext` does not read these correctly as separate blocks.
+
+## Exercises and solutions
+
+We use [sphinx-exercise](https://ebp-sphinx-exercise.readthedocs.io) for the exercises and solutions.
+
+Mark exercises and solution with [gated
+markers](https://ebp-sphinx-exercise.readthedocs.io/en/latest/syntax.html#alternative-gated-syntax),
+like this:
+
+~~~
+<!-- #region -->
+```{exercise-start}
+:label: my-exercise-label
+:class: dropdown
+```
+<!-- #endregion -->
+
+My exercise.
+
+<!-- #region -->
+```{exercise-end}
+```
+<!-- #endregion -->
+
+<!-- #region -->
+```{solution-start} my-exercise-label
+:class: dropdown
+```
+<!-- #endregion -->
+
+My solution.
+
+<!-- #region -->
+```{solution-end}
+```
+<!-- #endregion -->
+~~~
+
+The region markers are to prevent Jupytext getting confused as to whether these should be code cells.
+
+The gated markers (of form `solution-start` and `solution-end` etc) allow you
+to embed code cells in the exercise or solution, because this allows code
+cells to be at the top level of the notebook, where Jupyter needs them to be.
+
+See <
