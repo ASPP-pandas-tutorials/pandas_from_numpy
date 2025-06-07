@@ -16,4 +16,4 @@ import process_notebooks as pn
 def test_process():
     out_nb = pn.load_process_nb(EG_NB_PATH)
     cells = out_nb['cells']
-    assert len(cells) == 24
+    assert len(cells) == 16
