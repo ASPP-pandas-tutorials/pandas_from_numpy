@@ -78,10 +78,8 @@ C
 They are equivalent.
 
 ::: {exercise-start}
-
-:label: the-first-exercise
+:label: a-first-exercise
 :class: dropdown
-
 :::
 
 In fact the `df` and `loaded_labeled_df` data frames are not exactly the same.
@@ -94,8 +92,9 @@ Data Frame to give *exactly* the same display as we see for
 ::: {exercise-end}
 :::
 
-::: {solution-start} the-first-exercise
+::: {solution-start} a-first-exercise
 :class: dropdown
+
 :::
 
 You probably spotted that the `loaded_labeled_df` displays a `name` for the Index.  You can also see this displaying the `.index` on its own:

@@ -12,6 +12,7 @@
 
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 from pathlib import Path
+import re
 
 import jupytext
 
@@ -24,12 +25,60 @@ _JL_JSON_FMT = r'''\
 }}
 '''
 
-def proc_admonitions(nb_txt):
-    return nb_txt
+def proc_admonitions(nb_path):
+    # Run through panflute filter
+    # Filter detects notes, admonitions, drops level, adds beginning and
+    # end text.
+    # Filter replace exercise start and end markers with text.
+    return nb
 
 
-def proc_ex_sol(nb_txt):
-    return nb_txt
+_EX_SOL_MARKER = re.compile(
+    r'''
+    ^\s*(?:```+|:::+|~~~+)
+    \{\s*
+    (?P<ex_sol>exercise|solution)-
+    (?P<st_end>start|end)
+    \s*\}\n
+    (?P<attrs>\s*:\S+: \s* \S+\s*\n)*
+    \n*
+    \s*(?:```+|:::+|~~~+)$
+    ''',
+    flags=re.VERBOSE)
+
+
+class ParseError(ValueError):
+    """ Error parsing notebook
+    """
+
+
+def proc_ex_sol(nb, nb_path):
+    state = 'outside'
+    for cell in nb.cells:
+        if cell['cell_type'] != 'markdown':
+            continue
+        src = cell['source']
+        if (m := _EX_SOL_MARKER.match(src)):
+            ex_sol, st_end, _ = m.groups()
+            if ex_sol not in ('exercise', 'solution'):
+                raise ParseError(f'Unexpected ex_sol "{st_end}"')
+            if st_end not in ('start', 'end'):
+                raise ParseError(f'Unexpected st_end "{st_end}"')
+            if st_end == 'end':
+                if state != ex_sol:
+                    raise ParseError(
+                        f'{ex_sol} end marker in "{state}" block: {src}')
+                state = 'outside'
+                cell['source'] =f'**End of {ex_sol}**'
+            else:  # start
+                if state != 'outside':
+                    raise ParseError(
+                        f'Can only start {ex_sol} from "outside" block')
+                state = ex_sol
+                cell['source'] = f'**Start of {ex_sol}**'
+            print(f'{src} in state "{state}"')
+    1/0
+    return nb
 
 
 def load_process_nb(nb_path, fmt='myst'):
@@ -54,12 +103,9 @@ def load_process_nb(nb_path, fmt='myst'):
         Notebook as loaded and parsed.
     """
     nb_path = Path(nb_path)
-    nb_text = nb_path.read_text()
-    p1 = proc_admonitions(nb_text)
-    p2 = proc_ex_sol(p1)
-    fmt = jupytext.formats.long_form_one_format(fmt)
-    fmt.update({"extension": nb_path.suffix})
-    return jupytext.reads(p2, fmt=fmt)
+    nb = jupytext.read(nb_path, fmt=fmt)
+    nb2 = proc_admonitions(nb, nb_path)
+    return proc_ex_sol(nb2, nb_path)
 
 
 def process_dir(input_dir, output_dir, in_nb_suffix='.Rmd',

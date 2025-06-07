@@ -6,7 +6,7 @@ from pathlib import Path
 
 HERE = Path(__file__).parent
 THERE = HERE.parent
-EG_NB_PATH = HERE / 'eg.Rmd'
+EG_NB_PATH = HERE / 'eg2.Rmd'
 
 sys.path.append(str(THERE))
 
