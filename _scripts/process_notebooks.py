@@ -29,22 +29,38 @@ _JL_JSON_FMT = r'''\
 _EX_SOL_MARKER = re.compile(
     r'''
     (?P<newlines>\n*)
-    \s*(?:```+|:::+|~~~+)\s*
+    \s*(```+|:::+|~~~+)\s*
     \{\s*
     (?P<ex_sol>exercise|solution)-
     (?P<st_end>start|end)
-    \s*\}\n
+    \s*\}
+    \s*
+    (?P<suffix>\S+)?\s*
+    \n
     (?P<attrs>\s*:\S+: \s* \S+\s*\n)*
     \n*
-    \s*(?:```+|:::+|~~~+)\s*
+    \s*(\2)\s*
     \n
     ''',
     flags=re.VERBOSE)
 
 
+_SOL_MARKED = re.compile(
+    r'''
+    \n?
+    <!--\sstart-solution\s-->\n
+    .*?
+    <!--\send-solution\s-->\n?
+    ''',
+    flags=re.VERBOSE | re.MULTILINE | re.DOTALL)
+
+
 def _replace_markers(m):
-    return (f"{m['newlines']}**{m['st_end'].capitalize()} "
-            f"of {m['ex_sol']}**\n\n")
+    st_end = m['st_end']
+    if m['ex_sol'] == 'exercise':
+        return (f"{m['newlines']}**{st_end.capitalize()} "
+                f"of exercise**\n\n")
+    return f'\n<!-- {st_end}-solution -->\n'
 
 
 def process_notes(nb_text):
@@ -74,9 +90,10 @@ def load_process_nb(nb_path, fmt='myst'):
     """
     nb_path = Path(nb_path)
     nb_text = nb_path.read_text()
-    nb_text = _EX_SOL_MARKER.sub(_replace_markers, nb_text)
-    nb_text = process_notes(nb_text)
-    return jupytext.reads(nb_text,
+    nbt1 = _EX_SOL_MARKER.sub(_replace_markers, nb_text)
+    nbt2 = _SOL_MARKED.sub('\n**See page for solution**\n\n', nbt1)
+    nbt3 = process_notes(nbt2)
+    return jupytext.reads(nbt3,
                           fmt={'format_name': 'myst',
                                'extension': nb_path.suffix})
 
