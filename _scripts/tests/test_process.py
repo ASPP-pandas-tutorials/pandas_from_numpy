@@ -4,6 +4,10 @@
 import sys
 from pathlib import Path
 
+import jupytext
+
+import pytest
+
 HERE = Path(__file__).parent
 THERE = HERE.parent
 EG1_NB_PATH = HERE / 'eg.Rmd'
@@ -14,23 +18,20 @@ sys.path.append(str(THERE))
 import process_notebooks as pn
 
 
-def test_process_eg1():
-    out_nb = pn.load_process_nb(EG1_NB_PATH)
-    cells = out_nb['cells']
-    assert len(cells) == 16
-    assert '**Start of exercise**' in cells[-6]['source'].splitlines()
-    assert '**End of exercise**' in cells[-4]['source'].splitlines()
-    assert '**See page for solution**' in cells[-3]['source'].splitlines()
+def nb2rmd(nb, fmt='myst', ext='.Rmd'):
+    return jupytext.writes(nb, fmt)
 
 
-def test_process_eg2():
-    out_nb = pn.load_process_nb(EG2_NB_PATH)
-    cells = out_nb['cells']
-    assert len(cells) == 10
-    ex_cell_lines = cells[-3]['source'].splitlines()
-    assert '**Start of exercise**' in ex_cell_lines
-    assert '**End of exercise**' in ex_cell_lines
-    assert '**See page for solution**' in cells[-2]['source'].splitlines()
+@pytest.mark.parametrize('nb_path', (EG1_NB_PATH, EG2_NB_PATH))
+def test_process_nbs(nb_path):
+    out_nb = pn.load_process_nb(nb_path)
+    out_txt = nb2rmd(out_nb)
+    out_lines = out_txt.splitlines()
+    assert out_lines.count('**Start of exercise**') == 1
+    assert out_lines.count('**End of exercise**') == 1
+    assert out_lines.count('**See page for solution**') == 1
+    # A bit of solution text, should not be there.
+    assert 'You probably spotted that' not in out_txt
 
 
 def test_admonition_finding():
