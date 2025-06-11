@@ -143,7 +143,7 @@ def process_notes(nb_text):
         if not m:
             raise ValueError(f"Cannot get match from {lines[first]}")
         ad_type, ad_title = m['ad_type'], m['ad_title']
-        suffix = '' if ad_title is None else f': {ad_title}'
+        suffix = f': {ad_title}' if ad_title else ''
         lines[first] = f"**Start of {ad_type}{suffix}**"
         lines[last] = f"**End of {ad_type}**"
     return '\n'.join(lines)

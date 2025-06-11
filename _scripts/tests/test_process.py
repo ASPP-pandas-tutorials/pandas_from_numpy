@@ -30,10 +30,20 @@ def test_process_nbs(nb_path):
     assert out_lines.count('**Start of exercise**') == 1
     assert out_lines.count('**End of exercise**') == 1
     assert out_lines.count('**See page for solution**') == 1
-    # A bit of solution text, should not be there.
+    # A bit of solution text, should not be there after processing.
     assert 'You probably spotted that' not in out_txt
+    # Admonitions
+    assert out_lines.count('**Start of note**') == 1
+    assert out_lines.count('**End of note**') == 1
+    assert out_lines.count('**Start of admonition: My title**') == 1
+    assert out_lines.count('**End of admonition**') == 1
 
 
-def test_admonition_finding():
-    nb_text = EG2_NB_PATH.read_text()
-    assert pn.get_admonition_lines(nb_text) == [(24, 34), (126, 130)]
+@pytest.mark.parametrize('nb_path', (EG1_NB_PATH, EG2_NB_PATH))
+def test_admonition_finding(nb_path):
+    nb_text = nb_path.read_text()
+    nb_lines = nb_text.splitlines()
+    ad_lines = pn.get_admonition_lines(nb_text)
+    for first, last in ad_lines:
+        assert pn._ADM_HEADER.match(nb_lines[first])
+        assert pn._END_DIV_RE.match(nb_lines[last])
