@@ -13,6 +13,7 @@
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 from pathlib import Path
 import re
+from urllib.parse import quote as urlquote
 
 import docutils.core as duc
 import docutils.nodes as dun
@@ -136,7 +137,7 @@ _ADM_HEADER = re.compile(
     ''', flags=re.VERBOSE)
 
 
-def process_notes(nb_text):
+def process_admonitions(nb_text):
     lines = nb_text.splitlines()
     for first, last in get_admonition_lines(nb_text):
         m = _ADM_HEADER.match(lines[first])
@@ -149,7 +150,7 @@ def process_notes(nb_text):
     return '\n'.join(lines)
 
 
-def load_process_nb(nb_path, fmt='myst'):
+def load_process_nb(nb_path, fmt='myst', url=None):
     """ Load and process notebook
 
     Deal with:
@@ -164,17 +165,21 @@ def load_process_nb(nb_path, fmt='myst'):
         Path to notebook
     fmt : str, optional
         Format of notebook (for Jupytext)
+    url : str, optional
+        URL for output page.
 
     Returns
     -------
     nb : dict
         Notebook as loaded and parsed.
     """
+    link_txt = 'corresponding page'
+    page_link = f'[{link_txt}]({url})' if url else link_txt
     nb_path = Path(nb_path)
     nb_text = nb_path.read_text()
     nbt1 = _EX_SOL_MARKER.sub(_replace_markers, nb_text)
-    nbt2 = _SOL_MARKED.sub('\n**See page for solution**\n\n', nbt1)
-    nbt3 = process_notes(nbt2)
+    nbt2 = _SOL_MARKED.sub(f'\n**See the {page_link} for solution**\n\n', nbt1)
+    nbt3 = process_admonitions(nbt2)
     return jupytext.reads(nbt3,
                           fmt={'format_name': 'myst',
                                'extension': nb_path.suffix})
@@ -188,7 +193,10 @@ def process_dir(input_dir, output_dir, in_nb_suffix='.Rmd',
                ):
     output_dir.mkdir(exist_ok=True, parents=True)
     for path in input_dir.glob('*' + in_nb_suffix):
-        nb = load_process_nb(path, nb_fmt)
+        nb_url = urlquote(path.relative_to(input_dir)
+                          .with_suffix('.html')
+                          .as_posix())
+        nb = load_process_nb(path, nb_fmt, nb_url)
         nb['metadata']['kernelspec'] = {
             'name': kernel_name,
             'display_name': kernel_dname}
