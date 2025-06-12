@@ -30,10 +30,20 @@ file reads the input Myst-MD format notebooks using
 
 ## Notes and admonitions
 
-Stick to standard Myst-MD syntax.  Don't use extensions like using `:::` for
-`<div>` blocks, although [JupyterBook allows
-this](https://jupyterbook.org/en/stable/content/content-blocks.html#markdown-friendly-directives-with).
-So, for example, use:
+Use `:::` for
+`<div>` blocks ([JupyterBook allows
+this](https://jupyterbook.org/en/stable/content/content-blocks.html#markdown-friendly-directives-with)):
+So, for example, prefer:
+
+~~~
+::: {note}
+
+My note
+
+:::
+~~~
+
+to the more standard Myst markup of:
 
 ~~~
 <!-- #region -->
@@ -45,69 +55,49 @@ My note
 <!-- #endregion -->
 ~~~
 
-instead of:
+Note the `region` and `endregion` markup in the second form; this makes more
+sure that Jupytext does not confuse the `{note}` with a code block.  One of
+the advantages of the `:::` markup is that you don't need these `#region`
+demarcations.
+
+For the same reason, prefer the `:::` form for notes, warnings and admonitions.  For example, prefer:
 
 ~~~
-::: {note}
+::: {admonition} A custom title
 
-My note
+My admonition
 
 :::
 ~~~
 
-This allows the notebook post-processing script in
-`_scripts/process_notebooks.py` to read these notebooks correctly.  It appears
-that `jupytext.read("my_nb.Rmd", fmt="myst")` does not honor the second form.
-
-Note the `region` and `endregion` markup; this makes more sure that Jupytext does not confuse the `{note}` with a code block.
-
-For the same reason, do not use:
-
-~~~
-``` {admonition} A custom title
-
-My admonition
-
-```
-~~~
-
-as `jupytext` does not read these correctly as separate blocks.
 
 ## Exercises and solutions
 
 We use [sphinx-exercise](https://ebp-sphinx-exercise.readthedocs.io) for the exercises and solutions.
 
-Mark exercises and solution with [gated
+Mark *all* exercises and solution with [gated
 markers](https://ebp-sphinx-exercise.readthedocs.io/en/latest/syntax.html#alternative-gated-syntax),
 like this:
 
 ~~~
-<!-- #region -->
-```{exercise-start}
+::: {exercise-start}
 :label: my-exercise-label
 :class: dropdown
-```
-<!-- #endregion -->
+:::
 
 My exercise.
 
-<!-- #region -->
-```{exercise-end}
-```
-<!-- #endregion -->
+::: {exercise-end}
+:::
 
-<!-- #region -->
-```{solution-start} my-exercise-label
+::: {solution-start} my-exercise-label
 :class: dropdown
-```
-<!-- #endregion -->
+:::
 
 My solution.
 
-<!-- #region -->
-```{solution-end}
-```
-<!-- #endregion -->
+::: {solution-end}
+:::
 ~~~
 
 The region markers are to prevent Jupytext getting confused as to whether these should be code cells.
@@ -116,4 +106,5 @@ The gated markers (of form `solution-start` and `solution-end` etc) allow you
 to embed code cells in the exercise or solution, because this allows code
 cells to be at the top level of the notebook, where Jupyter needs them to be.
 
-See <
+The gated markers also make it possible to for the `process_notebooks.py`
+script to recognize exercise and solutions blocks, to parse them correctly.
