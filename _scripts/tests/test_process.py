@@ -41,6 +41,8 @@ def test_process_nbs(nb_path):
     assert out_lines.count('**End of note**') == 1
     assert out_lines.count('**Start of admonition: My title**') == 1
     assert out_lines.count('**End of admonition**') == 1
+    # Labels
+    assert 'plot-frames' not in out_txt
 
 
 @pytest.mark.parametrize('nb_path', (EG1_NB_PATH, EG2_NB_PATH))

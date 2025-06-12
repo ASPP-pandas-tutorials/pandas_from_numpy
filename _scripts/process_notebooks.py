@@ -11,6 +11,7 @@
 """
 
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
+from copy import deepcopy
 from pathlib import Path
 import re
 from urllib.parse import quote as urlquote, urlparse
@@ -139,6 +140,11 @@ _ADM_HEADER = re.compile(
     ''', flags=re.VERBOSE)
 
 
+_LABEL = re.compile(
+    r'^\s*\(\s*\S+\s*\)\=\s*\n',
+    flags=re.MULTILINE)
+
+
 def process_admonitions(nb_text):
     lines = nb_text.splitlines()
     for first, last in get_admonition_lines(nb_text):
@@ -150,6 +156,25 @@ def process_admonitions(nb_text):
         lines[first] = f"**Start of {ad_type}{suffix}**"
         lines[last] = f"**End of {ad_type}**"
     return '\n'.join(lines)
+
+
+def process_labels(nb):
+    """ Process labels in Markdown cells
+
+    Parameters
+    ----------
+    nb : dict
+
+    Returns
+    -------
+    out_nb : dict
+    """
+    out_nb = deepcopy(nb)
+    for cell in out_nb['cells']:
+        if cell['cell_type'] != 'markdown':
+            continue
+        cell['source'] = _LABEL.sub('', cell['source'])
+    return out_nb
 
 
 def load_process_nb(nb_path, fmt='myst', url=None):
@@ -182,9 +207,10 @@ def load_process_nb(nb_path, fmt='myst', url=None):
     nbt1 = _EX_SOL_MARKER.sub(_replace_markers, nb_text)
     nbt2 = _SOL_MARKED.sub(f'\n**See the {page_link} for solution**\n\n', nbt1)
     nbt3 = process_admonitions(nbt2)
-    return jupytext.reads(nbt3,
-                          fmt={'format_name': 'myst',
-                               'extension': nb_path.suffix})
+    nb = jupytext.reads(nbt3,
+                        fmt={'format_name': 'myst',
+                             'extension': nb_path.suffix})
+    return process_labels(nb)
 
 
 def process_notebooks(config, output_dir,

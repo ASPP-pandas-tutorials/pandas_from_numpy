@@ -163,7 +163,7 @@ What was your hypothesis?  If it was different from ours, why do you think yours
 ::: {solution-end}
 :::
 
-
+(plot-frames)=
 ## Convenient Plotting with Data Frames
 
 Remember earlier we imported Matplotlib to plot some of our data?
