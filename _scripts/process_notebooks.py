@@ -202,7 +202,7 @@ def process_notebooks(config, output_dir,
         path = input_dir / fn
         if not path.suffix == in_nb_suffix:
             continue
-        nb_url = (config['base_path']
+        nb_url = (config['base_path'] + '/'
                   + urlquote(path.relative_to(input_dir)
                              .with_suffix('.html')
                              .as_posix()))
