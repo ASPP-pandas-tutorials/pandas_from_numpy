@@ -14,7 +14,7 @@ jl:
 	rm -rf $(JL_DIR)
 	mkdir $(JL_DIR)
 	cp -r data images $(JL_DIR)
-	$(PYTHON) _scripts/process_notebooks.py . $(JL_DIR)
+	$(PYTHON) _scripts/process_notebooks.py $(JL_DIR)
 	$(PYTHON) -m jupyter lite build \
 		--contents $(JL_DIR) \
 		--output-dir $(BUILD_DIR)/interact \

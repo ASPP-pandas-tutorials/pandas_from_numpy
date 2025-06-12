@@ -28,13 +28,14 @@ def test_process_nbs(nb_path):
     out_nb = pn.load_process_nb(nb_path, fmt='msyt', url=url)
     out_txt = nb2rmd(out_nb)
     out_lines = out_txt.splitlines()
-    assert out_lines.count('**Start of exercise**') == 1
-    assert out_lines.count('**End of exercise**') == 1
+    assert out_lines.count('**Start of exercise**') == 2
+    assert out_lines.count('**End of exercise**') == 2
     assert out_lines.count(
         f'**See the [corresponding page]({url}) for solution**'
-    ) == 1
+    ) == 2
     # A bit of solution text, should not be there after processing.
     assert 'You probably spotted that' not in out_txt
+    assert "Here's our hypothesis of the algorithm:" not in out_txt
     # Admonitions
     assert out_lines.count('**Start of note**') == 1
     assert out_lines.count('**End of note**') == 1

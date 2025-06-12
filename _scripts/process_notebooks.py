@@ -13,12 +13,14 @@
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 from pathlib import Path
 import re
-from urllib.parse import quote as urlquote
+from urllib.parse import quote as urlquote, urlparse
 
 import docutils.core as duc
 import docutils.nodes as dun
 from docutils.utils import Reporter
+from sphinx.util.matching import get_matching_files
 from myst_parser.docutils_ import Parser
+import yaml
 
 _END_DIV_RE = re.compile(r'^\s*(:::+|```+|~~~+)\s*$')
 import jupytext
@@ -108,7 +110,7 @@ def get_admonition_lines(nb_text):
         source=nb_text,
         settings_overrides={
             "myst_enable_extensions": MYST_EXTENSIONS,
-            'report_level': Reporter.ERROR_LEVEL,
+            'report_level': Reporter.SEVERE_LEVEL,
         },
         parser=parser)
     lines = nb_text.splitlines()
@@ -185,17 +187,25 @@ def load_process_nb(nb_path, fmt='myst', url=None):
                                'extension': nb_path.suffix})
 
 
-def process_dir(input_dir, output_dir, in_nb_suffix='.Rmd',
-                nb_fmt='myst',
-                kernel_name='python',
-                kernel_dname='Python (Pyodide)',
-                out_nb_suffix='.ipynb'
-               ):
+def process_notebooks(config, output_dir,
+                      in_nb_suffix='.Rmd',
+                      nb_fmt='myst',
+                      kernel_name='python',
+                      kernel_dname='Python (Pyodide)',
+                      out_nb_suffix='.ipynb'
+                     ):
+    input_dir = Path(config['input_dir'])
     output_dir.mkdir(exist_ok=True, parents=True)
-    for path in input_dir.glob('*' + in_nb_suffix):
-        nb_url = urlquote(path.relative_to(input_dir)
-                          .with_suffix('.html')
-                          .as_posix())
+    # Use sphinx utiliti to find not-excluded files.
+    for fn in get_matching_files(input_dir,
+                                 exclude_patterns=config['exclude_patterns']):
+        path = input_dir / fn
+        if not path.suffix == in_nb_suffix:
+            continue
+        nb_url = (config['base_path']
+                  + urlquote(path.relative_to(input_dir)
+                             .with_suffix('.html')
+                             .as_posix()))
         nb = load_process_nb(path, nb_fmt, nb_url)
         nb['metadata']['kernelspec'] = {
             'name': kernel_name,
@@ -206,18 +216,31 @@ def process_dir(input_dir, output_dir, in_nb_suffix='.Rmd',
 def get_parser():
     parser = ArgumentParser(description=__doc__,  # Usage from docstring
                             formatter_class=RawDescriptionHelpFormatter)
-    parser.add_argument('input_dir',
-                        help='Directory containing input notebooks')
     parser.add_argument('output_dir',
                         help='Directory to which we will output notebooks')
+    parser.add_argument('--config-dir', default='.',
+                        help='Directory containing `_config.yml` file')
     return parser
+
+
+def load_config(config_path):
+    config_path = Path(config_path).resolve()
+    with (config_path / '_config.yml').open('rt') as fobj:
+        config = yaml.safe_load(fobj)
+    # Post-processing.
+    config['input_dir'] = Path(config.get('repository', {})
+                               .get('path_to_book', config_path))
+    config['base_path'] = urlparse(config.get('html', {})
+                                   .get('baseurl', "")).path
+    return config
 
 
 def main():
     parser = get_parser()
     args = parser.parse_args()
+    config = load_config(Path(args.config_dir))
     out_path = Path(args.output_dir)
-    process_dir(Path(args.input_dir), out_path)
+    process_notebooks(config, out_path)
     (out_path / 'jupyter-lite.json').write_text(
         _JL_JSON_FMT.format(language='python'))
 
