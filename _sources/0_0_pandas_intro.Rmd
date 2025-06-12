@@ -306,12 +306,10 @@ In this case, the Series had the same values in their Indices, so the Index
 for the Data Frame is the same as the Index for the each and both Series:
 
 
-<!-- #region -->
-```{exercise-start}
+::: {exercise-start}
 :label: differing-indices
 :class: dropdown
-```
-<!-- #endregion -->
+:::
 
 Perhaps your agile mind is racing ahead, wondering what Pandas would do if the
 two Series had different Indices.
@@ -403,12 +401,12 @@ df5 = pd.DataFrame({'Fertility Rate': fert_scrambled,
 After these examples, what is your final working theory about the algorithm
 Pandas uses to match the Indices of Series, when creating Data Frames?
 
-<!-- #region -->
-```{exercise-end}
-```
+::: {exercise-end}
+:::
 
-```{solution} differing-indices
+::: {solution-start} differing-indices
 :class: dropdown
+:::
 
 Here's our hypothesis of the algorithm:
 
@@ -418,8 +416,9 @@ Here's our hypothesis of the algorithm:
   use the resulting sorted Index.
 
 What was your hypothesis?  If it was different from ours, why do you think yours fits the results better?  What tests would you do to test your theory against our theory?
-```
-<!-- #endregion -->
+
+::: {solution-end}
+:::
 
 ## Selecting columns from a Data Frame
 
@@ -721,12 +720,10 @@ df.equals(loaded_labeled_df)
 
 They are equivalent.
 
-<!-- #region -->
-```{exercise-start}
+::: {exercise-start}
 :label: index-in-display
 :class: dropdown
-```
-<!-- #endregion -->
+:::
 
 In fact the `df` and `loaded_labeled_df` data frames are not exactly the same.
 If you look very carefully at the notebook output for the two data frames, you
@@ -735,16 +732,13 @@ difference, but let's imagine we did.  Try to work out how to change the `df`
 Data Frame to give *exactly* the same display as we see for
 `loaded_labeled_df`.
 
-<!-- #region -->
-```{exercise-end}
-```
-<!-- #endregion -->
 
-<!-- #region -->
-```{solution-start} index-in-display
+::: {exercise-end}
+:::
+
+::: {solution-start} index-in-display
 :class: dropdown
-```
-<!-- #endregion -->
+:::
 
 You probably spotted that the `loaded_labeled_df` displays a `name` for the Index.  You can also see this displaying the `.index` on its own:
 
@@ -774,10 +768,8 @@ df_copy.index.name = 'Code'
 df_copy
 ```
 
-<!-- #region -->
-```{solution-end}
-```
-<!-- #endregion -->
+::: {solution-end}
+:::
 
 ## Convenient Plotting with Data Frames
 
