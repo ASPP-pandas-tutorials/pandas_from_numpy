@@ -195,22 +195,22 @@ def process_notebooks(config, output_dir,
                       out_nb_suffix='.ipynb'
                      ):
     input_dir = Path(config['input_dir'])
-    output_dir.mkdir(exist_ok=True, parents=True)
     # Use sphinx utiliti to find not-excluded files.
     for fn in get_matching_files(input_dir,
                                  exclude_patterns=config['exclude_patterns']):
-        path = input_dir / fn
-        if not path.suffix == in_nb_suffix:
+        rel_path = Path(fn)
+        if not rel_path.suffix == in_nb_suffix:
             continue
-        nb_url = (config['base_path'] + '/'
-                  + urlquote(path.relative_to(input_dir)
-                             .with_suffix('.html')
-                             .as_posix()))
-        nb = load_process_nb(path, nb_fmt, nb_url)
+        print(f'Processing {rel_path}')
+        nb_url = config['base_path'] + '/' + urlquote(
+            rel_path.with_suffix('.html').as_posix())
+        nb = load_process_nb(input_dir / rel_path, nb_fmt, nb_url)
         nb['metadata']['kernelspec'] = {
             'name': kernel_name,
             'display_name': kernel_dname}
-        jupytext.write(nb, output_dir / (path.stem + out_nb_suffix))
+        out_path = (output_dir / rel_path).with_suffix(out_nb_suffix)
+        out_path.parent.mkdir(exist_ok=True, parents=True)
+        jupytext.write(nb, out_path)
 
 
 def get_parser():
@@ -232,6 +232,8 @@ def load_config(config_path):
                                .get('path_to_book', config_path))
     config['base_path'] = urlparse(config.get('html', {})
                                    .get('baseurl', "")).path
+    config['exclude_patterns'] = config.get('exclude_patterns', [])
+    config['exclude_patterns'].append('_build')
     return config
 
 
