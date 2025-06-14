@@ -430,6 +430,7 @@ hdi_from_df = df['Human Development Index']
 hdi_from_df
 ```
 
+(direct-indirect)=
 ::: {note}
 
 **Direct and indirect indexing**
@@ -480,6 +481,7 @@ select from the Data Frame.  We get back a new Series, extracted from the Data F
 type(hdi_from_df)
 ```
 
+(series-names)=
 ## Series have an optional name
 
 You can see in the output display that the extracted Series now has an extra

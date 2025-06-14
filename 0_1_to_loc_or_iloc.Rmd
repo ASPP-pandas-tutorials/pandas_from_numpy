@@ -13,7 +13,9 @@ jupyter:
     name: python3
 ---
 
-# `.loc` and `.iloc` indexing
+# Indexing by label, indexing by position
+
+## Indexing and Series
 
 From the [What is a Series section](what-is-a-series), remember our maxim:
 
@@ -23,14 +25,18 @@ From the [What is a Series section](what-is-a-series), remember our maxim:
 > * A sequence of labels for each value (`.index`)
 > * A name (which can be `None`).
 
-On this page we will examine differences between Data Frame attributes. We
-will demonstrate that the `name` attribute is optional. The default `name` is
-`None` and the `name` attribute can be left unspecified in any given Series
-with minimal consequences. We will show, however, that it is important to
-specify the `name` attribute as a column name when a Series is part of
-a Pandas Data Frame.
+On this page we take a brief look at Series `.name`s, and show that they can be useful when created Data Frames from Series.
 
-In contrast, an `index` is essential - if no `index` is specified then Pandas will create one. However, we will show that it is sensible to replace Pandas' default index with a custom index, to avoid accidental errors when indexing. 
+Then we look at the Index for Series and Data Frames, and the default index
+that Pandas creates if you do not specify one.
+
+The default Index that Pandas makes reminds us of the differences between
+label indexing (using `.loc`) and position (integer) indexing (using `.iloc`);
+we show that current Pandas allows some ambiguity about what type of indexing
+you are doing when using *direct indexing*.  It is sensible to replace Pandas'
+default index with a custom index, to avoid accidental errors when indexing.
+
+## Getting started
 
 ```{python}
 # import libraries
@@ -38,26 +44,17 @@ import numpy as np
 import pandas as pd
 ```
 
-## What's in a `name`?
-
-To consider the difference in importance/default behaviour between the `name`
-attribute and the `index` attribute, let's again build a Pandas Series from
-component parts, using Numpy arrays. We'll use the [fertility and Human
-Development Index data once more](data/data_notes).
-
-First, an array containing the three-letter codes for each country:
+We'll use the [fertility and Human Development Index data once
+more](data/data_notes).
 
 ```{python}
-# three letter codes for each country
+# Three letter codes for each country
 country_codes_array = np.array(['AUS', 'BRA', 'CAN',
                                 'CHN', 'DEU', 'ESP',
                                 'FRA', 'GBR', 'IND',
                                 'ITA', 'JPN', 'KOR',
                                 'MEX', 'RUS', 'USA'])
-country_codes_array
 ```
-
-Second, an array containing the Human Development Index (HDI) scores for each country:
 
 ```{python}
 # Human Development Index Scores for each country
@@ -66,86 +63,80 @@ hdis_array = np.array([0.896, 0.668, 0.89,
                        0.844, 0.863, 0.49,
                        0.842, 0.883, 0.824,
                        0.709, 0.733, 0.894])
-hdis_array
 ```
 
-We can make a Series using the `pd.Series()` constructor. Our `.values` array is the HDI scores, and the `index` is the three-letter country codes. As we have seen previously, we specify the `index` using the `index=` argument.
+## What's in a `name`?
+
+You may remember from the [](series-names) section that Series have optional names, where the default name is `None`.
+
+To recap, here we build a new Series by passing the values as the first argument, and the labels (Index) as the second:
 
 ```{python}
-# make a series from the `hdis` array
-hdi_series =  pd.Series(hdis_array, 
-                        index=country_codes_array)
+# Make a series from the `hdis_array` array.
+hdi_series = pd.Series(hdis_array, country_codes_array)
 hdi_series
 ```
 
-Currently, our Series has data (`values`) and an `index`, but no `name` attribute:
+In fact we generally prefer to pass the Index as a named argument, to be explicit:
 
 ```{python}
-# show the `values`
+# The same constructor call, with index as a named argument.
+hdi_series = pd.Series(hdis_array, index=country_codes_array)
+```
+
+Currently, our Series has data values (`values`) and an `index`, but the
+`name` attribute is None (the default).
+
+```{python}
+# Show the `values`
 hdi_series.values
 ```
 
 ```{python}
-# show the `index`
+# Show the `index`
 hdi_series.index
 ```
 
 ```{python}
-# show that `name` is None (e.g. does not exist - this cell will produce no output)
-hdi_series.name
-```
-
-```{python}
-# show that `name` is None (e.g. does not exist)
+# Show that `name` is None
 hdi_series.name is None
 ```
 
-The `name` attribute is optional when considering Series which are not part of Data Frames. If we do not specify a `name`, Pandas will set `name` to be `None`.
+However, the `name` attribute can be useful for remind you of the nature of
+the data in the `values` array.  As you will see below, it's particularly
+useful to attach names to Series when you will use the Series to build a Data
+Frame.
 
-However, the name attribute can be useful for tracking what data is inside the `values` array. 
-
-Let's make a new Series - called `hdi_series_with_name_and_index` - where we **do** specify a `name` attribute when calling the `pd.Series()` constructor. 
-
-To specify the `name` attribute we use the `name = ` argument inside the `pd.DataFrame()` constructor:
+Let's make a new Series - called `hdi_series_with_name_and_index` - where we
+**do** specify a `name` attribute when calling the `pd.Series()` constructor.
 
 ```{python}
 # Make a series from the `hdis` array, specifying the `name` attribute.
 hdi_series_with_name_and_index = pd.Series(hdis_array,
                                            index=country_codes_array,
-                                           name = 'Human Development Index')
+                                           name='Human Development Index')
 hdi_series_with_name_and_index
 ```
-
-Now, `name` is no longer equal to `None`:
 
 ```{python}
 # Show the `name` attribute
 hdi_series_with_name_and_index.name
 ```
 
-```{python}
-# `name` is not None
-hdi_series_with_name_and_index.name is None
-```
-
 ## What's in an `index`?
 
-So far so good, we have seen what happens if we make a Series with no `name` attribute. But what if we make a Series without specifying an `index`? 
-
-To do this, we simply call the `pd.Series()` constructor without using the `index = ` argument:
+We have seen what happens if we make a Series with no `name` attribute. But
+what if we make a Series without specifying an `index`?
 
 ```{python}
-# make a series from the `hdis` array, with no `name` and no `index` specified
+# Make a Series from `hdis_array`, without specifying `index` or `name`.
 hdi_series_no_name_no_index =  pd.Series(hdis_array)
 hdi_series_no_name_no_index
 ```
 
-Here, you can see that while we did not specify an `index` Pandas has automatically generated an one:
+Here, you can see that, where we did not specify an `index`, Pandas has
+automatically generated one.
 
-```{python}
-# view the new Series
-hdi_series_no_name_no_index
-```
 
 Let's take a closer look at this `index` by directly accessing the `.index`
 attribute:
@@ -155,156 +146,247 @@ attribute:
 hdi_series_no_name_no_index.index
 ```
 
-Hmm, it is quite strange-looking relative to the index of country codes (which
-visually resembles a numpy array). Let's use to the `type()` function to
-investigate further:
+`RangeIndex` is very similar to Python's `range`; it is a space-saving
+container that represents a sequence of integers from a start value up to, but not including a stop value, with an optional step size.  Here `RangeIndex` represents the numbers 0 through 14, just as `range` can represent the numbers 0 through 14:
 
 ```{python}
-# so the type of the default index
-type(hdi_series_no_name_no_index.index)
+zero_through_14 = range(0, 15)
+zero_through_14
 ```
 
-Ok, so for this Series - where we did not specify an `index` - the index that Pandas has created is a `RangeIndex` object. This is, in fact, the default Pandas index that will be attached to a Series where no other index is specified.
-
-The `RangeIndex` looks like a sequence of numbers (and in a sense it is) - but it behaves differently to python list and arrays with regards to indexing.
-
-Let's take a look at the shape of the `RangeIndex` and what is in it. To view the shape, we can use the `np.shape()` function:
+As for `range` we can ask the `RangeIndex` container to give up these numbers (by iteration) into another container, such as an array or list:
 
 ```{python}
-# take a closer look at the "default" index
-np.shape(hdi_series_no_name_no_index.index)
-```
-
-Ok, so the index has 15 elements. Let's view the first one, using direct indexing:
-
-```{python}
-# view the first element of the RangeIndex
-hdi_series_no_name_no_index.index[0]
-```
-
-Again, so far, so good. Now let's view the second element:
-
-```{python}
-# view the second element of the RangeIndex
-hdi_series_no_name_no_index.index[1]
-```
-
-Previously, we used three-letter country codes as the index elements (these were strings).
-
-Let's have a look at the `type()` of the numbers in the `RangeIndex`:
-
-```{python}
-# what type are the elements of the range index?
-type(hdi_series_no_name_no_index.index[0])
-```
-
-You might be fooled here into thinking that the `RangeIndex` behaves like a python list. If we try to use slicing, we will see this is not the case:
-
-```{python}
-# slice the RangeIndex
-hdi_series_no_name_no_index.index[0:-1]
+# Iterating through `RangeIndex` to give the represented numbers.
+np.array(hdi_series_no_name_no_index.index)
 ```
 
 ```{python}
-# slice the RangeIndex
-hdi_series_no_name_no_index.index[0:4]
+# Iterating through a `range` to give the represented numbers.
+np.array(zero_through_14)
 ```
 
-This might seem like pretty weird behaviour. This is because the `RangeIndex` behaves similarly to the in-built python `range()` function, rather than as a list or numpy array (e.g. we cannot slice it using the familiar `start:stop` syntax).
-
-To view all the values inside the `RangeIndex` we can loop over it:
+As for `range`, one can ask for the implied elements by indexing:
 
 ```{python}
-# loop over the index
-for el in hdi_series_no_name_no_index.index:
-    print(el)
+# View the fifth element of the RangeIndex
+fifth_element = hdi_series_no_name_no_index.index[4]
+fifth_element
 ```
 
-Or show the values together by converting the index to a python list, using the `list()` function:
+Notice that the elements from `RangeIndex` are `int`s:
 
 ```{python}
-# show the elements in the RangeIndex using list()
-list(hdi_series_no_name_no_index.index)
+type(fifth_element)
 ```
 
-## Why the "default" index can be confusing
+For all practical purposes, you can treat this `RangeIndex` as being
+equivalent the corresponding sequential Numpy integer array.
 
-To recap: we've used three-letter country codes as the elements of an `index`, and we've just seen what happens if we construct a Data Frame without telling Pandas what to use as an `index` - it will create a default `RangeIndex`.
+::: {exercise-start}
+:label: range-index
+:class: dropdown
+:::
 
-What is the advantage of using a non-default index? Below are some potential pitfalls to be aware of when using the default index.
+Let's make another Series where we do not specify the index:
 
-Let's say we want to access the fifth element of the Series. This is at integer location 4, because we count from 0. At the moment the numerical labels from `RangeIndex` "line up" with the integer-based locations:
+```{python}
+a_series = pd.Series([1000, 999, 101, 199, 99])
+a_series
+```
+
+As you have seen, you will have got the default `.index`, a `RangeIndex`:
+
+```{python}
+a_series.index
+```
+
+What do you expect to see for `list(a_series)`?  Reflect, then uncomment below
+and try it:
+
+```{python}
+# list(a_series)
+```
+
+What do you expect to see for `list(a_series.index)`?  Reflect, then try it:
+
+```{python}
+# list(a_series.index)
+```
+
+The Series method `.sort_values` returns a new Series sorted by the values.
+
+```{python}
+sorted_series = a_series.sort_values()
+```
+
+Now what do you expect to see for `list(sorted_series)`?  Reflect, then
+uncomment below and try it:
+
+```{python}
+# list(sorted_series)
+```
+
+How about `list(sorted_series.index)`?  Reflect, try:
+
+```{python}
+# list(sorted_series.index)
+```
+
+What kind of thing do you think the `.index` is now?  Reflect and then:
+
+```{python}
+# type(sorted_series.index)
+```
+
+Can you explain the result of the last cell?
+
+::: {exercise-end}
+:::
+
+::: {solution-start} range-index
+:class: dropdown
+:::
+
+You should have discovered that the `sorted_series` now has an Index of
+integers, and no longer has a `RangeIndex`.  The question was prompting you to
+reflect that Pandas can only use `RangeIndex` as a space-saving device if the
+integers continue to be representable as an ordered sequence with equal steps.
+Otherwise it will have to rebuild an array of integers to represent the index.
+
+::: {solution-end}
+:::
+
+## Why an index of integers can be confusing
+
+To recap: we've used three-letter country codes as the elements of an `index`,
+and we've just seen what happens if we construct a Data Frame without telling
+Pandas what to use as an `index` - it will create a default `RangeIndex`.  `RangeIndex` represents a series of integers.
+
+If you did the exercise, you will have found that Pandas can us `RangeIndex`
+when the index is a regular sequence of integers, but must otherwise change to
+having an index with an array containing integers, that are the value labels.
+
+What is the advantage of using an index with values that aren't integers
+— such as strings? Below are some potential pitfalls to be aware of when using
+the default index, and any other index made up of integers.
+
+Let's say we want to access the fifth element of the Series. This is at
+integer location 4, because we count from 0. At the moment the numerical
+labels implied by the `RangeIndex` "line up" with the integer-based locations:
 
 ```{python}
 # show the whole Series
 hdi_series_no_name_no_index
 ```
 
-If we use integer indexing (`.iloc`) we get the same value as if we use label based indexing (`.loc`):
+If you ask for element `4`, there is no ambiguity about which element you
+mean, because the value with label `4` is also the element at integer position
+`4`.  Therefore, if we use integer indexing (`.iloc`) we get the same value as
+if we use label based indexing (`.loc`):
 
 ```{python}
-# indexing using integer location
+# Indexing using integer location
 hdi_series_no_name_no_index.iloc[4]
 ```
 
 ```{python}
- # indexing using labels (from the default index)
+# Indexing using labels (from the default index)
 hdi_series_no_name_no_index.loc[4]
 ```
 
-What if we don't tell pandas what type of indexing we want to do? E.g. we do not use `.iloc` or `.loc`, we just use the sort of direct indexing we would use on a python list?
+What if we don't tell Pandas what type of indexing we want to do?  Meaning, we
+do not use `.iloc` or `.loc`, we just use the sort of [direct
+indexing](direct-indirect) we would use on a Python list or array?
 
 ```{python}
 # direct indexing
 hdi_series_no_name_no_index[4]
 ```
 
-All of these methods, presently, have returned the same value.
+There is no ambiguity as to what `4` refers to, so it may not be surprising that `.iloc`, `.loc` and direct indexing all give the same result.
 
-**But  this will not always be the case.** Certain functions and methods that we may want to use to sort and organise our data will cause cause misalignment between the `RangeIndex` and the integer location of a given element of the Series.
+**But this will not always be the case.** Certain functions and methods that
+we may want to use to sort and organise our data will cause cause misalignment
+between the *integer labels* and the *integer position* of a given element of
+the Series.
 
-For instance let's sort the data in our `hdi_series_no_name_no_index` Series in ascending order.  To do this we will use the `.sort_values()` method. We will cover Pandas methods in detail on [later pages](0_2_pandas_dataframes_attributes_methods.Rmd)  but for now the `.sort_values()` method just as what it says on the tin it sorts the elements of the Series in ascending order, based on the elements in the `.values` attribute of the Series:
+For instance let's sort the data in our `hdi_series_no_name_no_index` Series
+in ascending order.  To do this we will use the `.sort_values()` method. We
+will cover Pandas methods in detail on [later
+pages](0_2_pandas_dataframes_attributes_methods.Rmd). For now the
+`.sort_values()` method sorts the values of the Series in ascending order, taking the matching labels in the index with it.
 
 ```{python}
-# sorting the values in ascending order
+# Sorting the *values* in ascending order
 hdi_series_no_name_no_index_sorted = hdi_series_no_name_no_index.sort_values()
-
 hdi_series_no_name_no_index_sorted
 ```
 
-Look at the left hand side of the print out from the cell above e.g. look at the `RangeIndex`.  The numbers within the `RangeIndex` no longer run sequentially from 0 to 14. This means that the integer location of each element in the Series no longer matches up with the index label. This can potentially be a source of errors.
+Look at the left hand side of the display from the cell above — in particular,
+look at the Index.  The numbers within the Index no longer run sequentially
+from 0 to 14. This means that the integer location of each element in the
+Series no longer matches up with the index label. This can be a potential
+source of errors.
 
-Let's see what happens if we try to access the fifth element of the series using integer based indexing (`.iloc[4]`) location based indexing (`.loc[4]`) and direct indexing (`[4]`) as we did above.
+::: note
 
-When we did this on the unsorted data all these methods returned the same value:
+**The index type can change if you rearrange elements**
+
+If you haven't done the exercise above, please consider doing it.
+
+If you have, you will have found already that the sorted Series has a new
+Index, that is no longer a `RangeIndex` (because the integer labels now cannot
+be represented as a regular sequence of integers):
 
 ```{python}
-# integer indexing on the sorted data
+type(hdi_series_no_name_no_index_sorted.index)
+```
+
+:::
+
+Let's see what happens if we try to access the fifth element of the series
+using integer based indexing (`.iloc[4]`) location based indexing (`.loc[4]`)
+and direct indexing (`[4]`) as we did above.
+
+As you remember, when we did this on the data before sorting, all these
+methods returned the same value.  Now, however:
+
+```{python}
+# Integer indexing on the sorted data
+# This is the fifth element in the Series.
 hdi_series_no_name_no_index_sorted.iloc[4]
 ```
 
 ```{python}
-# label indexing on the sorted data
+# Label indexing on the sorted data
+# This is the element with the label `4`.
 hdi_series_no_name_no_index_sorted.loc[4]
 ```
 
 ```{python}
-# direct indexing on the sorted data
+# Direct indexing on the sorted data
+# Which is this?  Position or label?
 hdi_series_no_name_no_index_sorted[4]
 ```
 
-Oh dear,  we have used the number 4 with each indexing method, yet have gotten back different values. 
+We have used the number 4 with each indexing method, yet have gotten back
+different values for `.iloc` compared to `.loc` and direct indexing.
 
-This is a pitfall of using the default `RangeIndex` - it can lead to confusing results when the integer-based location and the `int` label of an element of the Series do not match up. 
+This is a pitfall of using sequential numbers as the index — as generated, for
+example, by `RangeIndex` — it can lead to confusing results when the position
+in the sequence and the `int` label of an element of the Series do not match
+up.
 
-Compare this to our `hdi_series_with_name_and_index` which uses the three-letter country codes as it's index:
+Compare this to our `hdi_series_with_name_and_index` which uses the
+three-letter country codes as its index:
 
 ```{python}
-# show the `hdi_series_with_name_and_index` Series
+# Show the `hdi_series_with_name_and_index` Series
 hdi_series_with_name_and_index
 ```
 
-Let's get the Fifth Element using integer based (`.iloc`) indexing:
+Let's get the fifth element using integer based (`.iloc`) indexing:
 
 ```{python}
 # integer indexing
@@ -314,119 +396,217 @@ hdi_series_with_name_and_index.iloc[4]
 ...and let's try to use `.loc[4]` on this Series (this will generate an error):
 
 ```{python tags=c("raises-exception")}
-# label indexing raises a KeyError ...
+# Label indexing raises a KeyError ...
 hdi_series_with_name_and_index.loc[4]
 ```
 
-This `KeyError` tells us that there is no index label `4` (which makes sense as the index labels in this Series are three-letter country codes). To use `.loc` with this Series, we must use the three-letter country code strings:
+This `KeyError` tells us that there is no index label `4` (which makes sense
+as the index labels in this Series are three-letter country codes). To use
+`.loc` with this Series, we must use the three-letter country code strings:
 
 ```{python}
 # label based indexing
 hdi_series_with_name_and_index.loc['DEU']
 ```
 
-Direct indexing here will assume we mean `.iloc` integer-based indexing.
+We don't think it's very confusing when using integer indices with `.loc` and
+`.iloc`.  You've specified what you mean (by label or by position) with the
+name of the method.  However, things can get dangerously confusing if you use
+an integer index and *direct indexing*.
+
+Just to remind you, `hdi_series_with_name_and_index` has the country codes (strings like `'DEU'`) as the index.
+
+Now, consider, what would happen if we used an integer for *direct indexing*?
+As in something like `hdi_series_with_name_and_index[4]`?  Because we haven't
+specified that we want to index with labels (`.loc`) or positions (`.iloc`),
+Pandas has to make some decision as to how to proceed.
+
+::: {exercise-start}
+:label: direct-indexing-series
+:class: dropdown
+:::
+
+We assume you've just read the text above the exercise, where we consider what you would expect to happen if:
+
+* Your Series has a index of strings.
+* You use direct indexing on this Series with an integer.
+
+As in `hdi_series_with_name_and_index[4]`. (Don't try it yet).
+
+Pause and reflect what decision you would make in this situation, if you were
+a Pandas developer, deciding what Pandas should do?  What are the options?
+Why would you chose one option over another?
+
+::: {exercise-end}
+:::
+
+::: {solution-start} direct-indexing-series
+:class: dropdown
+:::
+
+Briefly you have two options we could think of as the Pandas developer.  You
+could:
+
+* Assume that the user is trying to index by label, and raise an error to say
+  that the label `4` is not in the index (because your index is a set of
+  strings).
+* Assume that the user is trying to index by position (Pandas' current
+  behavior).
+
+However, there's a big problem about assuming that the user is trying to index
+by position, which is that, as you have seen above, in general Pandas treats
+direct indexing as by label.  So, if there are integer labels, it will,
+without complaint, give you the value corresponding the integer label, not the
+position.  This means that you sometimes treat direct indexing as by label
+(when there is an integer index and integer value between the `[]`), and other
+times as by position (when there is a non-integer index and integer value
+between the `[]`).
+
+As you can see, Pandas initially went for this option, because, if you keep
+track of whether your index is an integer index or not, it can be convenient
+to avoid the `.iloc` and just do position-based indexing (on a Series with
+a non-integer index) with direct indexing.  But recently, the Pandas developers have reconsidered, and are planning to remove this ambiguous use of integer indexing, on the basis that it is too easy to be confused as to which indexing you are doing.
+
+::: {solution-end}
+:::
+
+
+You are about to see that direct indexing on a Series, for now, does something
+truly awful, which is to *guess* whether we mean to `.loc` or `.iloc` indexing
+depending on whether the index values are integers.
+
+So, as you have already seen above, if the index consists of integers, and you
+specify integers in your direct indexing, then Pandas will assume you mean the
+values to be labels (like `.loc`).
+
+If the index consists does not consist of integers, and you specify integers
+in your direct indexing, then Pandas will assume you mean the values to be
+positions (like `.iloc`).
 
 ```{python}
 # direct indexing
 hdi_series_with_name_and_index[4]
 ```
 
-Using a custom index (e.g. the three-letter country codes) rather than the default `RangeIndex` has the advantage of avoiding potential confusion between the integer location of a datapoint, and the index label of that datapoint.
+Using a custom non-integer index (e.g. the three-letter country codes) rather
+than the default `RangeIndex`, or some other integer index, has the advantage
+of avoiding potential confusion between the integer location of an element,
+and the index label of that element.
 
 To demonstrate this, let's sort our `hdi_series_with_name_and_index` in ascending order:
 
 ```{python}
-# sorting the Series in ascending order
-hdi_series_with_name_and_index_sorted = hdi_series_with_name_and_index.sort_values()
-
+# Sorting the Series in ascending order
+# Notice the standard Python / Pandas trick of using parentheses to
+# break the statement over multiple lines.  This is a common trick, but
+# it's particularly common for Pandas processing, to chain multiple
+# method calls on the output of previous calls.  You'll see what we mean soon.
+hdi_series_with_name_and_index_sorted = (hdi_series_with_name_and_index
+                                         .sort_values())
 hdi_series_with_name_and_index_sorted
 ```
 
-The use of custom string-based labels in the index (e.g. `FRA`, `AUS` etc)  and say confusing misalignment between `RangeIndex` numerical labels and integer location.
+The use of custom string-based labels in the index (e.g. `FRA`, `AUS` etc)
+avoids confusing misalignment between the default numerical labels and integer
+location.
 
-Now, if we index using a number, this means *integer indexing*:
 
-```{python}
-# index using `.iloc`
-hdi_series_with_name_and_index_sorted.iloc[4]
-```
-
-```{python}
-# index using direct indexing.
-# Currently this generates a warning.  In the future it will be an error.
-hdi_series_with_name_and_index_sorted[4]
-```
-
-Using `.loc` means we have to use a string, preventing errors where we use a number and return data we do not expect.
+It's good and safe practice to explicitly specify `.loc` or `.iloc` when
+indexing a Series, in order not to confuse Pandas as to whether you mean to
+index by label or position.   In this case `.loc` means we have to use
+a string, preventing errors where we use a number and return data we do not
+expect.
 
 ```{python}
 # label-based indexing
 hdi_series_with_name_and_index_sorted.loc['DEU']
 ```
 
-However, a good additional maxim is: **use `.loc` and `iloc` unless there is a good reason not to!**.
-
-If you use direct indexing, e.g. `[4]` without using `.iloc` or `.loc`, then Pandas assumes you want to use integer indexing.  if this is the case it is better to be explicit and use the `.iloc` method *especially if the Series has a `RangeIndex` with numeric labels*.
+Therefore, a good additional maxim is: **use `.loc` and `iloc` unless there is
+a good reason not to!**.
 
 
 ## Strange and `name`less Data Frame columns
 
-When we include Series as columns in Data Frames - remember, that a Data Frame is just a dictionary-like collection of Series - it becomes eminently sensible to specify a `name` attribute for each Series.
+Remember, a Data Frame is a dictionary-like collection of Series.
 
-Pandas will not *force* us to do this, but it leads to some error-prone consequences if we do not. In fact, the `RangeIndex` crops up again here, and can create confusion in similar ways to the ones we have seen in the last section.
+We often create Data Frames with an actual dictionary of Series, or with single Series.
 
-As shown above, our `hdi_series` does not have a `name` attribute. Let's pass this Series to the `pd.DataFrame()` constructor, to see the consequence of a `name`less Series in this context. We will call the resulting Data Frame `no_name_df`:
+When we build Data Frames from Series, it becomes eminently sensible to
+specify a `name` attribute for each Series.
+
+Pandas will not *force* us to do this, but it leads to some error-prone
+consequences if we do not. In fact, the default `RangeIndex` crops up again
+here, and can create confusion in similar ways to the ones we have seen in the
+last section.
+
+As shown above, our `hdi_series` does not have a `name` attribute. Let's pass
+this Series to the `pd.DataFrame()` constructor, to see the consequence of
+a `name`less Series in this context. We will call the resulting Data Frame
+`no_name_df`:
 
 ```{python}
-# verify again that the `hdi_series` has no `name` attribute
+# Verify again that the `hdi_series` has no `name` attribute
 hdi_series.name is None
 ```
 
 ```{python}
 # a Data Frame made of a Series with no `name` attribute
 no_name_df = pd.DataFrame(hdi_series)
-
 no_name_df
 ```
 
 Ok, so in the absence of a `name` attribute Pandas has labelled the column with a `0`. If we inspect more deeply, we find that actually Pandas, in the absence of being instructed otherwise, has created a `RangeIndex`, but this time for the `columns` (e.g. the column names) of the Data Frame. If you look at the Data Frame above, you can see that the `index` attribute is the three-letter country codes. However, the `.columns` are a `RangeIndex`:
 
 ```{python}
-# look at the column names via the `.columns` attribute
+# Look at the column names via the `.columns` attribute
 no_name_df.columns
 ```
 
-Sure enough, if we check the `type` of the fist element in this `RangeIndex` it is a of a numeric type - e.g. we can think of it not as a column *name* but a number standing in for a column name:
+Sure enough, if we check the `type` of the fist element in this `RangeIndex`
+it is an `int` — we can think of it not as a column *name* but a number
+standing in for a column name:
 
 ```{python}
-# check the type of the first element in the `.columns` attribute
+# Check the type of the first element in the `.columns` attribute
 type(no_name_df.columns[0])
 ```
 
-It may be obvious why this naming convention for Data Frame columns can lead to errors for reasons of low interpretability. We typically want our column names to be descriptive of the data in the column, to ourselves and to other people reading our code. If we do not specify a `name` attribute for our Series when creating Data Frames, the default numerical column names supplied by Pandas are hard to interpret, and it is easy to misinterpret, or to forget what data is in that column, leading to human errors.
+It may be obvious why this naming convention for Data Frame columns can lead
+to errors for reasons of low interpretability. We typically want our column
+names to be descriptive of the data in the column, to ourselves and to other
+people reading our code. If we do not specify a `name` attribute for our
+Series when creating Data Frames, the default numerical column names supplied
+by Pandas are hard to interpret, and it is easy to misinterpret, or to forget
+what data is in that column, leading to human errors.
 
-They can also lead to indexing errors, similar to those we saw in the previous section. To demonstrate this, let's compare the `name`less Data Frame above to a Data Frame created from a Series with a `name`.
+They can also lead to indexing errors, similar to those we saw in the previous
+section. To demonstrate this, let's compare the `name`less Data Frame above to
+a Data Frame created from a Series with a `name`.
 
-Our aptly named `hdi_series_with_name_and_index` has a `name` attribute - (look at the last line of the output from the cell below, the `Name: Human Development Index`):
+Our aptly named `hdi_series_with_name_and_index` has a `name` attribute
+— (look at the last line of the output from the cell below, the `Name: Human
+Development Index`):
 
 ```{python}
-# a Series with a `name`
+# A Series with a `name`
 hdi_series_with_name_and_index
 ```
 
-Let's call the `pd.DataFrame()` constructor on this Series - we'll call the resultant Data Frame `named_df`:
+Let's call the `pd.DataFrame()` constructor on this Series - we'll call the
+resultant Data Frame `named_df`:
 
 ```{python}
-# create a new Data Frame, with a sensible name for the column
+# Create a new Data Frame, with a sensible name for the column
 named_df = pd.DataFrame(hdi_series_with_name_and_index)
-
 named_df
 ```
 
-We see that Pandas has automatically used the `name` attribute as the column name, hugely increasing the interpretability of the resulting Data Frame.
+We see that Pandas has automatically used the `name` attribute as the column
+name, hugely increasing the interpretability of the resulting Data Frame.
 
-We can see the `name` in the `.columns` attribute of the new  `named_df` Data Frame:
+We can see the `name` in the `.columns` attribute of the new  `named_df` Data
+Frame:
 
 ```{python}
 # show the column names from the `named_df` Data Frame
@@ -442,16 +622,20 @@ This is very straightforward for the `named_df`:
 named_df['Human Development Index']
 ```
 
-What about for `no_name_df`? Well, the column name there is `0`, of `int` type.
+What about for `no_name_df`? Well, the column name there is `0`, of `int`
+type.
 
-What happens if use direct indexing? We are hoping we see something like the output of the cell above, albeit with a `0` for the `name`, rather than `Human Development Index`:
+What happens if use direct indexing? We are hoping we see something like the
+output of the cell above, albeit with a `0` for the `name`, rather than `Human
+Development Index`:
 
 ```{python}
-# direct indexing with no `name` attribute
+# Direct indexing with no `name` attribute
 no_name_df[0]
 ```
 
-Sure enough that is what we see. But the operation we have used looks very much like *integer* indexing on a Series, which will return a single value:
+Sure enough that is what we see. But the operation we have used looks very
+much like *integer* indexing on a Series, which will return a single value:
 
 ```{python}
 # integer indexing a Series (without using `.iloc`)
@@ -460,91 +644,110 @@ hdi_series[0]
 
 This can be confusing.
 
-In addition, the numerical label can also be confusing if we introduce more columns, especially if we mix in columns which do have `name` attributes that we specify.
+The numerical label can also be confusing if we introduce more columns, especially if we mix in columns which do have `name` attributes that we specify.
 
 For instance, if we add in the full name of each country:
 
 ```{python}
 # country names array
 country_names_array = np.array(['Australia', 'Brazil', 'Canada',
-                          'China', 'Germany', 'Spain',
-                          'France', 'United Kingdom', 'India',
-                          'Italy', 'Japan', 'South Korea',
-                          'Mexico', 'Russia', 'United States'])
+                                'China', 'Germany', 'Spain',
+                                'France', 'United Kingdom', 'India',
+                                'Italy', 'Japan', 'South Korea',
+                                'Mexico', 'Russia', 'United States'])
 country_names_array
 ```
 
-Let's add this into the `no_name_df`, using the `name` "Country Names":
+Let's add this into the `no_name_df`, using the `name` `'Country Names'`:
 
 ```{python}
 no_name_df['Country Names'] = country_names_array
-
 no_name_df
 ```
 
-We now have one column that has an `int` as it's column name, and another with a string.
+We now have one column that has an `int` as its column name, and another with
+a string.
 
-In the same way as for a numerical `index`, this situation can become confusing if the numerical labels become misaligned with their integer location in the `.columns` attribute.
+In the same way as for a numerical `index`, this situation can become
+confusing if the numerical labels become misaligned with their integer
+location in the `.columns` attribute.
 
-For instance, if we re-arrange the columns:
+For instance, we could reverse the order of the columns, by using *direct indexing* in the Data Frame to request the columns in reverse order by column label:
 
 ```{python}
-# re-arrange the columns
-no_name_df = no_name_df[["Country Names", 0]]
-
-no_name_df
+# Re-arrange the columns
+# Specify the order of columns we want.
+cols = ['Country Names', 0]
+# Use direct indexing to select columns in given order.
+reversed_col_df = no_name_df[cols]
+reversed_col_df
 ```
 
-We now have a column with the `name` "0" that is not at the 0-th location of the `.columns` attribute:
+We now have a column with the `name` `0` (an int) that is not at the 0-th location of the `.columns` attribute:
 
 ```{python}
-# show the 0-th element of the `.columns` attribute
-no_name_df.columns[0]
+# Show the 0-th element of the `.columns` attribute
+reversed_col_df.columns[0]
 ```
 
 We are now in the precarious situation of using a `int` `0` both as a *label* and as a *location*. In the cell above, it is a location, it the cell below it serves as a label:
 
 ```{python}
-# direct index the `0` column
-no_name_df[0]
+# Direct index the `0` column
+reversed_col_df[0]
 ```
 
-Ideally, we want a clear separation between integer indexes (like `0`) and *column names*. 
+Ideally, we would like a clear separation between integer indexes (like `0`)
+and *column names*.
 
-This confusing situation can be completely avoided in the case of `named_df`. Let's add the country names to this Data Frame also:
+This confusing situation can be completely avoided in the case of `named_df`. Let's add the country names to this Data Frame, that thus far only has a single column, containing the "Human Development Index" values.
 
 ```{python}
-# add the country names
+# Show the Data Frame thus far
+named_df
+```
+
+```{python}
+# Add the country names
 named_df['Country Names'] = country_names_array
-
 named_df
 ```
 
-We don't introduce any confusion or error-proneness by re-arranging these columns which have sensible string names:
+We don't introduce any confusion or add propensity to error by re-arranging
+these columns which have sensible string names:
 
 ```{python}
-# re-arrange the columns
-named_df = named_df[["Country Names", "Human Development Index"]]
-
-named_df
+# Re-arrange the columns
+reversed_named_df = named_df[['Country Names', 'Human Development Index']]
+reversed_named_df
 ```
 
-In fact, now if we want to use integer indexing, we are forced to use `.iloc`, as else we get an error:
+In fact, now if we want to use integer indexing, we are forced to use `.iloc`,
+as we will otherwise get an error:
 
 ```{python tags=c("raises-exception")}
-# this will not work if each column has a `name` string
-named_df[0]
+# This will not work if each column has a `name` string
+reversed_named_df[0]
 ```
 
-This compels us to stick to the good practice maxim we introduced above: **use `.loc` and `iloc` unless there is a good reason not to!**. 
+This compels us to stick to the good practice maxim we introduced above: **use
+`.loc` and `iloc` unless there is a good reason not to!**.
 
 Giving every column a sensible string as a `name` is one situation where direct indexing (e.g. in the present context using `named_df['Human Development Index']` etc.) is safe and non-error prone. As we have seen, issues can arise if we do not specify `name` attributes, and let Pandas automatically generate numeric labels for our Data Frame columns...
 
 
 ## Summary
 
-On this page we have looked at the differences between attributes of the Pandas Series - the `name` is optional, but a default `RangeIndex` will be supplied if no custom `index` is specified.
+On this page we have looked at the differences between attributes of the
+Pandas Series - the `name` is optional, but a default `RangeIndex` will be
+supplied if no custom `index` is specified.
 
-We have seen that the `RangeIndex` can lead to errors if the numeric row labels become misaligned with the integer location of a given row. Similarly, if we do not specify a `name` attribute for Data Frame columns, Pandas will generate numeric labels which can create confusion between integer-based and direct indexing.
+We have seen that the `RangeIndex` and other indices with integer labels can
+lead to errors if the numeric row labels become misaligned with the integer
+location of a given row. Similarly, if we do not specify a `name` attribute
+for Data Frame columns, Pandas will generate numeric labels which can create
+confusion between integer-based and direct indexing.
 
-For best results, we should specify both an interpretable `index` and interpretable `name` attributes for our Series, especially when they are part of Data Frames.
+For best results, we should specify both an interpretable `index` and
+interpretable `name` attributes for our Series, especially when they are part
+of Data Frames.
