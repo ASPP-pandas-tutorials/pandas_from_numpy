@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.15.2
+      jupytext_version: 1.17.2
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -42,11 +42,11 @@ Structure of this page:
   cleaning data
 -->
 
-String/text data is often used to represent categorical variables, and commonly appears in data analyses in a variety of contexts. When dealing with string/text data we will frequently find that we need to alter the strings to correct errors, improve clarity, make formatting uniform, or a host of other reasons.
+String/text data is often used to represent categorical variables, and commonly appears in a variety of data analysis contexts. When dealing with string/text data we will frequently find that we need to alter the strings to correct errors, improve clarity, make formatting uniform, or for a host of other reasons.
 
 String methods are inherent to Python, and these methods or variants of them can all be used on Numpy arrays and Pandas Series/Data Frames. However, Numpy and Pandas use different interfaces for interacting with strings. To understand the differences between Numpy and Pandas with respect to strings, let's begin at the foundation, the in-built string methods of Python. The cell below contains a simple string.
 
-*NB*: you may want to use `dir()` again here to see the full complement of available string methods.
+*NB*: if you are running this tutorial interactively, and you like messy cell outputs, you may want to use `dir()` again here to see the full complement of available string methods.
 
 ```{python}
 # a string
@@ -60,21 +60,21 @@ Remember that *a method is a function attached to an object*. In this case our o
 Let's say we like reading values in our data as if they are being spoken in a loud voice. If this is the case we can alter the format of the string to make all letters uppercase, using the `.upper()` method:
 
 ```{python}
-# upper method
+# the `.upper()` method
 string.upper()
 ```
 
-We can replace characters in the string using the aptly named `.replace()` method. Here we supply two strings to the method, first the string we want to replace, and then second, the string we want to replace it with.
+We can replace characters in the string using the aptly named `.replace()` method. Here we supply two strings to the method, first the string we want to replace, and then second, the string we want to replace it with. In this case, let's `.replace()` the underscores with a blank space:
 
 ```{python}
-# replace
-string.replace('_', '')
+# the `.replace()` method
+string.replace('_', ' ')
 ```
 
 Fancier formatting methods will let us adjust strings, for instance, in title case (`.title()`):
 
 ```{python}
-# a more elaborate method
+# a more elaborate string method
 string.title()
 ```
 
@@ -102,7 +102,7 @@ So, strings in base python have a large number of in-built methods - what about 
 
 Numpy arrays themselves do not have specific string methods, but the in-built Python string methods can be called on individual string values in a Numpy array. Alternatively, we can use functions from the `np.char.` module to operate on all the strings in the array concurrently.
 
-To investigate how string data is handled in Numpy, let's make some arrays containing strings:
+To investigate how string data is handled in Numpy, let's make some arrays containing strings from now (very) familiar [HDI dataset](https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index):
 
 ```{python}
 # import libraries (no imports were needed prior to this point as string methods are part of base python)
@@ -289,7 +289,7 @@ So, Pandas makes it somewhat easier than Numpy to perform operations on all the 
 
 Remember that *a DataFrame is a dictionary-like collection of Series*, and so everything we have just seen of strings in Pandas Series applies to the *columns* of a Data Frame.
 
-Let's import the [HDI data](https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index):
+Let's import the [HDI data](https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index) in a Pandas Data Frame:
 
 ```{python}
 # import data
@@ -368,7 +368,7 @@ As we mentioned earlier, string methods generally useful for cleaning text data.
 
 To explore this, let's import a new dataset, which, like the HDI data, contains observations at the country level (e.g. each row is an observarion from a specific country).
 
-You can read more about the dataset [here](https://github.com/odsti/datasets/tree/main/gender_stats).
+This dataset is also at the country-level of granularity, and it contains information about maternal mortality rates. You can read more about the dataset [here](https://github.com/odsti/datasets/tree/main/gender_stats).
 
 ```{python}
 # import maternal mortality dataset
@@ -384,7 +384,7 @@ Let's say we are interested in Russia, but do not know how the name of the count
 maternal_mort['country_name'].str.contains('Russia')
 ```
 
-That output is pretty opaque, maybe there is a `True` in there somewhere. We can chain on the `.sum()` method to count the number of `True` values in the above Boolean Series:
+That output is pretty opaque, maybe there is a `True` in there somewhere. Because Python treats `True` values as being equal to `1`, we can chain on the `.sum()` method to count the number of `True` values in the above Boolean Series:
 
 ```{python}
 # count the Trues for country names containing "Russia" in the `maternal
@@ -413,8 +413,12 @@ String methods are our friend here. We can use the process just outlined for fin
 # format the maternal mortality data for Russia to use the same country name as the HDI data
 maternal_mort['country_name'] = maternal_mort['country_name'].str.replace('Russian Federation', 'Russia')
 
+# show the newly formatted row
 maternal_mort[maternal_mort['country_name'].str.contains('Russia')]
 ```
+
+We are now ready for a clean and stress-free data merge! (*NB*: we are lying here, merging datasets is almost never stress-free...)
+
 
 ## Summary
 
