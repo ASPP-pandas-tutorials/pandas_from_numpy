@@ -431,8 +431,11 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-series-attributes-and-methods">Pandas Series attributes and methods</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-dataframe-attributes">Pandas DataFrame attributes</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-dataframe-methods">Pandas Dataframe methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-data-frame-attributes">Pandas Data Frame attributes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-data-frame-methods">Pandas Data Frame methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#methods-for-getting-subsets-of-data-from-a-data-frame">Methods for getting subsets of data from a Data Frame</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-methods">Plotting Methods</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-note-on-numerical-operations">A note on numerical operations</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
@@ -1323,8 +1326,8 @@ Name: count, dtype: int64
 </div>
 </div>
 </section>
-<section id="pandas-dataframe-attributes">
-<h2>Pandas DataFrame attributes<a class="headerlink" href="#pandas-dataframe-attributes" title="Link to this heading">#</a></h2>
+<section id="pandas-data-frame-attributes">
+<h2>Pandas Data Frame attributes<a class="headerlink" href="#pandas-data-frame-attributes" title="Link to this heading">#</a></h2>
 <p>Now, remember again our other maxim that <em>A <em>Data Frame</em> is a dictionary-like collection of Series.</em></p>
 <p>Because of this, we can use all the methods we have seen so far on any Data Frame column. Each column is a Series, and therefore contains a Numpy array as its <code class="docutils literal notranslate"><span class="pre">.values</span></code> attribute.</p>
 <p>However, Data Frames have some (useful!) extra methods (including statistical methods) not available for Series.</p>
@@ -1987,7 +1990,7 @@ attributes and methods:</p>
 </div>
 </div>
 </div>
-<p>Once we know how many observations we have, in any data analysis context, we will always want to know what variables we have in the Data Frame columns, and (again) what type of data is in each.</p>
+<p>Once we’ve done these preliminary inspections and we know how many observations we have, in any data analysis context, we will always want to know what variables we have in the Data Frame columns, and (again) what type of data is in each.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">.columns</span></code> attribute will tell us the name of each column:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2042,7 +2045,7 @@ previously, Pandas will automatically supply one:</p>
 </div>
 </div>
 </div>
-<p>We have <a class="reference internal" href="0_1_to_loc_or_iloc.html"><span class="std std-doc">already discussed</span></a> the downsides of using the default index. As we have seen before, we can use the <code class="docutils literal notranslate"><span class="pre">.set_index()</span></code> method to choose a column containing values which we will use as index labels. We have come across Data Frame methods previouslt (<code class="docutils literal notranslate"><span class="pre">.sort_values()</span></code>) and will look at more in the next section. For now, just remember that these differ from <em>attributes</em> in that they are a <em>function attached to an object</em> rather than just a value/values attached to an object. Methods  often do something to the data rather than just report a value or set of values, like an attribute does.</p>
+<p>We have <a class="reference internal" href="0_1_to_loc_or_iloc.html"><span class="std std-doc">already discussed</span></a> the downsides of using the default index. As we have seen before, we can use the <code class="docutils literal notranslate"><span class="pre">.set_index()</span></code> method to choose a column containing values which we will use as index labels. We have come across Data Frame methods previously (<code class="docutils literal notranslate"><span class="pre">.sort_values()</span></code>) and will look at more in the next section. For now, just remember that these differ from <em>attributes</em> in that they are a <em>function attached to an object</em> rather than just a value/values attached to an object. Methods  often do something to the data rather than just report a value or set of values, like an attribute does.</p>
 <p>Let’s set the <code class="docutils literal notranslate"><span class="pre">Code</span></code> column (containing the three-letter country codes) to be our index labels:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2271,10 +2274,10 @@ previously, Pandas will automatically supply one:</p>
 </div></div></div>
 </div>
 </section>
-<section id="pandas-dataframe-methods">
-<h2>Pandas Dataframe methods<a class="headerlink" href="#pandas-dataframe-methods" title="Link to this heading">#</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">.sort_values()</span></code> method we just used is one of many methods attached to Pandas Data Frames. We saw that many Numpy array methods are inherited by Pandas Series and this principle also applies to Data Frames.</p>
-<p>For instance, should we want to see the unique values in a given column (e.g. Series), we can use the <code class="docutils literal notranslate"><span class="pre">.unique()</span></code> method on just that column:</p>
+<section id="pandas-data-frame-methods">
+<h2>Pandas Data Frame methods<a class="headerlink" href="#pandas-data-frame-methods" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">.sort_values()</span></code> method we used on the <a class="reference internal" href="0_1_to_loc_or_iloc.html"><span class="std std-doc">previous page</span></a> and the <code class="docutils literal notranslate"><span class="pre">set_index()</span></code> method we just used in the last section are just some of the many methods attached to Pandas Data Frames. We saw that many Numpy array methods are inherited by Pandas Series and this principle also applies to Data Frames, built as they are from Pandas Series.</p>
+<p>Other Pandas methods do similar things to some Numpy <em>functions</em> (e.g. as well as Numpy <em>methods</em>). For instance, should we want to see the unique values in a given column (e.g. Series), we can use the <code class="docutils literal notranslate"><span class="pre">.unique()</span></code> method on just that column:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># unique values in a given column</span>
@@ -2290,7 +2293,23 @@ previously, Pandas will automatically supply one:</p>
 </div>
 </div>
 </div>
-<p>Other Data Frame methods will report information from the Data Frame <em>as a whole</em>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">.unique()</span></code> Pandas method does the same thing as the <code class="docutils literal notranslate"><span class="pre">np.unique()</span></code> Numpy function, albeit more efficiently in terms of typing (and readability!):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the above cell is a more efficient version of this</span>
+<span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Country Name&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;Australia&#39;, &#39;Brazil&#39;, &#39;Canada&#39;, &#39;China&#39;, &#39;France&#39;, &#39;Germany&#39;,
+       &#39;India&#39;, &#39;Italy&#39;, &#39;Japan&#39;, &#39;Mexico&#39;, &#39;Russia&#39;, &#39;South Korea&#39;,
+       &#39;Spain&#39;, &#39;United Kingdom&#39;, &#39;United States&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Other Data Frame methods will report information from the Data Frame <em>as a whole</em>, rather than just for a given column/Series.</p>
 <p>For instance, we can call the <code class="docutils literal notranslate"><span class="pre">.describe()</span></code> method on the whole Data Frame. We saw this method used on a single Series earlier. The same useful statistical summary is shown for every column when we use the method on the whole Data Frame:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2534,7 +2553,7 @@ Name: count, dtype: int64
 </div>
 </div>
 </div>
-<p>Other methods, like <code class="docutils literal notranslate"><span class="pre">.sort_values()</span></code> take a column name as an argument, but have effects on the entire Data Frame.</p>
+<p>By contrast, other methods, like <code class="docutils literal notranslate"><span class="pre">.sort_values()</span></code> take a column name as an argument, but have effects on the entire Data Frame.</p>
 <p>For instance, if we want to sort by <code class="docutils literal notranslate"><span class="pre">Human</span> <span class="pre">Development</span> <span class="pre">Index</span></code> scores:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -3137,7 +3156,8 @@ Name: count, dtype: int64
 <p>Another useful method, which is very powerful in tandem with label-based indexing, is <code class="docutils literal notranslate"><span class="pre">.drop()</span></code>. This lets use specify using index labels rows which we want to remove from the Data Frame. For instance, if we want to remove the data for Australia we can use:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="s1">&#39;AUS&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># drop the &#39;AUS&#39; row</span>
+<span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="s1">&#39;AUS&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -3277,6 +3297,410 @@ Name: count, dtype: int64
 </div></div></div>
 </div>
 <p>If you compare this to the output from the last cell you will see that, as if by magic, the row for <code class="docutils literal notranslate"><span class="pre">AUS</span></code> has disappeared.</p>
+<section id="methods-for-getting-subsets-of-data-from-a-data-frame">
+<h3>Methods for getting subsets of data from a Data Frame<a class="headerlink" href="#methods-for-getting-subsets-of-data-from-a-data-frame" title="Link to this heading">#</a></h3>
+<p>Another common operation we may want to perform is to view only the start (e.g. the <code class="docutils literal notranslate"><span class="pre">.head</span></code>) or the end (e.g. the <code class="docutils literal notranslate"><span class="pre">.tail</span></code>) of a Data Frame. For instance, if the rows are organized by time, amongst many other reasons.</p>
+<p>We could just use the <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> method to do this. For example, to view the first three rows of the Data Frame we can use:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># view the first three rows of the Data Frame, using `.iloc`</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>19.1324</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>174.0182</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Or, alternatively, to view the last three rows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># view the last three rows of the Data Frame, using `.iloc`</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>MEX</th>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>98.6255</td>
+      <td>Mexico</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>146.7177</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>281.4841</td>
+      <td>United States</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>However, the kind folks at Pandas, because these operations are so commonly desired, have provided us the <code class="docutils literal notranslate"><span class="pre">.head()</span></code> and <code class="docutils literal notranslate"><span class="pre">.tail()</span></code> methods to do the same thing, with less typing and better readability.</p>
+<p>For example, we just give the <code class="docutils literal notranslate"><span class="pre">.head()</span></code> method the number of rows from the start of the Data Frame which we want to view. Let’s say, again, we want to view the first three rows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># view the first three rows of the Data Frame, using `.head()`</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>19.1324</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>174.0182</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can also do the same thing at the other end of the Data Frame, using the <code class="docutils literal notranslate"><span class="pre">.tail()</span></code> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># view the last three rows of the Data Frame, using `.tail()`</span>
+<span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>MEX</th>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>98.6255</td>
+      <td>Mexico</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>146.7177</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>281.4841</td>
+      <td>United States</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>In addition to retrieving rows from the extremes of the Data Frame, we may also, for many different purposes, want to retrieve a <em>random</em> set of rows.</p>
+<p>We can do this using the <code class="docutils literal notranslate"><span class="pre">.sample()</span></code> method. The syntax here is just the same as for <code class="docutils literal notranslate"><span class="pre">.head()</span></code> and <code class="docutils literal notranslate"><span class="pre">.tail()</span></code>, only now we are specifying the <em>number of random rows</em> we want to grab from the Data Frame.</p>
+<p>For instance, if let’s say we want to get three random rows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># grab three rows at random using `.sample()`</span>
+<span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>ESP</th>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>41.0197</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>174.0182</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Even using the small dataset we have here, the overwhelming probability is that we will get a different selection of rows each time we run this command:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># grab three rows at random AGAIN using `.sample()`</span>
+<span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>MEX</th>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>98.6255</td>
+      <td>Mexico</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>146.7177</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>41.0197</td>
+      <td>Spain</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>If you are running this tutorial interactively, re-run the cell above a few times to see randomness in action…</p>
+</section>
 </section>
 <section id="plotting-methods">
 <h2>Plotting Methods<a class="headerlink" href="#plotting-methods" title="Link to this heading">#</a></h2>
@@ -3303,7 +3727,7 @@ Name: count, dtype: int64
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">65</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">72</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># A ValueError from trying to scatter plot a Series</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">hdi_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
 
@@ -4038,8 +4462,11 @@ Series and Numpy arrays have a nested structure.</p>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-series-attributes-and-methods">Pandas Series attributes and methods</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-dataframe-attributes">Pandas DataFrame attributes</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-dataframe-methods">Pandas Dataframe methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-data-frame-attributes">Pandas Data Frame attributes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-data-frame-methods">Pandas Data Frame methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#methods-for-getting-subsets-of-data-from-a-data-frame">Methods for getting subsets of data from a Data Frame</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-methods">Plotting Methods</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-note-on-numerical-operations">A note on numerical operations</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
