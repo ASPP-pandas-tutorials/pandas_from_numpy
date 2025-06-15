@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.1
+      jupytext_version: 1.17.2
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -382,7 +382,7 @@ hdi_series.unique()
 country_names_series.unique()
 ```
 
-## Pandas DataFrame attributes
+## Pandas Data Frame attributes
 
 Now, remember again our other maxim that *A *Data Frame* is a dictionary-like collection of Series.*
 
@@ -428,7 +428,7 @@ When accessed for the entire Data Frame, the `size` attribute works in the same 
 df.size
 ```
 
-Once we know how many observations we have, in any data analysis context, we will always want to know what variables we have in the Data Frame columns, and (again) what type of data is in each.
+Once we've done these preliminary inspections and we know how many observations we have, in any data analysis context, we will always want to know what variables we have in the Data Frame columns, and (again) what type of data is in each.
 
 The `.columns` attribute will tell us the name of each column:
 
@@ -457,7 +457,7 @@ previously, Pandas will automatically supply one:
 df.index
 ```
 
-We have [already discussed](0_1_to_loc_or_iloc.Rmd) the downsides of using the default index. As we have seen before, we can use the `.set_index()` method to choose a column containing values which we will use as index labels. We have come across Data Frame methods previouslt (`.sort_values()`) and will look at more in the next section. For now, just remember that these differ from *attributes* in that they are a *function attached to an object* rather than just a value/values attached to an object. Methods  often do something to the data rather than just report a value or set of values, like an attribute does.
+We have [already discussed](0_1_to_loc_or_iloc.Rmd) the downsides of using the default index. As we have seen before, we can use the `.set_index()` method to choose a column containing values which we will use as index labels. We have come across Data Frame methods previously (`.sort_values()`) and will look at more in the next section. For now, just remember that these differ from *attributes* in that they are a *function attached to an object* rather than just a value/values attached to an object. Methods  often do something to the data rather than just report a value or set of values, like an attribute does.
 
 Let's set the `Code` column (containing the three-letter country codes) to be our index labels:
 
@@ -482,18 +482,25 @@ df.index
 df.loc[['USA', 'ITA']]
 ```
 
-## Pandas Dataframe methods
+## Pandas Data Frame methods
 
-The `.sort_values()` method we just used is one of many methods attached to Pandas Data Frames. We saw that many Numpy array methods are inherited by Pandas Series and this principle also applies to Data Frames.
+The `.sort_values()` method we used on the [previous page](0_1_to_loc_or_iloc.Rmd) and the `set_index()` method we just used in the last section are just some of the many methods attached to Pandas Data Frames. We saw that many Numpy array methods are inherited by Pandas Series and this principle also applies to Data Frames, built as they are from Pandas Series.
 
-For instance, should we want to see the unique values in a given column (e.g. Series), we can use the `.unique()` method on just that column:
+Other Pandas methods do similar things to some Numpy *functions* (e.g. as well as Numpy *methods*). For instance, should we want to see the unique values in a given column (e.g. Series), we can use the `.unique()` method on just that column:
 
 ```{python}
 # unique values in a given column
 df['Country Name'].unique()
 ```
 
-Other Data Frame methods will report information from the Data Frame *as a whole*.
+The `.unique()` Pandas method does the same thing as the `np.unique()` Numpy function, albeit more efficiently in terms of typing (and readability!):
+
+```{python}
+# the above cell is a more efficient version of this
+np.unique(df['Country Name'])
+```
+
+Other Data Frame methods will report information from the Data Frame *as a whole*, rather than just for a given column/Series.
 
 For instance, we can call the `.describe()` method on the whole Data Frame. We saw this method used on a single Series earlier. The same useful statistical summary is shown for every column when we use the method on the whole Data Frame:
 
@@ -536,7 +543,7 @@ df['Fertility Rate'].mean()
 df['Country Name'].value_counts()
 ```
 
-Other methods, like `.sort_values()` take a column name as an argument, but have effects on the entire Data Frame.
+By contrast, other methods, like `.sort_values()` take a column name as an argument, but have effects on the entire Data Frame.
 
 For instance, if we want to sort by `Human Development Index` scores:
 
@@ -566,10 +573,68 @@ df.sort_index(ascending=False)
 Another useful method, which is very powerful in tandem with label-based indexing, is `.drop()`. This lets use specify using index labels rows which we want to remove from the Data Frame. For instance, if we want to remove the data for Australia we can use:
 
 ```{python}
+# drop the 'AUS' row
 df.drop(labels='AUS')
 ```
 
+<!-- #region -->
 If you compare this to the output from the last cell you will see that, as if by magic, the row for `AUS` has disappeared.
+
+
+### Methods for getting subsets of data from a Data Frame
+
+Another common operation we may want to perform is to view only the start (e.g. the `.head`) or the end (e.g. the `.tail`) of a Data Frame. For instance, if the rows are organized by time, amongst many other reasons.
+
+We could just use the `.iloc` method to do this. For example, to view the first three rows of the Data Frame we can use:
+<!-- #endregion -->
+
+```{python}
+# view the first three rows of the Data Frame, using `.iloc`
+df.iloc[:3]
+```
+
+Or, alternatively, to view the last three rows:
+
+```{python}
+# view the last three rows of the Data Frame, using `.iloc`
+df.iloc[-3:]
+```
+
+However, the kind folks at Pandas, because these operations are so commonly desired, have provided us the `.head()` and `.tail()` methods to do the same thing, with less typing and better readability.
+
+For example, we just give the `.head()` method the number of rows from the start of the Data Frame which we want to view. Let's say, again, we want to view the first three rows:
+
+```{python}
+# view the first three rows of the Data Frame, using `.head()`
+df.head(3)
+```
+
+We can also do the same thing at the other end of the Data Frame, using the `.tail()` method:
+
+```{python}
+# view the last three rows of the Data Frame, using `.tail()`
+df.tail(3)
+```
+
+In addition to retrieving rows from the extremes of the Data Frame, we may also, for many different purposes, want to retrieve a *random* set of rows.
+
+We can do this using the `.sample()` method. The syntax here is just the same as for `.head()` and `.tail()`, only now we are specifying the *number of random rows* we want to grab from the Data Frame.
+
+For instance, if let's say we want to get three random rows:
+
+```{python}
+# grab three rows at random using `.sample()`
+df.sample(3)
+```
+
+Even using the small dataset we have here, the overwhelming probability is that we will get a different selection of rows each time we run this command:
+
+```{python}
+# grab three rows at random AGAIN using `.sample()`
+df.sample(3)
+```
+
+If you are running this tutorial interactively, re-run the cell above a few times to see randomness in action...
 
 
 ## Plotting Methods
