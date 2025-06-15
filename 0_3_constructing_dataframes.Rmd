@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.1
+      jupytext_version: 1.17.2
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -22,7 +22,7 @@ the "DataFrames are just dictionary-like collections of Series"
 
 # Let There Be Data : Creating Data Frames
 
-In [the](0_0_pandas_intro.Rmd) [previous](0_1_to_loc_or_iloc.Rmd) [tutorials](0_2_pandas_dataframes_attributes_methods.Rmd) we showed how the Pandas class objects (Series and Data Frames) are constructed from Numpy objects (arrays) and other attributes (`name` and `index`).
+In [the](0_0_pandas_intro.Rmd) [previous](0_1_to_loc_or_iloc.Rmd) [tutorials](0_2_pandas_dataframes_attributes_methods.Rmd) we showed how the Pandas class objects (Series and Data Frames) are constructed from Numpy components (arrays) and other attributes (`name` and `index`).
 
 We focused on the maxims:
 
@@ -110,7 +110,7 @@ Ditto for the columns attribute:
 df.columns
 ```
 
-We can add new columns (e.g. new Pandas Series) into this black Data Frame by using direct indexing. E.g.
+We can add new columns (e.g. new Pandas Series) into this "blank" Data Frame by using direct indexing. E.g.
 
 `df['name_of_column'] = np.array([])`
 
@@ -122,14 +122,14 @@ df['new_column'] = np.array([1, 2, 3])
 df
 ```
 
-We used a Numpy array to construct this new column, however, as we know, Data Frames are a dictionary-like collection of Series, so Pandas has automatically added the array into a Pandas Series:
+We used a Numpy array to construct this new column, however, as we know, Data Frames are a dictionary-like collection of Series, so Pandas has automatically added the array into a Pandas Series when constructing the column:
 
 ```{python}
 # show the type of df['new_column']
 type(df['new_column'])
 ```
 
-The string which we used as the column name (`new_column`) has become the `name` attribute of this Series:
+The string which we used as the column name (e.g. `new_column`) has become the `name` attribute of this new Series:
 
 ```{python}
 # show the `name` of the column
@@ -207,6 +207,9 @@ Because all Series/columns in the Data Frame must share an `index`, Pandas will 
 df.index = ['Person_1', 'Person_2', 'Person_3', 'Person_4']
 ```
 
+Again, the error that Pandas gives us here is informative: `ValueError: Length mismatch: Expected axis has 3 elements, new values have 4 elements`. (Unfortunately, this may not be the case with all Pandas errors...).
+
+
 ## 2: Constructing a Data Frame from a dictionary (using Numpy arrays)
 
 Another common way to construct Data Frames is to use a dictionary.
@@ -216,6 +219,7 @@ When we do this, the keys of the dictionary become the column names (and therefo
 First, let's make a dictionary:
 
 ```{python}
+# make a dictionary, using the keys "A" and "B" and two Numpy arrays for the values
 dictionary = {'A': np.array([1, 2, 3, 4]),
               'B': np.array([5, 6, 7, 8])}
 
@@ -264,7 +268,7 @@ df3['A'].values
 
 ## 3: Constructing a Data Frame from a dictionary (using Pandas series)
 
-We can also use Pandas Series as the values in a dictionary, in order to build a Data Frame. Because Pandas Series contain a Numpy array plus additional attributes, like an `index`, we need to be aware of this when using them to create Data Frames, as it can lead to errors.
+We can also use Pandas Series as the values in a dictionary (rather than Numpy arrays), in order to build a Data Frame. Because Pandas Series contain a Numpy array plus additional attributes, like an `index`, we need to be aware of this when using them to create Data Frames, as conflicts between the indexes of different Series can lead to errors.
 
 Let's build a Series with the familiar three-letter country codes, the country names, and the [HDI data](https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index):
 
@@ -347,6 +351,8 @@ For the latest Pandas (2.2.3 at time of writing), Pandas will give an error if w
 # TypeError if we construct a Data Frame using Series without matching indexes
 df5 = pd.DataFrame({'country_names': country_names_series,
                     'HDI': hdi_series})
+
+df5
 ```
 
 Remember each index label is a unique identifier for each row of the Data Frame. Pandas is trying to compare the indices of the two series in order to match corresponding rows, and failing, because it cannot compare the string index of `country_names_series` to the (newly set) integer series of `hdi_series`.
