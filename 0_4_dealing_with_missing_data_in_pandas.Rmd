@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.1
+      jupytext_version: 1.17.2
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -42,14 +42,13 @@ floating point operations, such as `np.inf / np.inf`. In Pandas, NaNs are more
 commonly a flag to indicate the absence of data, for floating point and other
 data types.
 
-We will also look at how to handle NaNs safely in Pandas.
-
-First, let's remind ourselves how NaNs work in Numpy...
+We will also look at how to handle NaNs safely in Pandas. First, let's remind 
+ourselves how NaNs work in Numpy...
 
 
 ## NaNs in Numpy
 
-As mentioned above, NaNs in Numpy result from floating point errors. Numpy floating-point errors occur due to limitations in how computers represent and process numbers. They can result, for instance, from overflow and underflow - when a computer is dealing with numbers too large or too small to be represented within a floating point range. Likewise, invalid operations, doing something mathematically illegal/nonsensical will create NaN values in Numpy.
+As mentioned above, NaNs in Numpy result from floating point errors. Numpy floating-point errors occur due to limitations in how computers represent and process numbers. They can result, for instance, from overflow and underflow - when a computer is dealing with numbers too large or too small to be represented within a floating point range. Likewise, invalid operations - doing something mathematically illegal/nonsensical - will create NaN values in Numpy.
 
 ```{python}
 # import libraries
@@ -77,7 +76,7 @@ Let's inspect this value with the `type()` function, surely the type will also b
 type(array_with_nans[0])
 ```
 
-Hmmm, as we have seen previously, `float64` is a numerical datatype, and therefore perhaps not what we would expect here? The reason for this is that NaNs are represented in the same (in this case 64) bit sequence used to represent other numbers. The specific representation they use *means* undefined number however, rather than representing a *specific* number.
+Hmmm, as we have seen previously, `float64` is a numerical datatype, and therefore perhaps not what we would expect here? The reason for this is that NaNs are represented in the same (in this case 64) bit sequence used to represent other numbers. The specific representation they use means *undefined number* however, rather than representing a *specific* number.
 
 Because of this feature (though perhaps somewhat bizarrely) NaN values do not behave nicely with the equality operator:
 
@@ -93,7 +92,7 @@ We might surmise that this strange result is due to one NaN being retrieved from
 np.nan == np.nan
 ```
 
-The last two cells above both return a `False` value because NaN value is treated (essentially) like an undefined number. The equality operator will return `True` where two values are the *same* value. For a NaN, a value is *undefined* and *has no value*, so it cannot be compared with a specific number and checked for equality; therefore, the equality operator returns `False`.
+The last two cells above both return a `False` value because NaN value is treated (essentially) like an undefined number. The equality operator will return `True` where two values are the *same value*. For a NaN, the value is *undefined* and therefore *has no value*, so it cannot be compared with a specific number and checked for equality; therefore, the equality operator returns `False`.
 
 To get the expected result (e.g. a NaN value returning `True` when we ask Python "is this a NaN?"), we can use the `np.isnan()` function:
 
