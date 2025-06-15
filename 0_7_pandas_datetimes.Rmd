@@ -1,0 +1,329 @@
+---
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.17.2
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
+# Pandas Datetimes
+
+We will frequently find ourselves working with data about *time*. Having a specialised representation of time is useful in numerous respects, primarily because it allows us to do "maths with times". For instance, we may want to use subtraction to calculate the distance between two timepoints; we cannot do this if we represent dates/times as string data. As such, Python has a useful module for handling dates and times, creatively named ["Datetime"](https://docs.python.org/3/library/datetime.html).
+
+Datetimes have a (deserved) reputation for being fiddly (we would wager anyone who has encountered them will agree...). Additionally, in contrast to the close relation between Numpy and Pandas shown on the other pages, the way Pandas handles Datetimes is somewhat different to how they are handled in Numpy. The handling of Datetimes in Pandas is more similar to the Datetime library than to Numpy (and Numpy itself differs substantially from the Datetime library). We would argue that Numpy's handling of Datetimes is the fiddliest. 
+
+As such this page will focus on using Datetimes in Pandas (this is also probably the most likely context in which readers will use Datetimes...). 
+
+This page is a *brief* introduction to Datetimes in Pandas - there is much more than be done with Pandas datetimes than we will show here - but these are the essentials.
+
+
+## Datetimes in Pandas Series
+
+First, let's look at how Pandas handles dates. To do this, we'll create a Pandas Series containing some strings representing dates:
+
+```{python}
+import pandas as pd
+
+# create a Series with some strings representing dates
+string_time_series = pd.Series(['2025-06-06', '2025-06-07'])
+
+# show the Series
+string_time_series
+```
+
+To no one's surprise, the `type()` of this data is `str`:
+
+```{python}
+# show the `type()` of the data
+type(string_time_series.iloc[0])
+```
+
+These dates might look OK at a first glance, but let's say we want to know the difference in time between them.
+
+We might surmise that substracting one date from the other would give us this information.
+
+However, we would be sorely disappointed, when using `str` data to represent time:
+
+```{python tags=c("raises-exception")}
+# not what we wanted...
+string_time_series.iloc[1] - string_time_series.iloc[0]
+```
+
+This is where having a specialized representation of time comes in handy. We can use the `pd.to_datetime()` function to convert this data to Pandas' special representation of time. Specifically, each string will be converted to a representation of a specific *timepoint*. 
+
+Let's convert our string dates to Pandas datetimes:
+
+```{python}
+# convert `to_datetime()`
+datetime_series = pd.to_datetime(string_time_series)
+datetime_series
+```
+
+You'll (hopefully) notice immediately from the output of the cell above that the `dtype` of this data is no long `object` as it was above. It is now `datetime64[ns]` - which we can read as "a datetime representation, in 64 bits, down to the nanosecond resolution". Sounds fancy!
+
+We can confirm the type of the data using the `type()` function:
+
+```{python}
+type(datetime_series.iloc[0])
+```
+
+The `Timestamp` is Pandas' special representation of a timepoint e.g. a specific point in time. You may wonder why Pandas reports the `type()` as a `Timestamp` but the `dtype` as `datetime64[ns]`. For all intents and purposes, the `Timestamp` is just a more general description of `datetime64[ns]` (with the latter just giving more information about the bit depth and the time resolution...)
+
+We can now do "maths with times" and use substraction to calculate the difference between these dates:
+
+```{python}
+# get the difference between the two dates
+datetime_series.iloc[1] - datetime_series.iloc[0]
+```
+
+This operation has returned a `Timedelta` - the other foundational representation of time in Pandas. The `delta` in `Timedelta` refers to *difference* e.g. the difference between two timepoints. Equally, we can think of a `Timedelta` as a representation of a *duration* (e.g. the duration of time between two timepoints).
+
+Pandas helpfully reports that the difference between our two dates is `1 days 00:00:00`. You'll notice here that Pandas has made a guess as to the format of the dates. The original two strings (`2025-06-06` and `2025-06-07`) are equally interpretable as 6th June 2025/**7th June** 2025 and 6th June 2025/**6th July** 2025. Pandas has guessed that the middle two digits represent months.
+
+This may or may not be correct (in normal contexts, we would need to consult metadata/documentation associated with our dataset to be sure). However, we can control the format with which `pd.datetime()` will interpret the date strings, using the `format=` argument:
+
+```{python}
+# a new Series, using the alternate formatting
+other_datetime_series = pd.to_datetime(string_time_series, 
+                                       format='%Y-%d-%m')
+other_datetime_series
+```
+
+Here we have used the *date format string* `'%Y-%d-%m'` as input for the `format=` argument. We can read this as *"a four digit year, followed by a hyphen, followed by a two digit day, followed by a hyphen, followed by a two digit month"*. 
+
+The, *ahem*, format of the date format string can take some getting used to. Please see [here](https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior) for the full list of date format options.
+
+We can see that we get a totally different `Timedelta` when subtracting the dates interpretted according to the new format:
+
+```{python}
+# get the difference between the two dates with the alternate formatting
+other_datetime_series.iloc[1] - other_datetime_series.iloc[0]
+```
+
+These two objects (`Timestamp`s and `Timedelta`s) are the cornerstones of time representation in Pandas (though there is much else to know about them). 
+
+We will look more specifically at the attributes and methods we can use on these representations of time. However, we will do so in the context of Data Frames. As we know, Data Frames are just *dictionary-like collections of Series*, so any methods/attributes of Data Frame columns can also be used with standalone Series...
+
+Before we move on, it is important to note that `pd.to_datetime()` can also convert dates which contain words like the names of months (June, July etc.):
+
+```{python}
+# representations of dates which contain strings for the names of months (e.g. "JUNE")
+a_time_series_with_words = pd.Series(['2025-JUNE-06', '2025-JUNE-07'])
+
+# convert to Pandas datetimes
+pd.to_datetime(a_time_series_with_words)
+```
+
+Again, Pandas has guessed the format but has implored us to *specify* the format with which we want the string dates to be interpreted. (Pretty much always, specifying the format is better practice than letting Pandas guess...)
+
+The important point here is that even though the names of months ("JUNE") went into the `pd.to_datetime()` converstion, the `Timestamp` that came out the other side contains only numbers. This is important for understanding the essential nature of Pandas datetimes, as we will see in later sections.
+
+
+## Datetimes in Pandas Data Frames
+
+Let's explore Pandas Datetimes further. We will again use the [Human Development Index](https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index) dataset. However,  to keep things simple, we will just be looking at rows corresponding to Afghanistan:
+
+```{python}
+# import the dateset
+df = pd.read_csv('data/AFG-data-children-per-woman-vs-human-development-index.csv')
+
+df
+```
+
+If you look at the `Year` column, you can see that what we have is a running set of observations (all from Afghanistan) from the year 1990 up until the year 2022.
+
+This sort of data - a series of observations over time - is called *time series* data. In fact, the name of Pandas *Series* comes from "time series", as this is the sort of data the library was originally designed to be used with.
+
+If we have data like this - one observational unit (in this case a country), measured over time on the same variables - then a useful trick can be used to inspect all time-related trends at once.
+
+We just call the `.plot()` method on the whole Data Frame, using the `subplots=True` argument), and we get the following neat result:
+
+```{python}
+# a useful trick to time-series data!
+df.plot(subplots=True);
+```
+
+As expected, the trend for `Year` increasely linearly (*duh!*), whilst `Fertility Rate` falls and `Human Development Index`/`Population` (mostly) climb.
+
+We are undoubtedly viewing time-rleated trends here, but we are doing so based on a non-specialized representation of the times in the `Year` column:
+
+```{python}
+# what type of data is in the `Year` column?
+df['Year'].dtype
+```
+
+Because the `Year` formats in this dataset, unlike the `str` dates we used earlier, do NOT contain anything string specific (hyphens and the like), Pandas has interpreted them as `int` data.
+
+```{python}
+# inspect the `Year` column
+df['Year']
+```
+
+This is OK as far as it goes, but we can do better.
+
+Let's convert the `Year` values to `Timestamp` data, to see the host of *time-specific* attributes and methods that we then get access to:
+
+```{python}
+# convert the month data to datetime
+df['Year'] = pd.to_datetime(df['Year'],
+                            format='%Y')
+
+df['Year']
+```
+
+Here we used a much simpler datetime format string (`'%Y'`) for the `format=` argument. We can just read the string as *"a four digit representation of year"* (e.g. 1990). 
+
+You'll see in the output of the cell above that Pandas has added a month and a day to the `Year` values. This is because Pandas Datetimes (aka `Timestamp`s) represent a *specific timepoint* - so a whole year is too low of a resolution for this representation of time. As a result, Pandas has automatically chosen January 1st to flesh out the timepoint. 
+
+For most purposes this addition is fine. It might create problems if we mix this data with other time-related data which is higher-resolution than "year", but for our present purpose we are not going to do that, so let's just let Pandas make this harmless addition, as it gives us the benefit of a specialized representation of time, which we will see in the next section.
+
+
+## What is a Pandas datetime?
+
+Relative to representing time with `str` or `int` data, Pandas `Timestamp`s contain many attributes which represent specific units of time.
+
+Let's look at just one value from the `Year` column:
+
+```{python}
+# a look at a specific datetime
+df['Year'].iloc[0]
+```
+
+We can read the numbers in the parentheses as "0 minutes, 0 seconds past midnight on 1st January 1990".
+
+Let's try to index further into the `Timestamp`:
+
+```{python tags=c("raises-exception")}
+# oh no....
+df['Year'].iloc[0][0]
+```
+
+This inability to index (using integers) into the `Timestamp` might seem frustrating, but it is sensible.
+
+Remember the advantages of using [*index labels* vs *integer indexes*](0_1_to_loc_or_iloc.Rmd)? E.g. greater human interpretability, less error-proneness?
+
+Well, Pandas' representation of time has the same advantages. To retrieve more specific aspects of the `Timestamp` we must use *meaningful*, *readable* and *hard to mis-interpret* attribute names.
+
+We can access these time-specific attributes via the `.dt.` accessor (read as "datetime"). Much like the `.str.` accessor we [saw earlier](0_6_more_pandas_methods_strings.Rmd) this is an accessor specialized for a specific data type, in this case Datetime (aka `Timestamp`) data.
+
+As with the `.str` accessor, the `.dt.` accessor operates on all values of a Data Frame column (Pandas Series) concurrently.
+
+For instance, to grab just the year information, we can use `.dt.year`:
+
+```{python}
+# view the `year` attribute
+df['Year'].dt.year
+```
+
+To get this information for a specific row, we can just chain on an `.iloc` indexing operation:
+
+```{python}
+df['Year'].dt.year.iloc[0]
+```
+
+We can use other clearly named attributes, accessing time-based information down to the smallest unit of time represented in the `Timestamp`.
+
+We will go through these in order (`.dt.month`, `.dt.day`, `.dt.hour`, `.dt.minute`, `.dt.second`) in the cells below:
+
+```{python}
+# view the `month` attribute (which here has been automatically set to 1 by Pandas)
+df['Year'].dt.month
+```
+
+```{python}
+# view the `day` attribute (which here has been automatically set to 1 by Pandas)
+df['Year'].dt.day
+```
+
+```{python}
+# view the `hour` attribute (which here has been automatically set to 0 by Pandas)
+df['Year'].dt.hour
+```
+
+```{python}
+# view the `minute` attribute (which here has been automatically set to 0 by Pandas)
+df['Year'].dt.minute
+```
+
+```{python}
+# view the `second` attribute (which here has been automatically set to 0 by Pandas)
+df['Year'].dt.second
+```
+
+We can see that the sequence with which we just "walked" through the `.dt.` attributes (`.dt.month`, `.dt.day`, `.dt.hour`, `.dt.minute`, `.dt.second`) corresponds to the order of the output of a single `Timestamp`:
+
+```{python}
+# view an individual Timestamp
+df.index[0]
+```
+
+`Timestamp`s provide a structured, easy to access and hard to misinterpret, representation of time.
+
+This representation is *a nested set of numerical data where each level represents a specific unit of time*. **This is all Datetimes in Pandas are!** 
+
+
+We mentioned earlier than the names of months (like "June"/"July" etc, as well as other string-y stuff) can go *into* a `pd.to_datetime()` conversion, but the *result* will always contain only numbers. These numbers are stored in a sequence of attributes which represent increasingly smaller units of time (year, month, day, minute, second etc.) as numbers, even if the original input containing strings like "June", "July" etc.
+
+Using the `.dt.` accessor, we can easily do things like filter our a specific year using these attributes:
+
+```{python}
+# filter using a Boolean array from the `.dt` accessor
+df[df['Year'].dt.year == 1990]
+```
+
+See further methods and attribures available from the `.dt.` accessor [here](https://pandas.pydata.org/docs/reference/api/pandas.Series.dt.html).
+
+
+## Using datetimes in a Data Frame index
+
+Now we have our special time representations, a real strength of having them is to put them in the `index` of the Data Frame. This let's us easily do some useful things, like slicing the Data Frame rows by time. 
+
+We can do this using the previously seen `.set_index()` method:
+
+```{python}
+# put datetimes in the index
+df = df.set_index('Year')
+
+df
+```
+
+We can get the [aforementioned benefits](0_1_to_loc_or_iloc.Rmd) of `.loc` indexing on our `Timestamp`s.
+
+For instance, we can `.loc` index just data from the year 1990:
+
+```{python}
+# using `.loc` with a year
+df.loc["1990"]
+```
+
+We can also do neat slicing operations using time information. For instance showing all rows corresponding to years between 1990 and 1995:
+
+```{python}
+# slice the years using `.loc`
+df.loc["1990" : "1995"]
+```
+
+Simple calls to the `.plot()` method (using the `y = ` argument only) will now automatically place the datetime information on the x-axis:
+
+```{python}
+# plotting will automatically use the datetime index on the x-axis
+df.plot(y='Human Development Index');
+```
+
+# Summary
+
+There is a lot more would could say about Datetimes (both in Pandas and in general), but that is enough for this brief introduction. 
+
+The key points are:
+
+* Pandas datetimes are just ordered sequences of attributes which represent different units of time (year, month, day, hour, minute...) in a numerical format.
+
+* Datetimes let us do "maths with times" which we cannot do with string representations.
+
+* Putting datetimes in our index allows for some neat indexing and plotting operations.
