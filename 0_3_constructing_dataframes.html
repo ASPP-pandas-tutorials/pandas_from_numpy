@@ -450,7 +450,7 @@ the "DataFrames are just dictionary-like collections of Series"
 -->
 <section class="tex2jax_ignore mathjax_ignore" id="let-there-be-data-creating-data-frames">
 <h1>Let There Be Data : Creating Data Frames<a class="headerlink" href="#let-there-be-data-creating-data-frames" title="Link to this heading">#</a></h1>
-<p>In <a class="reference internal" href="0_0_pandas_intro.html"><span class="std std-doc">the</span></a> <a class="reference internal" href="0_1_to_loc_or_iloc.html"><span class="std std-doc">previous</span></a> <a class="reference internal" href="0_2_pandas_dataframes_attributes_methods.html"><span class="std std-doc">tutorials</span></a> we showed how the Pandas class objects (Series and Data Frames) are constructed from Numpy objects (arrays) and other attributes (<code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">index</span></code>).</p>
+<p>In <a class="reference internal" href="0_0_pandas_intro.html"><span class="std std-doc">the</span></a> <a class="reference internal" href="0_1_to_loc_or_iloc.html"><span class="std std-doc">previous</span></a> <a class="reference internal" href="0_2_pandas_dataframes_attributes_methods.html"><span class="std std-doc">tutorials</span></a> we showed how the Pandas class objects (Series and Data Frames) are constructed from Numpy components (arrays) and other attributes (<code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">index</span></code>).</p>
 <p>We focused on the maxims:</p>
 <ul class="simple">
 <li><p><em>“a Pandas Series is a numpy array, plus a <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute and an array-like <code class="docutils literal notranslate"><span class="pre">index</span></code>”</em></p></li>
@@ -659,7 +659,7 @@ the "DataFrames are just dictionary-like collections of Series"
 </div>
 </div>
 </div>
-<p>We can add new columns (e.g. new Pandas Series) into this black Data Frame by using direct indexing. E.g.</p>
+<p>We can add new columns (e.g. new Pandas Series) into this “blank” Data Frame by using direct indexing. E.g.</p>
 <p><code class="docutils literal notranslate"><span class="pre">df['name_of_column']</span> <span class="pre">=</span> <span class="pre">np.array([])</span></code></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -709,7 +709,7 @@ the "DataFrames are just dictionary-like collections of Series"
 </table>
 </div></div></div>
 </div>
-<p>We used a Numpy array to construct this new column, however, as we know, Data Frames are a dictionary-like collection of Series, so Pandas has automatically added the array into a Pandas Series:</p>
+<p>We used a Numpy array to construct this new column, however, as we know, Data Frames are a dictionary-like collection of Series, so Pandas has automatically added the array into a Pandas Series when constructing the column:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the type of df[&#39;new_column&#39;]</span>
@@ -723,7 +723,7 @@ the "DataFrames are just dictionary-like collections of Series"
 </div>
 </div>
 </div>
-<p>The string which we used as the column name (<code class="docutils literal notranslate"><span class="pre">new_column</span></code>) has become the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute of this Series:</p>
+<p>The string which we used as the column name (e.g. <code class="docutils literal notranslate"><span class="pre">new_column</span></code>) has become the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute of this new Series:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the `name` of the column</span>
@@ -1095,6 +1095,7 @@ the "DataFrames are just dictionary-like collections of Series"
 </div>
 </div>
 </div>
+<p>Again, the error that Pandas gives us here is informative: <code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">Length</span> <span class="pre">mismatch:</span> <span class="pre">Expected</span> <span class="pre">axis</span> <span class="pre">has</span> <span class="pre">3</span> <span class="pre">elements,</span> <span class="pre">new</span> <span class="pre">values</span> <span class="pre">have</span> <span class="pre">4</span> <span class="pre">elements</span></code>. (Unfortunately, this may not be the case with all Pandas errors…).</p>
 </section>
 <section id="constructing-a-data-frame-from-a-dictionary-using-numpy-arrays">
 <h2>2: Constructing a Data Frame from a dictionary (using Numpy arrays)<a class="headerlink" href="#constructing-a-data-frame-from-a-dictionary-using-numpy-arrays" title="Link to this heading">#</a></h2>
@@ -1103,7 +1104,8 @@ the "DataFrames are just dictionary-like collections of Series"
 <p>First, let’s make a dictionary:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dictionary</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]),</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># make a dictionary, using the keys &quot;A&quot; and &quot;B&quot; and two Numpy arrays for the values</span>
+<span class="n">dictionary</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]),</span>
               <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">])}</span>
 
 <span class="n">dictionary</span>
@@ -1248,7 +1250,7 @@ Name: A, dtype: int64
 </section>
 <section id="constructing-a-data-frame-from-a-dictionary-using-pandas-series">
 <h2>3: Constructing a Data Frame from a dictionary (using Pandas series)<a class="headerlink" href="#constructing-a-data-frame-from-a-dictionary-using-pandas-series" title="Link to this heading">#</a></h2>
-<p>We can also use Pandas Series as the values in a dictionary, in order to build a Data Frame. Because Pandas Series contain a Numpy array plus additional attributes, like an <code class="docutils literal notranslate"><span class="pre">index</span></code>, we need to be aware of this when using them to create Data Frames, as it can lead to errors.</p>
+<p>We can also use Pandas Series as the values in a dictionary (rather than Numpy arrays), in order to build a Data Frame. Because Pandas Series contain a Numpy array plus additional attributes, like an <code class="docutils literal notranslate"><span class="pre">index</span></code>, we need to be aware of this when using them to create Data Frames, as conflicts between the indexes of different Series can lead to errors.</p>
 <p>Let’s build a Series with the familiar three-letter country codes, the country names, and the <a class="reference external" href="https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index">HDI data</a>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1524,6 +1526,8 @@ dtype: float64
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TypeError if we construct a Data Frame using Series without matching indexes</span>
 <span class="n">df5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;country_names&#39;</span><span class="p">:</span> <span class="n">country_names_series</span><span class="p">,</span>
                     <span class="s1">&#39;HDI&#39;</span><span class="p">:</span> <span class="n">hdi_series</span><span class="p">})</span>
+
+<span class="n">df5</span>
 </pre></div>
 </div>
 </div>
@@ -1534,6 +1538,7 @@ dtype: float64
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># TypeError if we construct a Data Frame using Series without matching indexes</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">df5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;country_names&#39;</span><span class="p">:</span> <span class="n">country_names_series</span><span class="p">,</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span>                     <span class="s1">&#39;HDI&#39;</span><span class="p">:</span> <span class="n">hdi_series</span><span class="p">})</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">df5</span>
 
 <span class="nn">File /opt/hostedtoolcache/Python/3.12.11/x64/lib/python3.12/site-packages/pandas/core/frame.py:778,</span> in <span class="ni">DataFrame.__init__</span><span class="nt">(self, data, index, columns, dtype, copy)</span>
 <span class="g g-Whitespace">    </span><span class="mi">772</span>     <span class="n">mgr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_mgr</span><span class="p">(</span>
