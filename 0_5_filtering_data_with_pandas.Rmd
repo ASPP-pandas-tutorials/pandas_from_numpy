@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.1
+      jupytext_version: 1.17.2
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -50,7 +50,7 @@ Structure of this page:
 
 Once we have got our data into a Pandas Data Frame, no doubt we will want to filter and select specific portions of it for visualisation and analysis. 
 
-On this page we will look at different methods of filtering. Again, we will focus on how Pandas is built from Numpy, and assess the similarities and differences in how filtering works on objects from both libraries.
+On this page we will look at different methods of filtering. As on previous pages, we will focus on how Pandas is built from Numpy, and assess the similarities and differences in how filtering works on objects from both libraries.
 
 
 ## Pandas from Numpy, once more
@@ -117,12 +117,14 @@ Our Boolean array can now be used to retrieve elements of the `hdis_array` that 
 hdis_array[hdis_array_grtr_median_bool]
 ```
 
+If we're particularly neurotic, we can check using the [`all()`](https://docs.python.org/3/library/functions.html#all) function that this operation has, in fact, only returned elements greater than the median:
+
 ```{python}
 # check we have what we want
 all(hdis_array[hdis_array_grtr_median_bool] > np.median(hdis_array))
 ```
 
-Because Python treats `True` values as being equal to 1 and `False` values as being equal to 0, taking the mean of a Boolean array works out the same as calculating the proportion of `True` values.
+Because Python treats `True` values as being equal to 1 and `False` values as being equal to 0, taking the mean of a Boolean array works out the same as calculating the proportion of `True` values. (*NB*: this is because when we do this operation, we are doing something like $\frac{1+1+1...+0+0}{n}$. The `False` (aka `0`) values add nothing to the numerator of the mean calculation, leaving only the `True` (aka `1`) values. This effectively gives us a count of the `True` values, divided by the total number of values, which returns the proportion of `True`'s.
 
 Using `np.mean()` we can quickly count the proportion of `True` values, which as expected, because we are dealing with a median, is close to 0.5:
 
@@ -206,7 +208,7 @@ df = df.set_index("Code")
 df
 ```
 
-Now, to view the median we can use the `.median()` Series method, rather than calling the `np.median()` function as we did earlier:
+Now, to view the median we can use the `.median()` Series method, rather than calling the `np.median()` function as we did earlier. (*NB*: we mentioned on a [previous page](0_2_pandas_dataframes_attributes_methods.Rmd) that Pandas Series *methods* are sometimes inherited from Numpy *functions*, but they generally give better efficiency and readability, as is the case here...):
 
 ```{python}
 # get the median HDI
@@ -258,7 +260,7 @@ This hand-built Series returns the same rows of the Data Frame as Series we got 
 df[hdis_array_bool_series]
 ```
 
-We can use the Boolean Series to create a new Data Frame. This let's us use statistical and plotting methods on subset of the data.
+We can use the Boolean Series to create a new Data Frame. This let's us use Pandas' statistical and plotting methods on subsets of the data.
 
 For instance, we may want to look for differences between countries *above* the median HDI, and countries *below* the median HDI.
 
@@ -325,7 +327,7 @@ full_df
 
 This data is in *long format* - each row is an observation of one country, but each country appears in multiple rows. E.g. there are repeated observations from the same countries. If you look at the last few rows, you'll see repeated observations on Zimbabwe, over multiple years.
 
-You'll also notice (an unfortunate commonality of many datasets) that the full data contains many `NaN` values (we'll deal with some of these shortly).
+You'll also notice (an unfortunate commonality of many datasets) that the full data contains many NaN values (we'll deal with some of these shortly).
 
 As mentioned above, we will look at data from the year 2000, but using the full complement of countries. This will keep the plots interpretable. 
 
@@ -353,7 +355,7 @@ You might notice that now we have `NaN` values in the index. We don't want this,
 
 We can again do this via Boolean filtering:
 
-*NOTE:* the `~` operator, we are asking for rows with index labels that are NOT `NaN`
+*NB:* the `~` operator, we are asking for rows with index labels that are NOT NaN...
 
 ```{python}
 # remove NaN data 
@@ -409,20 +411,20 @@ full_df_2000_gtr_than_median_HDI_bool = full_df_2000['Human Development Index'] 
 full_df_2000_gtr_than_median_HDI_bool
 ```
 
-We can use this filter, and the `.plot()` method, to inspect the trend either side of the median HDI:
+We can use this filter, and the `.plot()` method, to inspect the trend either side of the median HDI - (again, to get the values from the *opposite* side of the median, we can use the `~` operator):
 
 ```{python}
 # plot countries with above median HDI
 full_df_2000[full_df_2000_gtr_than_median_HDI_bool].plot(x='Human Development Index',
                                                           y='Fertility Rate',
-                                                          kind='scatter')
+                                                          kind='scatter');
 ```
 
 ```{python}
 # plot countries with below median HDI
 full_df_2000[~full_df_2000_gtr_than_median_HDI_bool].plot(x='Human Development Index',
                                                           y='Fertility Rate',
-                                                          kind='scatter')
+                                                          kind='scatter');
 ```
 
 We can see graphically that the trends differ either side of the median, in a way that is clearer than looking at the full data on one plot. 
