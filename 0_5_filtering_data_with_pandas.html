@@ -58,6 +58,8 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '0_5_filtering_data_with_pandas';</script>
     <link rel="canonical" href="https://ASPP_pandas_tutorials.github.io/pandas_from_numpy/0_5_filtering_data_with_pandas.html" />
     <link rel="icon" href="_static/pandas_numpy.ico"/>
@@ -476,7 +478,7 @@ Structure of this page:
 * show Boolean filtering with DataFrames
 -->
 <p>Once we have got our data into a Pandas Data Frame, no doubt we will want to filter and select specific portions of it for visualisation and analysis.</p>
-<p>On this page we will look at different methods of filtering. Again, we will focus on how Pandas is built from Numpy, and assess the similarities and differences in how filtering works on objects from both libraries.</p>
+<p>On this page we will look at different methods of filtering. As on previous pages, we will focus on how Pandas is built from Numpy, and assess the similarities and differences in how filtering works on objects from both libraries.</p>
 <section id="pandas-from-numpy-once-more">
 <h2>Pandas from Numpy, once more<a class="headerlink" href="#pandas-from-numpy-once-more" title="Link to this heading">#</a></h2>
 <p>To explore filtering, let’s create some Numpy arrays, containing the <a class="reference external" href="https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index">HDI data</a>:</p>
@@ -578,6 +580,7 @@ larger than the median HDI score (and <code class="docutils literal notranslate"
 </div>
 </div>
 </div>
+<p>If we’re particularly neurotic, we can check using the <a class="reference external" href="https://docs.python.org/3/library/functions.html#all"><code class="docutils literal notranslate"><span class="pre">all()</span></code></a> function that this operation has, in fact, only returned elements greater than the median:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># check we have what we want</span>
@@ -591,7 +594,7 @@ larger than the median HDI score (and <code class="docutils literal notranslate"
 </div>
 </div>
 </div>
-<p>Because Python treats <code class="docutils literal notranslate"><span class="pre">True</span></code> values as being equal to 1 and <code class="docutils literal notranslate"><span class="pre">False</span></code> values as being equal to 0, taking the mean of a Boolean array works out the same as calculating the proportion of <code class="docutils literal notranslate"><span class="pre">True</span></code> values.</p>
+<p>Because Python treats <code class="docutils literal notranslate"><span class="pre">True</span></code> values as being equal to 1 and <code class="docutils literal notranslate"><span class="pre">False</span></code> values as being equal to 0, taking the mean of a Boolean array works out the same as calculating the proportion of <code class="docutils literal notranslate"><span class="pre">True</span></code> values. (<em>NB</em>: this is because when we do this operation, we are doing something like <span class="math notranslate nohighlight">\(\frac{1+1+1...+0+0}{n}\)</span>. The <code class="docutils literal notranslate"><span class="pre">False</span></code> (aka <code class="docutils literal notranslate"><span class="pre">0</span></code>) values add nothing to the numerator of the mean calculation, leaving only the <code class="docutils literal notranslate"><span class="pre">True</span></code> (aka <code class="docutils literal notranslate"><span class="pre">1</span></code>) values. This effectively gives us a count of the <code class="docutils literal notranslate"><span class="pre">True</span></code> values, divided by the total number of values, which returns the proportion of <code class="docutils literal notranslate"><span class="pre">True</span></code>’s.</p>
 <p>Using <code class="docutils literal notranslate"><span class="pre">np.mean()</span></code> we can quickly count the proportion of <code class="docutils literal notranslate"><span class="pre">True</span></code> values, which as expected, because we are dealing with a median, is close to 0.5:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -889,7 +892,7 @@ Name: hdi_grtr_thn_median, dtype: bool
 </table>
 </div></div></div>
 </div>
-<p>Now, to view the median we can use the <code class="docutils literal notranslate"><span class="pre">.median()</span></code> Series method, rather than calling the <code class="docutils literal notranslate"><span class="pre">np.median()</span></code> function as we did earlier:</p>
+<p>Now, to view the median we can use the <code class="docutils literal notranslate"><span class="pre">.median()</span></code> Series method, rather than calling the <code class="docutils literal notranslate"><span class="pre">np.median()</span></code> function as we did earlier. (<em>NB</em>: we mentioned on a <a class="reference internal" href="0_2_pandas_dataframes_attributes_methods.html"><span class="std std-doc">previous page</span></a> that Pandas Series <em>methods</em> are sometimes inherited from Numpy <em>functions</em>, but they generally give better efficiency and readability, as is the case here…):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the median HDI</span>
@@ -1187,7 +1190,7 @@ Name: hdi_grtr_thn_median, dtype: bool
 </table>
 </div></div></div>
 </div>
-<p>We can use the Boolean Series to create a new Data Frame. This let’s us use statistical and plotting methods on subset of the data.</p>
+<p>We can use the Boolean Series to create a new Data Frame. This let’s us use Pandas’ statistical and plotting methods on subsets of the data.</p>
 <p>For instance, we may want to look for differences between countries <em>above</em> the median HDI, and countries <em>below</em> the median HDI.</p>
 <p>We can use our Boolean filter as follows:</p>
 <div class="cell docutils container">
@@ -1652,7 +1655,7 @@ Name: Fertility Rate, dtype: float64
 </div></div></div>
 </div>
 <p>This data is in <em>long format</em> - each row is an observation of one country, but each country appears in multiple rows. E.g. there are repeated observations from the same countries. If you look at the last few rows, you’ll see repeated observations on Zimbabwe, over multiple years.</p>
-<p>You’ll also notice (an unfortunate commonality of many datasets) that the full data contains many <code class="docutils literal notranslate"><span class="pre">NaN</span></code> values (we’ll deal with some of these shortly).</p>
+<p>You’ll also notice (an unfortunate commonality of many datasets) that the full data contains many NaN values (we’ll deal with some of these shortly).</p>
 <p>As mentioned above, we will look at data from the year 2000, but using the full complement of countries. This will keep the plots interpretable.</p>
 <p>We can use Boolean filtering to strip the Data Frame down to just observations from the year 2000:</p>
 <div class="cell docutils container">
@@ -1975,7 +1978,7 @@ Name: Fertility Rate, dtype: float64
 </div>
 <p>You might notice that now we have <code class="docutils literal notranslate"><span class="pre">NaN</span></code> values in the index. We don’t want this, so let’s remove those observations.</p>
 <p>We can again do this via Boolean filtering:</p>
-<p><em>NOTE:</em> the <code class="docutils literal notranslate"><span class="pre">~</span></code> operator, we are asking for rows with index labels that are NOT <code class="docutils literal notranslate"><span class="pre">NaN</span></code></p>
+<p><em>NB:</em> the <code class="docutils literal notranslate"><span class="pre">~</span></code> operator, we are asking for rows with index labels that are NOT NaN…</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># remove NaN data </span>
@@ -2686,20 +2689,17 @@ Name: Human Development Index, Length: 240, dtype: bool
 </div>
 </div>
 </div>
-<p>We can use this filter, and the <code class="docutils literal notranslate"><span class="pre">.plot()</span></code> method, to inspect the trend either side of the median HDI:</p>
+<p>We can use this filter, and the <code class="docutils literal notranslate"><span class="pre">.plot()</span></code> method, to inspect the trend either side of the median HDI - (again, to get the values from the <em>opposite</em> side of the median, we can use the <code class="docutils literal notranslate"><span class="pre">~</span></code> operator):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot countries with above median HDI</span>
 <span class="n">full_df_2000</span><span class="p">[</span><span class="n">full_df_2000_gtr_than_median_HDI_bool</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">,</span>
                                                           <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">,</span>
-                                                          <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
+                                                          <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;Human Development Index&#39;, ylabel=&#39;Fertility Rate&#39;&gt;
-</pre></div>
-</div>
 <img alt="_images/646eceb7428a31ee2d5d220279d9e6c6849bc9a466a66e62f2a595febf0260f4.png" src="_images/646eceb7428a31ee2d5d220279d9e6c6849bc9a466a66e62f2a595febf0260f4.png" />
 </div>
 </div>
@@ -2708,14 +2708,11 @@ Name: Human Development Index, Length: 240, dtype: bool
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot countries with below median HDI</span>
 <span class="n">full_df_2000</span><span class="p">[</span><span class="o">~</span><span class="n">full_df_2000_gtr_than_median_HDI_bool</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">,</span>
                                                           <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">,</span>
-                                                          <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
+                                                          <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;Human Development Index&#39;, ylabel=&#39;Fertility Rate&#39;&gt;
-</pre></div>
-</div>
 <img alt="_images/a432b2dd813c76336a9d22329106523546ba69c975451dc188670cf4241cca18.png" src="_images/a432b2dd813c76336a9d22329106523546ba69c975451dc188670cf4241cca18.png" />
 </div>
 </div>
