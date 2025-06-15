@@ -467,11 +467,11 @@ Pandas. You are probably aware that Numpy will produce NaNs from invalid
 floating point operations, such as <code class="docutils literal notranslate"><span class="pre">np.inf</span> <span class="pre">/</span> <span class="pre">np.inf</span></code>. In Pandas, NaNs are more
 commonly a flag to indicate the absence of data, for floating point and other
 data types.</p>
-<p>We will also look at how to handle NaNs safely in Pandas.</p>
-<p>First, let’s remind ourselves how NaNs work in Numpy…</p>
+<p>We will also look at how to handle NaNs safely in Pandas. First, let’s remind
+ourselves how NaNs work in Numpy…</p>
 <section id="nans-in-numpy">
 <h2>NaNs in Numpy<a class="headerlink" href="#nans-in-numpy" title="Link to this heading">#</a></h2>
-<p>As mentioned above, NaNs in Numpy result from floating point errors. Numpy floating-point errors occur due to limitations in how computers represent and process numbers. They can result, for instance, from overflow and underflow - when a computer is dealing with numbers too large or too small to be represented within a floating point range. Likewise, invalid operations, doing something mathematically illegal/nonsensical will create NaN values in Numpy.</p>
+<p>As mentioned above, NaNs in Numpy result from floating point errors. Numpy floating-point errors occur due to limitations in how computers represent and process numbers. They can result, for instance, from overflow and underflow - when a computer is dealing with numbers too large or too small to be represented within a floating point range. Likewise, invalid operations - doing something mathematically illegal/nonsensical - will create NaN values in Numpy.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import libraries</span>
@@ -485,7 +485,7 @@ data types.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2668/557159319.py:6: RuntimeWarning: invalid value encountered in divide
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2520/557159319.py:6: RuntimeWarning: invalid value encountered in divide
   array_with_nans = np.array([0, 0]) / np.array([0, 0])
 </pre></div>
 </div>
@@ -523,7 +523,7 @@ data types.</p>
 </div>
 </div>
 </div>
-<p>Hmmm, as we have seen previously, <code class="docutils literal notranslate"><span class="pre">float64</span></code> is a numerical datatype, and therefore perhaps not what we would expect here? The reason for this is that NaNs are represented in the same (in this case 64) bit sequence used to represent other numbers. The specific representation they use <em>means</em> undefined number however, rather than representing a <em>specific</em> number.</p>
+<p>Hmmm, as we have seen previously, <code class="docutils literal notranslate"><span class="pre">float64</span></code> is a numerical datatype, and therefore perhaps not what we would expect here? The reason for this is that NaNs are represented in the same (in this case 64) bit sequence used to represent other numbers. The specific representation they use means <em>undefined number</em> however, rather than representing a <em>specific</em> number.</p>
 <p>Because of this feature (though perhaps somewhat bizarrely) NaN values do not behave nicely with the equality operator:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -552,7 +552,7 @@ data types.</p>
 </div>
 </div>
 </div>
-<p>The last two cells above both return a <code class="docutils literal notranslate"><span class="pre">False</span></code> value because NaN value is treated (essentially) like an undefined number. The equality operator will return <code class="docutils literal notranslate"><span class="pre">True</span></code> where two values are the <em>same</em> value. For a NaN, a value is <em>undefined</em> and <em>has no value</em>, so it cannot be compared with a specific number and checked for equality; therefore, the equality operator returns <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<p>The last two cells above both return a <code class="docutils literal notranslate"><span class="pre">False</span></code> value because NaN value is treated (essentially) like an undefined number. The equality operator will return <code class="docutils literal notranslate"><span class="pre">True</span></code> where two values are the <em>same value</em>. For a NaN, the value is <em>undefined</em> and therefore <em>has no value</em>, so it cannot be compared with a specific number and checked for equality; therefore, the equality operator returns <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
 <p>To get the expected result (e.g. a NaN value returning <code class="docutils literal notranslate"><span class="pre">True</span></code> when we ask Python “is this a NaN?”), we can use the <code class="docutils literal notranslate"><span class="pre">np.isnan()</span></code> function:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
