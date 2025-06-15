@@ -47,7 +47,7 @@ Remember, a *method* is a function attached to an object.
 In this case, our object is a Numpy array (later it will be a Pandas Series or Data Frame).
 
 We'll build a Numpy array using the `np.array([])` constructor, containing our
-familiar three-letter country codes. As before, you see the [datasets and
+familiar three-letter country codes. As before, you can see the [datasets and
 licenses page](data/data_notes) for more detail.
 
 ```{python}

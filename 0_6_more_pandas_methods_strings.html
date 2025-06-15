@@ -469,9 +469,9 @@ Structure of this page:
 * show str methods with a dataframe + how this can be very useful when
   cleaning data
 -->
-<p>String/text data is often used to represent categorical variables, and commonly appears in data analyses in a variety of contexts. When dealing with string/text data we will frequently find that we need to alter the strings to correct errors, improve clarity, make formatting uniform, or a host of other reasons.</p>
+<p>String/text data is often used to represent categorical variables, and commonly appears in a variety of data analysis contexts. When dealing with string/text data we will frequently find that we need to alter the strings to correct errors, improve clarity, make formatting uniform, or for a host of other reasons.</p>
 <p>String methods are inherent to Python, and these methods or variants of them can all be used on Numpy arrays and Pandas Series/Data Frames. However, Numpy and Pandas use different interfaces for interacting with strings. To understand the differences between Numpy and Pandas with respect to strings, let’s begin at the foundation, the in-built string methods of Python. The cell below contains a simple string.</p>
-<p><em>NB</em>: you may want to use <code class="docutils literal notranslate"><span class="pre">dir()</span></code> again here to see the full complement of available string methods.</p>
+<p><em>NB</em>: if you are running this tutorial interactively, and you like messy cell outputs, you may want to use <code class="docutils literal notranslate"><span class="pre">dir()</span></code> again here to see the full complement of available string methods.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># a string</span>
@@ -491,7 +491,7 @@ Structure of this page:
 <p>Let’s say we like reading values in our data as if they are being spoken in a loud voice. If this is the case we can alter the format of the string to make all letters uppercase, using the <code class="docutils literal notranslate"><span class="pre">.upper()</span></code> method:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># upper method</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the `.upper()` method</span>
 <span class="n">string</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -502,16 +502,16 @@ Structure of this page:
 </div>
 </div>
 </div>
-<p>We can replace characters in the string using the aptly named <code class="docutils literal notranslate"><span class="pre">.replace()</span></code> method. Here we supply two strings to the method, first the string we want to replace, and then second, the string we want to replace it with.</p>
+<p>We can replace characters in the string using the aptly named <code class="docutils literal notranslate"><span class="pre">.replace()</span></code> method. Here we supply two strings to the method, first the string we want to replace, and then second, the string we want to replace it with. In this case, let’s <code class="docutils literal notranslate"><span class="pre">.replace()</span></code> the underscores with a blank space:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># replace</span>
-<span class="n">string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the `.replace()` method</span>
+<span class="n">string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;stringofwords&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;string of words&#39;
 </pre></div>
 </div>
 </div>
@@ -519,7 +519,7 @@ Structure of this page:
 <p>Fancier formatting methods will let us adjust strings, for instance, in title case (<code class="docutils literal notranslate"><span class="pre">.title()</span></code>):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># a more elaborate method</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># a more elaborate string method</span>
 <span class="n">string</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -573,7 +573,7 @@ Structure of this page:
 <h2>Strings methods with numpy arrays<a class="headerlink" href="#strings-methods-with-numpy-arrays" title="Link to this heading">#</a></h2>
 <p>So, strings in base python have a large number of in-built methods - what about strings in Numpy?</p>
 <p>Numpy arrays themselves do not have specific string methods, but the in-built Python string methods can be called on individual string values in a Numpy array. Alternatively, we can use functions from the <code class="docutils literal notranslate"><span class="pre">np.char.</span></code> module to operate on all the strings in the array concurrently.</p>
-<p>To investigate how string data is handled in Numpy, let’s make some arrays containing strings:</p>
+<p>To investigate how string data is handled in Numpy, let’s make some arrays containing strings from now (very) familiar <a class="reference external" href="https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index">HDI dataset</a>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import libraries (no imports were needed prior to this point as string methods are part of base python)</span>
@@ -1040,7 +1040,7 @@ dtype: object
 <h2>String methods with Pandas DataFrames<a class="headerlink" href="#string-methods-with-pandas-dataframes" title="Link to this heading">#</a></h2>
 <p>So, Pandas makes it somewhat easier than Numpy to perform operations on all the string elements at once.</p>
 <p>Remember that <em>a DataFrame is a dictionary-like collection of Series</em>, and so everything we have just seen of strings in Pandas Series applies to the <em>columns</em> of a Data Frame.</p>
-<p>Let’s import the <a class="reference external" href="https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index">HDI data</a>:</p>
+<p>Let’s import the <a class="reference external" href="https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index">HDI data</a> in a Pandas Data Frame:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import data</span>
@@ -1242,7 +1242,7 @@ Name: Country Name, dtype: object
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="nn">/tmp/ipykernel_2638/1916934331.py</span> in <span class="ni">?</span><span class="nt">()</span>
+<span class="nn">/tmp/ipykernel_2569/1916934331.py</span> in <span class="ni">?</span><span class="nt">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Cannot use `.str` methods on whole Data Frame.</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">df</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 
@@ -1272,7 +1272,7 @@ same error:</p>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="nn">/tmp/ipykernel_2638/3866909753.py</span> in <span class="ni">?</span><span class="nt">()</span>
+<span class="nn">/tmp/ipykernel_2569/3866909753.py</span> in <span class="ni">?</span><span class="nt">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Oops, using `.str` fails even for all-string-dtype columns.</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Country Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Code&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">()</span>
 
@@ -1486,7 +1486,7 @@ Name: Country Name, dtype: bool
 <h2>Uses of string methods in data wrangling<a class="headerlink" href="#uses-of-string-methods-in-data-wrangling" title="Link to this heading">#</a></h2>
 <p>As we mentioned earlier, string methods generally useful for cleaning text data. This can be especially useful when combining data from different sources, where different conventions in data entry may lead to similar data being formatted differently.</p>
 <p>To explore this, let’s import a new dataset, which, like the HDI data, contains observations at the country level (e.g. each row is an observarion from a specific country).</p>
-<p>You can read more about the dataset <a class="reference external" href="https://github.com/odsti/datasets/tree/main/gender_stats">here</a>.</p>
+<p>This dataset is also at the country-level of granularity, and it contains information about maternal mortality rates. You can read more about the dataset <a class="reference external" href="https://github.com/odsti/datasets/tree/main/gender_stats">here</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import maternal mortality dataset</span>
@@ -1689,7 +1689,7 @@ Name: country_name, Length: 216, dtype: bool
 </div>
 </div>
 </div>
-<p>That output is pretty opaque, maybe there is a <code class="docutils literal notranslate"><span class="pre">True</span></code> in there somewhere. We can chain on the <code class="docutils literal notranslate"><span class="pre">.sum()</span></code> method to count the number of <code class="docutils literal notranslate"><span class="pre">True</span></code> values in the above Boolean Series:</p>
+<p>That output is pretty opaque, maybe there is a <code class="docutils literal notranslate"><span class="pre">True</span></code> in there somewhere. Because Python treats <code class="docutils literal notranslate"><span class="pre">True</span></code> values as being equal to <code class="docutils literal notranslate"><span class="pre">1</span></code>, we can chain on the <code class="docutils literal notranslate"><span class="pre">.sum()</span></code> method to count the number of <code class="docutils literal notranslate"><span class="pre">True</span></code> values in the above Boolean Series:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># count the Trues for country names containing &quot;Russia&quot; in the `maternal</span>
@@ -1784,6 +1784,7 @@ Name: RUS, dtype: object
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># format the maternal mortality data for Russia to use the same country name as the HDI data</span>
 <span class="n">maternal_mort</span><span class="p">[</span><span class="s1">&#39;country_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">maternal_mort</span><span class="p">[</span><span class="s1">&#39;country_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Russian Federation&#39;</span><span class="p">,</span> <span class="s1">&#39;Russia&#39;</span><span class="p">)</span>
 
+<span class="c1"># show the newly formatted row</span>
 <span class="n">maternal_mort</span><span class="p">[</span><span class="n">maternal_mort</span><span class="p">[</span><span class="s1">&#39;country_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;Russia&#39;</span><span class="p">)]</span>
 </pre></div>
 </div>
@@ -1835,6 +1836,7 @@ Name: RUS, dtype: object
 </table>
 </div></div></div>
 </div>
+<p>We are now ready for a clean and stress-free data merge! (<em>NB</em>: we are lying here, merging datasets is almost never stress-free…)</p>
 </section>
 <section id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
