@@ -1,6 +1,7 @@
 # Book settings
 title : "Pandas from Numpy"
 author: Peter Rush, Matthew Brett
+copyright: "2025"
 logo: images/pandas_numpy.jpg
 email: peter_rush@live.co.uk
 # >- starts a multiline string, where newlines replaced by spaces, and final
