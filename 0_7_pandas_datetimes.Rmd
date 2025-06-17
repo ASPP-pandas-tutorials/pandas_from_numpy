@@ -73,7 +73,7 @@ We can confirm the type of the data using the `type()` function:
 type(datetime_series.iloc[0])
 ```
 
-The `Timestamp` is Pandas' special representation of a timepoint e.g. a specific point in time. You may wonder why Pandas reports the `type()` as a `Timestamp` but the `dtype` as `datetime64[ns]`. For all intents and purposes, the `Timestamp` is just a more general description of `datetime64[ns]` (with the latter just giving more information about the bit depth and the time resolution...)
+The `Timestamp` is Pandas' special representation of a timepoint e.g. a specific point in time. You may wonder why Pandas reports the `type()` as a `Timestamp` but the `dtype` as `datetime64[ns]`. For all intents and purposes, the `Timestamp` is just a more general description of `datetime64[ns]` (with the latter just giving more information about the amount of memory used for storage and the time resolution...)
 
 We can now do "maths with times" and use substraction to calculate the difference between these dates:
 
