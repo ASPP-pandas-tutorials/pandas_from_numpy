@@ -46,7 +46,7 @@ type(string_time_series.iloc[0])
 
 These dates might look OK at a first glance, but let's say we want to know the difference in time between them.
 
-We might surmise that substracting one date from the other would give us this information.
+We might surmise that subtracting one date from the other would give us this information.
 
 However, we would be sorely disappointed, when using `str` data to represent time:
 
