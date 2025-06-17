@@ -139,7 +139,7 @@ If you look at the `Year` column, you can see that what we have is a running set
 
 This sort of data - a series of observations over time - is called *time series* data. In fact, the name of Pandas *Series* comes from "time series", as this is the sort of data the library was originally designed to be used with.
 
-If we have data like this - one observational unit (in this case a country), measured over time on the same variables - then a useful trick can be used to inspect all time-related trends at once.
+Here we have one observational unit (in this case a country), measured over time on the same variables.  If we have data like this, then we can use a useful trick to inspect all time-related trends at once.
 
 We just call the `.plot()` method on the whole Data Frame, using the `subplots=True` argument), and we get the following neat result:
 
