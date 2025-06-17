@@ -83,7 +83,7 @@ datetime_series.iloc[1] - datetime_series.iloc[0]
 
 This operation has returned a `Timedelta` - the other foundational representation of time in Pandas. The `delta` in `Timedelta` refers to *difference* e.g. the difference between two timepoints. Equally, we can think of a `Timedelta` as a representation of a *duration* (e.g. the duration of time between two timepoints).
 
-Pandas helpfully reports that the difference between our two dates is `1 days 00:00:00`. You'll notice here that Pandas has made a guess as to the format of the dates. The original two strings (`2025-06-06` and `2025-06-07`) are equally interpretable as 6th June 2025/**7th June** 2025 and 6th June 2025/**6th July** 2025. Pandas has guessed that the middle two digits represent months.
+Pandas helpfully reports that the difference between our two dates is `1 days 00:00:00`. You'll notice here that Pandas made a guess as to the format of the dates when we created this Series with `pd.to_datetime`. The original two strings (`2025-06-06` and `2025-06-07`) are equally interpretable as 6th June 2025/**7th June** 2025 and 6th June 2025/**6th July** 2025. Pandas has guessed that the middle two digits represent months.
 
 This may or may not be correct (in normal contexts, we would need to consult metadata/documentation associated with our dataset to be sure). However, we can control the format with which `pd.datetime()` will interpret the date strings, using the `format=` argument:
 
