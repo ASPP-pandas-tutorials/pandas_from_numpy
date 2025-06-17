@@ -20,7 +20,7 @@ Datetimes have a (deserved) reputation for being fiddly (we would wager anyone w
 
 As such this page will focus on using Datetimes in Pandas (this is also probably the most likely context in which readers will use Datetimes...). 
 
-This page is a *brief* introduction to Datetimes in Pandas - there is much more than be done with Pandas datetimes than we will show here - but these are the essentials.
+This page is a *brief* introduction to Pandas Datetimes - there is much more than be done with Pandas Datetimes than we will show here - but these are the essentials.
 
 
 ## Datetimes in Pandas Series
