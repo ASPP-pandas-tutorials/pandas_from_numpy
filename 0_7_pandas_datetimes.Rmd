@@ -64,7 +64,7 @@ datetime_series = pd.to_datetime(string_time_series)
 datetime_series
 ```
 
-You'll (hopefully) notice immediately from the output of the cell above that the `dtype` of this data is no long `object` as it was above. It is now `datetime64[ns]` - which we can read as "a datetime representation, in 64 bits, down to the nanosecond resolution". Sounds fancy!
+You'll (hopefully) notice immediately from the output of the cell above that the `dtype` of this data is no longer `object` as it was above. It is now `datetime64[ns]` - which we can read as "a datetime representation, in 64 bits, down to the nanosecond resolution". Sounds fancy!
 
 We can confirm the type of the data using the `type()` function:
 
