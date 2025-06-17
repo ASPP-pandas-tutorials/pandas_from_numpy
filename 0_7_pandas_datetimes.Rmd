@@ -260,12 +260,12 @@ We can see that the sequence with which we just "walked" through the `.dt.` attr
 
 ```{python}
 # view an individual Timestamp
-df.index[0]
+df['Year'].iloc[0]
 ```
 
 `Timestamp`s provide a structured, easy to access and hard to misinterpret, representation of time.
 
-This representation is *a nested set of numerical data where each level represents a specific unit of time*. **This is all Datetimes in Pandas are!** 
+This representation is *an ordered set of numerical data where each level represents a specific unit of time*. **This is all Datetimes in Pandas are!** 
 
 
 We mentioned earlier than the names of months (like "June"/"July" etc, as well as other string-y stuff) can go *into* a `pd.to_datetime()` conversion, but the *result* will always contain only numbers. These numbers are stored in a sequence of attributes which represent increasingly smaller units of time (year, month, day, minute, second etc.) as numbers, even if the original input containing strings like "June", "July" etc.
@@ -291,6 +291,23 @@ We can do this using the previously seen `.set_index()` method:
 df = df.set_index('Year')
 
 df
+```
+
+If we view the `index`, Pandas will helpfully reveal that setting `Year` as the `index` - a column which contained only Datetimes - has created a `DatetimeIndex`. As the name might reveal, this is an index containing only Datetimes:
+
+```{python}
+# show the index
+df.index
+```
+
+```{python}
+# show the `type()` of the index
+type(df.index)
+```
+
+```{python}
+# show an individual Datetime (aka Timestamp) from the `index`
+df.index[0]
 ```
 
 We can get the [aforementioned benefits](0_1_to_loc_or_iloc.Rmd) of `.loc` indexing on our `Timestamp`s.
@@ -326,4 +343,4 @@ The key points are:
 
 * Datetimes let us do "maths with times" which we cannot do with string representations.
 
-* Putting datetimes in our index allows for some neat indexing and plotting operations.
+* Putting Datetimes in our index allows for some neat indexing and plotting operations.
