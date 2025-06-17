@@ -277,7 +277,7 @@ Using the `.dt.` accessor, we can easily do things like filter our a specific ye
 df[df['Year'].dt.year == 1990]
 ```
 
-See further methods and attribures available from the `.dt.` accessor [here](https://pandas.pydata.org/docs/reference/api/pandas.Series.dt.html).
+See further methods and attributes available from the `.dt.` accessor [here](https://pandas.pydata.org/docs/reference/api/pandas.Series.dt.html).
 
 
 ## Using datetimes in a Data Frame index
