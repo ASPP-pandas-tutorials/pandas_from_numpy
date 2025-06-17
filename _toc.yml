@@ -10,3 +10,4 @@ parts:
       - file: 0_4_dealing_with_missing_data_in_pandas
       - file: 0_5_filtering_data_with_pandas
       - file: 0_6_more_pandas_methods_strings
+      - file: 0_7_pandas_datetimes
