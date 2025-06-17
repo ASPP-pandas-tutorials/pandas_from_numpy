@@ -29,7 +29,6 @@ First, let's look at how Pandas handles dates. To do this, we'll create a Pandas
 
 ```{python}
 import pandas as pd
-
 # create a Series with some strings representing dates
 string_time_series = pd.Series(['2025-06-06', '2025-06-07'])
 
@@ -75,7 +74,7 @@ type(datetime_series.iloc[0])
 
 The `Timestamp` is Pandas' special representation of a timepoint e.g. a specific point in time. You may wonder why Pandas reports the `type()` as a `Timestamp` but the `dtype` as `datetime64[ns]`. For all intents and purposes, the `Timestamp` is just a more general description of `datetime64[ns]` (with the latter just giving more information about the amount of memory used for storage and the time resolution...)
 
-We can now do "maths with times" and use substraction to calculate the difference between these dates:
+We can now do "maths with times" and use subtraction to calculate the difference between these dates:
 
 ```{python}
 # get the difference between the two dates
@@ -99,7 +98,7 @@ Here we have used the *date format string* `'%Y-%d-%m'` as input for the `format
 
 The, *ahem*, format of the date format string can take some getting used to. Please see [here](https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior) for the full list of date format options.
 
-We can see that we get a totally different `Timedelta` when subtracting the dates interpretted according to the new format:
+We can see that we get a totally different `Timedelta` when subtracting the dates interpreted according to the new format:
 
 ```{python}
 # get the difference between the two dates with the alternate formatting
@@ -122,7 +121,7 @@ pd.to_datetime(a_time_series_with_words)
 
 Again, Pandas has guessed the format but has implored us to *specify* the format with which we want the string dates to be interpreted. (Pretty much always, specifying the format is better practice than letting Pandas guess...)
 
-The important point here is that even though the names of months ("JUNE") went into the `pd.to_datetime()` converstion, the `Timestamp` that came out the other side contains only numbers. This is important for understanding the essential nature of Pandas datetimes, as we will see in later sections.
+The important point here is that even though the names of months ("JUNE") went into the `pd.to_datetime()` conversion, the `Timestamp` that came out the other side contains only numbers. This is important for understanding the essential nature of Pandas datetimes, as we will see in later sections.
 
 
 ## Datetimes in Pandas Data Frames
