@@ -603,7 +603,7 @@ df.iloc[-3:]
 
 However, the kind folks at Pandas, because these operations are so common, have provided us the `.head()` and `.tail()` methods to do the same thing, with less typing and better readability.
 
-`.head()` without arguments gives us the first five rows, eqivalent to `.iloc[5]`.
+`.head()` without arguments gives us the first five rows, equivalent to `.iloc[5]`.
 
 ```{python}
 # Default .head() gives first five rows.
