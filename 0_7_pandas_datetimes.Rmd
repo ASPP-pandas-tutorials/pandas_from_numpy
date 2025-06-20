@@ -14,6 +14,8 @@ jupyter:
 
 # Pandas Datetimes
 
+**Note:** change `Year` to `Year_as_Datetime` when converting `dtype`, for clarity.
+
 We will frequently find ourselves working with data about *time*. Having a specialised representation of time is useful in numerous respects, primarily because it allows us to do "maths with times". For instance, we may want to use subtraction to calculate the distance between two timepoints; we cannot do this if we represent dates/times as string data. As such, Python has a useful module for handling dates and times, creatively named ["Datetime"](https://docs.python.org/3/library/datetime.html).
 
 Datetimes have a (deserved) reputation for being fiddly (we would wager anyone who has encountered them will agree...). Additionally, in contrast to the close relation between Numpy and Pandas shown on the other pages, the way Pandas handles Datetimes is somewhat different to how they are handled in Numpy. The handling of Datetimes in Pandas is more similar to the Datetime library than to Numpy (and Numpy itself differs substantially from the Datetime library). We would argue that Numpy's handling of Datetimes is the fiddliest. 
