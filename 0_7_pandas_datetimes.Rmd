@@ -124,6 +124,29 @@ Again, Pandas has guessed the format but has implored us to *specify* the format
 The important point here is that even though the names of months ("JUNE") went into the `pd.to_datetime()` conversion, the `Timestamp` that came out the other side contains only numbers. This is important for understanding the essential nature of Pandas datetimes, as we will see in later sections.
 
 
+## A closer look at Datetimes
+
+```{python}
+res = pd.to_datetime('1900-10-30')
+res
+```
+
+```{python}
+res.value
+```
+
+```{python}
+res.year
+```
+
+```{python}
+res.month
+```
+
+```{python}
+res.day
+```
+
 ## Datetimes in Pandas Data Frames
 
 Let's explore Pandas Datetimes further. We will again use the [Human Development Index](https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index) dataset. However,  to keep things simple, we will just be looking at rows corresponding to Afghanistan:
