@@ -12,9 +12,9 @@ jupyter:
     name: python3
 ---
 
+<!-- #region -->
 # Pandas Datetimes
 
-**Note:** change `Year` to `Year_as_Datetime` when converting `dtype`, for clarity.
 
 We will frequently find ourselves working with data about *time*. Having a specialised representation of time is useful in numerous respects, primarily because it allows us to do "maths with times". For instance, we may want to use subtraction to calculate the distance between two timepoints; we cannot do this if we represent dates/times as string data. As such, Python has a useful module for handling dates and times, creatively named ["Datetime"](https://docs.python.org/3/library/datetime.html).
 
@@ -23,7 +23,7 @@ Datetimes have a (deserved) reputation for being fiddly (we would wager anyone w
 As such this page will focus on using Datetimes in Pandas (this is also probably the most likely context in which readers will use Datetimes...). 
 
 This page is a *brief* introduction to Pandas Datetimes - there is much more than be done with Pandas Datetimes than we will show here - but these are the essentials.
-
+<!-- #endregion -->
 
 ## Datetimes in Pandas Series
 
@@ -118,7 +118,9 @@ Before we move on, it is important to note that `pd.to_datetime()` can also conv
 a_time_series_with_words = pd.Series(['2025-JUNE-06', '2025-JUNE-07'])
 
 # convert to Pandas datetimes
-pd.to_datetime(a_time_series_with_words)
+a_time_series_of_datetimes = pd.to_datetime(a_time_series_with_words)
+
+a_time_series_of_datetimes
 ```
 
 Again, Pandas has guessed the format but has implored us to *specify* the format with which we want the string dates to be interpreted. (Pretty much always, specifying the format is better practice than letting Pandas guess...)
@@ -128,26 +130,100 @@ The important point here is that even though the names of months ("JUNE") went i
 
 ## A closer look at Datetimes
 
+The Datetimes in the output of the cell above might appear similar to strings, but in terms of the internal representation that Pandas uses they are something very different.
+
+To get an insight into this representation, let's take a closer look at one of the individual Datetimes.
+
+Our variable `a_time_series_of_datetimes` is a Pandas Series, as such, as we know we can use `.iloc` indexing to retrieve single values from it. In this case, this is a single `Timestamp`: 
+
 ```{python}
-res = pd.to_datetime('1900-10-30')
-res
+# retrieve a single Timestamp from the Series
+a_time_series_of_datetimes.iloc[0]
+```
+
+To save using `.iloc` each time, let's store this single `Timestamp` as a variable:
+
+```{python}
+# save the single Timestamp as a variable
+single_timestamp = a_time_series_of_datetimes.iloc[0]
+
+single_timestamp
+```
+
+Attached to any individual Timestamp is an attribute called `.value`:
+
+```{python}
+# show the `.value` attribute
+single_timestamp.value
+```
+
+At first glance this might be confusing - it doesn't look much like a normal date, or time...
+
+A glance through the other attributes reveals more familiarly name units of time. For instance, the `year`, `month` and `day` attributes:
+
+```{python}
+# the `.year` attribute
+single_timestamp.year
 ```
 
 ```{python}
-res.value
+# the `.month` attribute
+single_timestamp.month
 ```
 
 ```{python}
-res.year
+# the `.day` attribute
+single_timestamp.day
 ```
 
-```{python}
-res.month
-```
+So what is the mysterious `.value` attribute? 
+
+It is, in fact, more fundamental than the other attributes. It derives from the "Unix Epoch", a slightly ominous sci-fi name for a specific date in 1970. Here is an explanation of what that is:
+
+> "The Unix epoch is the number of seconds that have elapsed since January 1, 1970 at midnight UTC time minus the leap seconds. This means that at midnight of January 1, 1970, Unix time was 0." (from https://www.epoch101.com)
+
+The `.value` attribute reports the number of nanoseconds that have elapsed between midnight January 1st 1970 and the particular point in time represented by the `Timestamp`. This is the fundamental representation which Pandas uses in `Timestamp`s -the other attributes (`year`, `month`, etc) present this information in a form more understandable to a human.
+
+Why midnight of January 1st 1970? Well we need *some* point against which to measure other times, and [early Unix engineers](https://www.narrative.io/knowledge-base/concepts/data-terms/what-is-unix-time) chose this one. If it isn't broken why fix it?
+
+Let's look again at our single `Timestamp`:
 
 ```{python}
-res.day
+single_timestamp
 ```
+
+...and then once again at the `.value` attribute, now we know that it tells us the number of nanoseconds between our `Timestamp` and the point where the Unix Epoch was equal to 0 (midnight, January 1st 1970): 
+
+```{python}
+single_timestamp.value
+```
+
+To sanity check this, a simple Google search (at the time of writing) will tell us that the number of nanoseconds in a year is approximately 3.154e+16:
+
+![](images\nanoseconds.JPG)
+
+Thus, if we divide our `.value` attribute of our `Timestamp` by 3.154e+16 we should get something like number of years between the `Timestamp` and midnight January 1st 1970:
+
+```{python}
+# calculate the number of years since midnight Jan 1st 1970:
+single_timestamp.value/3.154e+16
+```
+
+That sounds about, because the `.year` of the `Timestamp` is 2025:
+
+```{python}
+# view the `.year` attribute
+single_timestamp.year
+```
+
+We can check this again by subtracting `single_timestamp.value/3.154e+16` from the `.year`:
+
+```{python}
+single_timestamp.year - single_timestamp.value/3.154e+16
+```
+
+That's pretty close to 1970...
+
 
 ## Datetimes in Pandas Data Frames
 
@@ -191,14 +267,19 @@ df['Year']
 
 This is OK as far as it goes, but we can do better.
 
-Let's convert the `Year` values to `Timestamp` data, to see the host of *time-specific* attributes and methods that we then get access to:
+Let's convert the `Year` values to `Timestamp` data, to see the host of *time-specific* attributes and methods that we then get access to.
+
+*NB*: we will call the column containing the Datetimes `Year_as_Datetime`, and rename the original `Year` column to `Year_as_String` to avoid confusion:
 
 ```{python}
+# rename the `Year` column
+df = df.rename(columns={'Year': 'Year_as_string'})
+
 # convert the month data to datetime
-df['Year'] = pd.to_datetime(df['Year'],
+df['Year_as_Datetime'] = pd.to_datetime(df['Year_as_string'],
                             format='%Y')
 
-df['Year']
+df['Year_as_Datetime']
 ```
 
 Here we used a much simpler datetime format string (`'%Y'`) for the `format=` argument. We can just read the string as *"a four digit representation of year"* (e.g. 1990). 
@@ -208,7 +289,7 @@ You'll see in the output of the cell above that Pandas has added a month and a d
 For most purposes this addition is fine. It might create problems if we mix this data with other time-related data which is higher-resolution than "year", but for our present purpose we are not going to do that, so let's just let Pandas make this harmless addition, as it gives us the benefit of a specialized representation of time, which we will see in the next section.
 
 
-## What is a Pandas datetime?
+## The `.dt` accessor
 
 Relative to representing time with `str` or `int` data, Pandas `Timestamp`s contain many attributes which represent specific units of time.
 
@@ -216,7 +297,7 @@ Let's look at just one value from the `Year` column:
 
 ```{python}
 # a look at a specific datetime
-df['Year'].iloc[0]
+df['Year_as_Datetime'].iloc[0]
 ```
 
 We can read the numbers in the parentheses as "0 minutes, 0 seconds past midnight on 1st January 1990".
@@ -225,7 +306,7 @@ Let's try to index further into the `Timestamp`:
 
 ```{python tags=c("raises-exception")}
 # oh no....
-df['Year'].iloc[0][0]
+df['Year_as_Datetime'].iloc[0][0]
 ```
 
 This inability to index (using integers) into the `Timestamp` might seem frustrating, but it is sensible.
@@ -236,19 +317,19 @@ Well, Pandas' representation of time has the same advantages. To retrieve more s
 
 We can access these time-specific attributes via the `.dt.` accessor (read as "datetime"). Much like the `.str.` accessor we [saw earlier](0_6_more_pandas_methods_strings.Rmd) this is an accessor specialized for a specific data type, in this case Datetime (aka `Timestamp`) data.
 
-As with the `.str` accessor, the `.dt.` accessor operates on all values of a Data Frame column (Pandas Series) concurrently.
+As with the `.str` accessor, the `.dt.` accessor operates on all values of a Data Frame column (Pandas Series) in parallel.
 
 For instance, to grab just the year information, we can use `.dt.year`:
 
 ```{python}
 # view the `year` attribute
-df['Year'].dt.year
+df['Year_as_Datetime'].dt.year
 ```
 
 To get this information for a specific row, we can just chain on an `.iloc` indexing operation:
 
 ```{python}
-df['Year'].dt.year.iloc[0]
+df['Year_as_Datetime'].dt.year.iloc[0]
 ```
 
 We can use other clearly named attributes, accessing time-based information down to the smallest unit of time represented in the `Timestamp`.
@@ -257,39 +338,39 @@ We will go through these in order (`.dt.month`, `.dt.day`, `.dt.hour`, `.dt.minu
 
 ```{python}
 # view the `month` attribute (which here has been automatically set to 1 by Pandas)
-df['Year'].dt.month
+df['Year_as_Datetime'].dt.month
 ```
 
 ```{python}
 # view the `day` attribute (which here has been automatically set to 1 by Pandas)
-df['Year'].dt.day
+df['Year_as_Datetime'].dt.day
 ```
 
 ```{python}
 # view the `hour` attribute (which here has been automatically set to 0 by Pandas)
-df['Year'].dt.hour
+df['Year_as_Datetime'].dt.hour
 ```
 
 ```{python}
 # view the `minute` attribute (which here has been automatically set to 0 by Pandas)
-df['Year'].dt.minute
+df['Year_as_Datetime'].dt.minute
 ```
 
 ```{python}
 # view the `second` attribute (which here has been automatically set to 0 by Pandas)
-df['Year'].dt.second
+df['Year_as_Datetime'].dt.second
 ```
 
 We can see that the sequence with which we just "walked" through the `.dt.` attributes (`.dt.month`, `.dt.day`, `.dt.hour`, `.dt.minute`, `.dt.second`) corresponds to the order of the output of a single `Timestamp`:
 
 ```{python}
 # view an individual Timestamp
-df['Year'].iloc[0]
+df['Year_as_Datetime'].iloc[0]
 ```
 
-`Timestamp`s provide a structured, easy to access and hard to misinterpret, representation of time.
+`Timestamp`s provide a structured, easy to access and hard to misinterpret, representation of time, fundamentally based on the Unix Epoch (the distance between a particular timepoint and midnight January 1st 1970).
 
-This representation is *an ordered set of numerical data where each level represents a specific unit of time*. **This is all Datetimes in Pandas are!** 
+From this nanosecond representation *each attribute converts the `.value` into a more human-interpretable unit of time*. **This is all Datetimes in Pandas are!** 
 
 
 We mentioned earlier than the names of months (like "June"/"July" etc, as well as other string-y stuff) can go *into* a `pd.to_datetime()` conversion, but the *result* will always contain only numbers. These numbers are stored in a sequence of attributes which represent increasingly smaller units of time (year, month, day, minute, second etc.) as numbers, even if the original input containing strings like "June", "July" etc.
@@ -298,7 +379,7 @@ Using the `.dt.` accessor, we can easily do things like filter our a specific ye
 
 ```{python}
 # filter using a Boolean array from the `.dt` accessor
-df[df['Year'].dt.year == 1990]
+df[df['Year_as_Datetime'].dt.year == 1990]
 ```
 
 See further methods and attributes available from the `.dt.` accessor [here](https://pandas.pydata.org/docs/reference/api/pandas.Series.dt.html).
@@ -312,7 +393,7 @@ We can do this using the previously seen `.set_index()` method:
 
 ```{python}
 # put datetimes in the index
-df = df.set_index('Year')
+df = df.set_index('Year_as_Datetime')
 
 df
 ```
