@@ -876,7 +876,7 @@ df.sample(frac=1)
 
 If you look at the `index` of either Dataframe in the above ceels, you'll notice that the rows are now in a random order.
 
-Because the sample is a random selection of the rows - and the default setting of `.sample()` is to sample *without replacement*  - using both `.sample(len(df))` and `df.sample(frac=1)` has the effect of randomizing the row order. All the original rows remainin in the sample, and there is no duplication of any rows.
+Because the sample is a random selection of the rows - and the default setting of `.sample()` is to sample *without replacement*  - using both `.sample(len(df))` and `df.sample(frac=1)` has the effect of randomizing the row order. All the original rows remaining in the sample, and there is no duplication of any rows.
 
 This method is often used on individual columns to (most likely) remove any statistical relationships between the data in that column and other columns. For instance, for [permutation testing](https://matthew-brett.github.io/cfd2020/permutation/permutation_and_t_test.html).
 
