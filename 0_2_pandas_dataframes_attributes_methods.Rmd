@@ -764,18 +764,21 @@ df.sample(frac=0.5)
 
 There are functions within Numpy (as well as other libraries) which shuffle/permute/randomize data within an array (or an arraylike object, like a list etc).
 
-Let's say we want to shuffle the *rows* in our Dataframe. We can do this with the `permutation()` function from the `numpy.random` submodule, but the output is very ugly. This operation brutally removes the nice Dataframe graphics, and puts the rows of the Dataframe into a Numpy array, as shown below:
+Let's say we want to shuffle the *rows* in our Dataframe. We can do this with the `permutation()` function from the `numpy.random` submodule, but the output is very ugly. This operation brutally removes the nice Dataframe graphics (at least when run in a Jupyter notebook), and puts the rows of the Dataframe into a Numpy array, as shown below:
 
 ```{python}
 # effective but ugly
-np.random.permutation(df)
+import numpy.random as npr
+npr.permutation(df)
 ```
 
-Can you think of a way to perform this operation using only the Pandas methods we have seen so far on this page? So, you should write code which will:
+Can you think of a way to perform this operation using only the Pandas methods we have seen so far on this page? In the cell below, you should write code which will:
 
 - randomize the order of the *rows* in the Dataframe. The data in each row should be the same as before shuffling (e.g. the data for Russia should still be the data for Russia etc.)
 
-Try to find the solution in the cell below:
+- ensure that no rows are removed or duplicated, just shuffled
+
+Try to find the solution in the cell below. Use as few lines of code as possible:
 
 ```{python}
 # your solution here
@@ -795,18 +798,18 @@ The solution is to take a `.sample()` which is the same *size as the number of r
 df.sample(n = len(df))
 ```
 
-Or, with greater grace, we can set `frac = 1`:
+Or, with greater grace, we can use `frac = 1`, to mean "take a random sample of 100% of the rows", effectively permuting them:
 
 ```{python}
-# a clean, efficient way
+# a clean, efficient way to permute the rows
 df.sample(frac=1)
 ```
 
 If you look at the `index` of either Dataframe in the above ceels, you'll notice that the rows are now in a random order.
 
-Because the sample is a random selection of the rows - and the default setting of `.sample()` is to sample *without replacement*  - using `.sample(len(df))` has the effect of randomizing the row order. All the original rows remainin in the sample, and there is no duplication of any rows.
+Because the sample is a random selection of the rows - and the default setting of `.sample()` is to sample *without replacement*  - using both `.sample(len(df))` and `df.sample(frac=1)` has the effect of randomizing the row order. All the original rows remainin in the sample, and there is no duplication of any rows.
 
-This method is often used on individual columns to (most likely) remove any statistical relationships between the data in that column and other columns. For instance, for [permutation testing](link_to_CFD_page).
+This method is often used on individual columns to (most likely) remove any statistical relationships between the data in that column and other columns. For instance, for [permutation testing](https://matthew-brett.github.io/cfd2020/permutation/permutation_and_t_test.html).
 
 
 ::: {solution-end}
@@ -829,7 +832,7 @@ df.sample(len(df) + 10,
           replace=True) 
 ```
 
-Quickly scan the `index` for duplicates, to see that this is correct.
+Quickly scan the `index` for duplicates, to see that this it definitely contains duplicates.
 
 You task now is the following:
 
@@ -863,7 +866,7 @@ Try to do this in as few lines of code as possible.
 :class: dropdown
 :::
 
-There are several ways you can achieve this, but one way of doing it in a single line of code is to *chain* Pandas methods together.
+There are several ways you can achieve this, but one way of doing it in a single line of code is to *chain Pandas methods together*.
 
 The left hand side of the subtraction operation in the cell below uses the `.describe()` method and `.loc` indexing to calculate the means of the original data.
 
@@ -896,7 +899,7 @@ difference_in_means = original_means - resample_means
 difference_in_means
 ```
 
-Similar kinds of *resampling procedure* are often used to generate [bootstrapped confidence intervals](link_to_page).
+Similar kinds of *resampling procedure* are often used to generate [bootstrapped confidence intervals](https://nbviewer.org/github/pxr687/bootstrap_tutorial/blob/main/bootstrap.ipynb).
 
 ::: {solution-end}
 :::
