@@ -200,7 +200,7 @@ single_timestamp.value
 
 To sanity check this, a simple Google search (at the time of writing) will tell us that the number of nanoseconds in a year is approximately 3.154e+16:
 
-![](images\nanoseconds.JPG)
+![](images\nanoseconds.png)
 
 Thus, if we divide our `.value` attribute of our `Timestamp` by 3.154e+16 we should get something like number of years between the `Timestamp` and midnight January 1st 1970:
 
