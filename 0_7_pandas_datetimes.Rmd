@@ -18,9 +18,9 @@ jupyter:
 
 We will frequently find ourselves working with data about *time*. Having a specialised representation of time is useful in numerous respects, primarily because it allows us to do "maths with times". For instance, we may want to use subtraction to calculate the distance between two timepoints; we cannot do this if we represent dates/times as string data. As such, Python has a useful module for handling dates and times, creatively named ["Datetime"](https://docs.python.org/3/library/datetime.html).
 
-Datetimes have a (deserved) reputation for being fiddly (we would wager anyone who has encountered them will agree...). Additionally, in contrast to the close relation between Numpy and Pandas shown on the other pages, the way Pandas handles Datetimes is somewhat different to how they are handled in Numpy. The handling of Datetimes in Pandas is more similar to the Datetime library than to Numpy (and Numpy itself differs substantially from the Datetime library). We would argue that Numpy's handling of Datetimes is the fiddliest. 
+Datetimes have a (deserved) reputation for being fiddly (we would wager anyone who has encountered them will agree...). Additionally, in contrast to the close relation between Numpy and Pandas shown on the other pages, the way Pandas handles Datetimes is somewhat different to how they are handled in Numpy. The handling of Datetimes in Pandas is more similar to the Datetime library than to Numpy. In fact, Numpy itself differs substantially from the Datetime library, which can be confusing. We would argue that Numpy's handling of Datetimes is the fiddliest of all the available options. 
 
-As such this page will focus on using Datetimes in Pandas (this is also probably the most likely context in which readers will use Datetimes...). 
+As a result, this page will focus on using Datetimes in Pandas (this is also probably the most likely context in which readers will use Datetimes...). 
 
 This page is a *brief* introduction to Pandas Datetimes - there is much more than be done with Pandas Datetimes than we will show here - but these are the essentials.
 <!-- #endregion -->
@@ -130,18 +130,18 @@ The important point here is that even though the names of months ("JUNE") went i
 
 ## A closer look at Datetimes
 
-The Datetimes in the output of the cell above might appear similar to strings, but in terms of the internal representation that Pandas uses they are something very different.
+The Datetimes in the output of the cell above might appear similar to strings, but in terms of the internal representation that Pandas uses they are something entirely different. They are based on something (incredibly sci-fi sounding) called the "Unix Epoch", to which we will attend later).
 
 To get an insight into this representation, let's take a closer look at one of the individual Datetimes.
 
-Our variable `a_time_series_of_datetimes` is a Pandas Series, as such, as we know we can use `.iloc` indexing to retrieve single values from it. In this case, this is a single `Timestamp`: 
+Our variable `a_time_series_of_datetimes` is a Pandas Series. As such, as we know we can use `.iloc` indexing to retrieve single values from it. In this case, we retrieve a single `Timestamp`: 
 
 ```{python}
 # retrieve a single Timestamp from the Series
 a_time_series_of_datetimes.iloc[0]
 ```
 
-To save using `.iloc` each time, let's store this single `Timestamp` as a variable:
+To save us from using `.iloc` each time, let's store this single `Timestamp` as a variable:
 
 ```{python}
 # save the single Timestamp as a variable
@@ -159,7 +159,7 @@ single_timestamp.value
 
 At first glance this might be confusing - it doesn't look much like a normal date, or time...
 
-A glance through the other attributes reveals more familiarly name units of time. For instance, the `year`, `month` and `day` attributes:
+A look through the other attributes reveals more familiarly name units of time. For instance, the `year`, `month` and `day` attributes:
 
 ```{python}
 # the `.year` attribute
@@ -178,7 +178,7 @@ single_timestamp.day
 
 So what is the mysterious `.value` attribute? 
 
-It is, in fact, more fundamental than the other attributes. It derives from the "Unix Epoch", a slightly ominous sci-fi name for a specific date in 1970. Here is an explanation of what that is:
+It is, in fact, more fundamental than the other attributes. It derives from the aforementioned "Unix Epoch", a slightly ominous sounding name for a specific date in 1970. Here is an explanation of what that is:
 
 > "The Unix epoch is the number of seconds that have elapsed since January 1, 1970 at midnight UTC time minus the leap seconds. This means that at midnight of January 1, 1970, Unix time was 0." (from https://www.epoch101.com)
 
@@ -206,28 +206,23 @@ Thus, if we divide our `.value` attribute of our `Timestamp` by 3.154e+16 we sho
 
 ```{python}
 # calculate the number of years since midnight Jan 1st 1970:
-single_timestamp.value/3.154e+16
+approx_years_since_first_jan_1970 = single_timestamp.value/3.154e+16
+
+approx_years_since_first_jan_1970
 ```
 
-That sounds about, because the `.year` of the `Timestamp` is 2025:
+55 years between the `Timestamp` (6th June 2025) and January 1st 1970? That sounds about right, but let's check it by subtracting the `approx_years_since_first_jan_1970` from our `single_timestamp.year`, to see if we get something close to 1970:
 
 ```{python}
-# view the `.year` attribute
-single_timestamp.year
+single_timestamp.year - approx_years_since_first_jan_1970
 ```
 
-We can check this again by subtracting `single_timestamp.value/3.154e+16` from the `.year`:
-
-```{python}
-single_timestamp.year - single_timestamp.value/3.154e+16
-```
-
-That's pretty close to 1970...
+That's pretty close to 1970, as expected.
 
 
 ## Datetimes in Pandas Data Frames
 
-Let's explore Pandas Datetimes further. We will again use the [Human Development Index](https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index) dataset. However,  to keep things simple, we will just be looking at rows corresponding to Afghanistan:
+Let's explore Pandas Datetimes further now that we know they are fundamentally a measure of nanoseconds since midnight on 1st January 1970, a duration which can be expressed in more understandable forms like `.year`, `month`, `day` etc. We will again use the [Human Development Index](https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index) dataset. However,  to keep things simple, we will just be looking at rows corresponding to Afghanistan:
 
 ```{python}
 # import the dateset
@@ -269,7 +264,7 @@ This is OK as far as it goes, but we can do better.
 
 Let's convert the `Year` values to `Timestamp` data, to see the host of *time-specific* attributes and methods that we then get access to.
 
-*NB*: we will call the column containing the Datetimes `Year_as_Datetime`, and rename the original `Year` column to `Year_as_String` to avoid confusion:
+*NB*: we will call the column containing the Datetimes `Year_as_Datetime`, and rename the original `Year` column to `Year_as_string` to avoid confusion:
 
 ```{python}
 # rename the `Year` column
@@ -284,7 +279,7 @@ df['Year_as_Datetime']
 
 Here we used a much simpler datetime format string (`'%Y'`) for the `format=` argument. We can just read the string as *"a four digit representation of year"* (e.g. 1990). 
 
-You'll see in the output of the cell above that Pandas has added a month and a day to the `Year` values. This is because Pandas Datetimes (aka `Timestamp`s) represent a *specific timepoint* - so a whole year is too low of a resolution for this representation of time. As a result, Pandas has automatically chosen January 1st to flesh out the timepoint. 
+You'll see in the output of the cell above that Pandas has added a month and a day to the original `Year_as_string` values. This is because Pandas Datetimes (aka `Timestamp`s) represent a *specific timepoint* - so a whole year is too low of a resolution for this representation of time. As a result, Pandas has automatically chosen January 1st to flesh out the timepoint. 
 
 For most purposes this addition is fine. It might create problems if we mix this data with other time-related data which is higher-resolution than "year", but for our present purpose we are not going to do that, so let's just let Pandas make this harmless addition, as it gives us the benefit of a specialized representation of time, which we will see in the next section.
 
@@ -293,7 +288,7 @@ For most purposes this addition is fine. It might create problems if we mix this
 
 Relative to representing time with `str` or `int` data, Pandas `Timestamp`s contain many attributes which represent specific units of time.
 
-Let's look at just one value from the `Year` column:
+Let's look at just one value from the `Year_as_Datetime` column:
 
 ```{python}
 # a look at a specific datetime
