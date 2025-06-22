@@ -54,6 +54,9 @@ licenses page](data/data_notes) for more detail.
 # import libraries
 import numpy as np
 import pandas as pd
+
+# a hint for and exercise
+from hint import hint
 ```
 
 We build the constituent arrays:
@@ -446,6 +449,63 @@ When accessed for the entire Data Frame, the `size` attribute works in the same 
 # show the `size` of the Data Frame
 df.size
 ```
+
+<!-- #region -->
+::: {exercise-start}
+:label: attributes-series
+:class: dropdown
+:::
+
+Your job here is to make a new Series which summarises some aspects of the `df` Dataframe. In the `.values` array, the Series should contain the value the `.shape` and `.size` attributes, as well as the `len()` of the Dataframe. The name of each of these attributes should be in the `index`. The `name` attribute of the Series should be`df_attributes`.
+
+Your solution should look like this:
+
+```
+shape    (15, 4)
+size          60
+len           15
+Name: df_attributes, dtype: object
+```
+
+Try to do this in as few lines of code as possible. 
+
+
+You may run into an error with the `shape` attribute. Try running `hint()` for a hint on how to solve this (try to use the hint as a last resort, however...)
+<!-- #endregion -->
+
+```{python}
+# your code here
+```
+
+::: {exercise-end}
+:::
+
+::: {solution-start} attributes-seriess
+:class: dropdown
+:::
+            
+Our solution to this is below. First, we create an array containing the attributes. We must use the `str()` function to convert the output of `df.shape` to a single dimension (a `str` with 7 characters, rather than a `(2, )` tuple). This is in order to make it's shape homogenous with `df.size` and `len(df)` when passing the array to the `pd.Series()` constructor, to avoid a nasty error. We set the `index` and the `name` when we call the `pd.Series()` constructor:
+
+```{python}
+# make an array containing the desired attributes - note the use of `str()`
+attributes_array = np.array([str(df.shape),
+                             df.size,
+                             len(df)])
+
+# convert to Series, specify `index` and `name`
+df_attributes = pd.Series(attributes_array,
+                          index = ['shape', 'size', 'len'],
+                          name = "df_attributes" )
+# show the Series
+df_attributes
+```
+
+Creating your own Series in this way (ideally performed by a custom function) can be useful for displaying custom summaries of a dataset/Dataframe.
+
+
+::: {solution-end}
+:::
+
 
 Once we've done these preliminary inspections and we know how many observations we have, in any data analysis context, we will always want to know what variables we have in the Data Frame columns, and (again) what type of data is in each.
 
