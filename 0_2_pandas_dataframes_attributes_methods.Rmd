@@ -455,19 +455,28 @@ df.size
 :class: dropdown
 :::
 
-Your job here is to make a new Series which summarises aspects of the `df` Dataframe. In the `.values` array, the Series should contain the value the `.shape` and `.size` attributes of `df`. The name of each of these attributes should be in the `index`. The `name` attribute of the Series should be`df_attributes`.
+Your job here is to make a new Series which summarises aspects of the `df` Dataframe. In the `.values` array, your Series should contain the value the `.shape` and `.size` attributes of `df`. It should also contain the `dtype` of the `index` of `df` e.g. reporting whether the `index` contains numeric labels, `str` labels, or something else. See if you can figure out how to get Pandas to report this via indexing (e.g. rather than copy pasting the information from the output of `df.index`).
+
+The `index` of your Series should clearly state what each `value` is. E.g. the strings `shape`, `size`, `index_dtype` should be the `index` labels in your Series. 
+
+The `name` attribute of your Series should be`df_attributes`.
 
 When displayed, your Series should look like this:
 
 ```
-shape    (15, 4)
-size          60
+shape          (15, 4)
+size                60
+index_dtype     object
 Name: df_attributes, dtype: object
 ```
 
-Try to do this in as few lines of code as possible. 
+Try to create this Series in as few lines of code as possible. 
 
-You may run into an error with the `shape` attribute. Try running `hint()` for a hint on how to solve this (try to use the hint as a last resort, however...)
+You may run into an error with the `shape` attribute. Try running `hint()` for a hint on how to solve this.
+
+You can also run `hint_2()` to get a hint on how to get Pandas to report the `dtype` of the `index`.
+
+**Try to use the hints as a last resort, however...**
 
 ```{python}
 # your code here
@@ -480,22 +489,27 @@ You may run into an error with the `shape` attribute. Try running `hint()` for a
 :class: dropdown
 :::
             
-Our solution to this is below. First, we create an array containing the attributes. We must use the `str()` function to convert the output of `df.shape` to a single dimension (a `str` with 7 characters, rather than a `(2, )` tuple). This is in order to make it's shape homogenous with `df.size` when passing the array to the `pd.Series()` constructor, to avoid a nasty error. We set the `index` and the `name` when we call the `pd.Series()` constructor:
+Our solution to this is below. First, we create an array containing the attributes. We must use the `str()` function to convert the output of `df.shape` to a single dimension (a `str` with 7 characters, rather than a `(2, )` tuple). This is in order to make it's shape homogenous with `df.size` and the `index.dtype` string. Otherwise we get a nasty error when passing the array to the `pd.Series()` constructor, because we are trying to make a `.values` array using values with incompatible dimensions. 
+
+We got the `dtype` of the `index` labels by accessing the `dtype` attribute of the `index`, in a chained operation e.g.: `df.index.dtype`.
+
+We set the `index` and the `name` when we call the as optional arguments within `pd.Series()` (you may have done this using `df.index = ` and `df.name =`, which is another valid approach):
 
 ```{python}
 # make an array containing the desired attributes - note the use of `str()`
 attributes_array = np.array([str(df.shape),
-                             df.size])
+                             df.size,
+                             df.index.dtype])
 
 # convert to Series, specify `index` and `name`
 df_attributes = pd.Series(attributes_array,
-                          index = ['shape', 'size'],
+                          index = ['shape', 'size', "index_dtype"],
                           name = "df_attributes" )
 # show the Series
 df_attributes
 ```
 
-Creating your own Series in this way (ideally performed by a custom function) can be useful for displaying custom summaries of a dataset/Dataframe (normally with more complicated statistical information, not just the `shape`/`size`)!
+Creating your own Series in this way (ideally performed by a custom function) can be useful for displaying bespoke summaries of a dataset/Dataframe. However, normally this would be done with more complicated statistical information, not just the `shape`/`size`/`dtype`!
 
 
 ::: {solution-end}
