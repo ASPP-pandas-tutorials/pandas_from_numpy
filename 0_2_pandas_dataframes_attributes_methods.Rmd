@@ -485,8 +485,7 @@ You can also run `hint_2()` to get a hint on how to get Pandas to report the `dt
 ::: {exercise-end}
 :::
 
-::: {solution-start} 
-:label: attributes-series
+::: {solution-start} attributes-series
 :class: dropdown
 :::
             
@@ -626,8 +625,7 @@ Try to do this in as few lines of code as possible, using the methods shown on t
 ::: {exercise-end}
 :::
 
-::: {solution-start}
-:label: by-any-means
+::: {solution-start} by-any-means
 :class: dropdown
 :::
 
@@ -858,8 +856,7 @@ Try to find the solution in the cell below. Use as few lines of code as possible
 ::: {exercise-end}
 :::
 
-::: {solution-start}
-:label: random-samples
+::: {solution-start} random-samples
 :class: dropdown
 :::
 
@@ -934,8 +931,7 @@ Try to do this in as few lines of code as possible.
 ::: {exercise-end}
 :::
 
-::: {solution-start} 
-:label: more-random
+::: {solution-start} more-random
 :class: dropdown
 :::
 
@@ -1120,8 +1116,7 @@ Try to create the plot using as few lines of code as possible.
 ::: {exercise-end}
 :::
 
-::: {solution-start}
-:label: getting-barred
+::: {solution-start} getting-barred
 :class: dropdown
 :::
 
