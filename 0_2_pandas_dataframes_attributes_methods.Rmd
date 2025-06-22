@@ -190,7 +190,7 @@ country_codes_array.dtype
 
 The `dtype` attribute here is just telling us that this is string data. For an explanation of the meaning, see the image below.
 
-![](images/numpy_string_dtypes.JPG)
+![](images/numpy_string_dtypes.png)
 
 
 Let's look at the `dtype` of the `hdis_array`:
@@ -485,11 +485,12 @@ You can also run `hint_2()` to get a hint on how to get Pandas to report the `dt
 ::: {exercise-end}
 :::
 
-::: {solution-start} attributes-seriess
+::: {solution-start} 
+:label: attributes-series
 :class: dropdown
 :::
             
-Our solution to this is below. First, we create an array containing the attributes. We must use the `str()` function to convert the output of `df.shape` to a single dimension (a `str` with 7 characters, rather than a `(2, )` tuple). This is in order to make it's shape homogenous with `df.size` and the `index.dtype` string. Otherwise we get a nasty error when passing the array to the `pd.Series()` constructor, because we are trying to make a `.values` array using values with incompatible dimensions. 
+Our solution to this is below. First, we create an array containing the attributes. We must use the `str()` function to convert the output of `df.shape` to a single dimension (a `str` with 7 characters, rather than a `(2, )` tuple). This is in order to make it's shape homogeneous with `df.size` and the `index.dtype` string. Otherwise we get a nasty error when passing the array to the `pd.Series()` constructor, because we are trying to make a `.values` array using values with incompatible dimensions. 
 
 We got the `dtype` of the `index` labels by accessing the `dtype` attribute of the `index`, in a chained operation e.g.: `df.index.dtype`.
 
@@ -625,11 +626,12 @@ Try to do this in as few lines of code as possible, using the methods shown on t
 ::: {exercise-end}
 :::
 
-::: {solution-start} by-any-means
+::: {solution-start}
+:label: by-any-means
 :class: dropdown
 :::
 
-The output of the `.describe()` method is itself a Dataframe, and the `index` of this Dataframe contains a row called `mean`, which, shockingly, contains the means. As a result, you can use `.loc` indexing to retrive just the means from the output of `.describe()`:
+The output of the `.describe()` method is itself a Dataframe, and the `index` of this Dataframe contains a row called `mean`, which, shockingly, contains the means. As a result, you can use `.loc` indexing to retrieve just the means from the output of `.describe()`:
 
 ```{python}
 # solution
@@ -856,7 +858,8 @@ Try to find the solution in the cell below. Use as few lines of code as possible
 ::: {exercise-end}
 :::
 
-::: {solution-start} random-samples
+::: {solution-start}
+:label: random-samples
 :class: dropdown
 :::
 
@@ -931,7 +934,8 @@ Try to do this in as few lines of code as possible.
 ::: {exercise-end}
 :::
 
-::: {solution-start} more-random
+::: {solution-start} 
+:label: more-random
 :class: dropdown
 :::
 
@@ -939,7 +943,7 @@ There are several ways you can achieve this, but one way of doing it in a single
 
 The left hand side of the subtraction operation in the cell below uses the `.describe()` method and `.loc` indexing to calculate the means of the original data.
 
-The right hand side of the subtraction draws a sample (the same size as the number of rows in `df`) using `.sample()` with `replace=True`. It then uses `.describe()` to calculate the means of the numeric variables *in this random sample*, and then `.loc` to select just those means (as opposed to including the other information that `.describ()` reports, like standard deviations etc).
+The right hand side of the subtraction draws a sample (the same size as the number of rows in `df`) using `.sample()` with `replace=True`. It then uses `.describe()` to calculate the means of the numeric variables *in this random sample*, and then `.loc` to select just those means (as opposed to including the other information that `.describe()` reports, like standard deviations etc).
 
 The result of this subtraction shows us the difference between the original means and the means of our *resample* (e.g. our random sample, drawn with replacement):
 
@@ -1116,7 +1120,8 @@ Try to create the plot using as few lines of code as possible.
 ::: {exercise-end}
 :::
 
-::: {solution-start} getting-barred
+::: {solution-start}
+:label: getting-barred
 :class: dropdown
 :::
 
