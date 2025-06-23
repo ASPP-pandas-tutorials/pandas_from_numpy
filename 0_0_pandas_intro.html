@@ -63,7 +63,7 @@
     <link rel="icon" href="_static/pandas_numpy.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Indexing by label, indexing by position" href="0_1_to_loc_or_iloc.html" />
+    <link rel="next" title="Indexing by label and position" href="0_1_to_loc_or_iloc.html" />
     <link rel="prev" title="Pandas from Numpy" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -177,7 +177,7 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Pandas from Numpy</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Pandas from Numpy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="0_1_to_loc_or_iloc.html">Indexing by label, indexing by position</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_1_to_loc_or_iloc.html">Indexing by label and position</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_2_pandas_dataframes_attributes_methods.html">Pandas DataFrames: Attributes and Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_3_constructing_dataframes.html">Let There Be Data : Creating Data Frames</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_4_dealing_with_missing_data_in_pandas.html">Dealing with NaNs</a></li>
@@ -433,7 +433,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-series-aka-an-array-an-index">Pandas Series (aka an array + an index)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-data-frames-aka-dictionary-like-collection-of-series">Pandas Data Frames (aka dictionary-like collection of series)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-columns-from-a-data-frame">Selecting columns from a Data Frame</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#series-have-an-optional-name">Series have an optional name</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-s-in-a-name">What’s in a name?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indirect-indexing-into-data-frames">Indirect indexing into Data Frames</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-series-what-is-a-data-frame">What is a Series?  What is a Data Frame?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-more-columns-to-the-data-frame">Adding more columns to the Data Frame</a></li>
@@ -1280,8 +1280,8 @@ select from the Data Frame.  We get back a new Series, extracted from the Data F
 </div>
 </div>
 </section>
-<section id="series-have-an-optional-name">
-<span id="series-names"></span><h2>Series have an optional name<a class="headerlink" href="#series-have-an-optional-name" title="Link to this heading">#</a></h2>
+<section id="what-s-in-a-name">
+<span id="series-names"></span><h2>What’s in a name?<a class="headerlink" href="#what-s-in-a-name" title="Link to this heading">#</a></h2>
 <p>You can see in the output display that the extracted Series now has an extra
 attribute, which is the <code class="docutils literal notranslate"><span class="pre">name</span></code>.</p>
 <div class="cell docutils container">
@@ -1330,16 +1330,68 @@ Series also has a <code class="docutils literal notranslate"><span class="pre">.
 </div>
 <p>Above, when we first built the series of HDI values and labels with
 <code class="docutils literal notranslate"><span class="pre">pd.Series</span></code>, we not set the name of the Series, so it got the default <code class="docutils literal notranslate"><span class="pre">.name</span></code>
-of <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+of <code class="docutils literal notranslate"><span class="pre">None</span></code>.  We rebuild it here:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This was the original series we built with pd.Series.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We rebuild with pd.Series.</span>
+<span class="n">hdi_series</span> <span class="o">=</span>  <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">hdis_array</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">country_codes_array</span><span class="p">)</span>
+<span class="c1"># When we don&#39;t specify the name, the default is None.</span>
 <span class="n">hdi_series</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>It can be useful to set the <code class="docutils literal notranslate"><span class="pre">.name</span></code> attribute can be useful for remind you of
+the nature of the data in the <code class="docutils literal notranslate"><span class="pre">.values</span></code> array.</p>
+<p>Let’s make a new Series — called <code class="docutils literal notranslate"><span class="pre">hdi_series_named</span></code> — where we <strong>do</strong> specify
+a <code class="docutils literal notranslate"><span class="pre">.name</span></code> attribute when calling the <code class="docutils literal notranslate"><span class="pre">pd.Series()</span></code> constructor.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make a series from the `hdis` array, specifying the `name` attribute.</span>
+<span class="n">hdi_series_named</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">hdis_array</span><span class="p">,</span>
+                             <span class="n">index</span><span class="o">=</span><span class="n">country_codes_array</span><span class="p">,</span>
+                             <span class="n">name</span><span class="o">=</span><span class="s1">&#39;HDI&#39;</span><span class="p">)</span>
+<span class="c1"># Show the `name` attribute.</span>
+<span class="n">hdi_series_named</span><span class="o">.</span><span class="n">name</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;HDI&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>You can set the name on an existing Series using the <code class="docutils literal notranslate"><span class="pre">.name</span></code> attribute:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hdi_series_named</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Hum Dev Ind&#39;</span>
+<span class="n">hdi_series_named</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUS    0.896
+BRA    0.668
+CAN    0.890
+CHN    0.586
+DEU    0.890
+ESP    0.828
+FRA    0.844
+GBR    0.863
+IND    0.490
+ITA    0.842
+JPN    0.883
+KOR    0.824
+MEX    0.709
+RUS    0.733
+USA    0.894
+Name: Hum Dev Ind, dtype: float64
 </pre></div>
 </div>
 </div>
@@ -2669,7 +2721,7 @@ to the output from using Pandas <code class="docutils literal notranslate"><span
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Indexing by label, indexing by position</p>
+        <p class="prev-next-title">Indexing by label and position</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -2694,7 +2746,7 @@ to the output from using Pandas <code class="docutils literal notranslate"><span
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-series-aka-an-array-an-index">Pandas Series (aka an array + an index)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pandas-data-frames-aka-dictionary-like-collection-of-series">Pandas Data Frames (aka dictionary-like collection of series)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-columns-from-a-data-frame">Selecting columns from a Data Frame</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#series-have-an-optional-name">Series have an optional name</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-s-in-a-name">What’s in a name?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indirect-indexing-into-data-frames">Indirect indexing into Data Frames</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-series-what-is-a-data-frame">What is a Series?  What is a Data Frame?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-more-columns-to-the-data-frame">Adding more columns to the Data Frame</a></li>

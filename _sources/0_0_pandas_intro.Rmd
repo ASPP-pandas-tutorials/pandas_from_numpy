@@ -482,7 +482,7 @@ type(hdi_from_df)
 ```
 
 (series-names)=
-## Series have an optional name
+## What's in a name?
 
 You can see in the output display that the extracted Series now has an extra
 attribute, which is the `name`.
@@ -503,11 +503,35 @@ hdi_from_df.name
 
 Above, when we first built the series of HDI values and labels with
 `pd.Series`, we not set the name of the Series, so it got the default `.name`
-of `None`.
+of `None`.  We rebuild it here:
 
 ```{python}
-# This was the original series we built with pd.Series.
+# We rebuild with pd.Series.
+hdi_series =  pd.Series(hdis_array, index=country_codes_array)
+# When we don't specify the name, the default is None.
 hdi_series.name is None
+```
+
+It can be useful to set the `.name` attribute can be useful for remind you of
+the nature of the data in the `.values` array.
+
+Let's make a new Series — called `hdi_series_named` — where we **do** specify
+a `.name` attribute when calling the `pd.Series()` constructor.
+
+```{python}
+# Make a series from the `hdis` array, specifying the `name` attribute.
+hdi_series_named = pd.Series(hdis_array,
+                             index=country_codes_array,
+                             name='HDI')
+# Show the `name` attribute.
+hdi_series_named.name
+```
+
+You can set the name on an existing Series using the `.name` attribute:
+
+```{python}
+hdi_series_named.name = 'Hum Dev Ind'
+hdi_series_named
 ```
 
 ## Indirect indexing into Data Frames
