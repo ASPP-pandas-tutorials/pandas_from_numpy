@@ -948,7 +948,7 @@ The result of this subtraction shows us the difference between the original mean
 df.describe().loc['mean'] - df.sample(len(df), replace=True).describe().loc['mean']
 ```
 
-You can also perform the same process, less efficiently, spread over multiple lines of code. The way shown below is not the only possible way - perhaps you used the `.mean()` method individually on each column, for instance, and then manually constructed a `Series` to store the results (even less efficient!) :
+You can also perform the same process, less efficiently, spread over multiple lines of code. The way shown below is not the only possible way - perhaps you used the `.mean()` method individually on each column, for instance, and then manually constructed a `Series` to store the results (even less efficient!) . Alternatively, you might have used `.drop()` to remove non-numeric columns, and then used `.mean()` in parallel on the numeric columns, another valid approach:
 
 ```{python}
 # calculate the original means
