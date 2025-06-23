@@ -585,9 +585,9 @@ You can do this in one line of code.
 :class: dropdown
 :::
 
-Remember the `.isna()` method shown above? This creates a Boolean Series containing `True` values where the Dataframe contains a NaN, and `False` values for non-NaN data. As such, you can get the "NaNs and blanks" Dataframe shown above by running the code in the cell below.
+Remember the `.isna()` method shown above? This creates a Boolean Series containing `True` values where data is NaN, and `False` values for non-NaN data. As such, you can get the "NaNs and blanks" Dataframe shown above by running the code in the cell below.
 
-First, we filter the Dataframe to contain only rows where `Fertility Rate` is NaN. Then we use `.isna()` method to make the whole Dataframe `True` where the data is NaN and `False` otherwise. We then use the `.replace()` method to replace `False` values with blankspace (`''`) and the `True` values with `np.nan`.
+First, we filter the Dataframe to contain only rows where `Fertility Rate` is NaN. Then we use `.isna()` method to make the data across the whole Dataframe `True` where there are NaN values and `False` otherwise. We then use the `.replace()` method to replace `False` values with blankspace (`''`) and the `True` values with `np.nan`.
 
 ```{python}
 # Solution 1
