@@ -583,7 +583,9 @@ You can do this in one line of code.
 :class: dropdown
 :::
 
-Remember the `.isna()` method shown above? This creates a Boolean Series containing `True` values where the Dataframe contains a NaN, and `False` values for non-NaN data. As such, you can get the "NaNs only" Dataframe shown above by running the following code:
+Remember the `.isna()` method shown above? This creates a Boolean Series containing `True` values where the Dataframe contains a NaN, and `False` values for non-NaN data. As such, you can get the "NaNs only" Dataframe shown above by running the code in the cell below.
+
+*Note*: you could also use the Pandas *function* `pd.isna()` here, to get the same result...
 
 ```{python}
 # solution
