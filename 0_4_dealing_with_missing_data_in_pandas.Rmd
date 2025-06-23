@@ -416,6 +416,6 @@ Pandas.
 In Numpy, NaN values have a *numerical* meaning, and typically result from
 invalid computations, such as dividing zero by zero.
 
-In Pandas, NaN values have *statistical* meaning.  They most commonly flags for
+In Pandas, NaN values have *statistical* meaning.  They are most commonly flags for
 missing data. By default, these NaN values will be ignored when you call
 Pandas' statistical methods for Series or Data Frames.
