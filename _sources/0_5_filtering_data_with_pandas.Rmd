@@ -178,6 +178,13 @@ hdis_array_bool_series.min()
 hdis_array_bool_series.mean()
 ```
 
+```{python}
+# we can achieve the same result as the cell above using the `.sum()` method, then dividing by the `len()` of the Series
+# the `.sum()` method adds up the `True` values, dividing by the `len()` of the Series divides by the number of observations
+# in the Series, giving us the mean (in this case a proportion)
+hdis_array_bool_series.sum()/len(hdis_array_bool_series)
+```
+
 We can use the Boolean Series to filter, exactly as we would with a Numpy array:
 
 ```{python}
@@ -310,6 +317,55 @@ above_median_HDI['Fertility Rate'].describe()
 below_median_HDI['Fertility Rate'].describe()
 ```
 
+::: {exercise-start}
+:label: below-replacement
+:class: dropdown
+:::
+
+For a country to be at "replacement rate" - e.g. the rate at which the population will remain constant, rather than increase or decrease - the `Fertility Rate` must be above [2.1](https://ourworldindata.org/data-insights/which-countries-have-fertility-rates-above-or-below-the-replacement-level). 
+
+Your task is to use a Boolean Series to calculate the proportion of countries in `df` which are below the 2.1 replacement rate.
+
+Try to do this in as few lines as code as possible, using Pandas methods rather than functions from other libraries...
+
+```{python}
+# your code here
+```
+
+::: {exercise-end}
+:::
+
+::: {solution-start} below-replacement
+:class: dropdown
+:::
+
+There are several ways to approach this, here are two.
+
+First, for both methods we generate a Boolean Series using `df['Fertility Rate'] < 2.1` - this will be `True` where the `Fertility Rate` is *under* 2.1, and `False` otherwise.
+
+In the first solution, we take the `sum()` of the `True` values, then divide that by the `len()` of the Dataframe (i.e. by the number of observations):
+
+```{python}
+# solution 1
+below_replacement_bool_series = df['Fertility Rate'] < 2.1
+
+below_replacement_bool_series.sum()/len(df)
+```
+
+The second solution is more efficient, as the `.mean()` method will perform the same calculation with less typing.
+
+```{python}
+# solution 2
+below_replacement_bool_series.mean()
+```
+
+Strikingly, 80% of the countries in the Dataframe are below the replacement rate...
+
+
+::: {solution-end}
+:::
+
+
 ## Cleaning, summarizing and plotting data with Boolean Indexing
 
 Remember, the data we have looked at on this page so far is just a fraction of the countries in the full HDI dataset. Let's import the full dataset, so we can use Boolean filtering to graphically inspect trends for countries above and below the median HDI. We will look at the data from all of the countries, but just for the year 2000, to keep the plot interpretable. 
@@ -440,6 +496,108 @@ full_df_2000[full_df_2000_gtr_than_median_HDI_bool]['Fertility Rate'].describe()
 # `.describe()` stats for `Fertility Rate` from countries below the median HDI (again, note the `~` operator)
 full_df_2000[~full_df_2000_gtr_than_median_HDI_bool]['Fertility Rate'].describe()
 ```
+
+::: {exercise-start}
+:label: a-big-pop
+:class: dropdown
+:::
+
+Let's say we are interested in whether `Population` is associated with `Human Development Index`. We might inspect a scatter plot of the two variables, to visually inspect for a trend. However, there may be a problem:
+
+![](images/big_pop_plot.png)
+
+
+The countries with huge populations are outliers which extend the x-axis far to the right, whilst most countries remain compressed near the far left of the x-axis. The pattern looks consistent with a random association, but perhaps there is a trend that is hard to see, in the presence of these extreme outliers?
+
+Your task is to use Boolean filtering to "trim" out observations *above* the [25% percentile](https://en.wikipedia.org/wiki/Percentile) of the `Population` scores. You should then create a scatter plot with `Population` on the x-axis, and `Human Development Index` on the y-axis, from the trimmed data. This will allow you to inspect the trend of the cluster of countries with smaller populations.
+
+You should try to do this in one or two lines of code, and using Pandas methods only.
+
+```{python}
+# your code here
+```
+
+::: {exercise-end}
+:::
+
+::: {solution-start} a-big-pop
+:class: dropdown
+:::
+
+Our solution - to make it easier to read - creates this plot in two lines of code (though it is possible to do it one line, using method chaining). 
+
+First, we use the "less than" (`<`) comparison operator to create a Boolean Series. This Series is `True` where the corresponding row in `full_df_2000` has a smaller-than-the-25th-percentile value, and `False` otherwise.
+
+To calculate the value of the 25th percentile, we use `.describe()`. Astute readers may have noticed that `.describe()` reports the quartiles (25%, 50%, 75% percentiles) of numeric variables. Because `.describe()` returns a Dataframe, we can use `.loc` indexing with the string `25%` to retrieve the value of the 25th percentile (the string `25%` is the `index` label of the 25th percentile, in the `.describe()` Dataframe output). Another option here would be to use `df['Fertility Rate'].quantile(0.25)` to get the 25th percentile - there are always many roads to the same outcome in Pandas...
+
+A second line of code then uses the `.plot()` method, with appropriate `x`, `y` and `kind` arguments, to generate the plot:
+
+```{python}
+# create a Boolean Series to filter the data
+below_25_filter = full_df_2000['Population'] < full_df_2000['Population'].describe().loc["25%"]
+
+# filter the data and plot
+full_df_2000[below_25_filter].plot(x='Population',
+                                   y='Human Development Index',
+                                   kind="scatter");
+```
+
+Interesting, it looks like actually, there may be a negative linear trend in these countries, which was not visible in the scatterplot showing all of the data.
+
+::: {solution-end}
+:::
+
+
+::: {exercise-start}
+:label: NaNs-army
+:class: dropdown
+:::
+
+For this exercise, we want you to make the stuff of a data analyst's nightmares: the result of a filtering operation which contains only NaN values. 
+
+Do you remember the `full_df` Dataframe, from before we filtered it down to just rows corresponding to the year 2000?. Here it is:
+
+```{python}
+# show the full Dataframe
+full_df
+```
+
+This data contains many NaN values. Your task is to use Boolean filtering on this Dataframe, to return *only the NaN values*. 
+
+The end product should look like this (and have the same dimensionality as the pictured Dataframe):
+
+![](images/NaN_army.png)
+
+You can do this in one line of code.
+
+*Hint:* this is simpler to accomplish than you might think.
+
+```{python}
+# your code here
+```
+
+::: {exercise-end}
+:::
+
+::: {solution-start} NaNs-army
+:class: dropdown
+:::
+
+Remember the `.isna()` method shown above? This creates a Boolean Series containing `True` values where the Dataframe contains a NaN, and `False` values for non-NaN data. As such, you can get the "NaNs only" Dataframe shown above by running the code in the cell below.
+
+*Note*: you could also use the Pandas *function* `pd.isna()` here, to get the same result...
+
+```{python}
+# solution
+full_df[full_df.isna()]
+```
+
+We sincerely hope you never have to see another Dataframe like this one.
+
+
+::: {solution-end}
+:::
+
 
 ## Summary
 
