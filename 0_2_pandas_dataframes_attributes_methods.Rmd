@@ -1131,7 +1131,7 @@ We then chain `.plot(kind='bar')` on the end, and we get the desired plot:
 df[['Country Name', 'Population']].sort_values(by='Population', ascending=False).plot(kind='bar')
 ```
 
-*Food for thought*: what will happen if you reverse the order of `Country Name` and `Population` in the direct indexing operation? Perhaps the order is telling `.plot()` which variable to put on the x-axis and which on the y-axis?
+*Food for thought*: what will happen if you reverse the order of `Country Name` and `Population` in the direct indexing operation? Do you think this will change the x-axis and and y-axis variables on the `.plot()`?
 
 Have a think about what you think will happen; you can check by uncommenting the code below to see if you were correct:
 
