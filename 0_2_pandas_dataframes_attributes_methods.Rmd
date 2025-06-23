@@ -607,7 +607,7 @@ df[cols].describe()
 :class: dropdown
 :::
 
-Can you think of what code you need to write to create a Series that contains the just the means of the `Human Development Index`, `Fertility Rate` and `Population` variables? For good measure, lets also require that the `name` attribute is set to `mean`. The output should look like this:
+Write code you need to create a Series that contains the just the means of the `Human Development Index`, `Fertility Rate` and `Population` variables. For good measure, let's also require that the `name` attribute is set to `mean`. The output should look like this:
 
 ```
 Human Development Index      0.789333
