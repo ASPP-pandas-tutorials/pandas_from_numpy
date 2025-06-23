@@ -913,7 +913,7 @@ Your task is the following:
 
 - store your result in a Pandas Series (note: depending what methods you use, your result may automatically be stored in a Pandas Series)
 
-The result should look something like this (though your differences with almost certainly be different to the ones shown below):
+The result should look something like this (though your differences will differ from the ones shown below, because of the randomness inherent in your sampling):
 
 ```
 Human Development Index      0.074467
