@@ -1,7 +1,3 @@
----
-orphan: true
----
-
 # ASPP Pandas tutorials
 
 This repository houses the Pandas tutorials originally written for the
