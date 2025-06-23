@@ -511,7 +511,7 @@ The countries with huge populations are outliers which extend the x-axis far to 
 
 Your task is to use Boolean filtering to "trim" out observations *above* the [25% percentile](link) of the `Population` scores. You should then create a scatter plot with `Population` on the x-axis, and `Human Development Index` on the y-axis, from the trimmed data. This will allow you to inspect the trend of the cluster of countries with smaller populations.
 
-You should try to do this *in one or two lines of code*, if you can. Try to do it using *only* Pandas methods.
+You should try to do this in one or two lines of code, and using Pandas methods only.
 
 ```{python}
 # your code here
