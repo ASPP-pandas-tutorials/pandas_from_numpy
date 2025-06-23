@@ -1095,7 +1095,7 @@ df['Population_z'].sort_values()
 
 If you use `.plot(kind="bar")` you will generate a bar plot (that is, a chart with bars representing counts for different categories).
 
-Your task is to use indexing methods of your choice, along with **only** the Pandas methods shown on this page, to create a bar plot which has:
+Your task is to use indexing methods of your choice, restricting yourself to the Pandas methods shown on this page, to create a bar plot which has:
 
 * the name of each country on the x-axis
 
