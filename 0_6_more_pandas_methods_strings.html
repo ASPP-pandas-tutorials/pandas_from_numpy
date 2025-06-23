@@ -428,7 +428,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strings-methods-with-numpy-arrays">Strings methods with numpy arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string-methods-with-numpy-arrays">String methods with Numpy arrays</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string-methods-with-pandas-series">String methods with Pandas Series</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string-methods-with-pandas-dataframes">String methods with Pandas DataFrames</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uses-of-string-methods-in-data-wrangling">Uses of string methods in data wrangling</a></li>
@@ -479,7 +479,6 @@ Structure of this page:
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A string</span>
 <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;string_of_words&quot;</span>
-
 <span class="n">string</span>
 </pre></div>
 </div>
@@ -494,7 +493,7 @@ Structure of this page:
 <p>Let’s say we like reading values in our data as if they are being spoken in a loud voice. If this is the case we can alter the format of the string to make all letters uppercase, using the <code class="docutils literal notranslate"><span class="pre">.upper()</span></code> method:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The `.upper()` method</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The `.upper()` method of `str`.</span>
 <span class="n">string</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -572,9 +571,9 @@ Structure of this page:
 </div>
 </div>
 <p>You can visit <a class="reference external" href="https://www.w3schools.com/python/python_ref_string.asp">this page</a> to see the variety of string methods available in base Python.</p>
-<section id="strings-methods-with-numpy-arrays">
-<h2>Strings methods with numpy arrays<a class="headerlink" href="#strings-methods-with-numpy-arrays" title="Link to this heading">#</a></h2>
-<p>So, strings in base python have a large number of in-built methods - what about strings in Numpy?</p>
+<section id="string-methods-with-numpy-arrays">
+<h2>String methods with Numpy arrays<a class="headerlink" href="#string-methods-with-numpy-arrays" title="Link to this heading">#</a></h2>
+<p>So, strings in base Python have a large number of in-built methods - what about strings in Numpy?</p>
 <p>Numpy arrays themselves do not have specific string methods, but the in-built Python string methods can be called on individual string values in a Numpy array. Alternatively, we can use functions from the <code class="docutils literal notranslate"><span class="pre">np.char.</span></code> module to operate on all the strings in the array concurrently.</p>
 <p>To investigate how string data is handled in Numpy, let’s make some arrays containing strings from now (very) familiar <a class="reference external" href="https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index">HDI dataset</a>:</p>
 <div class="cell docutils container">
@@ -582,40 +581,47 @@ Structure of this page:
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import libraries (no imports were needed prior to this point as string methods are part of base python)</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-
-<span class="c1"># Standard three-letter code for each country</span>
-<span class="n">country_codes_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;AUS&#39;</span><span class="p">,</span> <span class="s1">&#39;BRA&#39;</span><span class="p">,</span> <span class="s1">&#39;CAN&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;CHN&#39;</span><span class="p">,</span> <span class="s1">&#39;DEU&#39;</span><span class="p">,</span> <span class="s1">&#39;ESP&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;FRA&#39;</span><span class="p">,</span> <span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;IND&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;ITA&#39;</span><span class="p">,</span> <span class="s1">&#39;JPN&#39;</span><span class="p">,</span> <span class="s1">&#39;KOR&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;MEX&#39;</span><span class="p">,</span> <span class="s1">&#39;RUS&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">])</span>
-<span class="n">country_codes_array</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;AUS&#39;, &#39;BRA&#39;, &#39;CAN&#39;, &#39;CHN&#39;, &#39;DEU&#39;, &#39;ESP&#39;, &#39;FRA&#39;, &#39;GBR&#39;, &#39;IND&#39;,
-       &#39;ITA&#39;, &#39;JPN&#39;, &#39;KOR&#39;, &#39;MEX&#39;, &#39;RUS&#39;, &#39;USA&#39;], dtype=&#39;&lt;U3&#39;)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Country names</span>
-<span class="n">country_names_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;Australia&#39;</span><span class="p">,</span> <span class="s1">&#39;Brazil&#39;</span><span class="p">,</span> <span class="s1">&#39;Canada&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;China&#39;</span><span class="p">,</span> <span class="s1">&#39;Germany&#39;</span><span class="p">,</span> <span class="s1">&#39;Spain&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;France&#39;</span><span class="p">,</span> <span class="s1">&#39;United Kingdom&#39;</span><span class="p">,</span> <span class="s1">&#39;India&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;Italy&#39;</span><span class="p">,</span> <span class="s1">&#39;Japan&#39;</span><span class="p">,</span> <span class="s1">&#39;South Korea&#39;</span><span class="p">,</span>
-                          <span class="s1">&#39;Mexico&#39;</span><span class="p">,</span> <span class="s1">&#39;Russia&#39;</span><span class="p">,</span> <span class="s1">&#39;United States&#39;</span><span class="p">])</span>
-<span class="n">country_names_array</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A custom function to generate a Series to check exercise solutions.</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">clean_gender_df_names</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;Australia&#39;, &#39;Brazil&#39;, &#39;Canada&#39;, &#39;China&#39;, &#39;Germany&#39;, &#39;Spain&#39;,
-       &#39;France&#39;, &#39;United Kingdom&#39;, &#39;India&#39;, &#39;Italy&#39;, &#39;Japan&#39;,
-       &#39;South Korea&#39;, &#39;Mexico&#39;, &#39;Russia&#39;, &#39;United States&#39;], dtype=&#39;&lt;U14&#39;)
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate answer to exercise (see below).</span>
+<span class="n">answer_clean_series</span> <span class="o">=</span> <span class="n">clean_gender_df_names</span><span class="o">.</span><span class="n">get_cleaned</span><span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/gender_stats.csv&quot;</span><span class="p">)[</span><span class="s1">&#39;country_name&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Standard three-letter code for each country.</span>
+<span class="n">country_codes_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;AUS&#39;</span><span class="p">,</span> <span class="s1">&#39;BRA&#39;</span><span class="p">,</span> <span class="s1">&#39;CAN&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;CHN&#39;</span><span class="p">,</span> <span class="s1">&#39;DEU&#39;</span><span class="p">,</span> <span class="s1">&#39;ESP&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;FRA&#39;</span><span class="p">,</span> <span class="s1">&#39;GBR&#39;</span><span class="p">,</span> <span class="s1">&#39;IND&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;ITA&#39;</span><span class="p">,</span> <span class="s1">&#39;JPN&#39;</span><span class="p">,</span> <span class="s1">&#39;KOR&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;MEX&#39;</span><span class="p">,</span> <span class="s1">&#39;RUS&#39;</span><span class="p">,</span> <span class="s1">&#39;USA&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Country names.</span>
+<span class="n">country_names_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;Australia&#39;</span><span class="p">,</span> <span class="s1">&#39;Brazil&#39;</span><span class="p">,</span> <span class="s1">&#39;Canada&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;China&#39;</span><span class="p">,</span> <span class="s1">&#39;Germany&#39;</span><span class="p">,</span> <span class="s1">&#39;Spain&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;France&#39;</span><span class="p">,</span> <span class="s1">&#39;United Kingdom&#39;</span><span class="p">,</span> <span class="s1">&#39;India&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;Italy&#39;</span><span class="p">,</span> <span class="s1">&#39;Japan&#39;</span><span class="p">,</span> <span class="s1">&#39;South Korea&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;Mexico&#39;</span><span class="p">,</span> <span class="s1">&#39;Russia&#39;</span><span class="p">,</span> <span class="s1">&#39;United States&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -625,22 +631,14 @@ Structure of this page:
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Human Development Index Scores for each country</span>
 <span class="n">hdis_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.896</span><span class="p">,</span> <span class="mf">0.668</span><span class="p">,</span> <span class="mf">0.89</span> <span class="p">,</span> <span class="mf">0.586</span><span class="p">,</span> 
-                 <span class="mf">0.844</span><span class="p">,</span> <span class="mf">0.89</span> <span class="p">,</span> <span class="mf">0.49</span> <span class="p">,</span> <span class="mf">0.842</span><span class="p">,</span> 
-                 <span class="mf">0.883</span><span class="p">,</span> <span class="mf">0.709</span><span class="p">,</span> <span class="mf">0.733</span><span class="p">,</span> <span class="mf">0.824</span><span class="p">,</span>
-                 <span class="mf">0.828</span><span class="p">,</span> <span class="mf">0.863</span><span class="p">,</span> <span class="mf">0.894</span><span class="p">])</span>
-
-<span class="n">hdis_array</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.896, 0.668, 0.89 , 0.586, 0.844, 0.89 , 0.49 , 0.842, 0.883,
-       0.709, 0.733, 0.824, 0.828, 0.863, 0.894])
+                       <span class="mf">0.844</span><span class="p">,</span> <span class="mf">0.89</span> <span class="p">,</span> <span class="mf">0.49</span> <span class="p">,</span> <span class="mf">0.842</span><span class="p">,</span> 
+                       <span class="mf">0.883</span><span class="p">,</span> <span class="mf">0.709</span><span class="p">,</span> <span class="mf">0.733</span><span class="p">,</span> <span class="mf">0.824</span><span class="p">,</span>
+                       <span class="mf">0.828</span><span class="p">,</span> <span class="mf">0.863</span><span class="p">,</span> <span class="mf">0.894</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">dtype</span></code> attribute of the first two arrays begins with <code class="docutils literal notranslate"><span class="pre">&lt;U</span></code>, indicating we are dealing with string data:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">dtype</span></code> attribute of the first two arrays begins with <code class="docutils literal notranslate"><span class="pre">&lt;U</span></code>, indicating we are dealing with string data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the dtype of the country codes array (e.g. string data)</span>
@@ -654,6 +652,7 @@ Structure of this page:
 </div>
 </div>
 </div>
+<p><code class="docutils literal notranslate"><span class="pre">U3</span></code> tells us that the array stored Unicode (<code class="docutils literal notranslate"><span class="pre">U</span></code>) strings up  three Unicode characters in length.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the dtype of the country names array (e.g. string data)</span>
@@ -681,7 +680,7 @@ Structure of this page:
 </div>
 </div>
 </div>
-<p>Using direct indexing, we can use all of the in-built Python string methods on the individual values within a Numpy array:</p>
+<p>Using indexing, we can use all of the in-built Python string methods on the individual values within a Numpy array:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Methods on an individual string</span>
@@ -725,12 +724,12 @@ Structure of this page:
 <p>We can also replace elements of the string:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">country_codes_array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;HELLO&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">country_codes_array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;Comparable to the &quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;HELLOUS&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Comparable to the US&#39;
 </pre></div>
 </div>
 </div>
@@ -746,7 +745,7 @@ Structure of this page:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">18</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">21</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Oh no!</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">hdis_array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 
@@ -766,29 +765,9 @@ Structure of this page:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">19</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">22</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># This does not work</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">country_codes_array</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-
-<span class="ne">AttributeError</span>: &#39;numpy.ndarray&#39; object has no attribute &#39;lower&#39;
-</pre></div>
-</div>
-</div>
-</div>
-<p>The same error occurs if we try to use a string method on a slice from the array:</p>
-<div class="cell tag_raises-exception docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This also does not work</span>
-<span class="n">country_codes_array</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">20</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># This also does not work</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">country_codes_array</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 
 <span class="ne">AttributeError</span>: &#39;numpy.ndarray&#39; object has no attribute &#39;lower&#39;
 </pre></div>
@@ -836,7 +815,6 @@ Structure of this page:
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show again from Series</span>
 <span class="n">names_series</span> <span class="o">=</span>  <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">country_names_array</span><span class="p">,</span>
                           <span class="n">index</span><span class="o">=</span><span class="n">country_codes_array</span><span class="p">)</span>
-
 <span class="n">names_series</span>
 </pre></div>
 </div>
@@ -977,23 +955,6 @@ dtype: object
 </div>
 </div>
 </div>
-<p>In contrast to the behaviour of Numpy arrays, string methods used via the <code class="docutils literal notranslate"><span class="pre">.str.</span></code> accessor can be used when slicing the Series. Be careful to use <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> or <code class="docutils literal notranslate"><span class="pre">loc</span></code> here, for the <a class="reference internal" href="0_1_to_loc_or_iloc.html"><span class="std std-doc">aforementioned reasons</span></a>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Slicing with Series and string methods</span>
-<span class="n">names_series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;!&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUS    Austr!li!
-BRA       Br!zil
-CAN       C!n!d!
-dtype: object
-</pre></div>
-</div>
-</div>
-</div>
 <p>Using the <code class="docutils literal notranslate"><span class="pre">.contains()</span></code> method, Boolean Series can be generated by searching for specific instances of a substring in each value:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1048,7 +1009,6 @@ dtype: object
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import data</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/year_2000_hdi_fert.csv&quot;</span><span class="p">)</span>
-
 <span class="c1"># Show the data</span>
 <span class="n">df</span>
 </pre></div>
@@ -1205,11 +1165,11 @@ dtype: object
 </table>
 </div></div></div>
 </div>
-<p>Because each Data Frame column is nothing other than a Pandas Series, we can use string methods in the same way as we saw in the last section:</p>
+<p>Because each Data Frame column can be extracted as a Pandas Series, we can use string methods in the same way as we saw in the last section:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use the `.replace()` method</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Country Name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;HELLO&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Country Name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;I starts I&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1222,8 +1182,8 @@ dtype: object
 5              Spain
 6             France
 7     United Kingdom
-8          HELLOndia
-9          HELLOtaly
+8     I starts India
+9     I starts Italy
 10             Japan
 11       South Korea
 12            Mexico
@@ -1245,7 +1205,7 @@ Name: Country Name, dtype: object
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="nn">/tmp/ipykernel_2580/1916934331.py</span> in <span class="ni">?</span><span class="nt">()</span>
+<span class="nn">/tmp/ipykernel_2589/1916934331.py</span> in <span class="ni">?</span><span class="nt">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Cannot use `.str` methods on whole Data Frame.</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">df</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 
@@ -1275,7 +1235,7 @@ same error:</p>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="nn">/tmp/ipykernel_2580/3866909753.py</span> in <span class="ni">?</span><span class="nt">()</span>
+<span class="nn">/tmp/ipykernel_2589/3866909753.py</span> in <span class="ni">?</span><span class="nt">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Oops, using `.str` fails even for all-string-dtype columns.</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Country Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Code&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">()</span>
 
@@ -1420,12 +1380,12 @@ Name: Country Name, dtype: bool
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># See if there are any Trues in the Series</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Country Name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;Russia&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Country Name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;Russia&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.06666666666666667)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.int64(1)
 </pre></div>
 </div>
 </div>
@@ -1489,13 +1449,12 @@ Name: Country Name, dtype: bool
 <h2>Uses of string methods in data wrangling<a class="headerlink" href="#uses-of-string-methods-in-data-wrangling" title="Link to this heading">#</a></h2>
 <p>As we mentioned earlier, string methods generally useful for cleaning text data. This can be especially useful when combining data from different sources, where different conventions in data entry may lead to similar data being formatted differently.</p>
 <p>To explore this, let’s import a new dataset, which, like the HDI data, contains observations at the country level (e.g. each row is an observarion from a specific country).</p>
-<p>This dataset is also at the country-level of granularity, and it contains information about maternal mortality rates. You can read more about the dataset <a class="reference external" href="https://github.com/odsti/datasets/tree/main/gender_stats">here</a>.</p>
+<p>This dataset is also at the country-level of granularity, and it contains various data about countries, including maternal mortality rates. You can read more about the dataset <a class="reference internal" href="data/gender_stats.html"><span class="doc std std-doc">here</span></a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import maternal mortality dataset</span>
-<span class="n">maternal_mort</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/gender_stats.csv&quot;</span><span class="p">)</span>
-
-<span class="n">maternal_mort</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import gender statistics dataset</span>
+<span class="n">gender_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/gender_stats.csv&quot;</span><span class="p">)</span>
+<span class="n">gender_df</span>
 </pre></div>
 </div>
 </div>
@@ -1667,11 +1626,388 @@ Name: Country Name, dtype: bool
 <p>216 rows × 9 columns</p>
 </div></div></div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gender_df</span><span class="p">[</span><span class="n">gender_df</span><span class="p">[</span><span class="s1">&#39;country_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;S&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country_name</th>
+      <th>country_code</th>
+      <th>fert_rate</th>
+      <th>gdp_us_billion</th>
+      <th>health_exp_per_cap</th>
+      <th>health_exp_pub</th>
+      <th>prim_ed_girls</th>
+      <th>mat_mort_ratio</th>
+      <th>population</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>33</th>
+      <td>Switzerland</td>
+      <td>CHE</td>
+      <td>1.53000</td>
+      <td>676.642359</td>
+      <td>6335.436388</td>
+      <td>7.642569</td>
+      <td>48.556328</td>
+      <td>5.25</td>
+      <td>8.185870</td>
+    </tr>
+    <tr>
+      <th>58</th>
+      <td>Spain</td>
+      <td>ESP</td>
+      <td>1.30750</td>
+      <td>1299.724261</td>
+      <td>2963.832825</td>
+      <td>6.545739</td>
+      <td>48.722231</td>
+      <td>5.00</td>
+      <td>46.553128</td>
+    </tr>
+    <tr>
+      <th>103</th>
+      <td>St. Kitts and Nevis</td>
+      <td>KNA</td>
+      <td>NaN</td>
+      <td>0.832756</td>
+      <td>1212.879641</td>
+      <td>2.234503</td>
+      <td>49.805051</td>
+      <td>NaN</td>
+      <td>0.053722</td>
+    </tr>
+    <tr>
+      <th>110</th>
+      <td>St. Lucia</td>
+      <td>LCA</td>
+      <td>1.90200</td>
+      <td>1.362564</td>
+      <td>798.301449</td>
+      <td>3.780893</td>
+      <td>48.590773</td>
+      <td>49.00</td>
+      <td>0.176427</td>
+    </tr>
+    <tr>
+      <th>112</th>
+      <td>Sri Lanka</td>
+      <td>LKA</td>
+      <td>2.09775</td>
+      <td>76.808506</td>
+      <td>338.184994</td>
+      <td>1.762039</td>
+      <td>49.201950</td>
+      <td>31.25</td>
+      <td>20.790000</td>
+    </tr>
+    <tr>
+      <th>118</th>
+      <td>St. Martin (French part)</td>
+      <td>MAF</td>
+      <td>1.81250</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.031491</td>
+    </tr>
+    <tr>
+      <th>166</th>
+      <td>Saudi Arabia</td>
+      <td>SAU</td>
+      <td>2.79225</td>
+      <td>707.936120</td>
+      <td>2181.916849</td>
+      <td>3.114481</td>
+      <td>49.034225</td>
+      <td>12.25</td>
+      <td>30.728077</td>
+    </tr>
+    <tr>
+      <th>167</th>
+      <td>Sudan</td>
+      <td>SDN</td>
+      <td>4.38775</td>
+      <td>83.016732</td>
+      <td>272.975786</td>
+      <td>1.844650</td>
+      <td>46.560974</td>
+      <td>321.00</td>
+      <td>37.760931</td>
+    </tr>
+    <tr>
+      <th>168</th>
+      <td>Senegal</td>
+      <td>SEN</td>
+      <td>5.10400</td>
+      <td>14.539555</td>
+      <td>101.042953</td>
+      <td>2.278713</td>
+      <td>51.881078</td>
+      <td>331.00</td>
+      <td>14.551710</td>
+    </tr>
+    <tr>
+      <th>169</th>
+      <td>Singapore</td>
+      <td>SGP</td>
+      <td>1.24250</td>
+      <td>298.724394</td>
+      <td>3645.683877</td>
+      <td>1.763894</td>
+      <td>NaN</td>
+      <td>10.75</td>
+      <td>5.464722</td>
+    </tr>
+    <tr>
+      <th>170</th>
+      <td>Solomon Islands</td>
+      <td>SLB</td>
+      <td>3.99975</td>
+      <td>1.114535</td>
+      <td>111.679703</td>
+      <td>4.908624</td>
+      <td>47.983030</td>
+      <td>120.00</td>
+      <td>0.575490</td>
+    </tr>
+    <tr>
+      <th>171</th>
+      <td>Sierra Leone</td>
+      <td>SLE</td>
+      <td>4.69050</td>
+      <td>4.331604</td>
+      <td>207.625767</td>
+      <td>1.853112</td>
+      <td>50.098291</td>
+      <td>1435.00</td>
+      <td>7.080112</td>
+    </tr>
+    <tr>
+      <th>173</th>
+      <td>San Marino</td>
+      <td>SMR</td>
+      <td>1.26000</td>
+      <td>NaN</td>
+      <td>3437.298747</td>
+      <td>5.752693</td>
+      <td>45.616261</td>
+      <td>NaN</td>
+      <td>0.032607</td>
+    </tr>
+    <tr>
+      <th>174</th>
+      <td>Somalia</td>
+      <td>SOM</td>
+      <td>6.51450</td>
+      <td>5.785250</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>762.75</td>
+      <td>13.527075</td>
+    </tr>
+    <tr>
+      <th>175</th>
+      <td>Serbia</td>
+      <td>SRB</td>
+      <td>1.45000</td>
+      <td>41.075644</td>
+      <td>1298.626684</td>
+      <td>6.150194</td>
+      <td>48.625357</td>
+      <td>16.75</td>
+      <td>7.129316</td>
+    </tr>
+    <tr>
+      <th>176</th>
+      <td>South Sudan</td>
+      <td>SSD</td>
+      <td>5.06600</td>
+      <td>11.480939</td>
+      <td>58.565752</td>
+      <td>0.991932</td>
+      <td>40.879082</td>
+      <td>827.50</td>
+      <td>11.527917</td>
+    </tr>
+    <tr>
+      <th>177</th>
+      <td>Sao Tome and Principe</td>
+      <td>STP</td>
+      <td>4.60375</td>
+      <td>0.314540</td>
+      <td>304.237533</td>
+      <td>3.227125</td>
+      <td>48.664169</td>
+      <td>159.50</td>
+      <td>0.191333</td>
+    </tr>
+    <tr>
+      <th>178</th>
+      <td>Suriname</td>
+      <td>SUR</td>
+      <td>2.37325</td>
+      <td>4.773159</td>
+      <td>967.888627</td>
+      <td>3.119683</td>
+      <td>48.418349</td>
+      <td>157.50</td>
+      <td>0.547824</td>
+    </tr>
+    <tr>
+      <th>179</th>
+      <td>Slovak Republic</td>
+      <td>SVK</td>
+      <td>1.35500</td>
+      <td>93.894473</td>
+      <td>2107.917656</td>
+      <td>5.768967</td>
+      <td>48.521589</td>
+      <td>6.00</td>
+      <td>5.418425</td>
+    </tr>
+    <tr>
+      <th>180</th>
+      <td>Slovenia</td>
+      <td>SVN</td>
+      <td>1.57250</td>
+      <td>46.048863</td>
+      <td>2644.776298</td>
+      <td>6.698656</td>
+      <td>48.566330</td>
+      <td>8.75</td>
+      <td>2.061494</td>
+    </tr>
+    <tr>
+      <th>181</th>
+      <td>Sweden</td>
+      <td>SWE</td>
+      <td>1.89000</td>
+      <td>540.626904</td>
+      <td>5134.572113</td>
+      <td>10.010744</td>
+      <td>49.606578</td>
+      <td>4.00</td>
+      <td>9.703634</td>
+    </tr>
+    <tr>
+      <th>182</th>
+      <td>Swaziland</td>
+      <td>SWZ</td>
+      <td>3.30200</td>
+      <td>4.346817</td>
+      <td>570.468058</td>
+      <td>6.891502</td>
+      <td>47.524406</td>
+      <td>400.50</td>
+      <td>1.295364</td>
+    </tr>
+    <tr>
+      <th>183</th>
+      <td>Sint Maarten (Dutch part)</td>
+      <td>SXM</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>49.508551</td>
+      <td>NaN</td>
+      <td>0.037552</td>
+    </tr>
+    <tr>
+      <th>184</th>
+      <td>Seychelles</td>
+      <td>SYC</td>
+      <td>2.35000</td>
+      <td>1.366581</td>
+      <td>876.631453</td>
+      <td>3.413612</td>
+      <td>49.523733</td>
+      <td>NaN</td>
+      <td>0.091541</td>
+    </tr>
+    <tr>
+      <th>185</th>
+      <td>Syrian Arab Republic</td>
+      <td>SYR</td>
+      <td>2.96775</td>
+      <td>NaN</td>
+      <td>269.945739</td>
+      <td>1.507166</td>
+      <td>48.047394</td>
+      <td>62.00</td>
+      <td>19.319674</td>
+    </tr>
+    <tr>
+      <th>204</th>
+      <td>St. Vincent and the Grenadines</td>
+      <td>VCT</td>
+      <td>1.98600</td>
+      <td>0.730107</td>
+      <td>775.803386</td>
+      <td>4.365757</td>
+      <td>48.536415</td>
+      <td>45.75</td>
+      <td>0.109421</td>
+    </tr>
+    <tr>
+      <th>210</th>
+      <td>Samoa</td>
+      <td>WSM</td>
+      <td>4.11825</td>
+      <td>0.799887</td>
+      <td>366.353096</td>
+      <td>5.697059</td>
+      <td>48.350049</td>
+      <td>54.75</td>
+      <td>0.192225</td>
+    </tr>
+    <tr>
+      <th>213</th>
+      <td>South Africa</td>
+      <td>ZAF</td>
+      <td>2.37525</td>
+      <td>345.209888</td>
+      <td>1123.142656</td>
+      <td>4.241441</td>
+      <td>48.516298</td>
+      <td>143.75</td>
+      <td>54.177209</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
 <p>Let’s say we are interested in Russia, but do not know how the name of the country is formatted. We can use the <code class="docutils literal notranslate"><span class="pre">str.contains()</span></code> method to search for likely matches.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Hmmm is Russia not in this data?</span>
-<span class="n">maternal_mort</span><span class="p">[</span><span class="s1">&#39;country_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;Russia&#39;</span><span class="p">)</span>
+<span class="n">gender_df</span><span class="p">[</span><span class="s1">&#39;country_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;Russia&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1696,7 +2032,7 @@ Name: country_name, Length: 216, dtype: bool
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Count the Trues for country names containing &quot;Russia&quot; in the `maternal</span>
-<span class="n">maternal_mort</span><span class="p">[</span><span class="s1">&#39;country_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;Russia&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">gender_df</span><span class="p">[</span><span class="s1">&#39;country_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;Russia&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1710,7 +2046,7 @@ Name: country_name, Length: 216, dtype: bool
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use the `str.contains()` method to filter the data</span>
-<span class="n">maternal_mort</span><span class="p">[</span><span class="n">maternal_mort</span><span class="p">[</span><span class="s1">&#39;country_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;Russia&#39;</span><span class="p">)]</span>
+<span class="n">gender_df</span><span class="p">[</span><span class="n">gender_df</span><span class="p">[</span><span class="s1">&#39;country_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;Russia&#39;</span><span class="p">)]</span>
 </pre></div>
 </div>
 </div>
@@ -1780,15 +2116,20 @@ Name: RUS, dtype: object
 </div>
 </div>
 </div>
-<p>We may want to <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.merge.html">merge</a> these datasets. To do that, we need common identifiers linking rows in each dataset which refer to the same observational units (in this case countries).</p>
-<p>String methods are our friend here. We can use the process just outlined for find data for a specific country, and then use other methods to ensure uniform formatting between the datasets, such that we can merge them:</p>
+<p>In due course, we may want to
+<a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.merge.html">merge</a>
+these datasets. To do that, we need common identifiers linking rows in each
+dataset which refer to the same observational units (in this case countries).</p>
+<p>String methods are our friend here. We can use the process just outlined for
+find data for a specific country, and then use other methods to ensure uniform
+formatting between the datasets, such that we can merge them:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Format the maternal mortality data for Russia to use the same country name as the HDI data</span>
-<span class="n">maternal_mort</span><span class="p">[</span><span class="s1">&#39;country_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">maternal_mort</span><span class="p">[</span><span class="s1">&#39;country_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Russian Federation&#39;</span><span class="p">,</span> <span class="s1">&#39;Russia&#39;</span><span class="p">)</span>
+<span class="n">gender_df</span><span class="p">[</span><span class="s1">&#39;country_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gender_df</span><span class="p">[</span><span class="s1">&#39;country_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Russian Federation&#39;</span><span class="p">,</span> <span class="s1">&#39;Russia&#39;</span><span class="p">)</span>
 
 <span class="c1"># Show the newly formatted row</span>
-<span class="n">maternal_mort</span><span class="p">[</span><span class="n">maternal_mort</span><span class="p">[</span><span class="s1">&#39;country_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;Russia&#39;</span><span class="p">)]</span>
+<span class="n">gender_df</span><span class="p">[</span><span class="n">gender_df</span><span class="p">[</span><span class="s1">&#39;country_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;Russia&#39;</span><span class="p">)]</span>
 </pre></div>
 </div>
 </div>
@@ -1839,7 +2180,541 @@ Name: RUS, dtype: object
 </table>
 </div></div></div>
 </div>
-<p>We are now ready for a clean and stress-free data merge! (<em>NB</em>: we are lying here, merging datasets is almost never stress-free…)</p>
+<p>We are now ready for a clean and stress-free data merge! (<em>NB</em>: we are grossly exaggerating here, merging datasets is almost never stress-free…)</p>
+<div class="exercise dropdown admonition" id="strings-and-things">
+
+<p class="admonition-title"><span class="caption-number">Exercise 15 </span></p>
+<section id="exercise-content">
+<p>The <code class="docutils literal notranslate"><span class="pre">gender_df['country_name']</span></code> Series contains a lot of formatting that is nice to read, but annoying
+to use in indexing operations (or any time where we need to type them).</p>
+<p>Entries like <code class="docutils literal notranslate"><span class="pre">'Virgin</span> <span class="pre">Islands</span> <span class="pre">(U.S.)'</span></code> and <code class="docutils literal notranslate"><span class="pre">'St.</span> <span class="pre">Martin</span> <span class="pre">(French</span> <span class="pre">part)'</span></code> will be a pain to type if we need to use them in <code class="docutils literal notranslate"><span class="pre">.loc</span></code> indexing operations, for instance.</p>
+<p>We would therefore like to create a new Series containing versions of these names that are easier to type.</p>
+<p>That is what we have done with some hidden code.   The hidden code:</p>
+<ul class="simple">
+<li><p>Processes the <code class="docutils literal notranslate"><span class="pre">gender_df['country_name']</span></code> Series to make a new Series where we have replaced the original names (above) with versions of these names that are easier to type.</p></li>
+<li><p>Taken this new Series, and run <code class="docutils literal notranslate"><span class="pre">sorted(new_series.unique())</span></code> to show you the new names.</p></li>
+</ul>
+<p>Have a careful look at the resulting list below - and work out which Pandas string methods have been used to get from the <code class="docutils literal notranslate"><span class="pre">gender_df['country_name']</span></code> Series to the new Series, to which we have applied <code class="docutils literal notranslate"><span class="pre">sorted(new_series.unique())</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is the answer - don&#39;t use it in your solution.</span>
+<span class="nb">sorted</span><span class="p">(</span><span class="n">answer_clean_series</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;afghanistan&#39;,
+ &#39;albania&#39;,
+ &#39;algeria&#39;,
+ &#39;american_samoa&#39;,
+ &#39;andorra&#39;,
+ &#39;angola&#39;,
+ &#39;antigua_and_barbuda&#39;,
+ &#39;argentina&#39;,
+ &#39;armenia&#39;,
+ &#39;aruba&#39;,
+ &#39;australia&#39;,
+ &#39;austria&#39;,
+ &#39;azerbaijan&#39;,
+ &#39;bahamas_the&#39;,
+ &#39;bahrain&#39;,
+ &#39;bangladesh&#39;,
+ &#39;barbados&#39;,
+ &#39;belarus&#39;,
+ &#39;belgium&#39;,
+ &#39;belize&#39;,
+ &#39;benin&#39;,
+ &#39;bermuda&#39;,
+ &#39;bhutan&#39;,
+ &#39;bolivia&#39;,
+ &#39;bosnia_and_herzegovina&#39;,
+ &#39;botswana&#39;,
+ &#39;brazil&#39;,
+ &#39;british_virgin_islands&#39;,
+ &#39;brunei_darussalam&#39;,
+ &#39;bulgaria&#39;,
+ &#39;burkina_faso&#39;,
+ &#39;burundi&#39;,
+ &#39;cabo_verde&#39;,
+ &#39;cambodia&#39;,
+ &#39;cameroon&#39;,
+ &#39;canada&#39;,
+ &#39;cayman_islands&#39;,
+ &#39;central_african_republic&#39;,
+ &#39;chad&#39;,
+ &#39;chile&#39;,
+ &#39;china&#39;,
+ &#39;colombia&#39;,
+ &#39;comoros&#39;,
+ &#39;congo_dem_rep&#39;,
+ &#39;congo_rep&#39;,
+ &#39;costa_rica&#39;,
+ &quot;cote_d&#39;ivoire&quot;,
+ &#39;croatia&#39;,
+ &#39;cuba&#39;,
+ &#39;curacao&#39;,
+ &#39;cyprus&#39;,
+ &#39;czech_republic&#39;,
+ &#39;denmark&#39;,
+ &#39;djibouti&#39;,
+ &#39;dominica&#39;,
+ &#39;dominican_republic&#39;,
+ &#39;ecuador&#39;,
+ &#39;egypt_arab_rep&#39;,
+ &#39;el_salvador&#39;,
+ &#39;equatorial_guinea&#39;,
+ &#39;eritrea&#39;,
+ &#39;estonia&#39;,
+ &#39;ethiopia&#39;,
+ &#39;faroe_islands&#39;,
+ &#39;fiji&#39;,
+ &#39;finland&#39;,
+ &#39;france&#39;,
+ &#39;french_polynesia&#39;,
+ &#39;gabon&#39;,
+ &#39;gambia_the&#39;,
+ &#39;georgia&#39;,
+ &#39;germany&#39;,
+ &#39;ghana&#39;,
+ &#39;gibraltar&#39;,
+ &#39;greece&#39;,
+ &#39;greenland&#39;,
+ &#39;grenada&#39;,
+ &#39;guam&#39;,
+ &#39;guatemala&#39;,
+ &#39;guinea&#39;,
+ &#39;guinea_bissau&#39;,
+ &#39;guyana&#39;,
+ &#39;haiti&#39;,
+ &#39;honduras&#39;,
+ &#39;hong_kong_sar_china&#39;,
+ &#39;hungary&#39;,
+ &#39;iceland&#39;,
+ &#39;india&#39;,
+ &#39;indonesia&#39;,
+ &#39;iran_islamic_rep&#39;,
+ &#39;iraq&#39;,
+ &#39;ireland&#39;,
+ &#39;isle_of_man&#39;,
+ &#39;israel&#39;,
+ &#39;italy&#39;,
+ &#39;jamaica&#39;,
+ &#39;japan&#39;,
+ &#39;jordan&#39;,
+ &#39;kazakhstan&#39;,
+ &#39;kenya&#39;,
+ &#39;kiribati&#39;,
+ &quot;korea_dem_people&#39;s_rep&quot;,
+ &#39;korea_rep&#39;,
+ &#39;kosovo&#39;,
+ &#39;kuwait&#39;,
+ &#39;kyrgyz_republic&#39;,
+ &#39;lao_pdr&#39;,
+ &#39;latvia&#39;,
+ &#39;lebanon&#39;,
+ &#39;lesotho&#39;,
+ &#39;liberia&#39;,
+ &#39;libya&#39;,
+ &#39;liechtenstein&#39;,
+ &#39;lithuania&#39;,
+ &#39;luxembourg&#39;,
+ &#39;macao_sar_china&#39;,
+ &#39;macedonia_fyr&#39;,
+ &#39;madagascar&#39;,
+ &#39;malawi&#39;,
+ &#39;malaysia&#39;,
+ &#39;maldives&#39;,
+ &#39;mali&#39;,
+ &#39;malta&#39;,
+ &#39;marshall_islands&#39;,
+ &#39;mauritania&#39;,
+ &#39;mauritius&#39;,
+ &#39;mexico&#39;,
+ &#39;micronesia_fed_sts&#39;,
+ &#39;moldova&#39;,
+ &#39;monaco&#39;,
+ &#39;mongolia&#39;,
+ &#39;montenegro&#39;,
+ &#39;morocco&#39;,
+ &#39;mozambique&#39;,
+ &#39;myanmar&#39;,
+ &#39;namibia&#39;,
+ &#39;nauru&#39;,
+ &#39;nepal&#39;,
+ &#39;netherlands&#39;,
+ &#39;new_caledonia&#39;,
+ &#39;new_zealand&#39;,
+ &#39;nicaragua&#39;,
+ &#39;niger&#39;,
+ &#39;nigeria&#39;,
+ &#39;northern_mariana_islands&#39;,
+ &#39;norway&#39;,
+ &#39;oman&#39;,
+ &#39;pakistan&#39;,
+ &#39;palau&#39;,
+ &#39;panama&#39;,
+ &#39;papua_new_guinea&#39;,
+ &#39;paraguay&#39;,
+ &#39;peru&#39;,
+ &#39;philippines&#39;,
+ &#39;poland&#39;,
+ &#39;portugal&#39;,
+ &#39;puerto_rico&#39;,
+ &#39;qatar&#39;,
+ &#39;romania&#39;,
+ &#39;russian_federation&#39;,
+ &#39;rwanda&#39;,
+ &#39;samoa&#39;,
+ &#39;san_marino&#39;,
+ &#39;sao_tome_and_principe&#39;,
+ &#39;saudi_arabia&#39;,
+ &#39;senegal&#39;,
+ &#39;serbia&#39;,
+ &#39;seychelles&#39;,
+ &#39;sierra_leone&#39;,
+ &#39;singapore&#39;,
+ &#39;sint_maarten_dutch_part&#39;,
+ &#39;slovak_republic&#39;,
+ &#39;slovenia&#39;,
+ &#39;solomon_islands&#39;,
+ &#39;somalia&#39;,
+ &#39;south_africa&#39;,
+ &#39;south_sudan&#39;,
+ &#39;spain&#39;,
+ &#39;sri_lanka&#39;,
+ &#39;st_kitts_and_nevis&#39;,
+ &#39;st_lucia&#39;,
+ &#39;st_martin_french_part&#39;,
+ &#39;st_vincent_and_the_grenadines&#39;,
+ &#39;sudan&#39;,
+ &#39;suriname&#39;,
+ &#39;swaziland&#39;,
+ &#39;sweden&#39;,
+ &#39;switzerland&#39;,
+ &#39;syrian_arab_republic&#39;,
+ &#39;tajikistan&#39;,
+ &#39;tanzania&#39;,
+ &#39;thailand&#39;,
+ &#39;timor_leste&#39;,
+ &#39;togo&#39;,
+ &#39;tonga&#39;,
+ &#39;trinidad_and_tobago&#39;,
+ &#39;tunisia&#39;,
+ &#39;turkey&#39;,
+ &#39;turkmenistan&#39;,
+ &#39;turks_and_caicos_islands&#39;,
+ &#39;tuvalu&#39;,
+ &#39;uganda&#39;,
+ &#39;ukraine&#39;,
+ &#39;united_arab_emirates&#39;,
+ &#39;united_kingdom&#39;,
+ &#39;united_states&#39;,
+ &#39;uruguay&#39;,
+ &#39;uzbekistan&#39;,
+ &#39;vanuatu&#39;,
+ &#39;venezuela_rb&#39;,
+ &#39;vietnam&#39;,
+ &#39;virgin_islands_us&#39;,
+ &#39;west_bank_and_gaza&#39;,
+ &#39;yemen_rep&#39;,
+ &#39;zambia&#39;,
+ &#39;zimbabwe&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Your task now is to make a Series called <code class="docutils literal notranslate"><span class="pre">my_clean_series</span></code> which gives (with <code class="docutils literal notranslate"><span class="pre">sorted(my_clean_series.unique())</span></code>) a list that is <em>identical</em> to the list shown above.</p>
+<p>You can perform the relevant string transformations using Pandas string methods on the <code class="docutils literal notranslate"><span class="pre">gender_df['country_name']</span></code> Series, and then run <code class="docutils literal notranslate"><span class="pre">sorted(my_clean_names.unique())</span></code> to get the final array.</p>
+<p>There is a cell at the end of the exercise to check your answer.</p>
+<p>Try to do the string transformation in as few lines of code as possible and <strong>using ONLY Pandas string methods</strong>.</p>
+<p><strong>Hint</strong>: There are many ways to do this, but for maximum beauty, you might consider having a look at <a class="reference external" href="https://docs.python.org/3.3/library/stdtypes.html?highlight=maketrans#str.maketrans">Python’s str.maketrans function</a>.  And yes, you can use <code class="docutils literal notranslate"><span class="pre">str.maketrans</span></code> as well.  Or you can use some other algorithm of your choice.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your code here to create a new Pandas Series with modified</span>
+<span class="c1"># country names, as above.</span>
+<span class="n">my_clean_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">()</span>  <span class="c1"># Edit here to solve the problem.</span>
+<span class="c1"># ...</span>
+<span class="c1"># But don&#39;t modify the code below.</span>
+<span class="n">my_clean_names</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">my_clean_series</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="n">my_clean_names</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run this cell to check your answer.</span>
+<span class="c1"># It will print &#39;Success&#39; if your cleaning worked correctly.</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">check_names</span><span class="p">():</span>
+    <span class="n">answer_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">answer_clean_series</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">my_clean_names</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">answer_list</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;The answers are of different lengths&#39;</span>
+    <span class="n">not_matching</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">my_clean_names</span><span class="p">)</span> <span class="o">!=</span> <span class="n">answer_list</span>
+    <span class="k">if</span> <span class="n">not_matching</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;My solution unmatched&#39;</span><span class="p">,</span> <span class="n">my_clean_names</span><span class="p">[</span><span class="n">not_matching</span><span class="p">])</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Desired unmatched&#39;</span><span class="p">,</span> <span class="n">cleaned_names_answer</span><span class="p">[</span><span class="n">not_matching</span><span class="p">])</span>
+        <span class="k">return</span> <span class="s1">&#39;Remaining unmatched values&#39;</span>
+    <span class="k">return</span> <span class="s1">&#39;Success&#39;</span>
+    
+<span class="n">check_names</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;The answers are of different lengths&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<div class="solution dropdown admonition" id="0_6_more_pandas_methods_strings-solution-1">
+
+<p class="admonition-title">Solution to<a class="reference internal" href="#strings-and-things"> Exercise 15</a></p>
+<section id="solution-content">
+<p>Our solution is below. We have used the hint above to make a <em>translation table</em> from a set of characters to another set of characters, followed by a set of characters to delete, and then applied this translation table with the Pandas <code class="docutils literal notranslate"><span class="pre">.str.translate</span></code> method.</p>
+<p>We then use the <code class="docutils literal notranslate"><span class="pre">.lower()</span></code> method to remove the capitalization.</p>
+<p>To make the array <em>identical</em> to the one shown above (and the one used for marking this exercise), we then re-rename <code class="docutils literal notranslate"><span class="pre">russia</span></code> to <code class="docutils literal notranslate"><span class="pre">russian_federation</span></code> before using <code class="docutils literal notranslate"><span class="pre">.unique()</span></code> to show the final array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">soln_clean_series</span> <span class="o">=</span> <span class="p">(</span><span class="n">gender_df</span><span class="p">[</span><span class="s1">&#39;country_name&#39;</span><span class="p">]</span>
+                     <span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                     <span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">maketrans</span><span class="p">(</span><span class="s1">&#39; -&#39;</span><span class="p">,</span> <span class="s1">&#39;__&#39;</span><span class="p">,</span> <span class="s1">&#39;().,&#39;</span><span class="p">))</span>
+                     <span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;russia&#39;</span><span class="p">,</span> <span class="s1">&#39;russian_federation&#39;</span><span class="p">))</span>
+<span class="n">soln_clean_names</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">soln_clean_series</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="n">soln_clean_names</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;afghanistan&#39;,
+ &#39;albania&#39;,
+ &#39;algeria&#39;,
+ &#39;american_samoa&#39;,
+ &#39;andorra&#39;,
+ &#39;angola&#39;,
+ &#39;antigua_and_barbuda&#39;,
+ &#39;argentina&#39;,
+ &#39;armenia&#39;,
+ &#39;aruba&#39;,
+ &#39;australia&#39;,
+ &#39;austria&#39;,
+ &#39;azerbaijan&#39;,
+ &#39;bahamas_the&#39;,
+ &#39;bahrain&#39;,
+ &#39;bangladesh&#39;,
+ &#39;barbados&#39;,
+ &#39;belarus&#39;,
+ &#39;belgium&#39;,
+ &#39;belize&#39;,
+ &#39;benin&#39;,
+ &#39;bermuda&#39;,
+ &#39;bhutan&#39;,
+ &#39;bolivia&#39;,
+ &#39;bosnia_and_herzegovina&#39;,
+ &#39;botswana&#39;,
+ &#39;brazil&#39;,
+ &#39;british_virgin_islands&#39;,
+ &#39;brunei_darussalam&#39;,
+ &#39;bulgaria&#39;,
+ &#39;burkina_faso&#39;,
+ &#39;burundi&#39;,
+ &#39;cabo_verde&#39;,
+ &#39;cambodia&#39;,
+ &#39;cameroon&#39;,
+ &#39;canada&#39;,
+ &#39;cayman_islands&#39;,
+ &#39;central_african_republic&#39;,
+ &#39;chad&#39;,
+ &#39;chile&#39;,
+ &#39;china&#39;,
+ &#39;colombia&#39;,
+ &#39;comoros&#39;,
+ &#39;congo_dem_rep&#39;,
+ &#39;congo_rep&#39;,
+ &#39;costa_rica&#39;,
+ &quot;cote_d&#39;ivoire&quot;,
+ &#39;croatia&#39;,
+ &#39;cuba&#39;,
+ &#39;curacao&#39;,
+ &#39;cyprus&#39;,
+ &#39;czech_republic&#39;,
+ &#39;denmark&#39;,
+ &#39;djibouti&#39;,
+ &#39;dominica&#39;,
+ &#39;dominican_republic&#39;,
+ &#39;ecuador&#39;,
+ &#39;egypt_arab_rep&#39;,
+ &#39;el_salvador&#39;,
+ &#39;equatorial_guinea&#39;,
+ &#39;eritrea&#39;,
+ &#39;estonia&#39;,
+ &#39;ethiopia&#39;,
+ &#39;faroe_islands&#39;,
+ &#39;fiji&#39;,
+ &#39;finland&#39;,
+ &#39;france&#39;,
+ &#39;french_polynesia&#39;,
+ &#39;gabon&#39;,
+ &#39;gambia_the&#39;,
+ &#39;georgia&#39;,
+ &#39;germany&#39;,
+ &#39;ghana&#39;,
+ &#39;gibraltar&#39;,
+ &#39;greece&#39;,
+ &#39;greenland&#39;,
+ &#39;grenada&#39;,
+ &#39;guam&#39;,
+ &#39;guatemala&#39;,
+ &#39;guinea&#39;,
+ &#39;guinea_bissau&#39;,
+ &#39;guyana&#39;,
+ &#39;haiti&#39;,
+ &#39;honduras&#39;,
+ &#39;hong_kong_sar_china&#39;,
+ &#39;hungary&#39;,
+ &#39;iceland&#39;,
+ &#39;india&#39;,
+ &#39;indonesia&#39;,
+ &#39;iran_islamic_rep&#39;,
+ &#39;iraq&#39;,
+ &#39;ireland&#39;,
+ &#39;isle_of_man&#39;,
+ &#39;israel&#39;,
+ &#39;italy&#39;,
+ &#39;jamaica&#39;,
+ &#39;japan&#39;,
+ &#39;jordan&#39;,
+ &#39;kazakhstan&#39;,
+ &#39;kenya&#39;,
+ &#39;kiribati&#39;,
+ &quot;korea_dem_people&#39;s_rep&quot;,
+ &#39;korea_rep&#39;,
+ &#39;kosovo&#39;,
+ &#39;kuwait&#39;,
+ &#39;kyrgyz_republic&#39;,
+ &#39;lao_pdr&#39;,
+ &#39;latvia&#39;,
+ &#39;lebanon&#39;,
+ &#39;lesotho&#39;,
+ &#39;liberia&#39;,
+ &#39;libya&#39;,
+ &#39;liechtenstein&#39;,
+ &#39;lithuania&#39;,
+ &#39;luxembourg&#39;,
+ &#39;macao_sar_china&#39;,
+ &#39;macedonia_fyr&#39;,
+ &#39;madagascar&#39;,
+ &#39;malawi&#39;,
+ &#39;malaysia&#39;,
+ &#39;maldives&#39;,
+ &#39;mali&#39;,
+ &#39;malta&#39;,
+ &#39;marshall_islands&#39;,
+ &#39;mauritania&#39;,
+ &#39;mauritius&#39;,
+ &#39;mexico&#39;,
+ &#39;micronesia_fed_sts&#39;,
+ &#39;moldova&#39;,
+ &#39;monaco&#39;,
+ &#39;mongolia&#39;,
+ &#39;montenegro&#39;,
+ &#39;morocco&#39;,
+ &#39;mozambique&#39;,
+ &#39;myanmar&#39;,
+ &#39;namibia&#39;,
+ &#39;nauru&#39;,
+ &#39;nepal&#39;,
+ &#39;netherlands&#39;,
+ &#39;new_caledonia&#39;,
+ &#39;new_zealand&#39;,
+ &#39;nicaragua&#39;,
+ &#39;niger&#39;,
+ &#39;nigeria&#39;,
+ &#39;northern_mariana_islands&#39;,
+ &#39;norway&#39;,
+ &#39;oman&#39;,
+ &#39;pakistan&#39;,
+ &#39;palau&#39;,
+ &#39;panama&#39;,
+ &#39;papua_new_guinea&#39;,
+ &#39;paraguay&#39;,
+ &#39;peru&#39;,
+ &#39;philippines&#39;,
+ &#39;poland&#39;,
+ &#39;portugal&#39;,
+ &#39;puerto_rico&#39;,
+ &#39;qatar&#39;,
+ &#39;romania&#39;,
+ &#39;russian_federation&#39;,
+ &#39;rwanda&#39;,
+ &#39;samoa&#39;,
+ &#39;san_marino&#39;,
+ &#39;sao_tome_and_principe&#39;,
+ &#39;saudi_arabia&#39;,
+ &#39;senegal&#39;,
+ &#39;serbia&#39;,
+ &#39;seychelles&#39;,
+ &#39;sierra_leone&#39;,
+ &#39;singapore&#39;,
+ &#39;sint_maarten_dutch_part&#39;,
+ &#39;slovak_republic&#39;,
+ &#39;slovenia&#39;,
+ &#39;solomon_islands&#39;,
+ &#39;somalia&#39;,
+ &#39;south_africa&#39;,
+ &#39;south_sudan&#39;,
+ &#39;spain&#39;,
+ &#39;sri_lanka&#39;,
+ &#39;st_kitts_and_nevis&#39;,
+ &#39;st_lucia&#39;,
+ &#39;st_martin_french_part&#39;,
+ &#39;st_vincent_and_the_grenadines&#39;,
+ &#39;sudan&#39;,
+ &#39;suriname&#39;,
+ &#39;swaziland&#39;,
+ &#39;sweden&#39;,
+ &#39;switzerland&#39;,
+ &#39;syrian_arab_republic&#39;,
+ &#39;tajikistan&#39;,
+ &#39;tanzania&#39;,
+ &#39;thailand&#39;,
+ &#39;timor_leste&#39;,
+ &#39;togo&#39;,
+ &#39;tonga&#39;,
+ &#39;trinidad_and_tobago&#39;,
+ &#39;tunisia&#39;,
+ &#39;turkey&#39;,
+ &#39;turkmenistan&#39;,
+ &#39;turks_and_caicos_islands&#39;,
+ &#39;tuvalu&#39;,
+ &#39;uganda&#39;,
+ &#39;ukraine&#39;,
+ &#39;united_arab_emirates&#39;,
+ &#39;united_kingdom&#39;,
+ &#39;united_states&#39;,
+ &#39;uruguay&#39;,
+ &#39;uzbekistan&#39;,
+ &#39;vanuatu&#39;,
+ &#39;venezuela_rb&#39;,
+ &#39;vietnam&#39;,
+ &#39;virgin_islands_us&#39;,
+ &#39;west_bank_and_gaza&#39;,
+ &#39;yemen_rep&#39;,
+ &#39;zambia&#39;,
+ &#39;zimbabwe&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</div>
 </section>
 <section id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
@@ -1914,7 +2789,7 @@ Name: RUS, dtype: object
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#strings-methods-with-numpy-arrays">Strings methods with numpy arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string-methods-with-numpy-arrays">String methods with Numpy arrays</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string-methods-with-pandas-series">String methods with Pandas Series</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#string-methods-with-pandas-dataframes">String methods with Pandas DataFrames</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uses-of-string-methods-in-data-wrangling">Uses of string methods in data wrangling</a></li>
