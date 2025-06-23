@@ -5,7 +5,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.16.6
+      jupytext_version: 1.17.2
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -53,16 +53,16 @@ import pandas as pd
 ```
 
 ```{python}
-# create a Series with some strings representing dates
+# Create a Series with some strings representing dates
 string_time_series = pd.Series(['2025-06-06', '2025-06-07'])
-# show the Series
+# Show the Series
 string_time_series
 ```
 
 To no one's surprise, the `type()` of these data is `str`:
 
 ```{python}
-# show the `type()` of the data
+# Show the `type()` of the data
 first_val = string_time_series.iloc[0]
 type(first_val)
 ```
@@ -77,7 +77,7 @@ However, we would be sorely disappointed, when using `str` data to represent
 time:
 
 ```{python tags=c("raises-exception")}
-# not what we wanted...
+# Not what we wanted...
 second_val = string_time_series.iloc[1]
 second_val - first_val
 ```
@@ -135,7 +135,7 @@ We can now do "mathemstics with times" and use subtraction to calculate the
 difference between these dates:
 
 ```{python}
-# get the difference between the two dates
+# Get the difference between the two dates
 second_ts_val = timestamp_series.iloc[1]
 second_ts_val - first_ts_val
 ```
@@ -165,7 +165,7 @@ the date strings. However, we can control the format with which `pd.datetime()`
 will interpret the date strings, using the `format=` argument:
 
 ```{python}
-# a new Series, using an alternate formatting to the standard Pandas assumes.
+# A new Series, using an alternate formatting to the standard Pandas assumes.
 other_timestamp_series = pd.to_datetime(string_time_series, format='%Y-%d-%m')
 other_timestamp_series
 ```
@@ -184,7 +184,7 @@ We can see that we get a totally different `Timedelta` when subtracting the
 dates interpreted according to the new format:
 
 ```{python}
-# get the difference between the two dates with the alternate formatting
+# Get the difference between the two dates with the alternate formatting
 other_timestamp_series.iloc[1] - other_timestamp_series.iloc[0]
 ```
 
@@ -201,7 +201,7 @@ Before we move on, it is important to note that `pd.to_datetime()` can also
 convert dates which contain words like the names of months (June, July etc.):
 
 ```{python}
-# representations of dates which contain strings for the names of months (e.g. "JUNE")
+# Representations of dates which contain strings for the names of months (e.g. "JUNE")
 a_series_of_str = pd.Series(['2025-JUNE-06', '2025-JUNE-07'])
 a_series_of_timestamps = pd.to_datetime(a_series_of_str)
 a_series_of_timestamps
@@ -228,7 +228,7 @@ we can use `.iloc` indexing to retrieve single values from it. In this case, we
 retrieve a single `Timestamp`:
 
 ```{python}
-# retrieve a single Timestamp from the Series
+# Retrieve a single Timestamp from the Series
 single_timestamp = a_series_of_timestamps.iloc[0]
 single_timestamp
 ```
@@ -236,7 +236,7 @@ single_timestamp
 Attached to any individual Timestamp is an attribute called `.value`:
 
 ```{python}
-# show the `.value` attribute
+# Show the `.value` attribute
 single_timestamp.value
 ```
 
@@ -246,13 +246,18 @@ date, or time...
 A look through the other attributes reveals more familiar nameed units of time. For instance, the `year`, `month` and `day` attributes:
 
 ```{python}
-# the `.year` attribute
+# The `.year` attribute
 single_timestamp.year
 ```
 
 ```{python}
-# .month and day
-single_timestamp.month, single_timestamp.day
+# The `.month` attribute
+single_timestamp.month
+```
+
+```{python}
+# The `.day` attribute
+single_timestamp.day
 ```
 
 So what is the mysterious `.value` attribute? 
@@ -302,7 +307,7 @@ approx_ns_in_year
 Thus, if we divide our `.value` attribute of our `Timestamp` by `approx_ns_in_year` we should get something like number of years between the `Timestamp` and midnight January 1st 1970:
 
 ```{python}
-# calculate the number of years since midnight Jan 1st 1970:
+# Calculate the number of years since midnight Jan 1st 1970:
 approx_years_since_1_1_1970 = single_timestamp.value / approx_ns_in_year
 approx_years_since_1_1_1970
 ```
@@ -327,7 +332,7 @@ We could have subtracted `approx_years_since_1_1_1970` from `single_timestamp.ye
 Let's explore Pandas Timestamps further now that we know they are fundamentally a measure of nanoseconds since midnight on 1st January 1970, a duration which can be expressed in more understandable forms like `.year`, `month`, `day` etc. We will again use the [Human Development Index](https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index) dataset. However,  to keep things simple, we will just be looking at rows corresponding to Afghanistan:
 
 ```{python}
-# import the dateset
+# Import the dateset
 df = pd.read_csv('data/AFG-data-children-per-woman-vs-human-development-index.csv')
 
 df
@@ -342,7 +347,7 @@ Here we have one observational unit (in this case a country), measured over time
 We just call the `.plot()` method on the whole Data Frame, using the `subplots=True` argument), and we get the following neat result:
 
 ```{python}
-# a useful trick to time-series data!
+# A useful trick to time-series data!
 df.plot(subplots=True);
 ```
 
@@ -351,14 +356,14 @@ As expected, the trend for `Year` increasely linearly (*duh!*), whilst `Fertilit
 We are undoubtedly viewing time-rleated trends here, but we are doing so based on a non-specialized representation of the times in the `Year` column:
 
 ```{python}
-# what type of data is in the `Year` column?
+# What type of data is in the `Year` column?
 df['Year'].dtype
 ```
 
 Because the `Year` formats in this dataset, unlike the `str` dates we used earlier, do NOT contain anything string specific (hyphens and the like), Pandas has interpreted them as `int` data.
 
 ```{python}
-# inspect the `Year` column
+# Inspect the `Year` column
 df['Year']
 ```
 
@@ -371,10 +376,10 @@ Let's convert the `Year` values to `Timestamp` data, to see the host of
 rename the original `Year` column to `Year_as_string` to avoid confusion:
 
 ```{python}
-# rename the `Year` column
+# Rename the `Year` column
 df = df.rename(columns={'Year': 'Year_as_string'})
 
-# Convert the month data to time stamp.
+# Convert the month data to Timestamp.
 df['Year_as_Timestamp'] = pd.to_datetime(df['Year_as_string'], format='%Y')
 df['Year_as_Timestamp']
 ```
@@ -414,7 +419,7 @@ midnight on 1st January 1990".
 Let's try to index further into the `Timestamp`:
 
 ```{python tags=c("raises-exception")}
-# oh no....
+# Oh no....
 first_year_ts
 ```
 
@@ -438,7 +443,7 @@ As with the `.str` accessor, the `.dt.` accessor operates on all values of a Dat
 For instance, to grab just the year information, we can use `.dt.year`:
 
 ```{python}
-# view the `year` attribute
+# View the `year` attribute
 df['Year_as_Timestamp'].dt.year
 ```
 
@@ -453,34 +458,34 @@ We can use other clearly named attributes, accessing time-based information down
 We will go through these in order (`.dt.month`, `.dt.day`, `.dt.hour`, `.dt.minute`, `.dt.second`) in the cells below:
 
 ```{python}
-# view the `month` attribute (which here has been automatically set to 1 by Pandas)
+# View the `month` attribute (which here has been automatically set to 1 by Pandas)
 df['Year_as_Timestamp'].dt.month
 ```
 
 ```{python}
-# view the `day` attribute (which here has been automatically set to 1 by Pandas)
+# View the `day` attribute (which here has been automatically set to 1 by Pandas)
 df['Year_as_Timestamp'].dt.day
 ```
 
 ```{python}
-# view the `hour` attribute (which here has been automatically set to 0 by Pandas)
+# View the `hour` attribute (which here has been automatically set to 0 by Pandas)
 df['Year_as_Timestamp'].dt.hour
 ```
 
 ```{python}
-# view the `minute` attribute (which here has been automatically set to 0 by Pandas)
+# View the `minute` attribute (which here has been automatically set to 0 by Pandas)
 df['Year_as_Timestamp'].dt.minute
 ```
 
 ```{python}
-# view the `second` attribute (which here has been automatically set to 0 by Pandas)
+# View the `second` attribute (which here has been automatically set to 0 by Pandas)
 df['Year_as_Timestamp'].dt.second
 ```
 
 We can see that the sequence with which we just "walked" through the `.dt.` attributes (`.dt.month`, `.dt.day`, `.dt.hour`, `.dt.minute`, `.dt.second`) corresponds to the order of the output of a single `Timestamp`:
 
 ```{python}
-# view an individual Timestamp
+# View an individual Timestamp
 df['Year_as_Timestamp'].iloc[0]
 ```
 
@@ -494,7 +499,7 @@ We mentioned earlier than the names of months (like "June"/"July" etc, as well a
 Using the `.dt.` accessor, we can easily do things like filter our a specific year using these attributes:
 
 ```{python}
-# filter using a Boolean array from the `.dt` accessor
+# Filter using a Boolean array from the `.dt` accessor
 df[df['Year_as_Timestamp'].dt.year == 1990]
 ```
 
@@ -508,7 +513,7 @@ Now we have our special time representations, a real strength of having them is 
 We can do this using the previously seen `.set_index()` method:
 
 ```{python}
-# put Timestamps in the index
+# Put Timestamps in the index
 df = df.set_index('Year_as_Timestamp')
 
 df
@@ -517,17 +522,17 @@ df
 If we view the `index`, Pandas will helpfully reveal that setting `Year` as the `index` - a column which contained only Timestamps - has created a `DatetimeIndex`. As the name might reveal, this is an index containing only Timestamps (aka dates / times):
 
 ```{python}
-# show the index
+# Show the index
 df.index
 ```
 
 ```{python}
-# show the `type()` of the index
+# Show the `type()` of the index
 type(df.index)
 ```
 
 ```{python}
-# show an individual Timestamp from the `index`
+# Show an individual Timestamp from the `index`
 df.index[0]
 ```
 
@@ -537,14 +542,14 @@ indexing on our `Timestamp`s.
 For instance, we can `.loc` index just data from the year 1990:
 
 ```{python}
-# using `.loc` with a year
+# Using `.loc` with a year
 df.loc["1990"]
 ```
 
 We can also do neat slicing operations using time information. For instance showing all rows corresponding to years between 1990 and 1995:
 
 ```{python}
-# slice the years using `.loc`
+# Slice the years using `.loc`
 df.loc["1990" : "1995"]
 ```
 
