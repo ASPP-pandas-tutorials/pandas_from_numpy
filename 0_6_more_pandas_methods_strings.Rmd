@@ -51,7 +51,6 @@ String methods are inherent to Python, and these methods or variants of them can
 ```{python}
 # A string
 string = "string_of_words"
-
 string
 ```
 
@@ -60,7 +59,7 @@ Remember that *a method is a function attached to an object*. In this case our o
 Let's say we like reading values in our data as if they are being spoken in a loud voice. If this is the case we can alter the format of the string to make all letters uppercase, using the `.upper()` method:
 
 ```{python}
-# The `.upper()` method
+# The `.upper()` method of `str`.
 string.upper()
 ```
 
@@ -96,9 +95,9 @@ string[0:7]
 You can visit [this page](https://www.w3schools.com/python/python_ref_string.asp) to see the variety of string methods available in base Python.
 
 
-## Strings methods with numpy arrays
+## String methods with Numpy arrays
 
-So, strings in base python have a large number of in-built methods - what about strings in Numpy?
+So, strings in base Python have a large number of in-built methods - what about strings in Numpy?
 
 Numpy arrays themselves do not have specific string methods, but the in-built Python string methods can be called on individual string values in a Numpy array. Alternatively, we can use functions from the `np.char.` module to operate on all the strings in the array concurrently.
 
@@ -111,13 +110,13 @@ import pandas as pd
 ```
 
 ```{python}
-# A custom function for the exercise, generates a variable used to mark the exercise.
-import clean_mat_mort_names
+# A custom function to generate a Series to check exercise solutions.
+import clean_gender_df_names
 ```
 
 ```{python}
-# Get answer to exercise below.
-answer_clean_series = clean_mat_mort_names.get_cleaned(
+# Calculate answer to exercise (see below).
+answer_clean_series = clean_gender_df_names.get_cleaned(
     pd.read_csv("data/gender_stats.csv")['country_name'])
 ```
 
@@ -128,7 +127,6 @@ country_codes_array = np.array(['AUS', 'BRA', 'CAN',
                                 'FRA', 'GBR', 'IND',
                                 'ITA', 'JPN', 'KOR',
                                 'MEX', 'RUS', 'USA'])
-country_codes_array
 ```
 
 ```{python}
@@ -138,7 +136,6 @@ country_names_array = np.array(['Australia', 'Brazil', 'Canada',
                                 'France', 'United Kingdom', 'India',
                                 'Italy', 'Japan', 'South Korea',
                                 'Mexico', 'Russia', 'United States'])
-country_names_array
 ```
 
 For comparison, let's make an array containing the numerical HDI scores:
@@ -149,16 +146,16 @@ hdis_array = np.array([0.896, 0.668, 0.89 , 0.586,
                        0.844, 0.89 , 0.49 , 0.842, 
                        0.883, 0.709, 0.733, 0.824,
                        0.828, 0.863, 0.894])
-
-hdis_array
 ```
 
-The `dtype` attribute of the first two arrays begins with `<U`, indicating we are dealing with string data:
+The `dtype` attribute of the first two arrays begins with `<U`, indicating we are dealing with string data.
 
 ```{python}
 # Show the dtype of the country codes array (e.g. string data)
 country_codes_array.dtype
 ```
+
+`U3` tells us that the array stored Unicode (`U`) strings up  three Unicode characters in length.
 
 ```{python}
 # Show the dtype of the country names array (e.g. string data)
@@ -172,7 +169,7 @@ Conversely, the `hdis_array` contains data of a numerical type:
 hdis_array.dtype
 ```
 
-Using direct indexing, we can use all of the in-built Python string methods on the individual values within a Numpy array:
+Using indexing, we can use all of the in-built Python string methods on the individual values within a Numpy array:
 
 ```{python}
 # Methods on an individual string
@@ -194,7 +191,7 @@ country_codes_array[0].upper()
 We can also replace elements of the string:
 
 ```{python}
-country_codes_array[0].replace("A", "HELLO")
+country_codes_array[0].replace("A", "Comparable to the ")
 ```
 
 Understandably, if we try to use any of these string methods on numerical data, we will get an error:
@@ -209,13 +206,6 @@ All of the string methods used in this section above have been called on single 
 ```{python tags=c("raises-exception")}
 # This does not work
 country_codes_array.lower()
-```
-
-The same error occurs if we try to use a string method on a slice from the array:
-
-```{python tags=c("raises-exception")}
-# This also does not work
-country_codes_array[0:2].lower()
 ```
 
 String methods in Numpy must be called from the single string values or using the `.char.` module.
@@ -245,7 +235,6 @@ To see how this works, let's construct a Series from our `country_names` array:
 # Show again from Series
 names_series =  pd.Series(country_names_array,
                           index=country_codes_array)
-
 names_series
 ```
 
@@ -275,13 +264,6 @@ The syntax for slicing strings is the same as for a single value, but it also op
 names_series.str[2:4]
 ```
 
-In contrast to the behaviour of Numpy arrays, string methods used via the `.str.` accessor can be used when slicing the Series. Be careful to use `.iloc` or `loc` here, for the [aforementioned reasons](0_1_to_loc_or_iloc.Rmd).
-
-```{python}
-# Slicing with Series and string methods
-names_series.iloc[0:3].str.replace('a', '!')
-```
-
 Using the `.contains()` method, Boolean Series can be generated by searching for specific instances of a substring in each value:
 
 ```{python}
@@ -307,16 +289,15 @@ Let's import the [HDI data](https://ourworldindata.org/grapher/children-per-woma
 ```{python}
 # Import data
 df = pd.read_csv("data/year_2000_hdi_fert.csv")
-
 # Show the data
 df
 ```
 
-Because each Data Frame column is nothing other than a Pandas Series, we can use string methods in the same way as we saw in the last section:
+Because each Data Frame column can be extracted as a Pandas Series, we can use string methods in the same way as we saw in the last section:
 
 ```{python}
 # Use the `.replace()` method
-df['Country Name'].str.replace('I', 'HELLO')
+df['Country Name'].str.replace('I', 'I starts I')
 ```
 
 However, Pandas will not let us use string methods on the whole Data Frame at once:
@@ -367,7 +348,7 @@ df['Country Name'].str.contains('Russia')
 
 ```{python}
 # See if there are any Trues in the Series
-df['Country Name'].str.contains('Russia').sum()/len(df)
+df['Country Name'].str.contains('Russia').sum()
 ```
 
 ```{python}
@@ -381,37 +362,37 @@ As we mentioned earlier, string methods generally useful for cleaning text data.
 
 To explore this, let's import a new dataset, which, like the HDI data, contains observations at the country level (e.g. each row is an observarion from a specific country).
 
-This dataset is also at the country-level of granularity, and it contains information about maternal mortality rates. You can read more about the dataset [here](https://github.com/odsti/datasets/tree/main/gender_stats).
+This dataset is also at the country-level of granularity, and it contains various data about countries, including maternal mortality rates. You can read more about the dataset [here](data/gender_stats).
 
 ```{python}
-# Import maternal mortality dataset
-maternal_mort = pd.read_csv("data/gender_stats.csv")
-maternal_mort
+# Import gender statistics dataset
+gender_df = pd.read_csv("data/gender_stats.csv")
+gender_df
 ```
 
 ```{python}
-maternal_mort[maternal_mort['country_name'].str.startswith('S')]
+gender_df[gender_df['country_name'].str.startswith('S')]
 ```
 
 Let's say we are interested in Russia, but do not know how the name of the country is formatted. We can use the `str.contains()` method to search for likely matches.
 
 ```{python}
 # Hmmm is Russia not in this data?
-maternal_mort['country_name'].str.contains('Russia')
+gender_df['country_name'].str.contains('Russia')
 ```
 
 That output is pretty opaque, maybe there is a `True` in there somewhere. Because Python treats `True` values as being equal to `1`, we can chain on the `.sum()` method to count the number of `True` values in the above Boolean Series:
 
 ```{python}
 # Count the Trues for country names containing "Russia" in the `maternal
-maternal_mort['country_name'].str.contains('Russia').sum()
+gender_df['country_name'].str.contains('Russia').sum()
 ```
 
 It appears we do have one match. Let's use the Boolean Series we just made to have a look at the row that contains the string "Russia" in the `country_name` column:
 
 ```{python}
 # Use the `str.contains()` method to filter the data
-maternal_mort[maternal_mort['country_name'].str.contains('Russia')]
+gender_df[gender_df['country_name'].str.contains('Russia')]
 ```
 
 So, we have found the row for Russia in this new dataset. Let's compare the naming convention to the HDI data, in the `df` Data Frame:
@@ -427,10 +408,10 @@ String methods are our friend here. We can use the process just outlined for fin
 
 ```{python}
 # Format the maternal mortality data for Russia to use the same country name as the HDI data
-maternal_mort['country_name'] = maternal_mort['country_name'].str.replace('Russian Federation', 'Russia')
+gender_df['country_name'] = gender_df['country_name'].str.replace('Russian Federation', 'Russia')
 
 # Show the newly formatted row
-maternal_mort[maternal_mort['country_name'].str.contains('Russia')]
+gender_df[gender_df['country_name'].str.contains('Russia')]
 ```
 
 We are now ready for a clean and stress-free data merge! (*NB*: we are lying here, merging datasets is almost never stress-free...)
@@ -441,7 +422,7 @@ We are now ready for a clean and stress-free data merge! (*NB*: we are lying her
 :class: dropdown
 :::
 
-The `maternal_mort['country_name']` Series contains a lot of formatting that is nice to read, but annoying
+The `gender_df['country_name']` Series contains a lot of formatting that is nice to read, but annoying
 to use in indexing operations (or any time where we need to type them).
 
 Entries like `'Virgin Islands (U.S.)'` and `'St. Martin (French part)'` will be a pain to type if we need to use them in `.loc` indexing operations, for instance.
@@ -450,10 +431,10 @@ We would therefore like to create a new Series containing versions of these name
 
 That is what we have done with some hidden code.   The hidden code:
 
-* Processes the `maternal_mort['country_name']` Series to make a new Series where we have replaced the original names (above) with versions of these names that are easier to type.
+* Processes the `gender_df['country_name']` Series to make a new Series where we have replaced the original names (above) with versions of these names that are easier to type.
 * Taken this new Series, and run `sorted(new_series.unique())` to show you the new names.
 
-Have a careful look at the resultng list below - and work out which Pandas string methods have been used to get from the `maternal_mort['country_name']` Series to the new Series, to which we have applied `sorted(new_series.unique())`
+Have a careful look at the resultng list below - and work out which Pandas string methods have been used to get from the `gender_df['country_name']` Series to the new Series, to which we have applied `sorted(new_series.unique())`
 
 ```{python}
 # This is the answer - don't use it in your solution.
@@ -462,13 +443,13 @@ sorted(answer_clean_series.unique())
 
 Your task now is to make a Series called `my_clean_series` which gives (with `sorted(my_clean_series.unique())`) a list that is *identical* to the list shown above.
 
-You can perform the relevant string transformations using Pandas string methods on the `maternal_mort['country_name']` Series, and then run `my_clean_names.unique()` to get the final array.
+You can perform the relevant string transformations using Pandas string methods on the `gender_df['country_name']` Series, and then run `my_clean_names.unique()` to get the final array.
 
-There is a cell at the end of the exercise to mark your answer.
+There is a cell at the end of the exercise to check your answer.
 
-Try to do this in as few lines of code as possible and **using ONLY Pandas string methods**.
+Try to do the string transformation in as few lines of code as possible and **using ONLY Pandas string methods**.
 
-**Hint**: There are many ways to do this, but for maximum beauty, you might consider having a look at [Python's str.maketrans function](https://docs.python.org/3.3/library/stdtypes.html?highlight=maketrans#str.maketrans).  And yes, you can use this as well.  Or you can use some other algorithm of your choice.
+**Hint**: There are many ways to do this, but for maximum beauty, you might consider having a look at [Python's str.maketrans function](https://docs.python.org/3.3/library/stdtypes.html?highlight=maketrans#str.maketrans).  And yes, you can use `str.maketrans` as well.  Or you can use some other algorithm of your choice.
 
 ```{python}
 # Your code here to create a new Pandas Series with modified
@@ -512,7 +493,7 @@ We then use the `.lower()` method to remove the capitalization.
 To make the array *identical* to the one shown above (and the one used for marking this exercise), we then re-rename `russia` to `russian_federation` before using `.unique()` to show the final array:
 
 ```{python}
-soln_clean_series = (maternal_mort['country_name']
+soln_clean_series = (gender_df['country_name']
                      .str.lower()
                      .str.translate(str.maketrans(' -', '__', '().,'))
                      .str.replace('russia', 'russian_federation'))
