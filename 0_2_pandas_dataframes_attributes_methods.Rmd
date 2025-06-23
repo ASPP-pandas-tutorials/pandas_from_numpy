@@ -832,7 +832,7 @@ df.sample(frac=0.5)
 :class: dropdown
 :::
 
-There are functions within Numpy (as well as other libraries) which shuffle/permute/randomize data within an array (or an arraylike object, like a list etc).
+There are functions within Numpy (as well as other libraries) that shuffle/permute/randomize data within an array (or an arraylike object, such as a list).
 
 Let's say we want to shuffle the *rows* in our Dataframe. We can do this with the `permutation()` function from the `numpy.random` submodule, but the output is very ugly. This operation brutally removes the nice Dataframe graphics (at least when run in a Jupyter notebook), and puts the rows of the Dataframe into a Numpy array, as shown below:
 
