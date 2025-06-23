@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.16.6
+      jupytext_version: 1.17.2
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -54,6 +54,9 @@ licenses page](data/data_notes) for more detail.
 # import libraries
 import numpy as np
 import pandas as pd
+
+# Our own routine to giving hints to the exercises.
+from hint import hint_1, hint_2
 ```
 
 We build the constituent arrays:
@@ -187,7 +190,7 @@ country_codes_array.dtype
 
 The `dtype` attribute here is just telling us that this is string data. For an explanation of the meaning, see the image below.
 
-![](images/numpy_string_dtypes.JPG)
+![](images/numpy_string_dtypes.png)
 
 
 Let's look at the `dtype` of the `hdis_array`:
@@ -448,6 +451,72 @@ When accessed for the entire Data Frame, the `size` attribute works in the same 
 df.size
 ```
 
+::: {exercise-start}
+:label: attributes-series
+:class: dropdown
+:::
+
+Your job here is to make a new Series which summarises aspects of the `df` Dataframe. In the `.values` array, your Series should contain the values of the `.shape` and `.size` attributes of `df`. It should also contain the `dtype` of the `index` of `df` (therefore, telling your user whether the `index` contains numeric labels, `str` labels, or something else). See if you can figure out how to get Pandas to report this via indexing (e.g. rather than copy pasting the information from the output of `df.index`).
+
+The `index` of your Series should clearly state what each `value` is. E.g. the strings `shape`, `size`, `index_dtype` should be the `index` labels in your Series. 
+
+The `name` attribute of your Series should be`df_attributes`.
+
+When displayed, your Series should look like this:
+
+```
+shape          (15, 4)
+size                60
+index_dtype     object
+Name: df_attributes, dtype: object
+```
+
+Try to create this Series in as few lines of code as possible. 
+
+You may run into an error with the `shape` attribute. Try running `hint_1()` for a hint on how to solve this.
+
+You can also run `hint_2()` to get a hint on how to get Pandas to report the `dtype` of the `index`.
+
+**Try to use the hints as a last resort, however...**
+
+```{python}
+# your code here
+```
+
+::: {exercise-end}
+:::
+
+::: {solution-start} attributes-series
+:class: dropdown
+:::
+            
+Our solution to this is below. First, we create an array containing the attributes. We must use the `str()` function to convert the output of `df.shape` to a single dimension (a `str` with 7 characters, rather than a `(2, )` tuple). This is in order to make its shape match that of `df.size` and the `index.dtype` string. Otherwise we get a nasty error when passing the array to the `pd.Series()` constructor, because we are trying to make a `.values` array using values with incompatible dimensions. 
+
+We got the `dtype` of the `index` labels by accessing the `dtype` attribute of the `index`, in a chained operation e.g.: `df.index.dtype`.
+
+We set the `index` and the `name` when we call the as optional arguments within `pd.Series()` (you may have done this using `df.index = ` and `df.name =`, which is another valid approach):
+
+```{python}
+# make an array containing the desired attributes - note the use of `str()`
+attributes_array = np.array([str(df.shape),
+                             df.size,
+                             df.index.dtype])
+
+# convert to Series, specify `index` and `name`
+df_attributes = pd.Series(attributes_array,
+                          index = ['shape', 'size', "index_dtype"],
+                          name = "df_attributes" )
+# show the Series
+df_attributes
+```
+
+Creating your own Series in this way (perhaps performed by a custom function) can be useful for displaying bespoke summaries of a dataset/Dataframe. However, normally this would be done with more complicated statistical information, not just the `shape`/`size`/`dtype`!
+
+
+::: {solution-end}
+:::
+
+
 Once we've done these preliminary inspections and we know how many observations we have, in any data analysis context, we will always want to know what variables we have in the Data Frame columns, and (again) what type of data is in each.
 
 The `.columns` attribute will tell us the name (label) for each column:
@@ -534,6 +603,66 @@ cols = ['Fertility Rate', 'Human Development Index']
 # Select columns by direct indexing, then describe.
 df[cols].describe()
 ```
+::: {exercise-start}
+:label: by-any-means
+:class: dropdown
+:::
+
+Write code you need to create a Series that contains the just the means of the `Human Development Index`, `Fertility Rate` and `Population` variables. For good measure, let's also require that the `name` attribute is set to `mean`. The output should look like this:
+
+```
+Human Development Index      0.789333
+Fertility Rate               1.773867
+Population                 236.719867
+Name: mean, dtype: float64
+```
+
+Try to do this in as few lines of code as possible, using the methods shown on this page...
+
+```{python}
+# your code here
+```
+
+::: {exercise-end}
+:::
+
+::: {solution-start} by-any-means
+:class: dropdown
+:::
+
+The output of the `.describe()` method is itself a Dataframe, and the `index` of this Dataframe contains a row called `mean`, which, shockingly, contains the means. As a result, you can use `.loc` indexing to retrieve just the means from the output of `.describe()`:
+
+```{python}
+# solution
+df.describe().loc['mean']
+```
+
+You could have also solved this problem (much less elegently) by calculating the means manually, storing them in an array or list, then using the `pd.Series()` constructor with `name = mean` and `index =  ['Human Development Index', 'Fertility Rate', 'Population']`:
+
+```{python}
+# calculate the means
+mean_hdi = df['Human Development Index'].mean()
+mean_fert = df['Fertility Rate'].mean()
+mean_pop = df['Population'].mean()
+
+# an array of the means
+means_arr = np.array([mean_hdi, mean_fert, mean_pop])
+
+# create a Series
+means_series = pd.Series(means_arr, 
+                         name="means",
+                         index= ['Human Development Index',
+                                 'Fertility Rate', 'Population'])
+
+means_series
+```
+
+Phew! That really was inefficient. Many Pandas methods are designed to save us time in situations exactly like this...
+
+Pandas is a particularly good example of a complex library where there are many ways of achieving the same result, and where AI or careless StackOverflow searches can give you a very inefficient or inelegant solution.   We strongly advise you to keep investing the time to work out the most elegant solution to your Pandas problems, in order to keep learning, and so that you write code that others can read, including you, the maintainer.
+
+::: {solution-end}
+:::
 
 Because each Data Frame column is just a Pandas Series, all of the Series methods we saw above can be used on individual Series:
 
@@ -699,12 +828,151 @@ Data Frame.  To get a sample that is half the size the original Data Frame
 df.sample(frac=0.5)
 ```
 
-Because default sampling is without replacement, `.sample` with `frac=1` is another way of asking for a copy of the Data Frame where the rows are permuted to a random order:
+::: {exercise-start}
+:label: random-samples
+:class: dropdown
+:::
+
+There are functions within Numpy (as well as other libraries) that shuffle/permute/randomize data within an array (or an arraylike object, such as a list).
+
+Let's say we want to shuffle the *rows* in our Dataframe. We can do this with the `permutation()` function from the `numpy.random` submodule, but the output is very ugly. This operation brutally removes the nice Dataframe graphics (at least when run in a Jupyter notebook), and puts the rows of the Dataframe into a Numpy array, as shown below:
 
 ```{python}
-# Random permutation of rows for entire Data Frame.
+# effective but ugly
+np.random.permutation(df)
+```
+
+Can you think of a way to perform this operation using only the Pandas methods we have seen so far on this page? In the cell below, you should write code which will:
+
+- randomize the order of the *rows* in the Dataframe. The data in each row should be the same as before shuffling (e.g. the data for Russia should still be the data for Russia etc.)
+
+- ensure that no rows are removed or duplicated, just shuffled
+
+Try to find the solution in the cell below. Use as few lines of code as possible:
+
+```{python}
+# your solution here
+```
+
+::: {exercise-end}
+:::
+
+::: {solution-start} random-samples
+:class: dropdown
+:::
+
+The solution is to take a `.sample()` which is the same *size as the number of rows in the original dataframe*. We can do this easily by using `n = len(df)` as in the input for `df.sample()`:
+
+```{python}
+# a trick to shuffle the rows
+df.sample(n=len(df))
+```
+
+Or, with greater grace, we can use `frac=1`, to mean "take a random sample of 100% of the rows", effectively permuting them:
+
+```{python}
+# a clean, efficient way to permute the rows
 df.sample(frac=1)
 ```
+
+If you look at the `index` of either Dataframe in the above ceels, you'll notice that the rows are now in a random order.
+
+Because the sample is a random selection of the rows - and the default setting of `.sample()` is to sample *without replacement*  - using both `.sample(len(df))` and `df.sample(frac=1)` has the effect of randomizing the row order. All the original rows remaining in the sample, and there is no duplication of any rows.
+
+This method is often used on individual columns to (most likely) remove any statistical relationships between the data in that column and other columns. For instance, for [permutation testing](https://matthew-brett.github.io/cfd2020/permutation/permutation_and_t_test.html).
+
+
+::: {solution-end}
+:::
+
+::: {exercise-start}
+:label: more-random
+:class: dropdown
+:::
+
+We mentioned above that the default behaviour of the `.sample()` method is to sample *without replacement*. We also mentioned that you can use the `replace=` argument to sample *with* replacement.
+
+To use a classic "drawing marbles from a bag" analogy, this means that when we randomly select a marble, we place it *back* in the bag (after recording it's identity/colour etc) before we randomly draw the next marble. This means the same marble can appear twice in the final sample. 
+
+As mentioned above, if we draw a sample of rows *with replacement* from our Dataframe, then individual rows can appear more than once in the resultant sample. If we draw a sample with replacement which is *larger* than the original data, it will certainly contain duplicate rows:
+
+```{python}
+# a sample with replacement
+df.sample(len(df) + 10, 
+          replace=True) 
+```
+
+Quickly scan the `index` for duplicates, to see that it contains duplicates (as it must, in order to generate a sample of this size).
+
+Your task is the following:
+
+- take a random sample *with replacement* of all the rows in the Dataframe (e.g. your sample should have the *same number of rows* as the original Dataframe)
+
+- use an appropriate method to calculate the means of `Human Development Index`, `Fertility Rate` and `Population`, from your random sample
+
+- using Pandas methods and indexing operations, calculate the *difference* between the means of `Human Development Index`, `Fertility Rate` and `Population` in your sample vs the means for the same variables in the original data
+
+- store your result in a Pandas Series (note: depending what methods you use, your result may automatically be stored in a Pandas Series)
+
+The result should look something like this (though your differences will differ from the ones shown below, because of the randomness inherent in your sampling):
+
+```
+Human Development Index      0.074467
+Fertility Rate              -0.182600
+Population                -210.516580
+Name: mean, dtype: float64
+```
+
+Try to do this in as few lines of code as possible.
+
+```{python}
+# your code here
+```
+
+::: {exercise-end}
+:::
+
+::: {solution-start} more-random
+:class: dropdown
+:::
+
+There are several ways you can achieve this, but one way of doing it in a single line of code is to *chain Pandas methods together*.
+
+The left hand side of the subtraction operation in the cell below uses the `.describe()` method and `.loc` indexing to calculate the means of the original data.
+
+The right hand side of the subtraction draws a sample (the same size as the number of rows in `df`) using `.sample()` with `replace=True`. It then uses `.describe()` to calculate the means of the numeric variables *in this random sample*, and then `.loc` to select just those means (as opposed to including the other information that `.describe()` reports, like standard deviations etc).
+
+The result of this subtraction shows us the difference between the original means and the means of our *resample* (e.g. our random sample, drawn with replacement):
+
+```{python}
+# show the difference in the means (original data vs resample)
+df.describe().loc['mean'] - df.sample(len(df), replace=True).describe().loc['mean']
+```
+
+You can also perform the same process, less efficiently, spread over multiple lines of code. The way shown below is not the only possible way - perhaps you used the `.mean()` method individually on each column, for instance, and then manually constructed a `Series` to store the results (even less efficient!) . Alternatively, you might have used `.drop()` to remove non-numeric columns, and then used `.mean()` in parallel on the numeric columns, another valid approach:
+
+```{python}
+# calculate the original means
+original_means = df.describe().loc['mean']
+
+# generate a resample
+resample = df.sample(len(df), 
+                     replace=True)
+
+# calculate the resample means
+resample_means = resample.describe().loc['mean']
+
+# calculate the difference in means
+difference_in_means = original_means - resample_means
+
+# show the difference
+difference_in_means
+```
+
+Similar kinds of *resampling procedure* are often used to generate [bootstrapped confidence intervals](https://nbviewer.org/github/pxr687/bootstrap_tutorial/blob/main/bootstrap.ipynb).
+
+::: {solution-end}
+:::
 
 ## Plotting Methods
 
@@ -818,8 +1086,64 @@ This dataset is small enough that we can see that these values correspond to Ind
 df['Population_z'].sort_values()
 ```
 
-... but for a larger dataset we could find them using [Boolean filtering - a topic we will come to in a later page](0_5_filtering_data_with_pandas.Rmd).
+... but for a larger dataset we could find them using [Boolean filtering ](0_5_filtering_data_with_pandas).
 
+
+::: {exercise-start}
+:label: getting-barred
+:class: dropdown
+:::
+
+If you use `.plot(kind="bar")` you will generate a bar plot (that is, a chart with bars representing counts for different categories).
+
+Your task is to use indexing methods of your choice, restricting yourself to the Pandas methods shown on this page, to create a bar plot which has:
+
+* the name of each country on the x-axis
+
+...and...
+
+* bars which show the population of the country on the y-axis. The bars should be ordered from highest population (left hand side of the graph) to lowest population (right hand side of the graph).
+
+*Unless you enjoy cheating, do not use other plotting libraries!*. Your final result should look like this:
+
+![](images/bar_example.png)
+
+As ever, use as few lines as you can, while but keep your code readable.
+
+```{python}
+# your code below
+```
+
+::: {exercise-end}
+:::
+
+::: {solution-start} getting-barred
+:class: dropdown
+:::
+
+It is possible to create this plot in one line of code, again, by *chaining* Pandas methods together. First, we use direct indexing with the column names to select just those variables. 
+
+Then we use `sort_values()` using the `by='Population'` and `ascending=False` arguments to ensure that the population counts are sorted in descending order.
+
+We then chain `.plot(kind='bar')` on the end, and we get the desired plot:
+
+```{python}
+# solution
+df[['Country Name', 'Population']].sort_values(by='Population', ascending=False).plot(kind='bar')
+```
+
+*Food for thought*: what will happen if you reverse the order of `Country Name` and `Population` in the direct indexing operation? Do you think this will change the x-axis and and y-axis variables on the `.plot()`?
+
+Have a think about what you think will happen; you can check by uncommenting the code below to see if you were correct:
+
+```{python}
+# df[['Population', 'Country Name',]].sort_values(by='Population', ascending=False).plot(kind='bar')
+```
+
+How would you explain the result?
+
+::: {solution-end}
+:::
 
 ## Summary
 
