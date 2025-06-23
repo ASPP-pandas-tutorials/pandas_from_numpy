@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.2
+      jupytext_version: 1.17.1
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -101,7 +101,7 @@ In this case `>` is the operator we want, with the `hdis_array` on the left hand
 
 ```{python}
 # Create a Boolean array
-hdis_array_grtr_median_bool =  hdis_array > np.median(hdis_array)
+hdis_array_grtr_median_bool = hdis_array > np.median(hdis_array)
 hdis_array_grtr_median_bool
 ```
 
@@ -114,19 +114,31 @@ Our Boolean array can now be used to retrieve elements of the `hdis_array` that 
 
 ```{python}
 # Filter the `hdis_array`
+# Notice that this is direct indexing.
 hdis_array[hdis_array_grtr_median_bool]
 ```
 
-If we're particularly neurotic, we can check using the [`all()`](https://docs.python.org/3/library/functions.html#all) function that this operation has, in fact, only returned elements greater than the median:
+If we're particularly neurotic, we can use the `np.all` function that this operation has, in fact, only returned elements greater than the median:
 
 ```{python}
-# Check we have what we want
-all(hdis_array[hdis_array_grtr_median_bool] > np.median(hdis_array))
+# Check that all remaining values are in fact above the median.
+np.all(hdis_array[hdis_array_grtr_median_bool] > np.median(hdis_array))
 ```
 
-Because Python treats `True` values as being equal to 1 and `False` values as being equal to 0, taking the mean of a Boolean array works out the same as calculating the proportion of `True` values. *NB*: this is because when we do this operation, we are doing something like $\frac{1+1+1...+0+0}{n}$. The `False` (aka `0`) values add nothing to the numerator of the mean calculation, leaving only the `True` (aka `1`) values. This effectively gives us a count of the `True` values, divided by the total number of values, which returns the proportion of `True`'s.
+Because Python and Numpy treat `True` values as being equal to 1 and `False` values as being equal to 0, taking the sum of a Boolean array calculates the number of True values in the array:
 
-Using `np.mean()` we can quickly count the proportion of `True` values, which as expected, because we are dealing with a median, is close to 0.5:
+```{python}
+n_trues = np.sum(hdis_array_grtr_median_bool)
+n_trues
+```
+
+If we divide by the number of elements in the Boolean array, we have proportion of elements that are True:
+
+```{python}
+n_trues / len(hdis_array_grtr_median_bool)
+```
+
+We do the same calculation with `np.mean()`.  `np.mean` on a Boolean array is a good way to count the proportion of `True` values. In our case it is fairly close to 0.5, as we might expect, because we are compared to the median
 
 ```{python}
 # Count the proportion of `True` values
@@ -137,19 +149,19 @@ This can be very useful when counting the proportion of participants or observat
 
 We can also, if we wish, turn our Boolean array into a Boolean *Series* using the `pd.Series()` constructor.
 
-This has the benefit of the Series `index`. In the present context, when we put the three-letter country codes as the `index`, we can keep track of the country that each filtered value corresponds to.
+The Series can benefit from an `.index`. In the present context, when we put the three-letter country codes as the `index`, we can keep track of the country that each filtered value corresponds to.
 
 Let's create a Boolean Series:
 
 ```{python}
-# Make a pandas Series
+# Make a Boolean Series from the Boolean array.
 hdis_array_bool_series = pd.Series(hdis_array_grtr_median_bool, 
                                    index=country_codes_array)
 hdis_array_bool_series
 ```
 
-Even better, let's manually specify the `name` attribute - to make it clearer
-down the line what the `True` and `False` values mean e.g. whether each
+Even better, let's manually specify the `.name` attribute - to make it clearer
+down the line what the `True` and `False` values mean --- i.e. whether each
 country has a higher-than-median HDI score:
 
 ```{python}
