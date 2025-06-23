@@ -537,7 +537,7 @@ value.</p>
 <p>First, we can calculate the median, using the <code class="docutils literal notranslate"><span class="pre">np.median()</span></code> function:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the median HDI</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the median HDI</span>
 <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">hdis_array</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -552,7 +552,7 @@ value.</p>
 <p>In this case <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> is the operator we want, with the <code class="docutils literal notranslate"><span class="pre">hdis_array</span></code> on the left hand side, and the median value of the array on the right hand side:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a Boolean array</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a Boolean array</span>
 <span class="n">hdis_array_grtr_median_bool</span> <span class="o">=</span>  <span class="n">hdis_array</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">hdis_array</span><span class="p">)</span>
 <span class="n">hdis_array_grtr_median_bool</span>
 </pre></div>
@@ -571,7 +571,7 @@ larger than the median HDI score (and <code class="docutils literal notranslate"
 <p>Our Boolean array can now be used to retrieve elements of the <code class="docutils literal notranslate"><span class="pre">hdis_array</span></code> that are greater than the median HDI value. We just place our filter in between square brackets used to index the array. The <code class="docutils literal notranslate"><span class="pre">True</span></code> values act as “on switches” (keeping that element in the output array) and the <code class="docutils literal notranslate"><span class="pre">False</span></code> values act as “off switches” (removing that element from the output array):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># filter the `hdis_array`</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Filter the `hdis_array`</span>
 <span class="n">hdis_array</span><span class="p">[</span><span class="n">hdis_array_grtr_median_bool</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -585,7 +585,7 @@ larger than the median HDI score (and <code class="docutils literal notranslate"
 <p>If we’re particularly neurotic, we can check using the <a class="reference external" href="https://docs.python.org/3/library/functions.html#all"><code class="docutils literal notranslate"><span class="pre">all()</span></code></a> function that this operation has, in fact, only returned elements greater than the median:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># check we have what we want</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check we have what we want</span>
 <span class="nb">all</span><span class="p">(</span><span class="n">hdis_array</span><span class="p">[</span><span class="n">hdis_array_grtr_median_bool</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">hdis_array</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -600,7 +600,7 @@ larger than the median HDI score (and <code class="docutils literal notranslate"
 <p>Using <code class="docutils literal notranslate"><span class="pre">np.mean()</span></code> we can quickly count the proportion of <code class="docutils literal notranslate"><span class="pre">True</span></code> values, which as expected, because we are dealing with a median, is close to 0.5:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># count the proportion of `True` values</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Count the proportion of `True` values</span>
 <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">hdis_array_grtr_median_bool</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -617,7 +617,7 @@ larger than the median HDI score (and <code class="docutils literal notranslate"
 <p>Let’s create a Boolean Series:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># make a pandas Series</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make a pandas Series</span>
 <span class="n">hdis_array_bool_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">hdis_array_grtr_median_bool</span><span class="p">,</span> 
                                    <span class="n">index</span><span class="o">=</span><span class="n">country_codes_array</span><span class="p">)</span>
 <span class="n">hdis_array_bool_series</span>
@@ -650,7 +650,7 @@ down the line what the <code class="docutils literal notranslate"><span class="p
 country has a higher-than-median HDI score:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set the `name` attribute</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set the `name` attribute</span>
 <span class="n">hdis_array_bool_series</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;hdi_grtr_thn_median&#39;</span>
 
 <span class="n">hdis_array_bool_series</span>
@@ -682,7 +682,7 @@ Name: hdi_grtr_thn_median, dtype: bool
 <p>We also have access to all of the Pandas Series methods:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># max</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Max</span>
 <span class="n">hdis_array_bool_series</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -695,7 +695,7 @@ Name: hdi_grtr_thn_median, dtype: bool
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># min</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Min</span>
 <span class="n">hdis_array_bool_series</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -708,7 +708,7 @@ Name: hdi_grtr_thn_median, dtype: bool
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># mean (returns the proportion of `True` values)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mean (returns the proportion of `True` values)</span>
 <span class="n">hdis_array_bool_series</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -721,7 +721,7 @@ Name: hdi_grtr_thn_median, dtype: bool
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we can achieve the same result as the cell above using the `.sum()` method, then dividing by the `len()` of the Series</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We can achieve the same result as the cell above using the `.sum()` method, then dividing by the `len()` of the Series</span>
 <span class="c1"># the `.sum()` method adds up the `True` values, dividing by the `len()` of the Series divides by the number of observations</span>
 <span class="c1"># in the Series, giving us the mean (in this case a proportion)</span>
 <span class="n">hdis_array_bool_series</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">hdis_array_bool_series</span><span class="p">)</span>
@@ -737,7 +737,7 @@ Name: hdi_grtr_thn_median, dtype: bool
 <p>We can use the Boolean Series to filter, exactly as we would with a Numpy array:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># same result when we filter with the Boolean series</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Same result when we filter with the Boolean series</span>
 <span class="n">hdis_array</span><span class="p">[</span><span class="n">hdis_array_bool_series</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -759,9 +759,9 @@ Name: hdi_grtr_thn_median, dtype: bool
 <p>To explore further, let’s import the HDI data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import our dataset</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import our dataset</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/year_2000_hdi_fert.csv&quot;</span><span class="p">)</span>
-<span class="c1"># set the index</span>
+<span class="c1"># Set the index</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;Code&quot;</span><span class="p">)</span>
 <span class="n">df</span>
 </pre></div>
@@ -912,7 +912,7 @@ Name: hdi_grtr_thn_median, dtype: bool
 <p>Now, to view the median we can use the <code class="docutils literal notranslate"><span class="pre">.median()</span></code> Series method, rather than calling the <code class="docutils literal notranslate"><span class="pre">np.median()</span></code> function as we did earlier. (<em>NB</em>: we mentioned on a <a class="reference internal" href="0_2_pandas_dataframes_attributes_methods.html"><span class="std std-doc">previous page</span></a> that Pandas Series <em>methods</em> are sometimes inherited from Numpy <em>functions</em>, but they generally give better efficiency and readability, as is the case here…):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the median HDI</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the median HDI</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -927,7 +927,7 @@ Name: hdi_grtr_thn_median, dtype: bool
 <p>For instance, let’s use direct indexing with a column name (<code class="docutils literal notranslate"><span class="pre">df['Human</span> <span class="pre">Development</span> <span class="pre">Index']</span></code>) to create a Boolean Series which is <code class="docutils literal notranslate"><span class="pre">True</span></code> where the country has a HDI score above the median HDI score:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a Boolean Series</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a Boolean Series</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -958,7 +958,7 @@ Name: Human Development Index, dtype: bool
 <p>Again, to increase interpretabiity, we can assign this Boolean Series a new <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a Boolean Series by using a comparison operator on the DataFrame column</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a Boolean Series by using a comparison operator on the DataFrame column</span>
 <span class="n">boolean_series_from_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
 
 <span class="n">boolean_series_from_df</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;HDI_grtr_than_median&#39;</span>
@@ -992,7 +992,7 @@ Name: HDI_grtr_than_median, dtype: bool
 <p>We can now use our Boolean Series to filter the whole Data Frame. This let’s use view entire rows, but only for rows corresponding to countries with greater than median HDI scores:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># filter the DataFrame using the Boolean Series we got from using a comparison operator on the DataFrame column</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Filter the DataFrame using the Boolean Series we got from using a comparison operator on the DataFrame column</span>
 <span class="n">df</span><span class="p">[</span><span class="n">boolean_series_from_df</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1087,7 +1087,7 @@ Name: HDI_grtr_than_median, dtype: bool
 <p>Earlier, we “hand built” a Boolean Series from a Numpy array, another array for the index, and a manually specified <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute. Here is that Series:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># our &quot;handmade&quot; Boolean Series</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Our &quot;handmade&quot; Boolean Series</span>
 <span class="n">hdis_array_bool_series</span>
 </pre></div>
 </div>
@@ -1116,7 +1116,7 @@ Name: hdi_grtr_thn_median, dtype: bool
 <p>This hand-built Series returns the same rows of the Data Frame as Series we got by using only Data Frame columns:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we can also filter with our &quot;handmade&quot; Series</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We can also filter with our &quot;handmade&quot; Series</span>
 <span class="n">df</span><span class="p">[</span><span class="n">hdis_array_bool_series</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1212,7 +1212,7 @@ Name: hdi_grtr_thn_median, dtype: bool
 <p>We can use our Boolean filter as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show countries with greater than median HDI</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show countries with greater than median HDI</span>
 <span class="n">above_median_HDI</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">boolean_series_from_df</span><span class="p">]</span>
 
 <span class="n">above_median_HDI</span>
@@ -1309,7 +1309,7 @@ Name: hdi_grtr_thn_median, dtype: bool
 <p>So, here is our Boolean Series:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the Boolean Series</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the Boolean Series</span>
 <span class="n">boolean_series_from_df</span>
 </pre></div>
 </div>
@@ -1339,7 +1339,7 @@ Name: HDI_grtr_than_median, dtype: bool
 <p>We can reverse each <code class="docutils literal notranslate"><span class="pre">True</span></code> to a <code class="docutils literal notranslate"><span class="pre">False</span></code> and vice versa by placing the <code class="docutils literal notranslate"><span class="pre">~</span></code> symbol in front of the Boolean Series, like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># &quot;flip&quot; the Boolean Series with the &quot;~&quot; operator</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># &quot;Flip&quot; the Boolean Series with the &quot;~&quot; operator</span>
 <span class="o">~</span><span class="n">boolean_series_from_df</span>
 </pre></div>
 </div>
@@ -1369,7 +1369,7 @@ Name: HDI_grtr_than_median, dtype: bool
 <p>Let’s use this operation (with <code class="docutils literal notranslate"><span class="pre">~</span></code>) to make a new Data Frame containing only the countries scoring below the median HDI:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># use the `~` operator to show countries with BELOW median HDI</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use the `~` operator to show countries with BELOW median HDI</span>
 <span class="n">below_median_HDI</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">boolean_series_from_df</span><span class="p">]</span>
 
 <span class="n">below_median_HDI</span> 
@@ -1472,7 +1472,7 @@ Name: HDI_grtr_than_median, dtype: bool
 <p>Now, on each Data Frame, we can call the <code class="docutils literal notranslate"><span class="pre">.describe()</span></code> method separately, to inspect the differences:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># use the `.describe()` method with countries with above the median HDI</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use the `.describe()` method with countries with above the median HDI</span>
 <span class="n">above_median_HDI</span><span class="p">[</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1493,7 +1493,7 @@ Name: Fertility Rate, dtype: float64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># use the `.describe()` method with countries with below the median HDI</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use the `.describe()` method with countries with below the median HDI</span>
 <span class="n">below_median_HDI</span><span class="p">[</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1521,7 +1521,7 @@ Name: Fertility Rate, dtype: float64
 <p>Try to do this in as few lines as code as possible, using Pandas methods rather than functions from other libraries…</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># your code here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your code here</span>
 </pre></div>
 </div>
 </div>
@@ -1537,7 +1537,7 @@ Name: Fertility Rate, dtype: float64
 <p>In the first solution, we take the <code class="docutils literal notranslate"><span class="pre">sum()</span></code> of the <code class="docutils literal notranslate"><span class="pre">True</span></code> values, then divide that by the <code class="docutils literal notranslate"><span class="pre">len()</span></code> of the Dataframe (i.e. by the number of observations):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution 1</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution 1</span>
 <span class="n">below_replacement_bool_series</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">2.1</span>
 
 <span class="n">below_replacement_bool_series</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
@@ -1553,7 +1553,7 @@ Name: Fertility Rate, dtype: float64
 <p>The second solution is more efficient, as the <code class="docutils literal notranslate"><span class="pre">.mean()</span></code> method will perform the same calculation with less typing.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution 2</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution 2</span>
 <span class="n">below_replacement_bool_series</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1575,7 +1575,7 @@ Name: Fertility Rate, dtype: float64
 <p>First, let’s import the data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import the full dataset</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import the full dataset</span>
 <span class="n">full_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/children-per-woman-vs-human-development-index.csv&#39;</span><span class="p">)</span>
 
 <span class="n">full_df</span>
@@ -1732,7 +1732,7 @@ Name: Fertility Rate, dtype: float64
 <p>We can use Boolean filtering to strip the Data Frame down to just observations from the year 2000:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># filter out all years apart from the year 2000</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Filter out all years apart from the year 2000</span>
 <span class="n">full_df_2000</span> <span class="o">=</span> <span class="n">full_df</span><span class="p">[</span><span class="n">full_df</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2000</span><span class="p">]</span>
 
 <span class="n">full_df_2000</span>
@@ -1887,7 +1887,7 @@ Name: Fertility Rate, dtype: float64
 <p>Let’s make a more usable index, but setting the <code class="docutils literal notranslate"><span class="pre">index</span></code> to be the three-letter country codes in the <code class="docutils literal notranslate"><span class="pre">Code</span></code> column:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set the index</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set the index</span>
 <span class="n">full_df_2000</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">full_df_2000</span><span class="p">[</span><span class="s1">&#39;Code&#39;</span><span class="p">]</span>
 
 <span class="n">full_df_2000</span>
@@ -2053,7 +2053,7 @@ Name: Fertility Rate, dtype: float64
 <p><em>NB:</em> the <code class="docutils literal notranslate"><span class="pre">~</span></code> operator, we are asking for rows with index labels that are NOT NaN…</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># remove NaN data </span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Remove NaN data </span>
 <span class="n">full_df_2000</span> <span class="o">=</span> <span class="n">full_df_2000</span><span class="p">[</span><span class="o">~</span><span class="n">full_df_2000</span><span class="p">[</span><span class="s1">&#39;Code&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()]</span>
 
 <span class="n">full_df_2000</span>
@@ -2217,7 +2217,7 @@ Name: Fertility Rate, dtype: float64
 <p>Let’s inspect the index, to see what countries are left after removing the NaN values:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># inspect the index</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Inspect the index</span>
 <span class="nb">list</span><span class="p">(</span><span class="n">full_df_2000</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2472,7 +2472,7 @@ Name: Fertility Rate, dtype: float64
 <p>Let’s inspect these rows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># inspect rows with non-standard codes</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Inspect rows with non-standard codes</span>
 <span class="n">full_df_2000</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s1">&#39;OWID_WRL&#39;</span><span class="p">,</span> <span class="s1">&#39;OWID_KOS&#39;</span><span class="p">,</span> <span class="s1">&#39;OWID_SRM&#39;</span><span class="p">]]</span>
 </pre></div>
 </div>
@@ -2554,7 +2554,7 @@ Name: Fertility Rate, dtype: float64
 <p>We can use the <code class="docutils literal notranslate"><span class="pre">.drop()</span></code> method, with the <code class="docutils literal notranslate"><span class="pre">labels=</span></code> argument to tell Pandas to drop the row with the <code class="docutils literal notranslate"><span class="pre">'OWID_WRL'</span></code> label:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># remove junk rows with the `.drop()` method</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Remove junk rows with the `.drop()` method</span>
 <span class="n">full_df_2000</span> <span class="o">=</span> <span class="n">full_df_2000</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;OWID_WRL&#39;</span><span class="p">])</span>
 
 <span class="n">full_df_2000</span>
@@ -2718,7 +2718,7 @@ Name: Fertility Rate, dtype: float64
 <p>We now have a clean Data Frame. Let’s plot HDI against fertility rate, to graphically inspect the trend:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the data</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the data</span>
 <span class="n">full_df_2000</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">,</span>
                   <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">,</span>
                   <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
@@ -2736,7 +2736,7 @@ Name: Fertility Rate, dtype: float64
 <p>This Series is <code class="docutils literal notranslate"><span class="pre">True</span></code> where the country has a greater than median HDI score, and <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># make a Boolean Series based on the median HDI</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make a Boolean Series based on the median HDI</span>
 <span class="n">full_df_2000_gtr_than_median_HDI_bool</span> <span class="o">=</span> <span class="n">full_df_2000</span><span class="p">[</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">full_df_2000</span><span class="p">[</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
 
 <span class="n">full_df_2000_gtr_than_median_HDI_bool</span>
@@ -2764,7 +2764,7 @@ Name: Human Development Index, Length: 240, dtype: bool
 <p>We can use this filter, and the <code class="docutils literal notranslate"><span class="pre">.plot()</span></code> method, to inspect the trend either side of the median HDI - (again, to get the values from the <em>opposite</em> side of the median, we can use the <code class="docutils literal notranslate"><span class="pre">~</span></code> operator):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot countries with above median HDI</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot countries with above median HDI</span>
 <span class="n">full_df_2000</span><span class="p">[</span><span class="n">full_df_2000_gtr_than_median_HDI_bool</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">,</span>
                                                           <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">,</span>
                                                           <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">);</span>
@@ -2777,7 +2777,7 @@ Name: Human Development Index, Length: 240, dtype: bool
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot countries with below median HDI</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot countries with below median HDI</span>
 <span class="n">full_df_2000</span><span class="p">[</span><span class="o">~</span><span class="n">full_df_2000_gtr_than_median_HDI_bool</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">,</span>
                                                           <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">,</span>
                                                           <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">);</span>
@@ -2792,7 +2792,7 @@ Name: Human Development Index, Length: 240, dtype: bool
 <p>We can also use the same filtering procedure to view statistics on the subsets of countries either side of the median HDI:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># `.describe()` stats for `Fertility Rate` from countries above the median HDI</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Getting `.describe()` stats for `Fertility Rate` from countries above the median HDI</span>
 <span class="n">full_df_2000</span><span class="p">[</span><span class="n">full_df_2000_gtr_than_median_HDI_bool</span><span class="p">][</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -2813,7 +2813,7 @@ Name: Fertility Rate, dtype: float64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># `.describe()` stats for `Fertility Rate` from countries below the median HDI (again, note the `~` operator)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Getting `.describe()` stats for `Fertility Rate` from countries below the median HDI (again, note the `~` operator)</span>
 <span class="n">full_df_2000</span><span class="p">[</span><span class="o">~</span><span class="n">full_df_2000_gtr_than_median_HDI_bool</span><span class="p">][</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -2843,7 +2843,7 @@ Name: Fertility Rate, dtype: float64
 <p>You should try to do this in one or two lines of code, and using Pandas methods only.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># your code here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your code here</span>
 </pre></div>
 </div>
 </div>
@@ -2860,7 +2860,7 @@ Name: Fertility Rate, dtype: float64
 <p>A second line of code then uses the <code class="docutils literal notranslate"><span class="pre">.plot()</span></code> method, with appropriate <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code> and <code class="docutils literal notranslate"><span class="pre">kind</span></code> arguments, to generate the plot:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a Boolean Series to filter the data</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a Boolean Series to filter the data</span>
 <span class="n">below_25_filter</span> <span class="o">=</span> <span class="n">full_df_2000</span><span class="p">[</span><span class="s1">&#39;Population&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">full_df_2000</span><span class="p">[</span><span class="s1">&#39;Population&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;25%&quot;</span><span class="p">]</span>
 
 <span class="c1"># filter the data and plot</span>
@@ -2885,7 +2885,7 @@ Name: Fertility Rate, dtype: float64
 <p>Do you remember the <code class="docutils literal notranslate"><span class="pre">full_df</span></code> Dataframe, from before we filtered it down to just rows corresponding to the year 2000?. Here it is:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the full Dataframe</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the full Dataframe</span>
 <span class="n">full_df</span>
 </pre></div>
 </div>
@@ -3041,7 +3041,7 @@ Name: Fertility Rate, dtype: float64
 <p><em>Hint:</em> this is simpler to accomplish than you might think.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># your code here</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your code here</span>
 </pre></div>
 </div>
 </div>
@@ -3056,7 +3056,7 @@ Name: Fertility Rate, dtype: float64
 <p><em>Note</em>: you could also use the Pandas <em>function</em> <code class="docutils literal notranslate"><span class="pre">pd.isna()</span></code> here, to get the same result…</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solution</span>
 <span class="n">full_df</span><span class="p">[</span><span class="n">full_df</span><span class="o">.</span><span class="n">isna</span><span class="p">()]</span>
 </pre></div>
 </div>
