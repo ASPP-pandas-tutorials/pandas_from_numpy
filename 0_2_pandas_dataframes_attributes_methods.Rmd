@@ -1139,6 +1139,8 @@ Have a think about what you think will happen; you can check by uncommenting the
 # df[['Population', 'Country Name',]].sort_values(by='Population', ascending=False).plot(kind='bar')
 ```
 
+How would you explain the result?
+
 ::: {solution-end}
 :::
 
