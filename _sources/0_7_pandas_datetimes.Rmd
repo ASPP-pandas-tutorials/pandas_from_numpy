@@ -420,7 +420,7 @@ Let's try to index further into the `Timestamp`:
 
 ```{python tags=c("raises-exception")}
 # Oh no....
-first_year_ts
+first_year_ts[0]
 ```
 
 This inability to index (using integers) into the `Timestamp` might seem frustrating, but it is sensible.   The underlying representation is a single number, so indexing into a number does not make sense.  One could also think of the Timestamp value as something from which one could retrieve information like year, month or day, but it's not clear what `[0]` would mean in terms of — for example — year, month or day.
