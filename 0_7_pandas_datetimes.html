@@ -485,9 +485,9 @@ create a Pandas Series containing some <em>strings</em> representing dates:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a Series with some strings representing dates</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a Series with some strings representing dates</span>
 <span class="n">string_time_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;2025-06-06&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-06-07&#39;</span><span class="p">])</span>
-<span class="c1"># show the Series</span>
+<span class="c1"># Show the Series</span>
 <span class="n">string_time_series</span>
 </pre></div>
 </div>
@@ -503,7 +503,7 @@ dtype: object
 <p>To no one’s surprise, the <code class="docutils literal notranslate"><span class="pre">type()</span></code> of these data is <code class="docutils literal notranslate"><span class="pre">str</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the `type()` of the data</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the `type()` of the data</span>
 <span class="n">first_val</span> <span class="o">=</span> <span class="n">string_time_series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="nb">type</span><span class="p">(</span><span class="n">first_val</span><span class="p">)</span>
 </pre></div>
@@ -523,7 +523,7 @@ information.</p>
 time:</p>
 <div class="cell tag_raises-exception docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># not what we wanted...</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Not what we wanted...</span>
 <span class="n">second_val</span> <span class="o">=</span> <span class="n">string_time_series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">second_val</span> <span class="o">-</span> <span class="n">first_val</span>
 </pre></div>
@@ -533,7 +533,7 @@ time:</p>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
 <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># not what we wanted...</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Not what we wanted...</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">second_val</span> <span class="o">=</span> <span class="n">string_time_series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 <span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">second_val</span> <span class="o">-</span> <span class="n">first_val</span>
 
@@ -604,7 +604,7 @@ of memory used for storage and the time resolution…)</p>
 difference between these dates:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the difference between the two dates</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the difference between the two dates</span>
 <span class="n">second_ts_val</span> <span class="o">=</span> <span class="n">timestamp_series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">second_ts_val</span> <span class="o">-</span> <span class="n">first_ts_val</span>
 </pre></div>
@@ -638,7 +638,7 @@ the date strings. However, we can control the format with which <code class="doc
 will interpret the date strings, using the <code class="docutils literal notranslate"><span class="pre">format=</span></code> argument:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># a new Series, using an alternate formatting to the standard Pandas assumes.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A new Series, using an alternate formatting to the standard Pandas assumes.</span>
 <span class="n">other_timestamp_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">string_time_series</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y-</span><span class="si">%d</span><span class="s1">-%m&#39;</span><span class="p">)</span>
 <span class="n">other_timestamp_series</span>
 </pre></div>
@@ -664,7 +664,7 @@ for the full list of date format options.</p>
 dates interpreted according to the new format:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the difference between the two dates with the alternate formatting</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the difference between the two dates with the alternate formatting</span>
 <span class="n">other_timestamp_series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">other_timestamp_series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -686,7 +686,7 @@ standalone Series…</p>
 convert dates which contain words like the names of months (June, July etc.):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># representations of dates which contain strings for the names of months (e.g. &quot;JUNE&quot;)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Representations of dates which contain strings for the names of months (e.g. &quot;JUNE&quot;)</span>
 <span class="n">a_series_of_str</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;2025-JUNE-06&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-JUNE-07&#39;</span><span class="p">])</span>
 <span class="n">a_series_of_timestamps</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">a_series_of_str</span><span class="p">)</span>
 <span class="n">a_series_of_timestamps</span>
@@ -694,7 +694,7 @@ convert dates which contain words like the names of months (June, July etc.):</p
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2590/263946141.py:3: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2610/560003137.py:3: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
   a_series_of_timestamps = pd.to_datetime(a_series_of_str)
 </pre></div>
 </div>
@@ -722,7 +722,7 @@ we can use <code class="docutils literal notranslate"><span class="pre">.iloc</s
 retrieve a single <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># retrieve a single Timestamp from the Series</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Retrieve a single Timestamp from the Series</span>
 <span class="n">single_timestamp</span> <span class="o">=</span> <span class="n">a_series_of_timestamps</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">single_timestamp</span>
 </pre></div>
@@ -737,7 +737,7 @@ retrieve a single <code class="docutils literal notranslate"><span class="pre">T
 <p>Attached to any individual Timestamp is an attribute called <code class="docutils literal notranslate"><span class="pre">.value</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the `.value` attribute</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the `.value` attribute</span>
 <span class="n">single_timestamp</span><span class="o">.</span><span class="n">value</span>
 </pre></div>
 </div>
@@ -753,7 +753,7 @@ date, or time…</p>
 <p>A look through the other attributes reveals more familiar nameed units of time. For instance, the <code class="docutils literal notranslate"><span class="pre">year</span></code>, <code class="docutils literal notranslate"><span class="pre">month</span></code> and <code class="docutils literal notranslate"><span class="pre">day</span></code> attributes:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the `.year` attribute</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The `.year` attribute</span>
 <span class="n">single_timestamp</span><span class="o">.</span><span class="n">year</span>
 </pre></div>
 </div>
@@ -766,13 +766,26 @@ date, or time…</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># .month and day</span>
-<span class="n">single_timestamp</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="n">single_timestamp</span><span class="o">.</span><span class="n">day</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The `.month` attribute</span>
+<span class="n">single_timestamp</span><span class="o">.</span><span class="n">month</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(6, 6)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The `.day` attribute</span>
+<span class="n">single_timestamp</span><span class="o">.</span><span class="n">day</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6
 </pre></div>
 </div>
 </div>
@@ -842,7 +855,7 @@ Epoch was equal to 0 (midnight, January 1st 1970):</p>
 <p>Thus, if we divide our <code class="docutils literal notranslate"><span class="pre">.value</span></code> attribute of our <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code> by <code class="docutils literal notranslate"><span class="pre">approx_ns_in_year</span></code> we should get something like number of years between the <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code> and midnight January 1st 1970:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># calculate the number of years since midnight Jan 1st 1970:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate the number of years since midnight Jan 1st 1970:</span>
 <span class="n">approx_years_since_1_1_1970</span> <span class="o">=</span> <span class="n">single_timestamp</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="n">approx_ns_in_year</span>
 <span class="n">approx_years_since_1_1_1970</span>
 </pre></div>
@@ -877,7 +890,7 @@ Epoch was equal to 0 (midnight, January 1st 1970):</p>
 <p>Let’s explore Pandas Timestamps further now that we know they are fundamentally a measure of nanoseconds since midnight on 1st January 1970, a duration which can be expressed in more understandable forms like <code class="docutils literal notranslate"><span class="pre">.year</span></code>, <code class="docutils literal notranslate"><span class="pre">month</span></code>, <code class="docutils literal notranslate"><span class="pre">day</span></code> etc. We will again use the <a class="reference external" href="https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index">Human Development Index</a> dataset. However,  to keep things simple, we will just be looking at rows corresponding to Afghanistan:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import the dateset</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import the dateset</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/AFG-data-children-per-woman-vs-human-development-index.csv&#39;</span><span class="p">)</span>
 
 <span class="n">df</span>
@@ -1219,7 +1232,7 @@ Epoch was equal to 0 (midnight, January 1st 1970):</p>
 <p>We just call the <code class="docutils literal notranslate"><span class="pre">.plot()</span></code> method on the whole Data Frame, using the <code class="docutils literal notranslate"><span class="pre">subplots=True</span></code> argument), and we get the following neat result:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># a useful trick to time-series data!</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A useful trick to time-series data!</span>
 <span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">subplots</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -1232,7 +1245,7 @@ Epoch was equal to 0 (midnight, January 1st 1970):</p>
 <p>We are undoubtedly viewing time-rleated trends here, but we are doing so based on a non-specialized representation of the times in the <code class="docutils literal notranslate"><span class="pre">Year</span></code> column:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># what type of data is in the `Year` column?</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># What type of data is in the `Year` column?</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span>
 </pre></div>
 </div>
@@ -1246,7 +1259,7 @@ Epoch was equal to 0 (midnight, January 1st 1970):</p>
 <p>Because the <code class="docutils literal notranslate"><span class="pre">Year</span></code> formats in this dataset, unlike the <code class="docutils literal notranslate"><span class="pre">str</span></code> dates we used earlier, do NOT contain anything string specific (hyphens and the like), Pandas has interpreted them as <code class="docutils literal notranslate"><span class="pre">int</span></code> data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># inspect the `Year` column</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Inspect the `Year` column</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1297,10 +1310,10 @@ Name: Year, dtype: int64
 rename the original <code class="docutils literal notranslate"><span class="pre">Year</span></code> column to <code class="docutils literal notranslate"><span class="pre">Year_as_string</span></code> to avoid confusion:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># rename the `Year` column</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Rename the `Year` column</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Year&#39;</span><span class="p">:</span> <span class="s1">&#39;Year_as_string&#39;</span><span class="p">})</span>
 
-<span class="c1"># Convert the month data to time stamp.</span>
+<span class="c1"># Convert the month data to Timestamp.</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year_as_Timestamp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year_as_string&#39;</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y&#39;</span><span class="p">)</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year_as_Timestamp&#39;</span><span class="p">]</span>
 </pre></div>
@@ -1382,7 +1395,7 @@ midnight on 1st January 1990”.</p>
 <p>Let’s try to index further into the <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code>:</p>
 <div class="cell tag_raises-exception docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># oh no....</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Oh no....</span>
 <span class="n">first_year_ts</span>
 </pre></div>
 </div>
@@ -1408,7 +1421,7 @@ a specific data type, in this case Timestamp data.</p>
 <p>For instance, to grab just the year information, we can use <code class="docutils literal notranslate"><span class="pre">.dt.year</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># view the `year` attribute</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># View the `year` attribute</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year_as_Timestamp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span>
 </pre></div>
 </div>
@@ -1469,7 +1482,7 @@ Name: Year_as_Timestamp, dtype: int32
 <p>We will go through these in order (<code class="docutils literal notranslate"><span class="pre">.dt.month</span></code>, <code class="docutils literal notranslate"><span class="pre">.dt.day</span></code>, <code class="docutils literal notranslate"><span class="pre">.dt.hour</span></code>, <code class="docutils literal notranslate"><span class="pre">.dt.minute</span></code>, <code class="docutils literal notranslate"><span class="pre">.dt.second</span></code>) in the cells below:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># view the `month` attribute (which here has been automatically set to 1 by Pandas)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># View the `month` attribute (which here has been automatically set to 1 by Pandas)</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year_as_Timestamp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span>
 </pre></div>
 </div>
@@ -1515,7 +1528,7 @@ Name: Year_as_Timestamp, dtype: int32
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># view the `day` attribute (which here has been automatically set to 1 by Pandas)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># View the `day` attribute (which here has been automatically set to 1 by Pandas)</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year_as_Timestamp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">day</span>
 </pre></div>
 </div>
@@ -1561,7 +1574,7 @@ Name: Year_as_Timestamp, dtype: int32
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># view the `hour` attribute (which here has been automatically set to 0 by Pandas)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># View the `hour` attribute (which here has been automatically set to 0 by Pandas)</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year_as_Timestamp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">hour</span>
 </pre></div>
 </div>
@@ -1607,7 +1620,7 @@ Name: Year_as_Timestamp, dtype: int32
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># view the `minute` attribute (which here has been automatically set to 0 by Pandas)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># View the `minute` attribute (which here has been automatically set to 0 by Pandas)</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year_as_Timestamp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">minute</span>
 </pre></div>
 </div>
@@ -1653,7 +1666,7 @@ Name: Year_as_Timestamp, dtype: int32
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># view the `second` attribute (which here has been automatically set to 0 by Pandas)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># View the `second` attribute (which here has been automatically set to 0 by Pandas)</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year_as_Timestamp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">second</span>
 </pre></div>
 </div>
@@ -1700,7 +1713,7 @@ Name: Year_as_Timestamp, dtype: int32
 <p>We can see that the sequence with which we just “walked” through the <code class="docutils literal notranslate"><span class="pre">.dt.</span></code> attributes (<code class="docutils literal notranslate"><span class="pre">.dt.month</span></code>, <code class="docutils literal notranslate"><span class="pre">.dt.day</span></code>, <code class="docutils literal notranslate"><span class="pre">.dt.hour</span></code>, <code class="docutils literal notranslate"><span class="pre">.dt.minute</span></code>, <code class="docutils literal notranslate"><span class="pre">.dt.second</span></code>) corresponds to the order of the output of a single <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># view an individual Timestamp</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># View an individual Timestamp</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year_as_Timestamp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1717,7 +1730,7 @@ Name: Year_as_Timestamp, dtype: int32
 <p>Using the <code class="docutils literal notranslate"><span class="pre">.dt.</span></code> accessor, we can easily do things like filter our a specific year using these attributes:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># filter using a Boolean array from the `.dt` accessor</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Filter using a Boolean array from the `.dt` accessor</span>
 <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year_as_Timestamp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span> <span class="o">==</span> <span class="mi">1990</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1773,7 +1786,7 @@ Name: Year_as_Timestamp, dtype: int32
 <p>We can do this using the previously seen <code class="docutils literal notranslate"><span class="pre">.set_index()</span></code> method:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># put Timestamps in the index</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Put Timestamps in the index</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Year_as_Timestamp&#39;</span><span class="p">)</span>
 
 <span class="n">df</span>
@@ -2121,7 +2134,7 @@ Name: Year_as_Timestamp, dtype: int32
 <p>If we view the <code class="docutils literal notranslate"><span class="pre">index</span></code>, Pandas will helpfully reveal that setting <code class="docutils literal notranslate"><span class="pre">Year</span></code> as the <code class="docutils literal notranslate"><span class="pre">index</span></code> - a column which contained only Timestamps - has created a <code class="docutils literal notranslate"><span class="pre">DatetimeIndex</span></code>. As the name might reveal, this is an index containing only Timestamps (aka dates / times):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the index</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the index</span>
 <span class="n">df</span><span class="o">.</span><span class="n">index</span>
 </pre></div>
 </div>
@@ -2143,7 +2156,7 @@ Name: Year_as_Timestamp, dtype: int32
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the `type()` of the index</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the `type()` of the index</span>
 <span class="nb">type</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2156,7 +2169,7 @@ Name: Year_as_Timestamp, dtype: int32
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show an individual Timestamp from the `index`</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show an individual Timestamp from the `index`</span>
 <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -2172,7 +2185,7 @@ indexing on our <code class="docutils literal notranslate"><span class="pre">Tim
 <p>For instance, we can <code class="docutils literal notranslate"><span class="pre">.loc</span></code> index just data from the year 1990:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># using `.loc` with a year</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Using `.loc` with a year</span>
 <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;1990&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -2230,7 +2243,7 @@ indexing on our <code class="docutils literal notranslate"><span class="pre">Tim
 <p>We can also do neat slicing operations using time information. For instance showing all rows corresponding to years between 1990 and 1995:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># slice the years using `.loc`</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Slice the years using `.loc`</span>
 <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;1990&quot;</span> <span class="p">:</span> <span class="s2">&quot;1995&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
