@@ -472,7 +472,7 @@ Name: df_attributes, dtype: object
 
 Try to create this Series in as few lines of code as possible. 
 
-You may run into an error with the `shape` attribute. Try running `hint()` for a hint on how to solve this.
+You may run into an error with the `shape` attribute. Try running `hint_1()` for a hint on how to solve this.
 
 You can also run `hint_2()` to get a hint on how to get Pandas to report the `dtype` of the `index`.
 
