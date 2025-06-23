@@ -402,9 +402,14 @@ So, we have found the row for Russia in this new dataset. Let's compare the nami
 df.loc['RUS']
 ```
 
-We may want to [merge](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.merge.html) these datasets. To do that, we need common identifiers linking rows in each dataset which refer to the same observational units (in this case countries). 
+In due course, we may want to
+[merge](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.merge.html)
+these datasets. To do that, we need common identifiers linking rows in each
+dataset which refer to the same observational units (in this case countries).
 
-String methods are our friend here. We can use the process just outlined for find data for a specific country, and then use other methods to ensure uniform formatting between the datasets, such that we can merge them:
+String methods are our friend here. We can use the process just outlined for
+find data for a specific country, and then use other methods to ensure uniform
+formatting between the datasets, such that we can merge them:
 
 ```{python}
 # Format the maternal mortality data for Russia to use the same country name as the HDI data
@@ -414,7 +419,7 @@ gender_df['country_name'] = gender_df['country_name'].str.replace('Russian Feder
 gender_df[gender_df['country_name'].str.contains('Russia')]
 ```
 
-We are now ready for a clean and stress-free data merge! (*NB*: we are lying here, merging datasets is almost never stress-free...)
+We are now ready for a clean and stress-free data merge! (*NB*: we are grossly exaggerating here, merging datasets is almost never stress-free...)
 
 
 ::: {exercise-start}
@@ -434,7 +439,7 @@ That is what we have done with some hidden code.   The hidden code:
 * Processes the `gender_df['country_name']` Series to make a new Series where we have replaced the original names (above) with versions of these names that are easier to type.
 * Taken this new Series, and run `sorted(new_series.unique())` to show you the new names.
 
-Have a careful look at the resultng list below - and work out which Pandas string methods have been used to get from the `gender_df['country_name']` Series to the new Series, to which we have applied `sorted(new_series.unique())`
+Have a careful look at the resulting list below - and work out which Pandas string methods have been used to get from the `gender_df['country_name']` Series to the new Series, to which we have applied `sorted(new_series.unique())`
 
 ```{python}
 # This is the answer - don't use it in your solution.
@@ -443,7 +448,7 @@ sorted(answer_clean_series.unique())
 
 Your task now is to make a Series called `my_clean_series` which gives (with `sorted(my_clean_series.unique())`) a list that is *identical* to the list shown above.
 
-You can perform the relevant string transformations using Pandas string methods on the `gender_df['country_name']` Series, and then run `my_clean_names.unique()` to get the final array.
+You can perform the relevant string transformations using Pandas string methods on the `gender_df['country_name']` Series, and then run `sorted(my_clean_names.unique())` to get the final array.
 
 There is a cell at the end of the exercise to check your answer.
 
