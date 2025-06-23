@@ -455,7 +455,7 @@ df.size
 :class: dropdown
 :::
 
-Your job here is to make a new Series which summarises aspects of the `df` Dataframe. In the `.values` array, your Series should contain the value the `.shape` and `.size` attributes of `df`. It should also contain the `dtype` of the `index` of `df` e.g. reporting whether the `index` contains numeric labels, `str` labels, or something else. See if you can figure out how to get Pandas to report this via indexing (e.g. rather than copy pasting the information from the output of `df.index`).
+Your job here is to make a new Series which summarises aspects of the `df` Dataframe. In the `.values` array, your Series should contain the values of the `.shape` and `.size` attributes of `df`. It should also contain the `dtype` of the `index` of `df` (therefore, telling your user whether the `index` contains numeric labels, `str` labels, or something else). See if you can figure out how to get Pandas to report this via indexing (e.g. rather than copy pasting the information from the output of `df.index`).
 
 The `index` of your Series should clearly state what each `value` is. E.g. the strings `shape`, `size`, `index_dtype` should be the `index` labels in your Series. 
 
