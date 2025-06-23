@@ -13,7 +13,7 @@ jupyter:
 ---
 
 <!-- #region -->
-# Its Pandas time
+# It's Pandas time
 
 
 We will frequently find ourselves working with data about *time*. Having
