@@ -426,6 +426,7 @@ If you peruse the list you'll notice that some of the methods have the sames as 
 df.shape
 ```
 
+(len-df)=
 `len(df)` (therefore, `df.__len__()`) gives the number of rows.  This corresponds the Numpy behavior of giving the number of elements on the first dimension of the array:
 
 ```{python}
