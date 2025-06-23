@@ -4,4 +4,4 @@ def hint_1():
 
 def hint_2():
     "Prints another hint for the attribute-series exercise"
-    print("The `index` has it's own `dtype` attribute...")
+    print("The `index` has its own `dtype` attribute...")
