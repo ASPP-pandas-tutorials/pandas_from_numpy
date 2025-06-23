@@ -5,7 +5,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.2
+      jupytext_version: 1.16.6
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -30,6 +30,7 @@ This page is a *brief* introduction to Pandas Datetimes - there is much more tha
 First, let's look at how Pandas handles dates. To do this, we'll create a Pandas Series containing some *strings* representing dates:
 
 ```{python}
+import numpy as np
 import pandas as pd
 # create a Series with some strings representing dates
 string_time_series = pd.Series(['2025-06-06', '2025-06-07'])
@@ -198,26 +199,38 @@ single_timestamp
 single_timestamp.value
 ```
 
-To sanity check this, a simple Google search (at the time of writing) will tell us that the number of nanoseconds in a year is approximately 3.154e+16:
+To sanity check this, let's estimate the number of nanoseconds in an average year:
 
-![](images\nanoseconds.png)
+```{python}
+# We've ignored various subtleties here to get an approximate number.
+# Taking leap years into account.
+average_days_in_year = 365.25
+# Days in year * hours in day * minutes in hour * seconds in minute * 1,000,000,000
+approx_ns_in_year = average_days_in_year * 24 * 60 * 60 * 1_000_000_000
+approx_ns_in_year
+```
 
-Thus, if we divide our `.value` attribute of our `Timestamp` by 3.154e+16 we should get something like number of years between the `Timestamp` and midnight January 1st 1970:
+Thus, if we divide our `.value` attribute of our `Timestamp` by `approx_ns_in_year` we should get something like number of years between the `Timestamp` and midnight January 1st 1970:
 
 ```{python}
 # calculate the number of years since midnight Jan 1st 1970:
-approx_years_since_first_jan_1970 = single_timestamp.value/3.154e+16
-
-approx_years_since_first_jan_1970
+approx_years_since_1_1_1970 = single_timestamp.value / approx_ns_in_year
+approx_years_since_1_1_1970
 ```
 
-55 years between the `Timestamp` (6th June 2025) and January 1st 1970? That sounds about right, but let's check it by subtracting the `approx_years_since_first_jan_1970` from our `single_timestamp.year`, to see if we get something close to 1970:
+55.43 years between the `Timestamp` (6th June 2025) and January 1st 1970? That sounds about right, but let's check it by subtracting the rounded `approx_years_since_1_1_1970` from our `single_timestamp.year`, expecting 1970:
 
 ```{python}
-single_timestamp.year - approx_years_since_first_jan_1970
+single_timestamp.year - np.round(approx_years_since_1_1_1970)
 ```
 
-That's pretty close to 1970, as expected.
+::: note
+
+**Floating point years**
+
+We could have subtracted `approx_years_since_1_1_1970` from `single_timestamp.year` without rounding, and we'd get something midway through 1969, because `approx_years_since_1_1_1970` includes the time from January 1 2025 to June 6 2025, so subtracting the unrounded value will take us back to midway through 1969.
+
+:::
 
 
 ## Datetimes in Pandas Data Frames
