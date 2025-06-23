@@ -288,7 +288,7 @@ Do you think this value is a reasonable estimate of actual worldwide health expe
 :class: dropdown
 :::
 
-The NaN values look very much like standard Pandas signals of missing (Not Available) data.  First, these values arose from loading a data file directly.  It's possible that some calculation that led to this data file had invalid floating poin values, but it's difficult to see what these might be, or why these could not be avoided.  On the other hand, looking at the values, it seems that they occur for smaller countries with less-developed economies (e.g. Aruba) or new countries (at time of data estimate) such as Kosovo.  It is easy to see how there might not be good data to calculate e.g. health expenditure per person for these countries.
+The NaN values look very much like standard Pandas signals of missing (Not Available) data.  First, these values arose from loading a data file directly.  It's possible that some calculation that led to this data file had invalid floating point values, but it's difficult to see what these might be, or why these could not be avoided.  On the other hand, looking at the values, it seems that they occur for smaller countries with less-developed economies (e.g. Aruba) or new countries (at time of data estimate) such as Kosovo.  It is easy to see how there might not be good data to calculate e.g. health expenditure per person for these countries.
 
 To explore more, you might have considered looking specifically for rows and columns with many NaN values with something like:
 
