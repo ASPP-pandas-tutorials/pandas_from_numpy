@@ -889,7 +889,7 @@ This method is often used on individual columns to (most likely) remove any stat
 :class: dropdown
 :::
 
-We mentioned above that the default behaviour of the `.sample()` method is to sample *without replacement*. We also mentioned that you can use the `replace =` argument to sample *with* replacement.
+We mentioned above that the default behaviour of the `.sample()` method is to sample *without replacement*. We also mentioned that you can use the `replace=` argument to sample *with* replacement.
 
 To use a classic "drawing marbles from a bag" analogy, this means that when we randomly select a marble, we place it *back* in the bag (after recording it's identity/colour etc) before we randomly draw the next marble. This means the same marble can appear twice in the final sample. 
 
