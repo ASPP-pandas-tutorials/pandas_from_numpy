@@ -1,0 +1,2484 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Its Pandas time &#8212; Pandas from Numpy</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '0_7_pandas_datetimes';</script>
+    <link rel="canonical" href="https://ASPP_pandas_tutorials.github.io/pandas_from_numpy/0_7_pandas_datetimes.html" />
+    <link rel="icon" href="_static/pandas_numpy.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="More Pandas methods" href="0_6_more_pandas_methods_strings.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/pandas_numpy.jpg" class="logo__image only-light" alt="Pandas from Numpy - Home"/>
+    <script>document.write(`<img src="_static/pandas_numpy.jpg" class="logo__image only-dark" alt="Pandas from Numpy - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Pandas from Numpy</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="0_0_pandas_intro.html">Pandas from Numpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_1_to_loc_or_iloc.html">Indexing by label, indexing by position</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_2_pandas_dataframes_attributes_methods.html">Pandas DataFrames: Attributes and Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_3_constructing_dataframes.html">Let There Be Data : Creating Data Frames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_4_dealing_with_missing_data_in_pandas.html">Dealing with NaNs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_5_filtering_data_with_pandas.html">Filtering Data Frames with Boolean Series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_6_more_pandas_methods_strings.html">More Pandas methods</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Its Pandas time</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="interact/lab/index.html?path=0_7_pandas_datetimes.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch via JupyterLite"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="JupyterLite logo" src="_static/images/logo_jupyterlite.svg">
+  </span>
+<span class="btn__text-container">JupyterLite</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ASPP_pandas_tutorials/pandas_from_numpy" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ASPP_pandas_tutorials/pandas_from_numpy/edit/main/0_7_pandas_datetimes.Rmd" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ASPP_pandas_tutorials/pandas_from_numpy/issues/new?title=Issue%20on%20page%20%2F0_7_pandas_datetimes.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/0_7_pandas_datetimes.Rmd" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.Rmd</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Its Pandas time</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Its Pandas time</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dates-and-times-in-pandas-series">Dates and times in Pandas Series</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-closer-look-at-time-stamps-and-time-deltas">A closer look at time stamps and time deltas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#times-and-dates-in-pandas-data-frames">Times and dates in Pandas Data Frames</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-dt-accessor">The <code class="docutils literal notranslate"><span class="pre">.dt</span></code> accessor</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-timestamps-in-a-data-frame-index">Using Timestamps in a Data Frame index</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="its-pandas-time">
+<h1>Its Pandas time<a class="headerlink" href="#its-pandas-time" title="Link to this heading">#</a></h1>
+<p>We will frequently find ourselves working with data about <em>time</em>. Having
+a specialised representation of time is useful in numerous respects, primarily
+because it allows us to do “mathematics with times”. For instance, we may want
+to use subtraction to calculate the distance between two time points; we cannot
+do this if we represent dates/times as string data. As such, Python has
+a useful module for handling dates and times, creatively named
+<a class="reference external" href="https://docs.python.org/3/library/datetime.html">“Datetime”</a>.</p>
+<p>Python’s Datetimes have a (deserved) reputation for being fiddly (we would
+wager anyone who has encountered them will agree…). Additionally, in contrast
+to the close relation between Numpy and Pandas shown on the other pages, the
+way Pandas handles dates and times is somewhat different to how they are
+handled in Numpy.  To be specific, Pandas <em>stores</em> dates and times using
+Numpy’s representations, but <em>presents</em> these values to you, dear user, with
+various attributes that make them look like Python’s Datatimes.</p>
+<p>This page will focus on using dates and times as implemented in Pandas.  This
+is also probably the most likely context in which readers will use dates and
+times…</p>
+<p>The page is a <em>brief</em> introduction to Pandas times and dates — there is much
+more than be done with Pandas dates / times than we will show here - but these
+are the essentials.</p>
+<section id="dates-and-times-in-pandas-series">
+<h2>Dates and times in Pandas Series<a class="headerlink" href="#dates-and-times-in-pandas-series" title="Link to this heading">#</a></h2>
+<p>First, let’s look at how Pandas handles dates and times. To do this, we’ll
+create a Pandas Series containing some <em>strings</em> representing dates:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Our usual imports.</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a Series with some strings representing dates</span>
+<span class="n">string_time_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;2025-06-06&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-06-07&#39;</span><span class="p">])</span>
+<span class="c1"># show the Series</span>
+<span class="n">string_time_series</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    2025-06-06
+1    2025-06-07
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>To no one’s surprise, the <code class="docutils literal notranslate"><span class="pre">type()</span></code> of these data is <code class="docutils literal notranslate"><span class="pre">str</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the `type()` of the data</span>
+<span class="n">first_val</span> <span class="o">=</span> <span class="n">string_time_series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">first_val</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>str
+</pre></div>
+</div>
+</div>
+</div>
+<p>These representations of dates might look OK at a first glance, but let’s say
+we want to know the difference in time (duration) between them.</p>
+<p>We might surmise that subtracting one date from the other would give us this
+information.</p>
+<p>However, we would be sorely disappointed, when using <code class="docutils literal notranslate"><span class="pre">str</span></code> data to represent
+time:</p>
+<div class="cell tag_raises-exception docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># not what we wanted...</span>
+<span class="n">second_val</span> <span class="o">=</span> <span class="n">string_time_series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">second_val</span> <span class="o">-</span> <span class="n">first_val</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># not what we wanted...</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">second_val</span> <span class="o">=</span> <span class="n">string_time_series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">second_val</span> <span class="o">-</span> <span class="n">first_val</span>
+
+<span class="ne">TypeError</span>: unsupported operand type(s) for -: &#39;str&#39; and &#39;str&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is where having a specialized representation of time comes in handy. We
+can use the <code class="docutils literal notranslate"><span class="pre">pd.to_datetime()</span></code> function to convert this data to Pandas’ special
+representation of a particular point in time.</p>
+<div class="note docutils">
+<p><strong>Different ways of representing time</strong></p>
+<p>As you’ll see below, there are two different and common ways of representing
+time.  These are:</p>
+<ul class="simple">
+<li><p>A specific point in time.  Pandas represents a specific point in time as
+a <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code>.</p></li>
+<li><p>A duration — for example, the difference in time between two <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code>s.
+Pandas represents durations with a type called <code class="docutils literal notranslate"><span class="pre">Timedelta</span></code>.</p></li>
+</ul>
+<p>See <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html">Pandas
+timeseries</a>
+for more.</p>
+</div>
+<p>Let’s convert our string dates to Pandas <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code>s:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert string to time stamps using `to_datetime()`</span>
+<span class="n">timestamp_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">string_time_series</span><span class="p">)</span>
+<span class="n">timestamp_series</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0   2025-06-06
+1   2025-06-07
+dtype: datetime64[ns]
+</pre></div>
+</div>
+</div>
+</div>
+<p>As you see from the output of the cell above, the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> of this data is no
+longer <code class="docutils literal notranslate"><span class="pre">object</span></code> as it was above. It is now <code class="docutils literal notranslate"><span class="pre">datetime64[ns]</span></code>
+— which we can read as “a datetime representation, in 64 bits, down to the
+nanosecond resolution”. Sounds fancy!</p>
+<p>We can confirm the type of the data using the <code class="docutils literal notranslate"><span class="pre">type()</span></code> function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">first_ts_val</span> <span class="o">=</span> <span class="n">timestamp_series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">first_ts_val</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Timestamp(&#39;2025-06-06 00:00:00&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code> is Pandas’ special representation of a time point e.g.
+a specific point in time. You may wonder why Pandas reports the <code class="docutils literal notranslate"><span class="pre">type()</span></code> as
+a <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code> but the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> as <code class="docutils literal notranslate"><span class="pre">datetime64[ns]</span></code>. For all intents and
+purposes, the <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code> is just a more general description of
+<code class="docutils literal notranslate"><span class="pre">datetime64[ns]</span></code> (with the latter just giving more information about the amount
+of memory used for storage and the time resolution…)</p>
+<p>We can now do “mathemstics with times” and use subtraction to calculate the
+difference between these dates:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the difference between the two dates</span>
+<span class="n">second_ts_val</span> <span class="o">=</span> <span class="n">timestamp_series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">second_ts_val</span> <span class="o">-</span> <span class="n">first_ts_val</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Timedelta(&#39;1 days 00:00:00&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>This operation has returned a <code class="docutils literal notranslate"><span class="pre">Timedelta</span></code> - the other foundational
+representation of time in Pandas. The <code class="docutils literal notranslate"><span class="pre">delta</span></code> in <code class="docutils literal notranslate"><span class="pre">Timedelta</span></code> refers to
+<em>difference</em> e.g. the difference between two time points. Equally, we can think
+of a <code class="docutils literal notranslate"><span class="pre">Timedelta</span></code> as a representation of a <em>duration</em> (e.g. the duration of time
+between two time points).</p>
+<p>Pandas helpfully reports that the difference between our two dates is <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">days</span> <span class="pre">00:00:00</span></code>. You’ll notice here that Pandas made a guess as to the format of the
+dates when we created this Series with <code class="docutils literal notranslate"><span class="pre">pd.to_datetime</span></code>. One could interpret
+the original two strings (<code class="docutils literal notranslate"><span class="pre">2025-06-06</span></code> and <code class="docutils literal notranslate"><span class="pre">2025-06-07</span></code>) are as 6th June 2025
+and <strong>7th June</strong> 2025, or 6th June 2025 and <strong>6th July</strong> 2025. Pandas assumes
+that the middle two digits represent months, and this is reasonable, because
+this year-first representation is a <a class="reference external" href="https://en.wikipedia.org/wiki/ISO_8601">standard string representation of
+time</a>, where the second value is always
+the month.</p>
+<p>However, more generally, Pandas may or may not be correct in its assumptions.
+For example, it is genuinely ambiguous what <code class="docutils literal notranslate"><span class="pre">'06-07-2025</span></code> means, because this
+could be a North American standard months-days-year string, or a European
+standard days-months-year string.  In normal contexts, we would need to consult
+metadata/documentation associated with our dataset to be sure of the meaning of
+the date strings. However, we can control the format with which <code class="docutils literal notranslate"><span class="pre">pd.datetime()</span></code>
+will interpret the date strings, using the <code class="docutils literal notranslate"><span class="pre">format=</span></code> argument:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># a new Series, using an alternate formatting to the standard Pandas assumes.</span>
+<span class="n">other_timestamp_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">string_time_series</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y-</span><span class="si">%d</span><span class="s1">-%m&#39;</span><span class="p">)</span>
+<span class="n">other_timestamp_series</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0   2025-06-06
+1   2025-07-06
+dtype: datetime64[ns]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here we have used the <em>date format string</em> <code class="docutils literal notranslate"><span class="pre">'%Y-%d-%m'</span></code> as input for the
+<code class="docutils literal notranslate"><span class="pre">format=</span></code> argument. We can read this as <em>“a four digit year, followed by
+a hyphen, followed by a two digit day, followed by a hyphen, followed by a two
+digit month”</em>.</p>
+<p>The, <em>ahem</em>, format of the date format string can take some getting used to.
+Please see
+<a class="reference external" href="https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior">here</a>
+for the full list of date format options.</p>
+<p>We can see that we get a totally different <code class="docutils literal notranslate"><span class="pre">Timedelta</span></code> when subtracting the
+dates interpreted according to the new format:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the difference between the two dates with the alternate formatting</span>
+<span class="n">other_timestamp_series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">other_timestamp_series</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Timedelta(&#39;30 days 00:00:00&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>These two objects (<code class="docutils literal notranslate"><span class="pre">Timestamp</span></code>s and <code class="docutils literal notranslate"><span class="pre">Timedelta</span></code>s) are the cornerstones of time
+representation in Pandas (though there is much else to know about them).</p>
+<p>We will look more specifically at the attributes and methods we can use on
+these representations of time. However, we will do so in the context of Data
+Frames. As we know, Data Frames are just <em>dictionary-like collections of
+Series</em>, so any methods/attributes of Data Frame columns can also be used with
+standalone Series…</p>
+<p>Before we move on, it is important to note that <code class="docutils literal notranslate"><span class="pre">pd.to_datetime()</span></code> can also
+convert dates which contain words like the names of months (June, July etc.):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># representations of dates which contain strings for the names of months (e.g. &quot;JUNE&quot;)</span>
+<span class="n">a_series_of_str</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;2025-JUNE-06&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-JUNE-07&#39;</span><span class="p">])</span>
+<span class="n">a_series_of_timestamps</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">a_series_of_str</span><span class="p">)</span>
+<span class="n">a_series_of_timestamps</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2571/263946141.py:3: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+  a_series_of_timestamps = pd.to_datetime(a_series_of_str)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0   2025-06-06
+1   2025-06-07
+dtype: datetime64[ns]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Again, Pandas has guessed the format but has implored us to <em>specify</em> the
+format with which we want the string dates to be interpreted. (Pretty much
+always, specifying the format is better practice than letting Pandas guess…)</p>
+<p>The important point here is that even though the names of months (“JUNE”) went
+into the <code class="docutils literal notranslate"><span class="pre">pd.to_datetime()</span></code> conversion, the <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code> that came out the other
+side contains only numbers. This is important for understanding the essential
+nature of Pandas time stamps, as we will see in later sections.</p>
+</section>
+<section id="a-closer-look-at-time-stamps-and-time-deltas">
+<h2>A closer look at time stamps and time deltas<a class="headerlink" href="#a-closer-look-at-time-stamps-and-time-deltas" title="Link to this heading">#</a></h2>
+<p>The Timestamps in the output of the cell above might appear similar to strings, but in terms of the internal representation that Pandas uses they are something entirely different. They are based on something (incredibly sci-fi sounding) called the “Unix Epoch”, to which we will attend later).</p>
+<p>To get an insight into this representation, let’s take a closer look at one of the individual Timestamps.</p>
+<p>Our variable <code class="docutils literal notranslate"><span class="pre">a_series_of_timestamps</span></code> is a Pandas Series. As such, as we know
+we can use <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> indexing to retrieve single values from it. In this case, we
+retrieve a single <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># retrieve a single Timestamp from the Series</span>
+<span class="n">single_timestamp</span> <span class="o">=</span> <span class="n">a_series_of_timestamps</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">single_timestamp</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Timestamp(&#39;2025-06-06 00:00:00&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Attached to any individual Timestamp is an attribute called <code class="docutils literal notranslate"><span class="pre">.value</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the `.value` attribute</span>
+<span class="n">single_timestamp</span><span class="o">.</span><span class="n">value</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1749168000000000000
+</pre></div>
+</div>
+</div>
+</div>
+<p>At first glance this might be confusing - it doesn’t look much like a normal
+date, or time…</p>
+<p>A look through the other attributes reveals more familiar nameed units of time. For instance, the <code class="docutils literal notranslate"><span class="pre">year</span></code>, <code class="docutils literal notranslate"><span class="pre">month</span></code> and <code class="docutils literal notranslate"><span class="pre">day</span></code> attributes:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the `.year` attribute</span>
+<span class="n">single_timestamp</span><span class="o">.</span><span class="n">year</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2025
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># .month and day</span>
+<span class="n">single_timestamp</span><span class="o">.</span><span class="n">month</span><span class="p">,</span> <span class="n">single_timestamp</span><span class="o">.</span><span class="n">day</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(6, 6)
+</pre></div>
+</div>
+</div>
+</div>
+<p>So what is the mysterious <code class="docutils literal notranslate"><span class="pre">.value</span></code> attribute?</p>
+<p>It is, in fact, more fundamental than the other attributes. It derives from the
+aforementioned “Unix Epoch”, a slightly ominous sounding name for a specific
+date in 1970. Here is an explanation of what that is:</p>
+<blockquote>
+<div><p>“The Unix epoch is the number of seconds that have elapsed since January 1, 1970 at midnight UTC time minus the leap seconds. This means that at midnight of January 1, 1970, Unix time was 0.” (from <a class="reference external" href="https://www.epoch101.com">https://www.epoch101.com</a>)</p>
+</div></blockquote>
+<p>The <code class="docutils literal notranslate"><span class="pre">.value</span></code> attribute reports the number of nanoseconds that have elapsed
+between midnight January 1st 1970 and the particular point in time represented
+by the <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code>. This is the fundamental representation that Pandas uses in
+<code class="docutils literal notranslate"><span class="pre">Timestamp</span></code>s — the other attributes (<code class="docutils literal notranslate"><span class="pre">year</span></code>, <code class="docutils literal notranslate"><span class="pre">month</span></code>, etc) present this
+information in a form more understandable to a human.</p>
+<p>Why midnight of January 1st 1970? Well we need <em>some</em> point against which to
+measure other times, and <a class="reference external" href="https://www.narrative.io/knowledge-base/concepts/data-terms/what-is-unix-time">early Unix
+engineers</a>
+chose this one. If it isn’t broken why fix it?</p>
+<p>Let’s look again at our single <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">single_timestamp</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Timestamp(&#39;2025-06-06 00:00:00&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>…and then once again at the <code class="docutils literal notranslate"><span class="pre">.value</span></code> attribute, now we know that it tells us
+the number of nanoseconds between our <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code> and the point where the Unix
+Epoch was equal to 0 (midnight, January 1st 1970):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">single_timestamp</span><span class="o">.</span><span class="n">value</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1749168000000000000
+</pre></div>
+</div>
+</div>
+</div>
+<p>To sanity check this, let’s estimate the number of nanoseconds in an average year:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We&#39;ve ignored various subtleties here to get an approximate number.</span>
+<span class="c1"># Taking leap years into account.</span>
+<span class="n">average_days_in_year</span> <span class="o">=</span> <span class="mf">365.25</span>
+<span class="c1"># Days in year * hours in day * minutes in hour * seconds in minute * 1,000,000,000</span>
+<span class="n">approx_ns_in_year</span> <span class="o">=</span> <span class="n">average_days_in_year</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">1_000_000_000</span>
+<span class="n">approx_ns_in_year</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.15576e+16
+</pre></div>
+</div>
+</div>
+</div>
+<p>Thus, if we divide our <code class="docutils literal notranslate"><span class="pre">.value</span></code> attribute of our <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code> by <code class="docutils literal notranslate"><span class="pre">approx_ns_in_year</span></code> we should get something like number of years between the <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code> and midnight January 1st 1970:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># calculate the number of years since midnight Jan 1st 1970:</span>
+<span class="n">approx_years_since_1_1_1970</span> <span class="o">=</span> <span class="n">single_timestamp</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="n">approx_ns_in_year</span>
+<span class="n">approx_years_since_1_1_1970</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>55.42778918548939
+</pre></div>
+</div>
+</div>
+</div>
+<p>55.43 years between the <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code> (6th June 2025) and January 1st 1970? That sounds about right, but let’s check it by subtracting the rounded <code class="docutils literal notranslate"><span class="pre">approx_years_since_1_1_1970</span></code> from our <code class="docutils literal notranslate"><span class="pre">single_timestamp.year</span></code>, expecting 1970:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">single_timestamp</span><span class="o">.</span><span class="n">year</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">approx_years_since_1_1_1970</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(1970.0)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="note docutils">
+<p><strong>Floating point years</strong></p>
+<p>We could have subtracted <code class="docutils literal notranslate"><span class="pre">approx_years_since_1_1_1970</span></code> from <code class="docutils literal notranslate"><span class="pre">single_timestamp.year</span></code> without rounding, and we’d get something midway through 1969, because <code class="docutils literal notranslate"><span class="pre">approx_years_since_1_1_1970</span></code> includes the time from January 1 2025 to June 6 2025, so subtracting the unrounded value will take us back to midway through 1969.</p>
+</div>
+</section>
+<section id="times-and-dates-in-pandas-data-frames">
+<h2>Times and dates in Pandas Data Frames<a class="headerlink" href="#times-and-dates-in-pandas-data-frames" title="Link to this heading">#</a></h2>
+<p>Let’s explore Pandas Timestamps further now that we know they are fundamentally a measure of nanoseconds since midnight on 1st January 1970, a duration which can be expressed in more understandable forms like <code class="docutils literal notranslate"><span class="pre">.year</span></code>, <code class="docutils literal notranslate"><span class="pre">month</span></code>, <code class="docutils literal notranslate"><span class="pre">day</span></code> etc. We will again use the <a class="reference external" href="https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index">Human Development Index</a> dataset. However,  to keep things simple, we will just be looking at rows corresponding to Afghanistan:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import the dateset</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/AFG-data-children-per-woman-vs-human-development-index.csv&#39;</span><span class="p">)</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Entity</th>
+      <th>Code</th>
+      <th>Year</th>
+      <th>Fertility Rate</th>
+      <th>Human Development Index</th>
+      <th>Population</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1990</td>
+      <td>7.576</td>
+      <td>0.284</td>
+      <td>12045622.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1991</td>
+      <td>7.631</td>
+      <td>0.292</td>
+      <td>12238831.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1992</td>
+      <td>7.703</td>
+      <td>0.299</td>
+      <td>13278937.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1993</td>
+      <td>7.761</td>
+      <td>0.307</td>
+      <td>14943125.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1994</td>
+      <td>7.767</td>
+      <td>0.300</td>
+      <td>16250755.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1995</td>
+      <td>7.767</td>
+      <td>0.318</td>
+      <td>17065794.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1996</td>
+      <td>7.757</td>
+      <td>0.326</td>
+      <td>17763221.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1997</td>
+      <td>7.732</td>
+      <td>0.330</td>
+      <td>18452049.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1998</td>
+      <td>7.693</td>
+      <td>0.329</td>
+      <td>19159955.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1999</td>
+      <td>7.641</td>
+      <td>0.337</td>
+      <td>19887737.0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2000</td>
+      <td>7.566</td>
+      <td>0.340</td>
+      <td>20130279.0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2001</td>
+      <td>7.453</td>
+      <td>0.344</td>
+      <td>20284252.0</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2002</td>
+      <td>7.320</td>
+      <td>0.368</td>
+      <td>21378081.0</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2003</td>
+      <td>7.174</td>
+      <td>0.379</td>
+      <td>22733007.0</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2004</td>
+      <td>7.018</td>
+      <td>0.395</td>
+      <td>23560598.0</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2005</td>
+      <td>6.858</td>
+      <td>0.402</td>
+      <td>24404520.0</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2006</td>
+      <td>6.686</td>
+      <td>0.410</td>
+      <td>25424050.0</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2007</td>
+      <td>6.508</td>
+      <td>0.426</td>
+      <td>25909790.0</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2008</td>
+      <td>6.392</td>
+      <td>0.431</td>
+      <td>26482577.0</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2009</td>
+      <td>6.295</td>
+      <td>0.441</td>
+      <td>27466056.0</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2010</td>
+      <td>6.195</td>
+      <td>0.449</td>
+      <td>28284036.0</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2011</td>
+      <td>6.094</td>
+      <td>0.457</td>
+      <td>29347668.0</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2012</td>
+      <td>5.985</td>
+      <td>0.467</td>
+      <td>30559988.0</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2013</td>
+      <td>5.879</td>
+      <td>0.475</td>
+      <td>31622662.0</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2014</td>
+      <td>5.770</td>
+      <td>0.480</td>
+      <td>32792472.0</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2015</td>
+      <td>5.652</td>
+      <td>0.479</td>
+      <td>33831716.0</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2016</td>
+      <td>5.542</td>
+      <td>0.483</td>
+      <td>34700565.0</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2017</td>
+      <td>5.433</td>
+      <td>0.485</td>
+      <td>35688889.0</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2018</td>
+      <td>5.327</td>
+      <td>0.486</td>
+      <td>36742997.0</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2019</td>
+      <td>5.238</td>
+      <td>0.492</td>
+      <td>37856071.0</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2020</td>
+      <td>5.145</td>
+      <td>0.488</td>
+      <td>39068933.0</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2021</td>
+      <td>5.039</td>
+      <td>0.473</td>
+      <td>40000360.0</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2022</td>
+      <td>4.932</td>
+      <td>0.462</td>
+      <td>40578801.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>If you look at the <code class="docutils literal notranslate"><span class="pre">Year</span></code> column, you can see that what we have is a running set of observations (all from Afghanistan) from the year 1990 up until the year 2022.</p>
+<p>This sort of data - a series of observations over time - is called <em>time series</em> data. In fact, the name of Pandas <em>Series</em> comes from “time series”, as this is the sort of data the library was originally designed to be used with.</p>
+<p>Here we have one observational unit (in this case a country), measured over time on the same variables.  If we have data like this, then we can use a useful trick to inspect all time-related trends at once.</p>
+<p>We just call the <code class="docutils literal notranslate"><span class="pre">.plot()</span></code> method on the whole Data Frame, using the <code class="docutils literal notranslate"><span class="pre">subplots=True</span></code> argument), and we get the following neat result:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># a useful trick to time-series data!</span>
+<span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">subplots</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/d8f874b344cd3d3829819d800d1e6ad5715c83274963f256082bc36fd49c186c.png" src="_images/d8f874b344cd3d3829819d800d1e6ad5715c83274963f256082bc36fd49c186c.png" />
+</div>
+</div>
+<p>As expected, the trend for <code class="docutils literal notranslate"><span class="pre">Year</span></code> increasely linearly (<em>duh!</em>), whilst <code class="docutils literal notranslate"><span class="pre">Fertility</span> <span class="pre">Rate</span></code> falls and <code class="docutils literal notranslate"><span class="pre">Human</span> <span class="pre">Development</span> <span class="pre">Index</span></code>/<code class="docutils literal notranslate"><span class="pre">Population</span></code> (mostly) climb.</p>
+<p>We are undoubtedly viewing time-rleated trends here, but we are doing so based on a non-specialized representation of the times in the <code class="docutils literal notranslate"><span class="pre">Year</span></code> column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># what type of data is in the `Year` column?</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dtype(&#39;int64&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Because the <code class="docutils literal notranslate"><span class="pre">Year</span></code> formats in this dataset, unlike the <code class="docutils literal notranslate"><span class="pre">str</span></code> dates we used earlier, do NOT contain anything string specific (hyphens and the like), Pandas has interpreted them as <code class="docutils literal notranslate"><span class="pre">int</span></code> data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># inspect the `Year` column</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     1990
+1     1991
+2     1992
+3     1993
+4     1994
+5     1995
+6     1996
+7     1997
+8     1998
+9     1999
+10    2000
+11    2001
+12    2002
+13    2003
+14    2004
+15    2005
+16    2006
+17    2007
+18    2008
+19    2009
+20    2010
+21    2011
+22    2012
+23    2013
+24    2014
+25    2015
+26    2016
+27    2017
+28    2018
+29    2019
+30    2020
+31    2021
+32    2022
+Name: Year, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is OK as far as it goes, but we can do better.</p>
+<p>Let’s convert the <code class="docutils literal notranslate"><span class="pre">Year</span></code> values to <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code> data, to see the host of
+<em>time-specific</em> attributes and methods that we then get access to.</p>
+<p><em>NB</em>: we will call the column containing the Timestamps <code class="docutils literal notranslate"><span class="pre">Year_as_Timestamp</span></code>, and
+rename the original <code class="docutils literal notranslate"><span class="pre">Year</span></code> column to <code class="docutils literal notranslate"><span class="pre">Year_as_string</span></code> to avoid confusion:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># rename the `Year` column</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Year&#39;</span><span class="p">:</span> <span class="s1">&#39;Year_as_string&#39;</span><span class="p">})</span>
+
+<span class="c1"># Convert the month data to time stamp.</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year_as_Timestamp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year_as_string&#39;</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year_as_Timestamp&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    1990-01-01
+1    1991-01-01
+2    1992-01-01
+3    1993-01-01
+4    1994-01-01
+5    1995-01-01
+6    1996-01-01
+7    1997-01-01
+8    1998-01-01
+9    1999-01-01
+10   2000-01-01
+11   2001-01-01
+12   2002-01-01
+13   2003-01-01
+14   2004-01-01
+15   2005-01-01
+16   2006-01-01
+17   2007-01-01
+18   2008-01-01
+19   2009-01-01
+20   2010-01-01
+21   2011-01-01
+22   2012-01-01
+23   2013-01-01
+24   2014-01-01
+25   2015-01-01
+26   2016-01-01
+27   2017-01-01
+28   2018-01-01
+29   2019-01-01
+30   2020-01-01
+31   2021-01-01
+32   2022-01-01
+Name: Year_as_Timestamp, dtype: datetime64[ns]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here we used a much simpler time stamp format string (<code class="docutils literal notranslate"><span class="pre">'%Y'</span></code>) for the <code class="docutils literal notranslate"><span class="pre">format=</span></code>
+argument. We can just read the string as <em>“a four digit representation of
+year”</em> (e.g. 1990).</p>
+<p>You’ll see in the output of the cell above that Pandas has added a month and
+a day to the original <code class="docutils literal notranslate"><span class="pre">Year_as_string</span></code> values. This is because Pandas
+Timestamps represent a <em>specific time point</em> - so a whole year is too low of
+a resolution for this representation of time. As a result, Pandas has
+automatically chosen January 1st to flesh out the time point.</p>
+<p>For most purposes this addition is fine. It might create problems if we mix
+this data with other time-related data which is higher-resolution than “year”,
+but for our present purpose we are not going to do that, so let’s just let
+Pandas make this harmless addition, as it gives us the benefit of a specialized
+representation of time, which we will see in the next section.</p>
+</section>
+<section id="the-dt-accessor">
+<h2>The <code class="docutils literal notranslate"><span class="pre">.dt</span></code> accessor<a class="headerlink" href="#the-dt-accessor" title="Link to this heading">#</a></h2>
+<p>Relative to representing time with <code class="docutils literal notranslate"><span class="pre">str</span></code> or <code class="docutils literal notranslate"><span class="pre">int</span></code> data, Pandas <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code>s contain many attributes which represent specific units of time.</p>
+<p>Let’s look at just one value from the <code class="docutils literal notranslate"><span class="pre">Year_as_Timestamp</span></code> column:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A look at a specific time stamp.</span>
+<span class="n">first_year_ts</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year_as_Timestamp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">first_year_ts</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Timestamp(&#39;1990-01-01 00:00:00&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can read the numbers in the parentheses as “0 minutes, 0 seconds past
+midnight on 1st January 1990”.</p>
+<p>Let’s try to index further into the <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code>:</p>
+<div class="cell tag_raises-exception docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># oh no....</span>
+<span class="n">first_year_ts</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Timestamp(&#39;1990-01-01 00:00:00&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>This inability to index (using integers) into the <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code> might seem frustrating, but it is sensible.   The underlying representation is a single number, so indexing into a number does not make sense.  One could also think of the Timestamp value as something from which one could retrieve information like year, month or day, but it’s not clear what <code class="docutils literal notranslate"><span class="pre">[0]</span></code> would mean in terms of — for example — year, month or day.</p>
+<p>Conversely, remember the advantages of using <a class="reference internal" href="0_1_to_loc_or_iloc.html"><span class="doc std std-doc"><em>index labels</em> vs <em>integer
+indexes</em></span></a>? These include greater human interpretability,
+less temptation to error (which derived value does <code class="docutils literal notranslate"><span class="pre">[0]</span></code> refer to).</p>
+<p>Well, Pandas’ representation of time has the same advantages. To retrieve more
+specific aspects of the <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code> we must use <em>meaningful</em>, <em>readable</em> and
+<em>hard to misinterpret</em> attribute names.</p>
+<p>We can access these time-specific attributes via the <code class="docutils literal notranslate"><span class="pre">.dt.</span></code> accessor (read as
+“datetime”, a synonym for Timestamp). Much like the <code class="docutils literal notranslate"><span class="pre">.str.</span></code> accessor we <a class="reference internal" href="0_6_more_pandas_methods_strings.html"><span class="doc std std-doc">saw
+earlier</span></a> this is an accessor specialized for
+a specific data type, in this case Timestamp data.</p>
+<p>As with the <code class="docutils literal notranslate"><span class="pre">.str</span></code> accessor, the <code class="docutils literal notranslate"><span class="pre">.dt.</span></code> accessor operates on all values of a Data Frame column (Pandas Series) in parallel.</p>
+<p>For instance, to grab just the year information, we can use <code class="docutils literal notranslate"><span class="pre">.dt.year</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># view the `year` attribute</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year_as_Timestamp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     1990
+1     1991
+2     1992
+3     1993
+4     1994
+5     1995
+6     1996
+7     1997
+8     1998
+9     1999
+10    2000
+11    2001
+12    2002
+13    2003
+14    2004
+15    2005
+16    2006
+17    2007
+18    2008
+19    2009
+20    2010
+21    2011
+22    2012
+23    2013
+24    2014
+25    2015
+26    2016
+27    2017
+28    2018
+29    2019
+30    2020
+31    2021
+32    2022
+Name: Year_as_Timestamp, dtype: int32
+</pre></div>
+</div>
+</div>
+</div>
+<p>To get this information for a specific row, we can just chain on an <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> indexing operation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year_as_Timestamp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.int32(1990)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use other clearly named attributes, accessing time-based information down to the smallest unit of time represented in the <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code>.</p>
+<p>We will go through these in order (<code class="docutils literal notranslate"><span class="pre">.dt.month</span></code>, <code class="docutils literal notranslate"><span class="pre">.dt.day</span></code>, <code class="docutils literal notranslate"><span class="pre">.dt.hour</span></code>, <code class="docutils literal notranslate"><span class="pre">.dt.minute</span></code>, <code class="docutils literal notranslate"><span class="pre">.dt.second</span></code>) in the cells below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># view the `month` attribute (which here has been automatically set to 1 by Pandas)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year_as_Timestamp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     1
+1     1
+2     1
+3     1
+4     1
+5     1
+6     1
+7     1
+8     1
+9     1
+10    1
+11    1
+12    1
+13    1
+14    1
+15    1
+16    1
+17    1
+18    1
+19    1
+20    1
+21    1
+22    1
+23    1
+24    1
+25    1
+26    1
+27    1
+28    1
+29    1
+30    1
+31    1
+32    1
+Name: Year_as_Timestamp, dtype: int32
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># view the `day` attribute (which here has been automatically set to 1 by Pandas)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year_as_Timestamp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">day</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     1
+1     1
+2     1
+3     1
+4     1
+5     1
+6     1
+7     1
+8     1
+9     1
+10    1
+11    1
+12    1
+13    1
+14    1
+15    1
+16    1
+17    1
+18    1
+19    1
+20    1
+21    1
+22    1
+23    1
+24    1
+25    1
+26    1
+27    1
+28    1
+29    1
+30    1
+31    1
+32    1
+Name: Year_as_Timestamp, dtype: int32
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># view the `hour` attribute (which here has been automatically set to 0 by Pandas)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year_as_Timestamp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">hour</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     0
+1     0
+2     0
+3     0
+4     0
+5     0
+6     0
+7     0
+8     0
+9     0
+10    0
+11    0
+12    0
+13    0
+14    0
+15    0
+16    0
+17    0
+18    0
+19    0
+20    0
+21    0
+22    0
+23    0
+24    0
+25    0
+26    0
+27    0
+28    0
+29    0
+30    0
+31    0
+32    0
+Name: Year_as_Timestamp, dtype: int32
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># view the `minute` attribute (which here has been automatically set to 0 by Pandas)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year_as_Timestamp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">minute</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     0
+1     0
+2     0
+3     0
+4     0
+5     0
+6     0
+7     0
+8     0
+9     0
+10    0
+11    0
+12    0
+13    0
+14    0
+15    0
+16    0
+17    0
+18    0
+19    0
+20    0
+21    0
+22    0
+23    0
+24    0
+25    0
+26    0
+27    0
+28    0
+29    0
+30    0
+31    0
+32    0
+Name: Year_as_Timestamp, dtype: int32
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># view the `second` attribute (which here has been automatically set to 0 by Pandas)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year_as_Timestamp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">second</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     0
+1     0
+2     0
+3     0
+4     0
+5     0
+6     0
+7     0
+8     0
+9     0
+10    0
+11    0
+12    0
+13    0
+14    0
+15    0
+16    0
+17    0
+18    0
+19    0
+20    0
+21    0
+22    0
+23    0
+24    0
+25    0
+26    0
+27    0
+28    0
+29    0
+30    0
+31    0
+32    0
+Name: Year_as_Timestamp, dtype: int32
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can see that the sequence with which we just “walked” through the <code class="docutils literal notranslate"><span class="pre">.dt.</span></code> attributes (<code class="docutils literal notranslate"><span class="pre">.dt.month</span></code>, <code class="docutils literal notranslate"><span class="pre">.dt.day</span></code>, <code class="docutils literal notranslate"><span class="pre">.dt.hour</span></code>, <code class="docutils literal notranslate"><span class="pre">.dt.minute</span></code>, <code class="docutils literal notranslate"><span class="pre">.dt.second</span></code>) corresponds to the order of the output of a single <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># view an individual Timestamp</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year_as_Timestamp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Timestamp(&#39;1990-01-01 00:00:00&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Timestamp</span></code>s provide a structured, easy to access and hard to misinterpret, representation of time, fundamentally based on the Unix Epoch (the distance between a particular timepoint and midnight January 1st 1970).</p>
+<p>From this nanosecond representation <em>each attribute converts the <code class="docutils literal notranslate"><span class="pre">.value</span></code> into a more human-interpretable unit of time</em>. <strong>This is all Timestamps in Pandas are!</strong></p>
+<p>We mentioned earlier than the names of months (like “June”/”July” etc, as well as other string-y stuff) can go <em>into</em> a <code class="docutils literal notranslate"><span class="pre">pd.to_datetime()</span></code> conversion, but the <em>result</em> will always contain only numbers. These numbers are stored in a sequence of attributes which represent increasingly smaller units of time (year, month, day, minute, second etc.) as numbers, even if the original input containing strings like “June”, “July” etc.</p>
+<p>Using the <code class="docutils literal notranslate"><span class="pre">.dt.</span></code> accessor, we can easily do things like filter our a specific year using these attributes:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># filter using a Boolean array from the `.dt` accessor</span>
+<span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Year_as_Timestamp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span> <span class="o">==</span> <span class="mi">1990</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Entity</th>
+      <th>Code</th>
+      <th>Year_as_string</th>
+      <th>Fertility Rate</th>
+      <th>Human Development Index</th>
+      <th>Population</th>
+      <th>Year_as_Timestamp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1990</td>
+      <td>7.576</td>
+      <td>0.284</td>
+      <td>12045622.0</td>
+      <td>1990-01-01</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>See further methods and attributes available from the <code class="docutils literal notranslate"><span class="pre">.dt.</span></code> accessor <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.Series.dt.html">here</a>.</p>
+</section>
+<section id="using-timestamps-in-a-data-frame-index">
+<h2>Using Timestamps in a Data Frame index<a class="headerlink" href="#using-timestamps-in-a-data-frame-index" title="Link to this heading">#</a></h2>
+<p>Now we have our special time representations, a real strength of having them is to put them in the <code class="docutils literal notranslate"><span class="pre">index</span></code> of the Data Frame. This let’s us easily do some useful things, like slicing the Data Frame rows by time.</p>
+<p>We can do this using the previously seen <code class="docutils literal notranslate"><span class="pre">.set_index()</span></code> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># put Timestamps in the index</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Year_as_Timestamp&#39;</span><span class="p">)</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Entity</th>
+      <th>Code</th>
+      <th>Year_as_string</th>
+      <th>Fertility Rate</th>
+      <th>Human Development Index</th>
+      <th>Population</th>
+    </tr>
+    <tr>
+      <th>Year_as_Timestamp</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1990-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1990</td>
+      <td>7.576</td>
+      <td>0.284</td>
+      <td>12045622.0</td>
+    </tr>
+    <tr>
+      <th>1991-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1991</td>
+      <td>7.631</td>
+      <td>0.292</td>
+      <td>12238831.0</td>
+    </tr>
+    <tr>
+      <th>1992-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1992</td>
+      <td>7.703</td>
+      <td>0.299</td>
+      <td>13278937.0</td>
+    </tr>
+    <tr>
+      <th>1993-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1993</td>
+      <td>7.761</td>
+      <td>0.307</td>
+      <td>14943125.0</td>
+    </tr>
+    <tr>
+      <th>1994-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1994</td>
+      <td>7.767</td>
+      <td>0.300</td>
+      <td>16250755.0</td>
+    </tr>
+    <tr>
+      <th>1995-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1995</td>
+      <td>7.767</td>
+      <td>0.318</td>
+      <td>17065794.0</td>
+    </tr>
+    <tr>
+      <th>1996-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1996</td>
+      <td>7.757</td>
+      <td>0.326</td>
+      <td>17763221.0</td>
+    </tr>
+    <tr>
+      <th>1997-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1997</td>
+      <td>7.732</td>
+      <td>0.330</td>
+      <td>18452049.0</td>
+    </tr>
+    <tr>
+      <th>1998-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1998</td>
+      <td>7.693</td>
+      <td>0.329</td>
+      <td>19159955.0</td>
+    </tr>
+    <tr>
+      <th>1999-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1999</td>
+      <td>7.641</td>
+      <td>0.337</td>
+      <td>19887737.0</td>
+    </tr>
+    <tr>
+      <th>2000-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2000</td>
+      <td>7.566</td>
+      <td>0.340</td>
+      <td>20130279.0</td>
+    </tr>
+    <tr>
+      <th>2001-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2001</td>
+      <td>7.453</td>
+      <td>0.344</td>
+      <td>20284252.0</td>
+    </tr>
+    <tr>
+      <th>2002-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2002</td>
+      <td>7.320</td>
+      <td>0.368</td>
+      <td>21378081.0</td>
+    </tr>
+    <tr>
+      <th>2003-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2003</td>
+      <td>7.174</td>
+      <td>0.379</td>
+      <td>22733007.0</td>
+    </tr>
+    <tr>
+      <th>2004-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2004</td>
+      <td>7.018</td>
+      <td>0.395</td>
+      <td>23560598.0</td>
+    </tr>
+    <tr>
+      <th>2005-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2005</td>
+      <td>6.858</td>
+      <td>0.402</td>
+      <td>24404520.0</td>
+    </tr>
+    <tr>
+      <th>2006-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2006</td>
+      <td>6.686</td>
+      <td>0.410</td>
+      <td>25424050.0</td>
+    </tr>
+    <tr>
+      <th>2007-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2007</td>
+      <td>6.508</td>
+      <td>0.426</td>
+      <td>25909790.0</td>
+    </tr>
+    <tr>
+      <th>2008-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2008</td>
+      <td>6.392</td>
+      <td>0.431</td>
+      <td>26482577.0</td>
+    </tr>
+    <tr>
+      <th>2009-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2009</td>
+      <td>6.295</td>
+      <td>0.441</td>
+      <td>27466056.0</td>
+    </tr>
+    <tr>
+      <th>2010-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2010</td>
+      <td>6.195</td>
+      <td>0.449</td>
+      <td>28284036.0</td>
+    </tr>
+    <tr>
+      <th>2011-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2011</td>
+      <td>6.094</td>
+      <td>0.457</td>
+      <td>29347668.0</td>
+    </tr>
+    <tr>
+      <th>2012-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2012</td>
+      <td>5.985</td>
+      <td>0.467</td>
+      <td>30559988.0</td>
+    </tr>
+    <tr>
+      <th>2013-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2013</td>
+      <td>5.879</td>
+      <td>0.475</td>
+      <td>31622662.0</td>
+    </tr>
+    <tr>
+      <th>2014-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2014</td>
+      <td>5.770</td>
+      <td>0.480</td>
+      <td>32792472.0</td>
+    </tr>
+    <tr>
+      <th>2015-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2015</td>
+      <td>5.652</td>
+      <td>0.479</td>
+      <td>33831716.0</td>
+    </tr>
+    <tr>
+      <th>2016-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2016</td>
+      <td>5.542</td>
+      <td>0.483</td>
+      <td>34700565.0</td>
+    </tr>
+    <tr>
+      <th>2017-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2017</td>
+      <td>5.433</td>
+      <td>0.485</td>
+      <td>35688889.0</td>
+    </tr>
+    <tr>
+      <th>2018-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2018</td>
+      <td>5.327</td>
+      <td>0.486</td>
+      <td>36742997.0</td>
+    </tr>
+    <tr>
+      <th>2019-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2019</td>
+      <td>5.238</td>
+      <td>0.492</td>
+      <td>37856071.0</td>
+    </tr>
+    <tr>
+      <th>2020-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2020</td>
+      <td>5.145</td>
+      <td>0.488</td>
+      <td>39068933.0</td>
+    </tr>
+    <tr>
+      <th>2021-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2021</td>
+      <td>5.039</td>
+      <td>0.473</td>
+      <td>40000360.0</td>
+    </tr>
+    <tr>
+      <th>2022-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>2022</td>
+      <td>4.932</td>
+      <td>0.462</td>
+      <td>40578801.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>If we view the <code class="docutils literal notranslate"><span class="pre">index</span></code>, Pandas will helpfully reveal that setting <code class="docutils literal notranslate"><span class="pre">Year</span></code> as the <code class="docutils literal notranslate"><span class="pre">index</span></code> - a column which contained only Timestamps - has created a <code class="docutils literal notranslate"><span class="pre">DatetimeIndex</span></code>. As the name might reveal, this is an index containing only Timestamps (aka dates / times):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the index</span>
+<span class="n">df</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DatetimeIndex([&#39;1990-01-01&#39;, &#39;1991-01-01&#39;, &#39;1992-01-01&#39;, &#39;1993-01-01&#39;,
+               &#39;1994-01-01&#39;, &#39;1995-01-01&#39;, &#39;1996-01-01&#39;, &#39;1997-01-01&#39;,
+               &#39;1998-01-01&#39;, &#39;1999-01-01&#39;, &#39;2000-01-01&#39;, &#39;2001-01-01&#39;,
+               &#39;2002-01-01&#39;, &#39;2003-01-01&#39;, &#39;2004-01-01&#39;, &#39;2005-01-01&#39;,
+               &#39;2006-01-01&#39;, &#39;2007-01-01&#39;, &#39;2008-01-01&#39;, &#39;2009-01-01&#39;,
+               &#39;2010-01-01&#39;, &#39;2011-01-01&#39;, &#39;2012-01-01&#39;, &#39;2013-01-01&#39;,
+               &#39;2014-01-01&#39;, &#39;2015-01-01&#39;, &#39;2016-01-01&#39;, &#39;2017-01-01&#39;,
+               &#39;2018-01-01&#39;, &#39;2019-01-01&#39;, &#39;2020-01-01&#39;, &#39;2021-01-01&#39;,
+               &#39;2022-01-01&#39;],
+              dtype=&#39;datetime64[ns]&#39;, name=&#39;Year_as_Timestamp&#39;, freq=None)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the `type()` of the index</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pandas.core.indexes.datetimes.DatetimeIndex
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show an individual Timestamp from the `index`</span>
+<span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Timestamp(&#39;1990-01-01 00:00:00&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can get the <a class="reference internal" href="0_1_to_loc_or_iloc.html"><span class="doc std std-doc">aforementioned benefits</span></a> of <code class="docutils literal notranslate"><span class="pre">.loc</span></code>
+indexing on our <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code>s.</p>
+<p>For instance, we can <code class="docutils literal notranslate"><span class="pre">.loc</span></code> index just data from the year 1990:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># using `.loc` with a year</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;1990&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Entity</th>
+      <th>Code</th>
+      <th>Year_as_string</th>
+      <th>Fertility Rate</th>
+      <th>Human Development Index</th>
+      <th>Population</th>
+    </tr>
+    <tr>
+      <th>Year_as_Timestamp</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1990-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1990</td>
+      <td>7.576</td>
+      <td>0.284</td>
+      <td>12045622.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can also do neat slicing operations using time information. For instance showing all rows corresponding to years between 1990 and 1995:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># slice the years using `.loc`</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;1990&quot;</span> <span class="p">:</span> <span class="s2">&quot;1995&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Entity</th>
+      <th>Code</th>
+      <th>Year_as_string</th>
+      <th>Fertility Rate</th>
+      <th>Human Development Index</th>
+      <th>Population</th>
+    </tr>
+    <tr>
+      <th>Year_as_Timestamp</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1990-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1990</td>
+      <td>7.576</td>
+      <td>0.284</td>
+      <td>12045622.0</td>
+    </tr>
+    <tr>
+      <th>1991-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1991</td>
+      <td>7.631</td>
+      <td>0.292</td>
+      <td>12238831.0</td>
+    </tr>
+    <tr>
+      <th>1992-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1992</td>
+      <td>7.703</td>
+      <td>0.299</td>
+      <td>13278937.0</td>
+    </tr>
+    <tr>
+      <th>1993-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1993</td>
+      <td>7.761</td>
+      <td>0.307</td>
+      <td>14943125.0</td>
+    </tr>
+    <tr>
+      <th>1994-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1994</td>
+      <td>7.767</td>
+      <td>0.300</td>
+      <td>16250755.0</td>
+    </tr>
+    <tr>
+      <th>1995-01-01</th>
+      <td>Afghanistan</td>
+      <td>AFG</td>
+      <td>1995</td>
+      <td>7.767</td>
+      <td>0.318</td>
+      <td>17065794.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Simple calls to the <code class="docutils literal notranslate"><span class="pre">.plot()</span></code> method (using the <code class="docutils literal notranslate"><span class="pre">y=</span></code> argument only) will now
+automatically place the Timestamp information on the x-axis:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plotting will automatically use the time stamp index on the x-axis</span>
+<span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/2d784cd7a3243fc0153b28a372f33b065dbd6bae0b505a3cbb82ead24f4aa094.png" src="_images/2d784cd7a3243fc0153b28a372f33b065dbd6bae0b505a3cbb82ead24f4aa094.png" />
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="summary">
+<h1>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h1>
+<p>There is a lot more would could say about dates and times (both in Pandas and
+in general), but that is enough for this brief introduction.</p>
+<p>The key points are:</p>
+<ul class="simple">
+<li><p>Pandas Timestamps are values that represent points in time.  The Pandas API
+allows us to get different units of time from these values, such as year,
+month, day, hour, minute and so on.</p></li>
+<li><p>Pandas Timedeltas are values that represent durations.</p></li>
+<li><p>Timestamps and Timedeltas let us do “mathematics with times” which we cannot
+do with string representations.</p></li>
+<li><p>Putting Timestamps in our index allows for some neat indexing and plotting
+operations.</p></li>
+</ul>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="0_6_more_pandas_methods_strings.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">More Pandas methods</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Its Pandas time</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dates-and-times-in-pandas-series">Dates and times in Pandas Series</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-closer-look-at-time-stamps-and-time-deltas">A closer look at time stamps and time deltas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#times-and-dates-in-pandas-data-frames">Times and dates in Pandas Data Frames</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-dt-accessor">The <code class="docutils literal notranslate"><span class="pre">.dt</span></code> accessor</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-timestamps-in-a-data-frame-index">Using Timestamps in a Data Frame index</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Peter Rush, Matthew Brett
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
