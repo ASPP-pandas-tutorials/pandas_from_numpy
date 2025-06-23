@@ -637,7 +637,15 @@ The output of the `.describe()` method is itself a Dataframe, and the `index` of
 df.describe().loc['mean']
 ```
 
-You could have also solved this problem (much less elegently) by calculating the means manually, storing them in an array or list, then using the `pd.Series()` constructor with `name = mean` and `index =  ['Human Development Index', 'Fertility Rate', 'Population']`:
+Another option is to manually drop the column containing non-numeric data, and then use the `.mean()` method, and manually specify the `name` attribute:
+
+```{python}
+mean_series = df.drop(columns='Country Name').mean()
+mean_series.name = "mean"
+mean_series
+```
+
+A further solution (much less elegent) is to calculate the means manually, store them in an array or list, then using the `pd.Series()` constructor with `name = mean` and `index = ['Human Development Index', 'Fertility Rate', 'Population']`:
 
 ```{python}
 # calculate the means
@@ -659,7 +667,7 @@ means_series
 
 Phew! That really was inefficient. Many Pandas methods are designed to save us time in situations exactly like this...
 
-Pandas is a particularly good example of a complex library where there are many ways of achieving the same result, and where AI or careless StackOverflow searches can give you a very inefficient or inelegant solution.   We strongly advise you to keep investing the time to work out the most elegant solution to your Pandas problems, in order to keep learning, and so that you write code that others can read, including you, the maintainer.
+In fact, Pandas is a particularly good example of a complex library where there are many ways of achieving the same result, and where AI or careless StackOverflow searches can give you a very inefficient or inelegant solution.   We strongly advise you to keep investing the time to work out the most elegant solution to your Pandas problems, in order to keep learning, and so that you write code that others can read, including you, the maintainer.
 
 ::: {solution-end}
 :::
