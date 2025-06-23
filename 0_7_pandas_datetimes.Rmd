@@ -57,7 +57,7 @@ However, we would be sorely disappointed, when using `str` data to represent tim
 string_time_series.iloc[1] - string_time_series.iloc[0]
 ```
 
-This is where having a specialized representation of time comes in handy. We can use the `pd.to_datetime()` function to convert this data to Pandas' special representation of time. Specifically, each string will be converted to a representation of a specific *timepoint*. 
+This is where having a specialized representation of time comes in handy. We can use the `pd.to_datetime()` function to convert this data to Pandas' special representation of a particular point in time. 
 
 Let's convert our string dates to Pandas datetimes:
 
