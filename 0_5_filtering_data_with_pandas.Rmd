@@ -509,7 +509,7 @@ Let's say we are interested in whether `Population` is associated with `Human De
 
 The countries with huge populations are outliers which extend the x-axis far to the right, whilst most countries remain compressed near the far left of the x-axis. The pattern looks consistent with a random association, but perhaps there is a trend that is hard to see, in the presence of these extreme outliers?
 
-Your task is to use Boolean filtering to "trim" out observations *above* the [25% percentile](link) of the `Population` scores. You should then create a scatter plot with `Population` on the x-axis, and `Human Development Index` on the y-axis, from the trimmed data. This will allow you to inspect the trend of the cluster of countries with smaller populations.
+Your task is to use Boolean filtering to "trim" out observations *above* the [25% percentile](https://en.wikipedia.org/wiki/Percentile) of the `Population` scores. You should then create a scatter plot with `Population` on the x-axis, and `Human Development Index` on the y-axis, from the trimmed data. This will allow you to inspect the trend of the cluster of countries with smaller populations.
 
 You should try to do this in one or two lines of code, and using Pandas methods only.
 
