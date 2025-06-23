@@ -384,7 +384,7 @@ Remember each index label is a identifier for each row of the Data Frame. Pandas
 [Later on](0_4_dealing_with_missing_data_in_pandas.Rmd) we will see further signs that Pandas is trying to match rows between series by using the `index`.
 
 
-## 3: Constructing a Data Frame from a sequence (using Pandas series)
+## 4: Constructing a Data Frame from a sequence (using Pandas series)
 
 
 Series have an optional `.name` (for which the default is `None`).
