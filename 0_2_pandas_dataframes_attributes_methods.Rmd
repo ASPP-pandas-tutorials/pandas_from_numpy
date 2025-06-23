@@ -509,7 +509,7 @@ df_attributes = pd.Series(attributes_array,
 df_attributes
 ```
 
-Creating your own Series in this way (ideally performed by a custom function) can be useful for displaying bespoke summaries of a dataset/Dataframe. However, normally this would be done with more complicated statistical information, not just the `shape`/`size`/`dtype`!
+Creating your own Series in this way (perhaps performed by a custom function) can be useful for displaying bespoke summaries of a dataset/Dataframe. However, normally this would be done with more complicated statistical information, not just the `shape`/`size`/`dtype`!
 
 
 ::: {solution-end}
