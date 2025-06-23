@@ -864,7 +864,7 @@ The solution is to take a `.sample()` which is the same *size as the number of r
 
 ```{python}
 # a trick to shuffle the rows
-df.sample(n = len(df))
+df.sample(n=len(df))
 ```
 
 Or, with greater grace, we can use `frac = 1`, to mean "take a random sample of 100% of the rows", effectively permuting them:
