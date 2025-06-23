@@ -1107,7 +1107,7 @@ Your task is to use indexing methods of your choice, restricting yourself to the
 
 ![](images/bar_example.png)
 
-Try to create the plot using as few lines of code as possible.
+As ever, use as few lines as you can, while but keep your code readable.
 
 ```{python}
 # your code below
