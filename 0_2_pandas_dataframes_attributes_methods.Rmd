@@ -903,7 +903,7 @@ df.sample(len(df) + 10,
 
 Quickly scan the `index` for duplicates, to see that it contains duplicates (as it must, in order to generate a sample of this size).
 
-You task now is the following:
+Your task is the following:
 
 - take a random sample *with replacement* of all the rows in the Dataframe (e.g. your sample should have the *same number of rows* as the original Dataframe)
 
