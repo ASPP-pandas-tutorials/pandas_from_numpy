@@ -487,7 +487,7 @@ operations.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2519/2603929860.py:6: RuntimeWarning: invalid value encountered in divide
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2536/2603929860.py:6: RuntimeWarning: invalid value encountered in divide
   a_nan = np.array(0) / np.array(0)
 </pre></div>
 </div>
@@ -510,7 +510,7 @@ infinity) are special floating point values:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2519/58810310.py:2: RuntimeWarning: divide by zero encountered in divide
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2536/58810310.py:2: RuntimeWarning: divide by zero encountered in divide
   np.array(1) / np.array(0)
 </pre></div>
 </div>
@@ -922,7 +922,7 @@ in 1950, with which to calculate the value.</p>
 <p>We will nearly always want to know <em>how much</em> of a given dataset is missing, as we will need to factor this in as a limitation of our data analysis.</p>
 <div class="exercise dropdown admonition" id="missing-mysteries">
 
-<p class="admonition-title"><span class="caption-number">Exercise 6 </span></p>
+<p class="admonition-title"><span class="caption-number">Exercise 11 </span></p>
 <section id="exercise-content">
 <p>Why might we worry about missing values?  Why can’t we just drop them and forget about them?  Let’s load some <a class="reference internal" href="data/gender_stats.html"><span class="doc std std-doc">related data from the World Bank</span></a> with country statistics on various measures:</p>
 <div class="cell docutils container">
@@ -1122,7 +1122,7 @@ in 1950, with which to calculate the value.</p>
 </div>
 <div class="solution dropdown admonition" id="0_4_dealing_with_missing_data_in_pandas-solution-1">
 
-<p class="admonition-title">Solution to<a class="reference internal" href="#missing-mysteries"> Exercise 6</a></p>
+<p class="admonition-title">Solution to<a class="reference internal" href="#missing-mysteries"> Exercise 11</a></p>
 <section id="solution-content">
 <p>The NaN values look very much like standard Pandas signals of missing (Not Available) data.  First, these values arose from loading a data file directly.  It’s possible that some calculation that led to this data file had invalid floating point values, but it’s difficult to see what these might be, or why these could not be avoided.  On the other hand, looking at the values, it seems that they occur for smaller countries with less-developed economies (e.g. Aruba) or new countries (at time of data estimate) such as Kosovo.  It is easy to see how there might not be good data to calculate e.g. health expenditure per person for these countries.</p>
 <p>To explore more, you might have considered looking specifically for rows and columns with many NaN values with something like:</p>

@@ -484,6 +484,9 @@ licenses page</span></a> for more detail.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import libraries</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Our own routine to giving hints to the exercises.</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hint</span><span class="w"> </span><span class="kn">import</span> <span class="n">hint_1</span><span class="p">,</span> <span class="n">hint_2</span>
 </pre></div>
 </div>
 </div>
@@ -946,7 +949,7 @@ attributes and methods that we can access from this or any other Numpy array.</p
 </div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">dtype</span></code> attribute here is just telling us that this is string data. For an explanation of the meaning, see the image below.</p>
-<p><img alt="" src="_images/numpy_string_dtypes.JPG" /></p>
+<p><img alt="" src="_images/numpy_string_dtypes.png" /></p>
 <p>Let’s look at the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> of the <code class="docutils literal notranslate"><span class="pre">hdis_array</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1845,6 +1848,68 @@ attributes and methods (that don’t begin with <code class="docutils literal no
 </div>
 </div>
 </div>
+<div class="exercise dropdown admonition" id="attributes-series">
+
+<p class="admonition-title"><span class="caption-number">Exercise 5 </span></p>
+<section id="exercise-content">
+<p>Your job here is to make a new Series which summarises aspects of the <code class="docutils literal notranslate"><span class="pre">df</span></code> Dataframe. In the <code class="docutils literal notranslate"><span class="pre">.values</span></code> array, your Series should contain the values of the <code class="docutils literal notranslate"><span class="pre">.shape</span></code> and <code class="docutils literal notranslate"><span class="pre">.size</span></code> attributes of <code class="docutils literal notranslate"><span class="pre">df</span></code>. It should also contain the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> of the <code class="docutils literal notranslate"><span class="pre">index</span></code> of <code class="docutils literal notranslate"><span class="pre">df</span></code> (therefore, telling your user whether the <code class="docutils literal notranslate"><span class="pre">index</span></code> contains numeric labels, <code class="docutils literal notranslate"><span class="pre">str</span></code> labels, or something else). See if you can figure out how to get Pandas to report this via indexing (e.g. rather than copy pasting the information from the output of <code class="docutils literal notranslate"><span class="pre">df.index</span></code>).</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">index</span></code> of your Series should clearly state what each <code class="docutils literal notranslate"><span class="pre">value</span></code> is. E.g. the strings <code class="docutils literal notranslate"><span class="pre">shape</span></code>, <code class="docutils literal notranslate"><span class="pre">size</span></code>, <code class="docutils literal notranslate"><span class="pre">index_dtype</span></code> should be the <code class="docutils literal notranslate"><span class="pre">index</span></code> labels in your Series.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute of your Series should be<code class="docutils literal notranslate"><span class="pre">df_attributes</span></code>.</p>
+<p>When displayed, your Series should look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">shape</span>          <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">size</span>                <span class="mi">60</span>
+<span class="n">index_dtype</span>     <span class="nb">object</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">df_attributes</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="nb">object</span>
+</pre></div>
+</div>
+<p>Try to create this Series in as few lines of code as possible.</p>
+<p>You may run into an error with the <code class="docutils literal notranslate"><span class="pre">shape</span></code> attribute. Try running <code class="docutils literal notranslate"><span class="pre">hint_1()</span></code> for a hint on how to solve this.</p>
+<p>You can also run <code class="docutils literal notranslate"><span class="pre">hint_2()</span></code> to get a hint on how to get Pandas to report the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> of the <code class="docutils literal notranslate"><span class="pre">index</span></code>.</p>
+<p><strong>Try to use the hints as a last resort, however…</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<div class="solution dropdown admonition" id="0_2_pandas_dataframes_attributes_methods-solution-1">
+
+<p class="admonition-title">Solution to<a class="reference internal" href="#attributes-series"> Exercise 5</a></p>
+<section id="solution-content">
+<p>Our solution to this is below. First, we create an array containing the attributes. We must use the <code class="docutils literal notranslate"><span class="pre">str()</span></code> function to convert the output of <code class="docutils literal notranslate"><span class="pre">df.shape</span></code> to a single dimension (a <code class="docutils literal notranslate"><span class="pre">str</span></code> with 7 characters, rather than a <code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">)</span></code> tuple). This is in order to make its shape match that of <code class="docutils literal notranslate"><span class="pre">df.size</span></code> and the <code class="docutils literal notranslate"><span class="pre">index.dtype</span></code> string. Otherwise we get a nasty error when passing the array to the <code class="docutils literal notranslate"><span class="pre">pd.Series()</span></code> constructor, because we are trying to make a <code class="docutils literal notranslate"><span class="pre">.values</span></code> array using values with incompatible dimensions.</p>
+<p>We got the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> of the <code class="docutils literal notranslate"><span class="pre">index</span></code> labels by accessing the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> attribute of the <code class="docutils literal notranslate"><span class="pre">index</span></code>, in a chained operation e.g.: <code class="docutils literal notranslate"><span class="pre">df.index.dtype</span></code>.</p>
+<p>We set the <code class="docutils literal notranslate"><span class="pre">index</span></code> and the <code class="docutils literal notranslate"><span class="pre">name</span></code> when we call the as optional arguments within <code class="docutils literal notranslate"><span class="pre">pd.Series()</span></code> (you may have done this using <code class="docutils literal notranslate"><span class="pre">df.index</span> <span class="pre">=</span> </code> and <code class="docutils literal notranslate"><span class="pre">df.name</span> <span class="pre">=</span></code>, which is another valid approach):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># make an array containing the desired attributes - note the use of `str()`</span>
+<span class="n">attributes_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span>
+                             <span class="n">df</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+                             <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">dtype</span><span class="p">])</span>
+
+<span class="c1"># convert to Series, specify `index` and `name`</span>
+<span class="n">df_attributes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">attributes_array</span><span class="p">,</span>
+                          <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;shape&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="s2">&quot;index_dtype&quot;</span><span class="p">],</span>
+                          <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;df_attributes&quot;</span> <span class="p">)</span>
+<span class="c1"># show the Series</span>
+<span class="n">df_attributes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>shape          (15, 5)
+size                75
+index_dtype      int64
+Name: df_attributes, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>Creating your own Series in this way (perhaps performed by a custom function) can be useful for displaying bespoke summaries of a dataset/Dataframe. However, normally this would be done with more complicated statistical information, not just the <code class="docutils literal notranslate"><span class="pre">shape</span></code>/<code class="docutils literal notranslate"><span class="pre">size</span></code>/<code class="docutils literal notranslate"><span class="pre">dtype</span></code>!</p>
+</section>
+</div>
 <p>Once we’ve done these preliminary inspections and we know how many observations we have, in any data analysis context, we will always want to know what variables we have in the Data Frame columns, and (again) what type of data is in each.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">.columns</span></code> attribute will tell us the name (label) for each column:</p>
 <div class="cell docutils container">
@@ -2320,6 +2385,82 @@ Name: Human Development Index, dtype: float64
   </tbody>
 </table>
 </div></div></div>
+</div>
+<div class="exercise dropdown admonition" id="by-any-means">
+
+<p class="admonition-title"><span class="caption-number">Exercise 6 </span></p>
+<section id="exercise-content">
+<p>Write code you need to create a Series that contains the just the means of the <code class="docutils literal notranslate"><span class="pre">Human</span> <span class="pre">Development</span> <span class="pre">Index</span></code>, <code class="docutils literal notranslate"><span class="pre">Fertility</span> <span class="pre">Rate</span></code> and <code class="docutils literal notranslate"><span class="pre">Population</span></code> variables. For good measure, let’s also require that the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute is set to <code class="docutils literal notranslate"><span class="pre">mean</span></code>. The output should look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Human</span> <span class="n">Development</span> <span class="n">Index</span>      <span class="mf">0.789333</span>
+<span class="n">Fertility</span> <span class="n">Rate</span>               <span class="mf">1.773867</span>
+<span class="n">Population</span>                 <span class="mf">236.719867</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">mean</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+</pre></div>
+</div>
+<p>Try to do this in as few lines of code as possible, using the methods shown on this page…</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<div class="solution dropdown admonition" id="0_2_pandas_dataframes_attributes_methods-solution-3">
+
+<p class="admonition-title">Solution to<a class="reference internal" href="#by-any-means"> Exercise 6</a></p>
+<section id="solution-content">
+<p>The output of the <code class="docutils literal notranslate"><span class="pre">.describe()</span></code> method is itself a Dataframe, and the <code class="docutils literal notranslate"><span class="pre">index</span></code> of this Dataframe contains a row called <code class="docutils literal notranslate"><span class="pre">mean</span></code>, which, shockingly, contains the means. As a result, you can use <code class="docutils literal notranslate"><span class="pre">.loc</span></code> indexing to retrieve just the means from the output of <code class="docutils literal notranslate"><span class="pre">.describe()</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Human Development Index      0.789333
+Fertility Rate               1.773867
+Population                 236.719867
+Name: mean, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>You could have also solved this problem (much less elegently) by calculating the means manually, storing them in an array or list, then using the <code class="docutils literal notranslate"><span class="pre">pd.Series()</span></code> constructor with <code class="docutils literal notranslate"><span class="pre">name</span> <span class="pre">=</span> <span class="pre">mean</span></code> and <code class="docutils literal notranslate"><span class="pre">index</span> <span class="pre">=</span>&#160; <span class="pre">['Human</span> <span class="pre">Development</span> <span class="pre">Index',</span> <span class="pre">'Fertility</span> <span class="pre">Rate',</span> <span class="pre">'Population']</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># calculate the means</span>
+<span class="n">mean_hdi</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">mean_fert</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Fertility Rate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">mean_pop</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Population&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="c1"># an array of the means</span>
+<span class="n">means_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">mean_hdi</span><span class="p">,</span> <span class="n">mean_fert</span><span class="p">,</span> <span class="n">mean_pop</span><span class="p">])</span>
+
+<span class="c1"># create a Series</span>
+<span class="n">means_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">means_arr</span><span class="p">,</span> 
+                         <span class="n">name</span><span class="o">=</span><span class="s2">&quot;means&quot;</span><span class="p">,</span>
+                         <span class="n">index</span><span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">,</span>
+                                 <span class="s1">&#39;Fertility Rate&#39;</span><span class="p">,</span> <span class="s1">&#39;Population&#39;</span><span class="p">])</span>
+
+<span class="n">means_series</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Human Development Index      0.789333
+Fertility Rate               1.773867
+Population                 236.719867
+Name: means, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Phew! That really was inefficient. Many Pandas methods are designed to save us time in situations exactly like this…</p>
+<p>Pandas is a particularly good example of a complex library where there are many ways of achieving the same result, and where AI or careless StackOverflow searches can give you a very inefficient or inelegant solution.   We strongly advise you to keep investing the time to work out the most elegant solution to your Pandas problems, in order to keep learning, and so that you write code that others can read, including you, the maintainer.</p>
+</section>
 </div>
 <p>Because each Data Frame column is just a Pandas Series, all of the Series methods we saw above can be used on individual Series:</p>
 <div class="cell docutils container">
@@ -3621,25 +3762,25 @@ Name: Human Development Index, dtype: float64
   </thead>
   <tbody>
     <tr>
-      <th>DEU</th>
-      <td>0.890</td>
-      <td>1.386</td>
-      <td>81.7972</td>
-      <td>Germany</td>
+      <th>KOR</th>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>46.7666</td>
+      <td>South Korea</td>
     </tr>
     <tr>
-      <th>BRA</th>
-      <td>0.668</td>
-      <td>2.247</td>
-      <td>174.0182</td>
-      <td>Brazil</td>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>281.4841</td>
+      <td>United States</td>
     </tr>
     <tr>
-      <th>IND</th>
-      <td>0.490</td>
-      <td>3.350</td>
-      <td>1057.9227</td>
-      <td>India</td>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1269.5811</td>
+      <td>China</td>
     </tr>
   </tbody>
 </table>
@@ -3687,25 +3828,25 @@ Name: Human Development Index, dtype: float64
   </thead>
   <tbody>
     <tr>
-      <th>ITA</th>
-      <td>0.842</td>
-      <td>1.249</td>
-      <td>57.2722</td>
-      <td>Italy</td>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
     </tr>
     <tr>
-      <th>GBR</th>
-      <td>0.863</td>
-      <td>1.641</td>
-      <td>59.0573</td>
-      <td>United Kingdom</td>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>19.1324</td>
+      <td>Australia</td>
     </tr>
     <tr>
-      <th>MEX</th>
-      <td>0.709</td>
-      <td>2.714</td>
-      <td>98.6255</td>
-      <td>Mexico</td>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>281.4841</td>
+      <td>United States</td>
     </tr>
   </tbody>
 </table>
@@ -3765,11 +3906,11 @@ Name: Human Development Index, dtype: float64
   </thead>
   <tbody>
     <tr>
-      <th>BRA</th>
-      <td>0.668</td>
-      <td>2.247</td>
-      <td>174.0182</td>
-      <td>Brazil</td>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1269.5811</td>
+      <td>China</td>
     </tr>
     <tr>
       <th>DEU</th>
@@ -3779,18 +3920,18 @@ Name: Human Development Index, dtype: float64
       <td>Germany</td>
     </tr>
     <tr>
-      <th>AUS</th>
-      <td>0.896</td>
-      <td>1.764</td>
-      <td>19.1324</td>
-      <td>Australia</td>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>174.0182</td>
+      <td>Brazil</td>
     </tr>
     <tr>
-      <th>CHN</th>
-      <td>0.586</td>
-      <td>1.628</td>
-      <td>1269.5811</td>
-      <td>China</td>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
     </tr>
   </tbody>
 </table>
@@ -3807,7 +3948,7 @@ Name: Human Development Index, dtype: float64
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">71</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">76</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Trying to take a without-replacement sample that is too large.</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">first_five</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
@@ -3874,48 +4015,6 @@ Name: Human Development Index, dtype: float64
   </thead>
   <tbody>
     <tr>
-      <th>CAN</th>
-      <td>0.890</td>
-      <td>1.510</td>
-      <td>30.8918</td>
-      <td>Canada</td>
-    </tr>
-    <tr>
-      <th>AUS</th>
-      <td>0.896</td>
-      <td>1.764</td>
-      <td>19.1324</td>
-      <td>Australia</td>
-    </tr>
-    <tr>
-      <th>CAN</th>
-      <td>0.890</td>
-      <td>1.510</td>
-      <td>30.8918</td>
-      <td>Canada</td>
-    </tr>
-    <tr>
-      <th>BRA</th>
-      <td>0.668</td>
-      <td>2.247</td>
-      <td>174.0182</td>
-      <td>Brazil</td>
-    </tr>
-    <tr>
-      <th>BRA</th>
-      <td>0.668</td>
-      <td>2.247</td>
-      <td>174.0182</td>
-      <td>Brazil</td>
-    </tr>
-    <tr>
-      <th>BRA</th>
-      <td>0.668</td>
-      <td>2.247</td>
-      <td>174.0182</td>
-      <td>Brazil</td>
-    </tr>
-    <tr>
       <th>CHN</th>
       <td>0.586</td>
       <td>1.628</td>
@@ -3937,11 +4036,53 @@ Name: Human Development Index, dtype: float64
       <td>Australia</td>
     </tr>
     <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1269.5811</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1269.5811</td>
+      <td>China</td>
+    </tr>
+    <tr>
       <th>BRA</th>
       <td>0.668</td>
       <td>2.247</td>
       <td>174.0182</td>
       <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>174.0182</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>81.7972</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1269.5811</td>
+      <td>China</td>
     </tr>
   </tbody>
 </table>
@@ -3992,11 +4133,39 @@ Data Frame.  To get a sample that is half the size the original Data Frame
   </thead>
   <tbody>
     <tr>
-      <th>RUS</th>
-      <td>0.733</td>
-      <td>1.190</td>
-      <td>146.7177</td>
-      <td>Russia</td>
+      <th>FRA</th>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>59.4837</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>41.0197</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>81.7972</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>19.1324</td>
+      <td>Australia</td>
     </tr>
     <tr>
       <th>IND</th>
@@ -4006,18 +4175,136 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>India</td>
     </tr>
     <tr>
-      <th>USA</th>
-      <td>0.894</td>
-      <td>2.030</td>
-      <td>281.4841</td>
-      <td>United States</td>
+      <th>MEX</th>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>98.6255</td>
+      <td>Mexico</td>
     </tr>
     <tr>
-      <th>JPN</th>
-      <td>0.883</td>
-      <td>1.346</td>
-      <td>127.0278</td>
-      <td>Japan</td>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>174.0182</td>
+      <td>Brazil</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="exercise dropdown admonition" id="random-samples">
+
+<p class="admonition-title"><span class="caption-number">Exercise 7 </span></p>
+<section id="exercise-content">
+<p>There are functions within Numpy (as well as other libraries) that shuffle/permute/randomize data within an array (or an arraylike object, such as a list).</p>
+<p>Let’s say we want to shuffle the <em>rows</em> in our Dataframe. We can do this with the <code class="docutils literal notranslate"><span class="pre">permutation()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">numpy.random</span></code> submodule, but the output is very ugly. This operation brutally removes the nice Dataframe graphics (at least when run in a Jupyter notebook), and puts the rows of the Dataframe into a Numpy array, as shown below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># effective but ugly</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.828, 1.21, 41.0197, &#39;Spain&#39;],
+       [0.49, 3.35, 1057.9227, &#39;India&#39;],
+       [0.709, 2.714, 98.6255, &#39;Mexico&#39;],
+       [0.883, 1.346, 127.0278, &#39;Japan&#39;],
+       [0.894, 2.03, 281.4841, &#39;United States&#39;],
+       [0.668, 2.247, 174.0182, &#39;Brazil&#39;],
+       [0.863, 1.641, 59.0573, &#39;United Kingdom&#39;],
+       [0.824, 1.467, 46.7666, &#39;South Korea&#39;],
+       [0.89, 1.51, 30.8918, &#39;Canada&#39;],
+       [0.586, 1.628, 1269.5811, &#39;China&#39;],
+       [0.844, 1.876, 59.4837, &#39;France&#39;],
+       [0.842, 1.249, 57.2722, &#39;Italy&#39;],
+       [0.733, 1.19, 146.7177, &#39;Russia&#39;],
+       [0.89, 1.386, 81.7972, &#39;Germany&#39;],
+       [0.896, 1.764, 19.1324, &#39;Australia&#39;]], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Can you think of a way to perform this operation using only the Pandas methods we have seen so far on this page? In the cell below, you should write code which will:</p>
+<ul class="simple">
+<li><p>randomize the order of the <em>rows</em> in the Dataframe. The data in each row should be the same as before shuffling (e.g. the data for Russia should still be the data for Russia etc.)</p></li>
+<li><p>ensure that no rows are removed or duplicated, just shuffled</p></li>
+</ul>
+<p>Try to find the solution in the cell below. Use as few lines of code as possible:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># your solution here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<div class="solution dropdown admonition" id="0_2_pandas_dataframes_attributes_methods-solution-5">
+
+<p class="admonition-title">Solution to<a class="reference internal" href="#random-samples"> Exercise 7</a></p>
+<section id="solution-content">
+<p>The solution is to take a <code class="docutils literal notranslate"><span class="pre">.sample()</span></code> which is the same <em>size as the number of rows in the original dataframe</em>. We can do this easily by using <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">len(df)</span></code> as in the input for <code class="docutils literal notranslate"><span class="pre">df.sample()</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># a trick to shuffle the rows</span>
+<span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>FRA</th>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>59.4837</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>174.0182</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
     </tr>
     <tr>
       <th>KOR</th>
@@ -4027,11 +4314,67 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>South Korea</td>
     </tr>
     <tr>
-      <th>CAN</th>
-      <td>0.890</td>
-      <td>1.510</td>
-      <td>30.8918</td>
-      <td>Canada</td>
+      <th>IND</th>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1057.9227</td>
+      <td>India</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>0.863</td>
+      <td>1.641</td>
+      <td>59.0573</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>JPN</th>
+      <td>0.883</td>
+      <td>1.346</td>
+      <td>127.0278</td>
+      <td>Japan</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>41.0197</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>146.7177</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1269.5811</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>281.4841</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>0.842</td>
+      <td>1.249</td>
+      <td>57.2722</td>
+      <td>Italy</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>98.6255</td>
+      <td>Mexico</td>
     </tr>
     <tr>
       <th>AUS</th>
@@ -4051,10 +4394,10 @@ Data Frame.  To get a sample that is half the size the original Data Frame
 </table>
 </div></div></div>
 </div>
-<p>Because default sampling is without replacement, <code class="docutils literal notranslate"><span class="pre">.sample</span></code> with <code class="docutils literal notranslate"><span class="pre">frac=1</span></code> is another way of asking for a copy of the Data Frame where the rows are permuted to a random order:</p>
+<p>Or, with greater grace, we can use <code class="docutils literal notranslate"><span class="pre">frac=1</span></code>, to mean “take a random sample of 100% of the rows”, effectively permuting them:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Random permutation of rows for entire Data Frame.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># a clean, efficient way to permute the rows</span>
 <span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -4093,6 +4436,62 @@ Data Frame.  To get a sample that is half the size the original Data Frame
   </thead>
   <tbody>
     <tr>
+      <th>ITA</th>
+      <td>0.842</td>
+      <td>1.249</td>
+      <td>57.2722</td>
+      <td>Italy</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>98.6255</td>
+      <td>Mexico</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>41.0197</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1057.9227</td>
+      <td>India</td>
+    </tr>
+    <tr>
+      <th>KOR</th>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>46.7666</td>
+      <td>South Korea</td>
+    </tr>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>19.1324</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>146.7177</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
       <th>JPN</th>
       <td>0.883</td>
       <td>1.346</td>
@@ -4100,11 +4499,187 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>Japan</td>
     </tr>
     <tr>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>81.7972</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
       <th>CHN</th>
       <td>0.586</td>
       <td>1.628</td>
       <td>1269.5811</td>
       <td>China</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>59.4837</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>281.4841</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>0.863</td>
+      <td>1.641</td>
+      <td>59.0573</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>174.0182</td>
+      <td>Brazil</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>If you look at the <code class="docutils literal notranslate"><span class="pre">index</span></code> of either Dataframe in the above ceels, you’ll notice that the rows are now in a random order.</p>
+<p>Because the sample is a random selection of the rows - and the default setting of <code class="docutils literal notranslate"><span class="pre">.sample()</span></code> is to sample <em>without replacement</em>  - using both <code class="docutils literal notranslate"><span class="pre">.sample(len(df))</span></code> and <code class="docutils literal notranslate"><span class="pre">df.sample(frac=1)</span></code> has the effect of randomizing the row order. All the original rows remaining in the sample, and there is no duplication of any rows.</p>
+<p>This method is often used on individual columns to (most likely) remove any statistical relationships between the data in that column and other columns. For instance, for <a class="reference external" href="https://matthew-brett.github.io/cfd2020/permutation/permutation_and_t_test.html">permutation testing</a>.</p>
+</section>
+</div>
+<div class="exercise dropdown admonition" id="more-random">
+
+<p class="admonition-title"><span class="caption-number">Exercise 8 </span></p>
+<section id="exercise-content">
+<p>We mentioned above that the default behaviour of the <code class="docutils literal notranslate"><span class="pre">.sample()</span></code> method is to sample <em>without replacement</em>. We also mentioned that you can use the <code class="docutils literal notranslate"><span class="pre">replace=</span></code> argument to sample <em>with</em> replacement.</p>
+<p>To use a classic “drawing marbles from a bag” analogy, this means that when we randomly select a marble, we place it <em>back</em> in the bag (after recording it’s identity/colour etc) before we randomly draw the next marble. This means the same marble can appear twice in the final sample.</p>
+<p>As mentioned above, if we draw a sample of rows <em>with replacement</em> from our Dataframe, then individual rows can appear more than once in the resultant sample. If we draw a sample with replacement which is <em>larger</em> than the original data, it will certainly contain duplicate rows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># a sample with replacement</span>
+<span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">+</span> <span class="mi">10</span><span class="p">,</span> 
+          <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Human Development Index</th>
+      <th>Fertility Rate</th>
+      <th>Population</th>
+      <th>Country Name</th>
+    </tr>
+    <tr>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1269.5811</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>41.0197</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1057.9227</td>
+      <td>India</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1057.9227</td>
+      <td>India</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>59.4837</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>281.4841</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1057.9227</td>
+      <td>India</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>0.863</td>
+      <td>1.641</td>
+      <td>59.0573</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>19.1324</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>174.0182</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1057.9227</td>
+      <td>India</td>
     </tr>
     <tr>
       <th>KOR</th>
@@ -4121,25 +4696,11 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>Spain</td>
     </tr>
     <tr>
-      <th>FRA</th>
-      <td>0.844</td>
-      <td>1.876</td>
-      <td>59.4837</td>
-      <td>France</td>
-    </tr>
-    <tr>
-      <th>RUS</th>
-      <td>0.733</td>
-      <td>1.190</td>
-      <td>146.7177</td>
-      <td>Russia</td>
-    </tr>
-    <tr>
-      <th>BRA</th>
-      <td>0.668</td>
-      <td>2.247</td>
-      <td>174.0182</td>
-      <td>Brazil</td>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
     </tr>
     <tr>
       <th>CAN</th>
@@ -4149,32 +4710,46 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>Canada</td>
     </tr>
     <tr>
-      <th>USA</th>
-      <td>0.894</td>
-      <td>2.030</td>
-      <td>281.4841</td>
-      <td>United States</td>
+      <th>KOR</th>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>46.7666</td>
+      <td>South Korea</td>
     </tr>
     <tr>
-      <th>ITA</th>
-      <td>0.842</td>
-      <td>1.249</td>
-      <td>57.2722</td>
-      <td>Italy</td>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1269.5811</td>
+      <td>China</td>
     </tr>
     <tr>
-      <th>AUS</th>
-      <td>0.896</td>
-      <td>1.764</td>
-      <td>19.1324</td>
-      <td>Australia</td>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
     </tr>
     <tr>
-      <th>MEX</th>
-      <td>0.709</td>
-      <td>2.714</td>
-      <td>98.6255</td>
-      <td>Mexico</td>
+      <th>KOR</th>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>46.7666</td>
+      <td>South Korea</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>41.0197</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1057.9227</td>
+      <td>India</td>
     </tr>
     <tr>
       <th>GBR</th>
@@ -4184,22 +4759,104 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>United Kingdom</td>
     </tr>
     <tr>
-      <th>DEU</th>
-      <td>0.890</td>
-      <td>1.386</td>
-      <td>81.7972</td>
-      <td>Germany</td>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>281.4841</td>
+      <td>United States</td>
     </tr>
     <tr>
-      <th>IND</th>
-      <td>0.490</td>
-      <td>3.350</td>
-      <td>1057.9227</td>
-      <td>India</td>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>174.0182</td>
+      <td>Brazil</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
+</div>
+<p>Quickly scan the <code class="docutils literal notranslate"><span class="pre">index</span></code> for duplicates, to see that it contains duplicates (as it must, in order to generate a sample of this size).</p>
+<p>Your task is the following:</p>
+<ul class="simple">
+<li><p>take a random sample <em>with replacement</em> of all the rows in the Dataframe (e.g. your sample should have the <em>same number of rows</em> as the original Dataframe)</p></li>
+<li><p>use an appropriate method to calculate the means of <code class="docutils literal notranslate"><span class="pre">Human</span> <span class="pre">Development</span> <span class="pre">Index</span></code>, <code class="docutils literal notranslate"><span class="pre">Fertility</span> <span class="pre">Rate</span></code> and <code class="docutils literal notranslate"><span class="pre">Population</span></code>, from your random sample</p></li>
+<li><p>using Pandas methods and indexing operations, calculate the <em>difference</em> between the means of <code class="docutils literal notranslate"><span class="pre">Human</span> <span class="pre">Development</span> <span class="pre">Index</span></code>, <code class="docutils literal notranslate"><span class="pre">Fertility</span> <span class="pre">Rate</span></code> and <code class="docutils literal notranslate"><span class="pre">Population</span></code> in your sample vs the means for the same variables in the original data</p></li>
+<li><p>store your result in a Pandas Series (note: depending what methods you use, your result may automatically be stored in a Pandas Series)</p></li>
+</ul>
+<p>The result should look something like this (though your differences will differ from the ones shown below, because of the randomness inherent in your sampling):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Human</span> <span class="n">Development</span> <span class="n">Index</span>      <span class="mf">0.074467</span>
+<span class="n">Fertility</span> <span class="n">Rate</span>              <span class="o">-</span><span class="mf">0.182600</span>
+<span class="n">Population</span>                <span class="o">-</span><span class="mf">210.516580</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">mean</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+</pre></div>
+</div>
+<p>Try to do this in as few lines of code as possible.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<div class="solution dropdown admonition" id="0_2_pandas_dataframes_attributes_methods-solution-7">
+
+<p class="admonition-title">Solution to<a class="reference internal" href="#more-random"> Exercise 8</a></p>
+<section id="solution-content">
+<p>There are several ways you can achieve this, but one way of doing it in a single line of code is to <em>chain Pandas methods together</em>.</p>
+<p>The left hand side of the subtraction operation in the cell below uses the <code class="docutils literal notranslate"><span class="pre">.describe()</span></code> method and <code class="docutils literal notranslate"><span class="pre">.loc</span></code> indexing to calculate the means of the original data.</p>
+<p>The right hand side of the subtraction draws a sample (the same size as the number of rows in <code class="docutils literal notranslate"><span class="pre">df</span></code>) using <code class="docutils literal notranslate"><span class="pre">.sample()</span></code> with <code class="docutils literal notranslate"><span class="pre">replace=True</span></code>. It then uses <code class="docutils literal notranslate"><span class="pre">.describe()</span></code> to calculate the means of the numeric variables <em>in this random sample</em>, and then <code class="docutils literal notranslate"><span class="pre">.loc</span></code> to select just those means (as opposed to including the other information that <code class="docutils literal notranslate"><span class="pre">.describe()</span></code> reports, like standard deviations etc).</p>
+<p>The result of this subtraction shows us the difference between the original means and the means of our <em>resample</em> (e.g. our random sample, drawn with replacement):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the difference in the means (original data vs resample)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Human Development Index     0.032333
+Fertility Rate             -0.124933
+Population                -36.325807
+Name: mean, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>You can also perform the same process, less efficiently, spread over multiple lines of code. The way shown below is not the only possible way - perhaps you used the <code class="docutils literal notranslate"><span class="pre">.mean()</span></code> method individually on each column, for instance, and then manually constructed a <code class="docutils literal notranslate"><span class="pre">Series</span></code> to store the results (even less efficient!) . Alternatively, you might have used <code class="docutils literal notranslate"><span class="pre">.drop()</span></code> to remove non-numeric columns, and then used <code class="docutils literal notranslate"><span class="pre">.mean()</span></code> in parallel on the numeric columns, another valid approach:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># calculate the original means</span>
+<span class="n">original_means</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span>
+
+<span class="c1"># generate a resample</span>
+<span class="n">resample</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span> 
+                     <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># calculate the resample means</span>
+<span class="n">resample_means</span> <span class="o">=</span> <span class="n">resample</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span>
+
+<span class="c1"># calculate the difference in means</span>
+<span class="n">difference_in_means</span> <span class="o">=</span> <span class="n">original_means</span> <span class="o">-</span> <span class="n">resample_means</span>
+
+<span class="c1"># show the difference</span>
+<span class="n">difference_in_means</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Human Development Index    -0.017800
+Fertility Rate              0.070000
+Population                -28.618093
+Name: mean, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Similar kinds of <em>resampling procedure</em> are often used to generate <a class="reference external" href="https://nbviewer.org/github/pxr687/bootstrap_tutorial/blob/main/bootstrap.ipynb">bootstrapped confidence intervals</a>.</p>
+</section>
 </div>
 </section>
 </section>
@@ -4228,7 +4885,7 @@ Data Frame.  To get a sample that is half the size the original Data Frame
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">76</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">88</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># A ValueError from trying to scatter plot a Series</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">hdi_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
 
@@ -4892,7 +5549,65 @@ Name: Population_z, dtype: float64
 </div>
 </div>
 </div>
-<p>… but for a larger dataset we could find them using <a class="reference internal" href="0_5_filtering_data_with_pandas.html"><span class="std std-doc">Boolean filtering - a topic we will come to in a later page</span></a>.</p>
+<p>… but for a larger dataset we could find them using <a class="reference internal" href="0_5_filtering_data_with_pandas.html"><span class="doc std std-doc">Boolean filtering </span></a>.</p>
+<div class="exercise dropdown admonition" id="getting-barred">
+
+<p class="admonition-title"><span class="caption-number">Exercise 9 </span></p>
+<section id="exercise-content">
+<p>If you use <code class="docutils literal notranslate"><span class="pre">.plot(kind=&quot;bar&quot;)</span></code> you will generate a bar plot (that is, a chart with bars representing counts for different categories).</p>
+<p>Your task is to use indexing methods of your choice, restricting yourself to the Pandas methods shown on this page, to create a bar plot which has:</p>
+<ul class="simple">
+<li><p>the name of each country on the x-axis</p></li>
+</ul>
+<p>…and…</p>
+<ul class="simple">
+<li><p>bars which show the population of the country on the y-axis. The bars should be ordered from highest population (left hand side of the graph) to lowest population (right hand side of the graph).</p></li>
+</ul>
+<p><em>Unless you enjoy cheating, do not use other plotting libraries!</em>. Your final result should look like this:</p>
+<p><img alt="" src="_images/bar_example.png" /></p>
+<p>As ever, use as few lines as you can, while but keep your code readable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># your code below</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<div class="solution dropdown admonition" id="0_2_pandas_dataframes_attributes_methods-solution-9">
+
+<p class="admonition-title">Solution to<a class="reference internal" href="#getting-barred"> Exercise 9</a></p>
+<section id="solution-content">
+<p>It is possible to create this plot in one line of code, again, by <em>chaining</em> Pandas methods together. First, we use direct indexing with the column names to select just those variables.</p>
+<p>Then we use <code class="docutils literal notranslate"><span class="pre">sort_values()</span></code> using the <code class="docutils literal notranslate"><span class="pre">by='Population'</span></code> and <code class="docutils literal notranslate"><span class="pre">ascending=False</span></code> arguments to ensure that the population counts are sorted in descending order.</p>
+<p>We then chain <code class="docutils literal notranslate"><span class="pre">.plot(kind='bar')</span></code> on the end, and we get the desired plot:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># solution</span>
+<span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Country Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Population&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;Population&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;Code&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/df77a05cc8b7b78c41ce286042ddf8ca1fa3c59d52441e146d6e8969cecc976b.png" src="_images/df77a05cc8b7b78c41ce286042ddf8ca1fa3c59d52441e146d6e8969cecc976b.png" />
+</div>
+</div>
+<p><em>Food for thought</em>: what will happen if you reverse the order of <code class="docutils literal notranslate"><span class="pre">Country</span> <span class="pre">Name</span></code> and <code class="docutils literal notranslate"><span class="pre">Population</span></code> in the direct indexing operation? Do you think this will change the x-axis and and y-axis variables on the <code class="docutils literal notranslate"><span class="pre">.plot()</span></code>?</p>
+<p>Have a think about what you think will happen; you can check by uncommenting the code below to see if you were correct:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># df[[&#39;Population&#39;, &#39;Country Name&#39;,]].sort_values(by=&#39;Population&#39;, ascending=False).plot(kind=&#39;bar&#39;)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>How would you explain the result?</p>
+</section>
+</div>
 </section>
 <section id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
