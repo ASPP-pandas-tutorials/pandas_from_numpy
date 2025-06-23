@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.16.6
+      jupytext_version: 1.17.1
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -532,20 +532,20 @@ could:
 
 However, there's a big problem about assuming that the user is trying to index
 by position, which is that, as you have seen above, in general Pandas treats
-direct indexing as by label.  So, if there are integer labels, it will, without
-complaint, give you the value corresponding the integer label, not the
+direct indexing as by label.  So, if there are integer labels, it will,
+without complaint, give you the value corresponding the integer label, not the
 position.  This means that you sometimes treat direct indexing as by label
 (when there is an integer index and integer value between the `[]`), and other
 times as by position (when there is a non-integer index and integer value
 between the `[]`).
 
 As you can see, Pandas initially went for this option, because, if you keep
-track of whether your index is an integer index or not, it can be convenient to
-avoid the `.iloc` and just do position-based indexing (on a Series with
-a non-integer index) with direct indexing.  But recently, the Pandas developers
-have reconsidered, and are planning to remove this ambiguous use of integer
-indexing, on the basis that it is too easy to be confused as to which type of
-indexing you are doing.
+track of whether your index is an integer index or not, it can be convenient
+to avoid the `.iloc` and just do position-based indexing (on a Series with
+a non-integer index) with direct indexing.  But recently, the Pandas
+developers have reconsidered, and are planning to remove this ambiguous use of
+integer indexing, on the basis that it is too easy to be confused as to which
+type of indexing you are doing.
 
 ::: {solution-end}
 :::
@@ -560,8 +560,9 @@ specify integers in your direct indexing, then Pandas will assume you mean the
 values to be labels (like `.loc`).
 
 If the index does not consist of integers, and you specify integers in your
-direct indexing, then Pandas will assume you mean the values to be positions
-(like `.iloc`).
+direct indexing, then Pandas will currently assume you mean the values to be
+positions (like `.iloc`), but (at time of writing) give you a warning that
+this will soon change.
 
 ```{python}
 # Direct indexing
@@ -570,8 +571,8 @@ hdi_series[4]
 
 Using a custom non-integer index (e.g. the three-letter country codes) rather
 than the default `RangeIndex`, or some other integer index, has the advantage
-of avoiding potential confusion between the integer location of an element, and
-the index label of that element.
+of avoiding potential confusion between the integer location of an element,
+and the index label of that element.
 
 To demonstrate this, let's sort our `hdi_series` in ascending order:
 
@@ -597,47 +598,23 @@ expect.
 hdi_series_sorted.loc['DEU']
 ```
 
-::: {exercise-start}
-:label: loc-direct
-:class: dropdown
+::: warning
+
+**Direct indexing is not currently consistent**
+
+As an extra warning, as Pandas shifts towards more explicit choice of labels over positions in direct indexing, there are still inconsistencies.  These will be resolved over time, so if you want to avoid confusion, skip the rest of this note, and remember *be explicit about labels or positions with `.loc` or `.iloc` unless you have good reason not to*.
+
+If you got this far, we admire your courage.  This warning is only to say that Pandas currently treats *slices* in direct indexing differently from individual positions or labels.  Specifically, at the moment, it will always assume integers in slices are positions and not labels.  Try some experiments with `hdi_series[:5]` (string label Series) and `hdi_series_def_index[:5]` (integer label Series).
+
+You may be confused after doing that.  And this behavior will surely change at some point.  Summary — use `.iloc` and `.loc` to avoid ambiguity.
+
 :::
 
-Let's return to the Series with a default Index:
-
-```{python}
-hdi_series_def_index
-```
-
-Remember that this has an integer index (in fact, a `RangeIndex`).
-
-How many rows will you see from the code below (currently commented).
-
-Reflect, and try it.  Explain the result.
-
-```{python}
-# hdi_series_def_index[:5]
-```
-
-::: {exercise-end}
-:::
-
-::: {solution-start} loc-direct
-:class: dropdown
-:::
-
-In the cell above, you have used *direct indexing* on a Series with integer
-Index values.  Pandas will assume that you mean the specified slice to refer to
-*labels*.  Thus
-
-::: {solution-end}
-:::
+We repeat, a very good additional maxim is: **use `.loc` and `iloc` unless
+there is a good reason not to!**.
 
 
-Therefore, a good additional maxim is: **use `.loc` and `iloc` unless there is
-a good reason not to!**.
-
-
-## Strange and `name`less Data Frame columns
+## Default names for Data Frame columns
 
 Remember, a Data Frame is a dictionary-like collection of Series.
 
@@ -702,17 +679,17 @@ They can also lead to indexing errors, similar to those we saw in the previous
 section. To demonstrate this, let's compare the `name`less Data Frame above to
 a Data Frame created from a Series with a `name`.
 
-Now let us create a Series with index and name:
+Now let us create a Series with index and not-default name:
 
 ```{python}
-hdi_series_with_name = pd.Series(
+hdi_series_named = pd.Series(
     hdis_array,
     index=country_codes_array,
     name='Human Development Index')
-hdi_series_with_name
+hdi_series_named
 ```
 
-Our aptly named `hdi_series_with_name` has a `name` attribute — (look at the
+Our aptly named `hdi_series_named` has a `name` attribute — (look at the
 last line of the output from the cell below, the `Name: Human Development
 Index`):
 
@@ -721,7 +698,7 @@ resultant Data Frame `named_df`:
 
 ```{python}
 # Create a new Data Frame, with a sensible name for the column
-named_df = pd.DataFrame(hdi_series)
+named_df = pd.DataFrame(hdi_series_named)
 named_df
 ```
 
@@ -859,6 +836,14 @@ This compels us to stick to the good practice maxim we introduced above: **use
 `.loc` and `iloc` unless there is a good reason not to!**.
 
 Giving every column a sensible string as a `name` is one situation where direct indexing (e.g. in the present context using `named_df['Human Development Index']` etc.) is safe and non-error prone. As we have seen, issues can arise if we do not specify `name` attributes, and let Pandas automatically generate numeric labels for our Data Frame columns...
+
+
+## `.loc` and `.iloc` with Data Frames
+
+
+So far we have spent much time with `.loc` and `.iloc` on Series.
+
+There is a new concern
 
 
 ## Summary

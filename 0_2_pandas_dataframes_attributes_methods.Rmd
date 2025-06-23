@@ -800,7 +800,7 @@ Check the documentation for `.sample` by uncommenting the cell below, and runnin
 
 ```{python}
 # Show documentation with (uncomment below and run):
-# # df.sample?
+# df.sample?
 ```
 
 Notice that by default the sampling is *without replacement*, so once a row has been pulled into the output sample, it cannot be selected again for the remaining values in the sample.  When we deal out hands of cards from a standard 52-card deck., we are sampling from the pack without replacement, because any one card cannot be dealt more than once.
