@@ -658,6 +658,7 @@ means_series
 
 Phew! That really was inefficient. Many Pandas methods are designed to save us time in situations exactly like this...
 
+Pandas is a particularly good example of a complex library where there are many ways of achieving the same result, and where AI or careless StackOverflow searches can give you a very inefficient or inelegant solution.   We strongly advise you to keep investing the time to work out the most elegant solution to your Pandas problems, in order to keep learning, and so that you write code that others can read, including you, the maintainer.
 
 ::: {solution-end}
 :::
