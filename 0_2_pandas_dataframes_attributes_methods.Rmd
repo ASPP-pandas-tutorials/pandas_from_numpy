@@ -901,7 +901,7 @@ df.sample(len(df) + 10,
           replace=True) 
 ```
 
-Quickly scan the `index` for duplicates, to see that this it definitely contains duplicates.
+Quickly scan the `index` for duplicates, to see that it contains duplicates (as it must, in order to generate a sample of this size).
 
 You task now is the following:
 
