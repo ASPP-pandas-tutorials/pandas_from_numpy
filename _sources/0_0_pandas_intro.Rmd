@@ -45,7 +45,7 @@ build our own Data Frame from scratch, beginning with the fundamental building
 block for Data Frames: Numpy arrays.
 
 ```{python}
-# import the libraries needed for this page
+# Import the libraries needed for this page
 import numpy as np
 import pandas as pd
 ```
