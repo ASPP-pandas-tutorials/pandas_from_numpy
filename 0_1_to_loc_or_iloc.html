@@ -882,7 +882,7 @@ integer location 4, because we count from 0. At the moment the numerical
 labels implied by the <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code> “line up” with the integer-based locations:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the whole Series</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the whole Series</span>
 <span class="n">hdi_series_no_name_no_index</span>
 </pre></div>
 </div>
@@ -943,7 +943,7 @@ do not use <code class="docutils literal notranslate"><span class="pre">.iloc</s
 indexing</span></a> we would use on a Python list or array?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># direct indexing</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Direct indexing</span>
 <span class="n">hdi_series_no_name_no_index</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1105,7 +1105,7 @@ Name: Human Development Index, dtype: float64
 <p>Let’s get the fifth element using integer based (<code class="docutils literal notranslate"><span class="pre">.iloc</span></code>) indexing:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># integer indexing</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Integer indexing</span>
 <span class="n">hdi_series_with_name_and_index</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1194,7 +1194,7 @@ as the index labels in this Series are three-letter country codes). To use
 <code class="docutils literal notranslate"><span class="pre">.loc</span></code> with this Series, we must use the three-letter country code strings:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># label based indexing</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Label based indexing</span>
 <span class="n">hdi_series_with_name_and_index</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;DEU&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1267,13 +1267,13 @@ in your direct indexing, then Pandas will assume you mean the values to be
 positions (like <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># direct indexing</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Direct indexing</span>
 <span class="n">hdi_series_with_name_and_index</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2447/1692167703.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2473/2186048664.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   hdi_series_with_name_and_index[4]
 </pre></div>
 </div>
@@ -1331,7 +1331,7 @@ a string, preventing errors where we use a number and return data we do not
 expect.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># label-based indexing</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Label-based indexing</span>
 <span class="n">hdi_series_with_name_and_index_sorted</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;DEU&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1374,7 +1374,7 @@ a <code class="docutils literal notranslate"><span class="pre">name</span></code
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># a Data Frame made of a Series with no `name` attribute</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A Data Frame made of a Series with no `name` attribute</span>
 <span class="n">no_name_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">hdi_series</span><span class="p">)</span>
 <span class="n">no_name_df</span>
 </pre></div>
@@ -1640,7 +1640,7 @@ name, hugely increasing the interpretability of the resulting Data Frame.</p>
 Frame:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the column names from the `named_df` Data Frame</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the column names from the `named_df` Data Frame</span>
 <span class="n">named_df</span><span class="o">.</span><span class="n">columns</span>
 </pre></div>
 </div>
@@ -1655,7 +1655,7 @@ Frame:</p>
 <p>This is very straightforward for the <code class="docutils literal notranslate"><span class="pre">named_df</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># direct indexing to retrieve a column by name</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Direct indexing to retrieve a column by name</span>
 <span class="n">named_df</span><span class="p">[</span><span class="s1">&#39;Human Development Index&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1717,13 +1717,13 @@ Name: 0, dtype: float64
 much like <em>integer</em> indexing on a Series, which will return a single value:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># integer indexing a Series (without using `.iloc`)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Integer indexing a Series (without using `.iloc`)</span>
 <span class="n">hdi_series</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2447/2632670009.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2473/374573743.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   hdi_series[0]
 </pre></div>
 </div>
@@ -1737,7 +1737,7 @@ much like <em>integer</em> indexing on a Series, which will return a single valu
 <p>For instance, if we add in the full name of each country:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># country names array</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Country names array</span>
 <span class="n">country_names_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;Australia&#39;</span><span class="p">,</span> <span class="s1">&#39;Brazil&#39;</span><span class="p">,</span> <span class="s1">&#39;Canada&#39;</span><span class="p">,</span>
                                 <span class="s1">&#39;China&#39;</span><span class="p">,</span> <span class="s1">&#39;Germany&#39;</span><span class="p">,</span> <span class="s1">&#39;Spain&#39;</span><span class="p">,</span>
                                 <span class="s1">&#39;France&#39;</span><span class="p">,</span> <span class="s1">&#39;United Kingdom&#39;</span><span class="p">,</span> <span class="s1">&#39;India&#39;</span><span class="p">,</span>

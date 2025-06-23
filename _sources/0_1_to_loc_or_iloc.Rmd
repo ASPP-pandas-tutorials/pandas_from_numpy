@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.1
+      jupytext_version: 1.17.2
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -276,7 +276,7 @@ integer location 4, because we count from 0. At the moment the numerical
 labels implied by the `RangeIndex` "line up" with the integer-based locations:
 
 ```{python}
-# show the whole Series
+# Show the whole Series
 hdi_series_no_name_no_index
 ```
 
@@ -300,7 +300,7 @@ do not use `.iloc` or `.loc`, we just use the sort of [direct
 indexing](direct-indirect) we would use on a Python list or array?
 
 ```{python}
-# direct indexing
+# Direct indexing
 hdi_series_no_name_no_index[4]
 ```
 
@@ -389,7 +389,7 @@ hdi_series_with_name_and_index
 Let's get the fifth element using integer based (`.iloc`) indexing:
 
 ```{python}
-# integer indexing
+# Integer indexing
 hdi_series_with_name_and_index.iloc[4]
 ```
 
@@ -405,7 +405,7 @@ as the index labels in this Series are three-letter country codes). To use
 `.loc` with this Series, we must use the three-letter country code strings:
 
 ```{python}
-# label based indexing
+# Label based indexing
 hdi_series_with_name_and_index.loc['DEU']
 ```
 
@@ -484,7 +484,7 @@ in your direct indexing, then Pandas will assume you mean the values to be
 positions (like `.iloc`).
 
 ```{python}
-# direct indexing
+# Direct indexing
 hdi_series_with_name_and_index[4]
 ```
 
@@ -518,7 +518,7 @@ a string, preventing errors where we use a number and return data we do not
 expect.
 
 ```{python}
-# label-based indexing
+# Label-based indexing
 hdi_series_with_name_and_index_sorted.loc['DEU']
 ```
 
@@ -551,7 +551,7 @@ hdi_series.name is None
 ```
 
 ```{python}
-# a Data Frame made of a Series with no `name` attribute
+# A Data Frame made of a Series with no `name` attribute
 no_name_df = pd.DataFrame(hdi_series)
 no_name_df
 ```
@@ -609,7 +609,7 @@ We can see the `name` in the `.columns` attribute of the new  `named_df` Data
 Frame:
 
 ```{python}
-# show the column names from the `named_df` Data Frame
+# Show the column names from the `named_df` Data Frame
 named_df.columns
 ```
 
@@ -618,7 +618,7 @@ Now, let's try using direct indexing with each Data Frame, using the column name
 This is very straightforward for the `named_df`:
 
 ```{python}
-# direct indexing to retrieve a column by name
+# Direct indexing to retrieve a column by name
 named_df['Human Development Index']
 ```
 
@@ -638,7 +638,7 @@ Sure enough that is what we see. But the operation we have used looks very
 much like *integer* indexing on a Series, which will return a single value:
 
 ```{python}
-# integer indexing a Series (without using `.iloc`)
+# Integer indexing a Series (without using `.iloc`)
 hdi_series[0]
 ```
 
@@ -649,7 +649,7 @@ The numerical label can also be confusing if we introduce more columns, especial
 For instance, if we add in the full name of each country:
 
 ```{python}
-# country names array
+# Country names array
 country_names_array = np.array(['Australia', 'Brazil', 'Canada',
                                 'China', 'Germany', 'Spain',
                                 'France', 'United Kingdom', 'India',
