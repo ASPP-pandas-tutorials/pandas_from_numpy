@@ -55,7 +55,7 @@ licenses page](data/data_notes) for more detail.
 import numpy as np
 import pandas as pd
 
-# a hint for and exercise
+# Our own routine to giving hints to the exercises.
 from hint import hint
 ```
 
