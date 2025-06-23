@@ -909,7 +909,7 @@ Your task is the following:
 
 - use an appropriate method to calculate the means of `Human Development Index`, `Fertility Rate` and `Population`, from your random sample
 
-- using appropriate Pandas methods and indexing operations, calculate the *difference* between the means of `Human Development Index`, `Fertility Rate` and `Population` in your sample vs the means for the same variables in the original data
+- using Pandas methods and indexing operations, calculate the *difference* between the means of `Human Development Index`, `Fertility Rate` and `Population` in your sample vs the means for the same variables in the original data
 
 - store your result in a Pandas Series (note: depending what methods you use, your result may automatically be stored in a Pandas Series)
 
