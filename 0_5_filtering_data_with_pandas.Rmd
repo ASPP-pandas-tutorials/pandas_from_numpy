@@ -124,7 +124,7 @@ If we're particularly neurotic, we can check using the [`all()`](https://docs.py
 all(hdis_array[hdis_array_grtr_median_bool] > np.median(hdis_array))
 ```
 
-Because Python treats `True` values as being equal to 1 and `False` values as being equal to 0, taking the mean of a Boolean array works out the same as calculating the proportion of `True` values. (*NB*: this is because when we do this operation, we are doing something like $\frac{1+1+1...+0+0}{n}$. The `False` (aka `0`) values add nothing to the numerator of the mean calculation, leaving only the `True` (aka `1`) values. This effectively gives us a count of the `True` values, divided by the total number of values, which returns the proportion of `True`'s.
+Because Python treats `True` values as being equal to 1 and `False` values as being equal to 0, taking the mean of a Boolean array works out the same as calculating the proportion of `True` values. *NB*: this is because when we do this operation, we are doing something like $\frac{1+1+1...+0+0}{n}$. The `False` (aka `0`) values add nothing to the numerator of the mean calculation, leaving only the `True` (aka `1`) values. This effectively gives us a count of the `True` values, divided by the total number of values, which returns the proportion of `True`'s.
 
 Using `np.mean()` we can quickly count the proportion of `True` values, which as expected, because we are dealing with a median, is close to 0.5:
 
