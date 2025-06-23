@@ -343,7 +343,7 @@ There are several ways to approach this, here are two.
 
 First, for both methods we generate a Boolean Series using `df['Fertility Rate'] < 2.1` - this will be `True` where the `Fertility Rate` is *under* 2.1, and `False` otherwise.
 
-In the first solution, we take the `sum()` of the `True` values, then divide that by the `len()` of the Dataframe (e.g. by the number of observations):
+In the first solution, we take the `sum()` of the `True` values, then divide that by the `len()` of the Dataframe (i.e. by the number of observations):
 
 ```{python}
 # solution 1
