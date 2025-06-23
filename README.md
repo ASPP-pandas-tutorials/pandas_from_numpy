@@ -108,3 +108,18 @@ cells to be at the top level of the notebook, where Jupyter needs them to be.
 
 The gated markers also make it possible to for the `process_notebooks.py`
 script to recognize exercise and solutions blocks, to parse them correctly.
+
+## Development
+
+Once:
+
+```
+pip install pre_commit
+pre-commit install
+```
+
+Before each commit that you will push:
+
+```
+pre-commit run --all
+```
