@@ -13,7 +13,7 @@ jupyter:
     name: python3
 ---
 
-# Dealing with NaNs
+# Handling what isn't there
 
 <!---
 📝 NOTE:

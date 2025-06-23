@@ -64,7 +64,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="More Pandas methods" href="0_6_more_pandas_methods_strings.html" />
-    <link rel="prev" title="Dealing with NaNs" href="0_4_dealing_with_missing_data_in_pandas.html" />
+    <link rel="prev" title="Handling what isn’t there" href="0_4_dealing_with_missing_data_in_pandas.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -180,7 +180,7 @@
 <li class="toctree-l1"><a class="reference internal" href="0_1_to_loc_or_iloc.html">Indexing by label and position</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_2_pandas_dataframes_attributes_methods.html">Pandas DataFrames: Attributes and Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_3_constructing_dataframes.html">Let There Be Data : Creating Data Frames</a></li>
-<li class="toctree-l1"><a class="reference internal" href="0_4_dealing_with_missing_data_in_pandas.html">Dealing with NaNs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_4_dealing_with_missing_data_in_pandas.html">Handling what isn’t there</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Filtering Data Frames with Boolean Series</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_6_more_pandas_methods_strings.html">More Pandas methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_7_pandas_datetimes.html">It’s Pandas time</a></li>
@@ -3066,7 +3066,7 @@ Name: Fertility Rate, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2535/2434494002.py:2: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option(&#39;future.no_silent_downcasting&#39;, True)`
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2563/2434494002.py:2: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option(&#39;future.no_silent_downcasting&#39;, True)`
   full_df[full_df[&#39;Fertility Rate&#39;].isna()].isna().replace(False, &#39;-&#39;).replace(True, np.nan)
 </pre></div>
 </div>
@@ -3225,7 +3225,7 @@ Name: Fertility Rate, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2535/1593477413.py:5: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option(&#39;future.no_silent_downcasting&#39;, True)`
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2563/1593477413.py:5: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option(&#39;future.no_silent_downcasting&#39;, True)`
   .replace(True, np.nan))
 </pre></div>
 </div>
@@ -3419,7 +3419,7 @@ Name: Fertility Rate, dtype: float64
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Dealing with NaNs</p>
+        <p class="prev-next-title">Handling what isn’t there</p>
       </div>
     </a>
     <a class="right-next"

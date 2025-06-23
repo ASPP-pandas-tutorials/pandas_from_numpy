@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Dealing with NaNs &#8212; Pandas from Numpy</title>
+    <title>Handling what isn’t there &#8212; Pandas from Numpy</title>
   
   
   
@@ -180,7 +180,7 @@
 <li class="toctree-l1"><a class="reference internal" href="0_1_to_loc_or_iloc.html">Indexing by label and position</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_2_pandas_dataframes_attributes_methods.html">Pandas DataFrames: Attributes and Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_3_constructing_dataframes.html">Let There Be Data : Creating Data Frames</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Dealing with NaNs</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Handling what isn’t there</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_5_filtering_data_with_pandas.html">Filtering Data Frames with Boolean Series</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_6_more_pandas_methods_strings.html">More Pandas methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_7_pandas_datetimes.html">It’s Pandas time</a></li>
@@ -418,7 +418,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Dealing with NaNs</h1>
+    <h1>Handling what isn’t there</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -442,8 +442,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="dealing-with-nans">
-<h1>Dealing with NaNs<a class="headerlink" href="#dealing-with-nans" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="handling-what-isn-t-there">
+<h1>Handling what isn’t there<a class="headerlink" href="#handling-what-isn-t-there" title="Link to this heading">#</a></h1>
 <!---
 📝 NOTE:
 Covered on this page/structure of this page:
@@ -489,7 +489,7 @@ operations.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2515/2469014178.py:6: RuntimeWarning: invalid value encountered in divide
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2541/2469014178.py:6: RuntimeWarning: invalid value encountered in divide
   a_nan = np.array(0) / np.array(0)
 </pre></div>
 </div>
@@ -512,7 +512,7 @@ infinity) are special floating point values:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2515/58810310.py:2: RuntimeWarning: divide by zero encountered in divide
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2541/58810310.py:2: RuntimeWarning: divide by zero encountered in divide
   np.array(1) / np.array(0)
 </pre></div>
 </div>
