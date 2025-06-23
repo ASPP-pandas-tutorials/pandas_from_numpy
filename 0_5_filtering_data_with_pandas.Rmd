@@ -528,7 +528,7 @@ Our solution - to make it easier to read - creates this plot in two lines of cod
 
 First, we use the "less than" (`<`) comparison operator to create a Boolean Series. This Series is `True` where the corresponding row in `full_df_2000` has a smaller-than-the-25th-percentile value, and `False` otherwise.
 
-To calculate the value of the 25th percentile, we use `.describe()`. Astute readers may have noticed that `.describe()` reports the quartiles (25%, 50%, 75% percentiles) of numeric variables. Becuase `.describe()` returns a Dataframe, we can use `.loc` indexing with the string `25%` to retrieve the value of the 25th percentile (the string `25%` is the `index` label of the 25th percentile, in the `.describe()` Dataframe output).
+To calculate the value of the 25th percentile, we use `.describe()`. Astute readers may have noticed that `.describe()` reports the quartiles (25%, 50%, 75% percentiles) of numeric variables. Because `.describe()` returns a Dataframe, we can use `.loc` indexing with the string `25%` to retrieve the value of the 25th percentile (the string `25%` is the `index` label of the 25th percentile, in the `.describe()` Dataframe output). Another option here would be to use `df['Fertility Rate'].quantile(0.25)` to get the 25th percentile - there are always many roads to the same outcome in Pandas...
 
 A second line of code then uses the `.plot()` method, with appropriate `x`, `y` and `kind` arguments, to generate the plot:
 
