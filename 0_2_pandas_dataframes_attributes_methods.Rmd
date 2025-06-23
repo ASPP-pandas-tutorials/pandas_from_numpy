@@ -1122,7 +1122,7 @@ Try to create the plot using as few lines of code as possible.
 
 It is possible to create this plot in one line of code, again, by *chaining* Pandas methods together. First, we use direct indexing with the column names to select just those variables. 
 
-Then we use `sort_values()` using the `by = 'Population'` and `ascending = False` arguments to ensure that the population counts are sorted in descending order.
+Then we use `sort_values()` using the `by='Population'` and `ascending=False` arguments to ensure that the population counts are sorted in descending order.
 
 We then chain `.plot(kind='bar')` on the end, and we get the desired plot:
 
