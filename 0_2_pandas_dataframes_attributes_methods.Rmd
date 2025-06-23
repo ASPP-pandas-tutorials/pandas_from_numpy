@@ -838,8 +838,7 @@ Let's say we want to shuffle the *rows* in our Dataframe. We can do this with th
 
 ```{python}
 # effective but ugly
-import numpy.random as npr
-npr.permutation(df)
+np.random.permutation(df)
 ```
 
 Can you think of a way to perform this operation using only the Pandas methods we have seen so far on this page? In the cell below, you should write code which will:
