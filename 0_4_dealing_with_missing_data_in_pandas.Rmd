@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.16.6
+      jupytext_version: 1.17.2
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -56,7 +56,7 @@ As mentioned above, NaNs in Numpy result from invalid floating point
 operations.
 
 ```{python}
-# import libraries
+# Import libraries
 import numpy as np
 import pandas as pd
 
@@ -319,7 +319,7 @@ A useful trick here is to divide the output of the `.count()` method by the
 *proportion* of NaNs in each column of the Data Frame:
 
 ```{python}
-# show the proportion of missing values, in each column.
+# Show the proportion of missing values, in each column.
 # The division operates elementwise, dividing all values above by the divisor.
 df.count() / len(df)
 ```
@@ -340,14 +340,14 @@ It turns out in this dataset, every row has at least one NaN value so dropping e
 Let's look at the `Fertility Rate` column, which contains numerical data:
 
 ```{python}
-# show the column
+# Show the column
 df['Fertility Rate']
 ```
 
 Because we are dealing with just one column, we can safely use `.dropna()` without losing every row (because not every row of the *Series* contains a NaN value):
 
 ```{python}
-# show the column
+# Show the column
 df['Fertility Rate'].dropna()
 ```
 
@@ -377,7 +377,7 @@ zwe_no_nans
 ```
 
 ```{python}
-# drop NaNs gives the same mean 
+# Drop NaNs gives the same mean 
 zwe_no_nans.mean()
 ```
 
