@@ -1085,7 +1085,7 @@ This dataset is small enough that we can see that these values correspond to Ind
 df['Population_z'].sort_values()
 ```
 
-... but for a larger dataset we could find them using [Boolean filtering - a topic we will come to in a later page](0_5_filtering_data_with_pandas.Rmd).
+... but for a larger dataset we could find them using [Boolean filtering ](0_5_filtering_data_with_pandas).
 
 
 ::: {exercise-start}
