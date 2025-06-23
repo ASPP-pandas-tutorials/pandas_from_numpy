@@ -109,22 +109,29 @@ To investigate how string data is handled in Numpy, let's make some arrays conta
 import numpy as np
 import pandas as pd
 
-# Standard three-letter code for each country
+# A custom function for the exercise, generates a variable used to mark the exercise
+from get_clean_mat_mort_names import get_clean_mat_mort_names
+
+cleaned_names_answer = get_clean_mat_mort_names(pd.read_csv("data/gender_stats.csv")['country_name'])
+```
+
+```{python}
+# Standard three-letter code for each country.
 country_codes_array = np.array(['AUS', 'BRA', 'CAN',
-                          'CHN', 'DEU', 'ESP',
-                          'FRA', 'GBR', 'IND',
-                          'ITA', 'JPN', 'KOR',
-                          'MEX', 'RUS', 'USA'])
+                                'CHN', 'DEU', 'ESP',
+                                'FRA', 'GBR', 'IND',
+                                'ITA', 'JPN', 'KOR',
+                                'MEX', 'RUS', 'USA'])
 country_codes_array
 ```
 
 ```{python}
-# Country names
+# Country names.
 country_names_array = np.array(['Australia', 'Brazil', 'Canada',
-                          'China', 'Germany', 'Spain',
-                          'France', 'United Kingdom', 'India',
-                          'Italy', 'Japan', 'South Korea',
-                          'Mexico', 'Russia', 'United States'])
+                                'China', 'Germany', 'Spain',
+                                'France', 'United Kingdom', 'India',
+                                'Italy', 'Japan', 'South Korea',
+                                'Mexico', 'Russia', 'United States'])
 country_names_array
 ```
 
@@ -133,9 +140,9 @@ For comparison, let's make an array containing the numerical HDI scores:
 ```{python}
 # Human Development Index Scores for each country
 hdis_array = np.array([0.896, 0.668, 0.89 , 0.586, 
-                 0.844, 0.89 , 0.49 , 0.842, 
-                 0.883, 0.709, 0.733, 0.824,
-                 0.828, 0.863, 0.894])
+                       0.844, 0.89 , 0.49 , 0.842, 
+                       0.883, 0.709, 0.733, 0.824,
+                       0.828, 0.863, 0.894])
 
 hdis_array
 ```
@@ -418,6 +425,139 @@ maternal_mort[maternal_mort['country_name'].str.contains('Russia')]
 ```
 
 We are now ready for a clean and stress-free data merge! (*NB*: we are lying here, merging datasets is almost never stress-free...)
+
+
+::: {exercise-start}
+:label: strings-and-things
+:class: dropdown
+:::
+
+The `maternal_mort['country_name']` Series contains a lot of formatting that is nice to read, but annoying
+to use in indexing operations (or any of time where we need to type them).
+
+Entries like `'Virgin Islands (U.S.)'` and `'St. Martin (French part)'` will be a pain to type if we need to use them in `.loc` indexing operations, for instance.
+
+We would like you to very carefully inspect the following array - which contains cleaner and easier-to-type names - and work out which Pandas string methods have been used to get from the `maternal_mort['country_name']` Series to this array. 
+
+*Note* - the array is the output of the `.unique()` method:
+
+```
+array(['aruba', 'afghanistan', 'angola', 'albania', 'andorra',
+       'united_arab_emirates', 'argentina', 'armenia', 'american_samoa',
+       'antigua_and_barbuda', 'australia', 'austria', 'azerbaijan',
+       'burundi', 'belgium', 'benin', 'burkina_faso', 'bangladesh',
+       'bulgaria', 'bahrain', 'bahamas_the', 'bosnia_and_herzegovina',
+       'belarus', 'belize', 'bermuda', 'bolivia', 'brazil', 'barbados',
+       'brunei_darussalam', 'bhutan', 'botswana',
+       'central_african_republic', 'canada', 'switzerland', 'chile',
+       'china', "cote_d'ivoire", 'cameroon', 'congo_dem_rep', 'congo_rep',
+       'colombia', 'comoros', 'cabo_verde', 'costa_rica', 'cuba',
+       'curacao', 'cayman_islands', 'cyprus', 'czech_republic', 'germany',
+       'djibouti', 'dominica', 'denmark', 'dominican_republic', 'algeria',
+       'ecuador', 'egypt_arab_rep', 'eritrea', 'spain', 'estonia',
+       'ethiopia', 'finland', 'fiji', 'france', 'faroe_islands',
+       'micronesia_fed_sts', 'gabon', 'united_kingdom', 'georgia',
+       'ghana', 'gibraltar', 'guinea', 'gambia_the', 'guinea_bissau',
+       'equatorial_guinea', 'greece', 'grenada', 'greenland', 'guatemala',
+       'guam', 'guyana', 'hong_kong_sar_china', 'honduras', 'croatia',
+       'haiti', 'hungary', 'indonesia', 'isle_of_man', 'india', 'ireland',
+       'iran_islamic_rep', 'iraq', 'iceland', 'israel', 'italy',
+       'jamaica', 'jordan', 'japan', 'kazakhstan', 'kenya',
+       'kyrgyz_republic', 'cambodia', 'kiribati', 'st_kitts_and_nevis',
+       'korea_rep', 'kuwait', 'lao_pdr', 'lebanon', 'liberia', 'libya',
+       'st_lucia', 'liechtenstein', 'sri_lanka', 'lesotho', 'lithuania',
+       'luxembourg', 'latvia', 'macao_sar_china', 'st_martin_french_part',
+       'morocco', 'monaco', 'moldova', 'madagascar', 'maldives', 'mexico',
+       'marshall_islands', 'macedonia_fyr', 'mali', 'malta', 'myanmar',
+       'montenegro', 'mongolia', 'northern_mariana_islands', 'mozambique',
+       'mauritania', 'mauritius', 'malawi', 'malaysia', 'namibia',
+       'new_caledonia', 'niger', 'nigeria', 'nicaragua', 'netherlands',
+       'norway', 'nepal', 'nauru', 'new_zealand', 'oman', 'pakistan',
+       'panama', 'peru', 'philippines', 'palau', 'papua_new_guinea',
+       'poland', 'puerto_rico', "korea_dem_people's_rep", 'portugal',
+       'paraguay', 'west_bank_and_gaza', 'french_polynesia', 'qatar',
+       'romania', 'russian_federation', 'rwanda', 'saudi_arabia', 'sudan',
+       'senegal', 'singapore', 'solomon_islands', 'sierra_leone',
+       'el_salvador', 'san_marino', 'somalia', 'serbia', 'south_sudan',
+       'sao_tome_and_principe', 'suriname', 'slovak_republic', 'slovenia',
+       'sweden', 'swaziland', 'sint_maarten_dutch_part', 'seychelles',
+       'syrian_arab_republic', 'turks_and_caicos_islands', 'chad', 'togo',
+       'thailand', 'tajikistan', 'turkmenistan', 'timor_leste', 'tonga',
+       'trinidad_and_tobago', 'tunisia', 'turkey', 'tuvalu', 'tanzania',
+       'uganda', 'ukraine', 'uruguay', 'united_states', 'uzbekistan',
+       'st_vincent_and_the_grenadines', 'venezuela_rb',
+       'british_virgin_islands', 'virgin_islands_us', 'vietnam',
+       'vanuatu', 'samoa', 'kosovo', 'yemen_rep', 'south_africa',
+       'zambia', 'zimbabwe'], dtype=object)
+```
+
+Your task now is to make an array called `my_clean_names` which is *identical* to the array shown above. As noted above, it is a Numpy array (and not a Pandas Series) because it is the output of the `.unique()` method (which, by default, returns a Numpy array).
+
+You do not have to manually create an array to complete this exercise, you can perform the relevant string transformations using Pandas string methods on the `maternal_mort['country_name']` Series, and then run `my_clean_names.unique()` to get the final array.
+
+There is a cell at the end of the exercise to mark your answer.
+
+Try to do this in as few lines of code as possible and **using ONLY Pandas string methods**:
+
+```{python}
+# Your code here
+my_clean_names = ...
+```
+
+```{python}
+# Run this cell to check your answer. It will return True if you cleaning worked correctly.
+all(my_clean_names == cleaned_names_answer)
+```
+
+::: {exercise-end}
+:::
+
+::: {solution-start} strings-and-things
+:class: dropdown
+:::
+
+Our solution is below. We used a dictionary where the values to be replace are the `.keys()` and the values with which to replace them with are the `.values()`.
+
+We then loop through the key/value pairings and perform the replacements using `.str.replace()` (see the note below about a more efficient way to do this).
+
+We then use the `.lower()` method to remove the capitalization.
+
+To make the array *identical* to the one shown above (and the one used for marking this exercise), we then re-rename `russia` to `russian_federation` before using `.unique()` to show the final array:
+
+```{python}
+# Copy the `country_name` Series
+clean_mat_mort_names_solution = maternal_mort['country_name'].copy()
+
+# A dictionary of values. The `.keys()` are the original strings, the `.values()`
+# are the replacement strings
+replace_dict = {" ": "_",
+                "(": "",
+                ")": "",
+                ",": "",
+                ".": "",
+                "-": "_"}
+
+# Loop through the keys and values
+for to_replace, replace in zip(replace_dict.keys(), 
+                               replace_dict.values()):
+    
+    # Make the replacements
+    clean_mat_mort_names_solution = clean_mat_mort_names_solution.str.replace(to_replace, replace)
+
+# Remove capitalization
+clean_mat_mort_names_solution = clean_mat_mort_names_solution.str.lower()
+
+# Re-rename "russia" to "russian_federation"
+clean_mat_mort_names_solution = clean_mat_mort_names_solution.str.replace("russia", "russian_federation")
+
+# Show the `.unique()` array.
+clean_mat_mort_names_solution.unique()
+```
+
+*Note:* you can achieve the same result in a more efficient, vectorized way using `.replace()` rather than `str.replace()`. E.g. where you can just pass a dictionary to the `.replace()` method ... but in the present context, this **is cheating, because we said to use *only* Pandas string methods!**
+
+::: {solution-end}
+:::
 
 
 ## Summary
