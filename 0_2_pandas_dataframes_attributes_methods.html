@@ -2428,7 +2428,25 @@ Name: mean, dtype: float64
 </div>
 </div>
 </div>
-<p>You could have also solved this problem (much less elegently) by calculating the means manually, storing them in an array or list, then using the <code class="docutils literal notranslate"><span class="pre">pd.Series()</span></code> constructor with <code class="docutils literal notranslate"><span class="pre">name</span> <span class="pre">=</span> <span class="pre">mean</span></code> and <code class="docutils literal notranslate"><span class="pre">index</span> <span class="pre">=</span>&#160; <span class="pre">['Human</span> <span class="pre">Development</span> <span class="pre">Index',</span> <span class="pre">'Fertility</span> <span class="pre">Rate',</span> <span class="pre">'Population']</span></code>:</p>
+<p>Another option is to manually drop the column containing non-numeric data, and then use the <code class="docutils literal notranslate"><span class="pre">.mean()</span></code> method, and manually specify the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean_series</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;Country Name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">mean_series</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;mean&quot;</span>
+<span class="n">mean_series</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Human Development Index      0.789333
+Fertility Rate               1.773867
+Population                 236.719867
+Name: mean, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>A further solution (much less elegent) is to calculate the means manually, store them in an array or list, then using the <code class="docutils literal notranslate"><span class="pre">pd.Series()</span></code> constructor with <code class="docutils literal notranslate"><span class="pre">name</span> <span class="pre">=</span> <span class="pre">mean</span></code> and <code class="docutils literal notranslate"><span class="pre">index</span> <span class="pre">=</span> <span class="pre">['Human</span> <span class="pre">Development</span> <span class="pre">Index',</span> <span class="pre">'Fertility</span> <span class="pre">Rate',</span> <span class="pre">'Population']</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># calculate the means</span>
@@ -2459,7 +2477,7 @@ Name: means, dtype: float64
 </div>
 </div>
 <p>Phew! That really was inefficient. Many Pandas methods are designed to save us time in situations exactly like this…</p>
-<p>Pandas is a particularly good example of a complex library where there are many ways of achieving the same result, and where AI or careless StackOverflow searches can give you a very inefficient or inelegant solution.   We strongly advise you to keep investing the time to work out the most elegant solution to your Pandas problems, in order to keep learning, and so that you write code that others can read, including you, the maintainer.</p>
+<p>In fact, Pandas is a particularly good example of a complex library where there are many ways of achieving the same result, and where AI or careless StackOverflow searches can give you a very inefficient or inelegant solution.   We strongly advise you to keep investing the time to work out the most elegant solution to your Pandas problems, in order to keep learning, and so that you write code that others can read, including you, the maintainer.</p>
 </section>
 </div>
 <p>Because each Data Frame column is just a Pandas Series, all of the Series methods we saw above can be used on individual Series:</p>
@@ -3762,25 +3780,25 @@ Name: means, dtype: float64
   </thead>
   <tbody>
     <tr>
-      <th>KOR</th>
-      <td>0.824</td>
-      <td>1.467</td>
-      <td>46.7666</td>
-      <td>South Korea</td>
-    </tr>
-    <tr>
-      <th>USA</th>
-      <td>0.894</td>
-      <td>2.030</td>
-      <td>281.4841</td>
-      <td>United States</td>
-    </tr>
-    <tr>
       <th>CHN</th>
       <td>0.586</td>
       <td>1.628</td>
       <td>1269.5811</td>
       <td>China</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>98.6255</td>
+      <td>Mexico</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>146.7177</td>
+      <td>Russia</td>
     </tr>
   </tbody>
 </table>
@@ -3828,25 +3846,25 @@ Name: means, dtype: float64
   </thead>
   <tbody>
     <tr>
-      <th>CAN</th>
-      <td>0.890</td>
-      <td>1.510</td>
-      <td>30.8918</td>
-      <td>Canada</td>
-    </tr>
-    <tr>
-      <th>AUS</th>
-      <td>0.896</td>
-      <td>1.764</td>
-      <td>19.1324</td>
-      <td>Australia</td>
+      <th>ESP</th>
+      <td>0.828</td>
+      <td>1.21</td>
+      <td>41.0197</td>
+      <td>Spain</td>
     </tr>
     <tr>
       <th>USA</th>
       <td>0.894</td>
-      <td>2.030</td>
+      <td>2.03</td>
       <td>281.4841</td>
       <td>United States</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.19</td>
+      <td>146.7177</td>
+      <td>Russia</td>
     </tr>
   </tbody>
 </table>
@@ -3906,18 +3924,11 @@ Name: means, dtype: float64
   </thead>
   <tbody>
     <tr>
-      <th>CHN</th>
-      <td>0.586</td>
-      <td>1.628</td>
-      <td>1269.5811</td>
-      <td>China</td>
-    </tr>
-    <tr>
-      <th>DEU</th>
+      <th>CAN</th>
       <td>0.890</td>
-      <td>1.386</td>
-      <td>81.7972</td>
-      <td>Germany</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
     </tr>
     <tr>
       <th>BRA</th>
@@ -3927,11 +3938,18 @@ Name: means, dtype: float64
       <td>Brazil</td>
     </tr>
     <tr>
-      <th>CAN</th>
+      <th>DEU</th>
       <td>0.890</td>
-      <td>1.510</td>
-      <td>30.8918</td>
-      <td>Canada</td>
+      <td>1.386</td>
+      <td>81.7972</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>19.1324</td>
+      <td>Australia</td>
     </tr>
   </tbody>
 </table>
@@ -3948,7 +3966,7 @@ Name: means, dtype: float64
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">76</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">77</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Trying to take a without-replacement sample that is too large.</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">first_five</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
@@ -4015,53 +4033,11 @@ Name: means, dtype: float64
   </thead>
   <tbody>
     <tr>
-      <th>CHN</th>
-      <td>0.586</td>
-      <td>1.628</td>
-      <td>1269.5811</td>
-      <td>China</td>
-    </tr>
-    <tr>
-      <th>AUS</th>
-      <td>0.896</td>
-      <td>1.764</td>
-      <td>19.1324</td>
-      <td>Australia</td>
-    </tr>
-    <tr>
-      <th>AUS</th>
-      <td>0.896</td>
-      <td>1.764</td>
-      <td>19.1324</td>
-      <td>Australia</td>
-    </tr>
-    <tr>
-      <th>CHN</th>
-      <td>0.586</td>
-      <td>1.628</td>
-      <td>1269.5811</td>
-      <td>China</td>
-    </tr>
-    <tr>
-      <th>CHN</th>
-      <td>0.586</td>
-      <td>1.628</td>
-      <td>1269.5811</td>
-      <td>China</td>
-    </tr>
-    <tr>
-      <th>BRA</th>
-      <td>0.668</td>
-      <td>2.247</td>
-      <td>174.0182</td>
-      <td>Brazil</td>
-    </tr>
-    <tr>
-      <th>BRA</th>
-      <td>0.668</td>
-      <td>2.247</td>
-      <td>174.0182</td>
-      <td>Brazil</td>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>81.7972</td>
+      <td>Germany</td>
     </tr>
     <tr>
       <th>DEU</th>
@@ -4071,6 +4047,20 @@ Name: means, dtype: float64
       <td>Germany</td>
     </tr>
     <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>19.1324</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>19.1324</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
       <th>CAN</th>
       <td>0.890</td>
       <td>1.510</td>
@@ -4078,11 +4068,39 @@ Name: means, dtype: float64
       <td>Canada</td>
     </tr>
     <tr>
-      <th>CHN</th>
-      <td>0.586</td>
-      <td>1.628</td>
-      <td>1269.5811</td>
-      <td>China</td>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>81.7972</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>174.0182</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>81.7972</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>19.1324</td>
+      <td>Australia</td>
     </tr>
   </tbody>
 </table>
@@ -4133,6 +4151,13 @@ Data Frame.  To get a sample that is half the size the original Data Frame
   </thead>
   <tbody>
     <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1269.5811</td>
+      <td>China</td>
+    </tr>
+    <tr>
       <th>FRA</th>
       <td>0.844</td>
       <td>1.876</td>
@@ -4140,11 +4165,18 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>France</td>
     </tr>
     <tr>
-      <th>CAN</th>
-      <td>0.890</td>
-      <td>1.510</td>
-      <td>30.8918</td>
-      <td>Canada</td>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>281.4841</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>174.0182</td>
+      <td>Brazil</td>
     </tr>
     <tr>
       <th>ESP</th>
@@ -4154,20 +4186,6 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>Spain</td>
     </tr>
     <tr>
-      <th>DEU</th>
-      <td>0.890</td>
-      <td>1.386</td>
-      <td>81.7972</td>
-      <td>Germany</td>
-    </tr>
-    <tr>
-      <th>AUS</th>
-      <td>0.896</td>
-      <td>1.764</td>
-      <td>19.1324</td>
-      <td>Australia</td>
-    </tr>
-    <tr>
       <th>IND</th>
       <td>0.490</td>
       <td>3.350</td>
@@ -4175,18 +4193,18 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>India</td>
     </tr>
     <tr>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>146.7177</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
       <th>MEX</th>
       <td>0.709</td>
       <td>2.714</td>
       <td>98.6255</td>
       <td>Mexico</td>
-    </tr>
-    <tr>
-      <th>BRA</th>
-      <td>0.668</td>
-      <td>2.247</td>
-      <td>174.0182</td>
-      <td>Brazil</td>
     </tr>
   </tbody>
 </table>
@@ -4206,21 +4224,21 @@ Data Frame.  To get a sample that is half the size the original Data Frame
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.828, 1.21, 41.0197, &#39;Spain&#39;],
-       [0.49, 3.35, 1057.9227, &#39;India&#39;],
-       [0.709, 2.714, 98.6255, &#39;Mexico&#39;],
-       [0.883, 1.346, 127.0278, &#39;Japan&#39;],
-       [0.894, 2.03, 281.4841, &#39;United States&#39;],
-       [0.668, 2.247, 174.0182, &#39;Brazil&#39;],
-       [0.863, 1.641, 59.0573, &#39;United Kingdom&#39;],
-       [0.824, 1.467, 46.7666, &#39;South Korea&#39;],
-       [0.89, 1.51, 30.8918, &#39;Canada&#39;],
-       [0.586, 1.628, 1269.5811, &#39;China&#39;],
-       [0.844, 1.876, 59.4837, &#39;France&#39;],
-       [0.842, 1.249, 57.2722, &#39;Italy&#39;],
-       [0.733, 1.19, 146.7177, &#39;Russia&#39;],
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.883, 1.346, 127.0278, &#39;Japan&#39;],
        [0.89, 1.386, 81.7972, &#39;Germany&#39;],
-       [0.896, 1.764, 19.1324, &#39;Australia&#39;]], dtype=object)
+       [0.668, 2.247, 174.0182, &#39;Brazil&#39;],
+       [0.49, 3.35, 1057.9227, &#39;India&#39;],
+       [0.89, 1.51, 30.8918, &#39;Canada&#39;],
+       [0.709, 2.714, 98.6255, &#39;Mexico&#39;],
+       [0.842, 1.249, 57.2722, &#39;Italy&#39;],
+       [0.824, 1.467, 46.7666, &#39;South Korea&#39;],
+       [0.863, 1.641, 59.0573, &#39;United Kingdom&#39;],
+       [0.828, 1.21, 41.0197, &#39;Spain&#39;],
+       [0.894, 2.03, 281.4841, &#39;United States&#39;],
+       [0.896, 1.764, 19.1324, &#39;Australia&#39;],
+       [0.733, 1.19, 146.7177, &#39;Russia&#39;],
+       [0.844, 1.876, 59.4837, &#39;France&#39;],
+       [0.586, 1.628, 1269.5811, &#39;China&#39;]], dtype=object)
 </pre></div>
 </div>
 </div>
@@ -4286,11 +4304,32 @@ Data Frame.  To get a sample that is half the size the original Data Frame
   </thead>
   <tbody>
     <tr>
-      <th>FRA</th>
-      <td>0.844</td>
-      <td>1.876</td>
-      <td>59.4837</td>
-      <td>France</td>
+      <th>KOR</th>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>46.7666</td>
+      <td>South Korea</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>146.7177</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>0.842</td>
+      <td>1.249</td>
+      <td>57.2722</td>
+      <td>Italy</td>
+    </tr>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>19.1324</td>
+      <td>Australia</td>
     </tr>
     <tr>
       <th>BRA</th>
@@ -4300,25 +4339,18 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>Brazil</td>
     </tr>
     <tr>
-      <th>CAN</th>
-      <td>0.890</td>
-      <td>1.510</td>
-      <td>30.8918</td>
-      <td>Canada</td>
-    </tr>
-    <tr>
-      <th>KOR</th>
-      <td>0.824</td>
-      <td>1.467</td>
-      <td>46.7666</td>
-      <td>South Korea</td>
-    </tr>
-    <tr>
       <th>IND</th>
       <td>0.490</td>
       <td>3.350</td>
       <td>1057.9227</td>
       <td>India</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1269.5811</td>
+      <td>China</td>
     </tr>
     <tr>
       <th>GBR</th>
@@ -4335,25 +4367,32 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>Japan</td>
     </tr>
     <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>81.7972</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>59.4837</td>
+      <td>France</td>
+    </tr>
+    <tr>
       <th>ESP</th>
       <td>0.828</td>
       <td>1.210</td>
       <td>41.0197</td>
       <td>Spain</td>
-    </tr>
-    <tr>
-      <th>RUS</th>
-      <td>0.733</td>
-      <td>1.190</td>
-      <td>146.7177</td>
-      <td>Russia</td>
-    </tr>
-    <tr>
-      <th>CHN</th>
-      <td>0.586</td>
-      <td>1.628</td>
-      <td>1269.5811</td>
-      <td>China</td>
     </tr>
     <tr>
       <th>USA</th>
@@ -4363,32 +4402,11 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>United States</td>
     </tr>
     <tr>
-      <th>ITA</th>
-      <td>0.842</td>
-      <td>1.249</td>
-      <td>57.2722</td>
-      <td>Italy</td>
-    </tr>
-    <tr>
       <th>MEX</th>
       <td>0.709</td>
       <td>2.714</td>
       <td>98.6255</td>
       <td>Mexico</td>
-    </tr>
-    <tr>
-      <th>AUS</th>
-      <td>0.896</td>
-      <td>1.764</td>
-      <td>19.1324</td>
-      <td>Australia</td>
-    </tr>
-    <tr>
-      <th>DEU</th>
-      <td>0.890</td>
-      <td>1.386</td>
-      <td>81.7972</td>
-      <td>Germany</td>
     </tr>
   </tbody>
 </table>
@@ -4436,11 +4454,11 @@ Data Frame.  To get a sample that is half the size the original Data Frame
   </thead>
   <tbody>
     <tr>
-      <th>ITA</th>
-      <td>0.842</td>
-      <td>1.249</td>
-      <td>57.2722</td>
-      <td>Italy</td>
+      <th>JPN</th>
+      <td>0.883</td>
+      <td>1.346</td>
+      <td>127.0278</td>
+      <td>Japan</td>
     </tr>
     <tr>
       <th>MEX</th>
@@ -4450,25 +4468,11 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>Mexico</td>
     </tr>
     <tr>
-      <th>ESP</th>
-      <td>0.828</td>
-      <td>1.210</td>
-      <td>41.0197</td>
-      <td>Spain</td>
-    </tr>
-    <tr>
-      <th>CAN</th>
-      <td>0.890</td>
-      <td>1.510</td>
-      <td>30.8918</td>
-      <td>Canada</td>
-    </tr>
-    <tr>
-      <th>IND</th>
-      <td>0.490</td>
-      <td>3.350</td>
-      <td>1057.9227</td>
-      <td>India</td>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>281.4841</td>
+      <td>United States</td>
     </tr>
     <tr>
       <th>KOR</th>
@@ -4478,32 +4482,11 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>South Korea</td>
     </tr>
     <tr>
-      <th>AUS</th>
-      <td>0.896</td>
-      <td>1.764</td>
-      <td>19.1324</td>
-      <td>Australia</td>
-    </tr>
-    <tr>
-      <th>RUS</th>
-      <td>0.733</td>
-      <td>1.190</td>
-      <td>146.7177</td>
-      <td>Russia</td>
-    </tr>
-    <tr>
-      <th>JPN</th>
-      <td>0.883</td>
-      <td>1.346</td>
-      <td>127.0278</td>
-      <td>Japan</td>
-    </tr>
-    <tr>
-      <th>DEU</th>
+      <th>CAN</th>
       <td>0.890</td>
-      <td>1.386</td>
-      <td>81.7972</td>
-      <td>Germany</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
     </tr>
     <tr>
       <th>CHN</th>
@@ -4513,20 +4496,6 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>China</td>
     </tr>
     <tr>
-      <th>FRA</th>
-      <td>0.844</td>
-      <td>1.876</td>
-      <td>59.4837</td>
-      <td>France</td>
-    </tr>
-    <tr>
-      <th>USA</th>
-      <td>0.894</td>
-      <td>2.030</td>
-      <td>281.4841</td>
-      <td>United States</td>
-    </tr>
-    <tr>
       <th>GBR</th>
       <td>0.863</td>
       <td>1.641</td>
@@ -4534,11 +4503,60 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>United Kingdom</td>
     </tr>
     <tr>
+      <th>ESP</th>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>41.0197</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>146.7177</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
       <th>BRA</th>
       <td>0.668</td>
       <td>2.247</td>
       <td>174.0182</td>
       <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>81.7972</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>0.842</td>
+      <td>1.249</td>
+      <td>57.2722</td>
+      <td>Italy</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>59.4837</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1057.9227</td>
+      <td>India</td>
+    </tr>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>19.1324</td>
+      <td>Australia</td>
     </tr>
   </tbody>
 </table>
@@ -4598,67 +4616,11 @@ Data Frame.  To get a sample that is half the size the original Data Frame
   </thead>
   <tbody>
     <tr>
-      <th>CHN</th>
-      <td>0.586</td>
-      <td>1.628</td>
-      <td>1269.5811</td>
-      <td>China</td>
-    </tr>
-    <tr>
-      <th>ESP</th>
-      <td>0.828</td>
-      <td>1.210</td>
-      <td>41.0197</td>
-      <td>Spain</td>
-    </tr>
-    <tr>
-      <th>IND</th>
-      <td>0.490</td>
-      <td>3.350</td>
-      <td>1057.9227</td>
-      <td>India</td>
-    </tr>
-    <tr>
-      <th>IND</th>
-      <td>0.490</td>
-      <td>3.350</td>
-      <td>1057.9227</td>
-      <td>India</td>
-    </tr>
-    <tr>
-      <th>FRA</th>
-      <td>0.844</td>
-      <td>1.876</td>
-      <td>59.4837</td>
-      <td>France</td>
-    </tr>
-    <tr>
       <th>USA</th>
       <td>0.894</td>
       <td>2.030</td>
       <td>281.4841</td>
       <td>United States</td>
-    </tr>
-    <tr>
-      <th>IND</th>
-      <td>0.490</td>
-      <td>3.350</td>
-      <td>1057.9227</td>
-      <td>India</td>
-    </tr>
-    <tr>
-      <th>GBR</th>
-      <td>0.863</td>
-      <td>1.641</td>
-      <td>59.0573</td>
-      <td>United Kingdom</td>
-    </tr>
-    <tr>
-      <th>CAN</th>
-      <td>0.890</td>
-      <td>1.510</td>
-      <td>30.8918</td>
-      <td>Canada</td>
     </tr>
     <tr>
       <th>AUS</th>
@@ -4668,6 +4630,62 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>Australia</td>
     </tr>
     <tr>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>81.7972</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>174.0182</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>81.7972</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>KOR</th>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>46.7666</td>
+      <td>South Korea</td>
+    </tr>
+    <tr>
+      <th>KOR</th>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>46.7666</td>
+      <td>South Korea</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>98.6255</td>
+      <td>Mexico</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>81.7972</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1269.5811</td>
+      <td>China</td>
+    </tr>
+    <tr>
       <th>BRA</th>
       <td>0.668</td>
       <td>2.247</td>
@@ -4682,39 +4700,11 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>India</td>
     </tr>
     <tr>
-      <th>KOR</th>
-      <td>0.824</td>
-      <td>1.467</td>
-      <td>46.7666</td>
-      <td>South Korea</td>
-    </tr>
-    <tr>
-      <th>ESP</th>
-      <td>0.828</td>
-      <td>1.210</td>
-      <td>41.0197</td>
-      <td>Spain</td>
-    </tr>
-    <tr>
-      <th>CAN</th>
-      <td>0.890</td>
-      <td>1.510</td>
-      <td>30.8918</td>
-      <td>Canada</td>
-    </tr>
-    <tr>
-      <th>CAN</th>
-      <td>0.890</td>
-      <td>1.510</td>
-      <td>30.8918</td>
-      <td>Canada</td>
-    </tr>
-    <tr>
-      <th>KOR</th>
-      <td>0.824</td>
-      <td>1.467</td>
-      <td>46.7666</td>
-      <td>South Korea</td>
+      <th>IND</th>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1057.9227</td>
+      <td>India</td>
     </tr>
     <tr>
       <th>CHN</th>
@@ -4724,25 +4714,32 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>China</td>
     </tr>
     <tr>
-      <th>CAN</th>
-      <td>0.890</td>
-      <td>1.510</td>
-      <td>30.8918</td>
-      <td>Canada</td>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>174.0182</td>
+      <td>Brazil</td>
     </tr>
     <tr>
-      <th>KOR</th>
-      <td>0.824</td>
-      <td>1.467</td>
-      <td>46.7666</td>
-      <td>South Korea</td>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>174.0182</td>
+      <td>Brazil</td>
     </tr>
     <tr>
-      <th>ESP</th>
-      <td>0.828</td>
-      <td>1.210</td>
-      <td>41.0197</td>
-      <td>Spain</td>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1269.5811</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>98.6255</td>
+      <td>Mexico</td>
     </tr>
     <tr>
       <th>IND</th>
@@ -4759,18 +4756,39 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>United Kingdom</td>
     </tr>
     <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>146.7177</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>98.6255</td>
+      <td>Mexico</td>
+    </tr>
+    <tr>
       <th>USA</th>
       <td>0.894</td>
       <td>2.030</td>
       <td>281.4841</td>
       <td>United States</td>
-    </tr>
-    <tr>
-      <th>BRA</th>
-      <td>0.668</td>
-      <td>2.247</td>
-      <td>174.0182</td>
-      <td>Brazil</td>
     </tr>
   </tbody>
 </table>
@@ -4817,9 +4835,9 @@ Data Frame.  To get a sample that is half the size the original Data Frame
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Human Development Index     0.032333
-Fertility Rate             -0.124933
-Population                -36.325807
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Human Development Index     0.037267
+Fertility Rate             -0.122867
+Population                -39.781667
 Name: mean, dtype: float64
 </pre></div>
 </div>
@@ -4847,9 +4865,9 @@ Name: mean, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Human Development Index    -0.017800
-Fertility Rate              0.070000
-Population                -28.618093
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Human Development Index      0.032667
+Fertility Rate              -0.082600
+Population                -102.992300
 Name: mean, dtype: float64
 </pre></div>
 </div>
@@ -4885,7 +4903,7 @@ Name: mean, dtype: float64
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">88</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">89</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># A ValueError from trying to scatter plot a Series</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">hdi_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
 
