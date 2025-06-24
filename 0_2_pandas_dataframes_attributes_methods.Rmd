@@ -456,7 +456,7 @@ df.size
 :class: dropdown
 :::
 
-Your job here is to make a new Series which summarises aspects of the `df` Dataframe. In the `.values` array, your Series should contain the values of the `.shape` and `.size` attributes of `df`. It should also contain the `dtype` of the `index` of `df` (therefore, telling your user whether the `index` contains numeric labels, `str` labels, or something else). See if you can figure out how to get Pandas to report this via indexing (e.g. rather than copy pasting the information from the output of `df.index`).
+Your job here is to make a new Series which summarises aspects of the `df` Data Frame. In the `.values` array, your Series should contain the values of the `.shape` and `.size` attributes of `df`. It should also contain the `dtype` of the `index` of `df` (therefore, telling your user whether the `index` contains numeric labels, `str` labels, or something else). See if you can figure out how to get Pandas to report this via indexing (e.g. rather than copy pasting the information from the output of `df.index`).
 
 The `index` of your Series should clearly state what each `value` is. E.g. the strings `shape`, `size`, `index_dtype` should be the `index` labels in your Series. 
 
@@ -510,7 +510,7 @@ df_attributes = pd.Series(attributes_array,
 df_attributes
 ```
 
-Creating your own Series in this way (perhaps performed by a custom function) can be useful for displaying bespoke summaries of a dataset/Dataframe. However, normally this would be done with more complicated statistical information, not just the `shape`/`size`/`dtype`!
+Creating your own Series in this way (perhaps performed by a custom function) can be useful for displaying bespoke summaries of a dataset/Data Frame. However, normally this would be done with more complicated statistical information, not just the `shape`/`size`/`dtype`!
 
 
 ::: {solution-end}
@@ -630,7 +630,7 @@ Try to do this in as few lines of code as possible, using the methods shown on t
 :class: dropdown
 :::
 
-The output of the `.describe()` method is itself a Dataframe, and the `index` of this Dataframe contains a row called `mean`, which, shockingly, contains the means. As a result, you can use `.loc` indexing to retrieve just the means from the output of `.describe()`:
+The output of the `.describe()` method is itself a Data Frame, and the `index` of this Data Frame contains a row called `mean`, which, shockingly, contains the means. As a result, you can use `.loc` indexing to retrieve just the means from the output of `.describe()`:
 
 ```{python}
 # Solution
@@ -843,7 +843,7 @@ df.sample(frac=0.5)
 
 There are functions within Numpy (as well as other libraries) that shuffle/permute/randomize data within an array (or an arraylike object, such as a list).
 
-Let's say we want to shuffle the *rows* in our Dataframe. We can do this with the `permutation()` function from the `numpy.random` submodule, but the output is very ugly. This operation brutally removes the nice Dataframe graphics (at least when run in a Jupyter notebook), and puts the rows of the Dataframe into a Numpy array, as shown below:
+Let's say we want to shuffle the *rows* in our Data Frame. We can do this with the `permutation()` function from the `numpy.random` submodule, but the output is very ugly. This operation brutally removes the nice Data Frame graphics (at least when run in a Jupyter notebook), and puts the rows of the Data Frame into a Numpy array, as shown below:
 
 ```{python}
 # Effective but ugly
@@ -852,7 +852,7 @@ np.random.permutation(df)
 
 Can you think of a way to perform this operation using only the Pandas methods we have seen so far on this page? In the cell below, you should write code which will:
 
-- randomize the order of the *rows* in the Dataframe. The data in each row should be the same as before shuffling (e.g. the data for Russia should still be the data for Russia etc.)
+- randomize the order of the *rows* in the Data Frame. The data in each row should be the same as before shuffling (e.g. the data for Russia should still be the data for Russia etc.)
 
 - ensure that no rows are removed or duplicated, just shuffled
 
@@ -883,7 +883,7 @@ Or, with greater grace, we can use `frac=1`, to mean "take a random sample of 10
 df.sample(frac=1)
 ```
 
-If you look at the `index` of either Dataframe in the above ceels, you'll notice that the rows are now in a random order.
+If you look at the `index` of either Data Frame in the above ceels, you'll notice that the rows are now in a random order.
 
 Because the sample is a random selection of the rows - and the default setting of `.sample()` is to sample *without replacement*  - using both `.sample(len(df))` and `df.sample(frac=1)` has the effect of randomizing the row order. All the original rows remaining in the sample, and there is no duplication of any rows.
 
@@ -902,7 +902,7 @@ We mentioned above that the default behaviour of the `.sample()` method is to sa
 
 To use a classic "drawing marbles from a bag" analogy, this means that when we randomly select a marble, we place it *back* in the bag (after recording it's identity/colour etc) before we randomly draw the next marble. This means the same marble can appear twice in the final sample. 
 
-As mentioned above, if we draw a sample of rows *with replacement* from our Dataframe, then individual rows can appear more than once in the resultant sample. If we draw a sample with replacement which is *larger* than the original data, it will certainly contain duplicate rows:
+As mentioned above, if we draw a sample of rows *with replacement* from our Data Frame, then individual rows can appear more than once in the resultant sample. If we draw a sample with replacement which is *larger* than the original data, it will certainly contain duplicate rows:
 
 ```{python}
 # A sample with replacement
@@ -914,7 +914,7 @@ Quickly scan the `index` for duplicates, to see that it contains duplicates (as 
 
 Your task is the following:
 
-- take a random sample *with replacement* of all the rows in the Dataframe (e.g. your sample should have the *same number of rows* as the original Dataframe)
+- take a random sample *with replacement* of all the rows in the Data Frame (e.g. your sample should have the *same number of rows* as the original Data Frame)
 
 - use an appropriate method to calculate the means of `Human Development Index`, `Fertility Rate` and `Population`, from your random sample
 
