@@ -716,16 +716,52 @@ Another useful method that can be powerful in tandem with label-based indexing, 
 df_rev_ind.drop(index='USA')
 ```
 
-<!-- #region -->
 If you compare this to the output from the last cell you will see that, as if by magic, the row for `USA` has disappeared.
 
+In addition to removing data from the Dataframe, we will also often want to replace data. Maybe we want to recode categorical data with better labels, create custom dummy/indicator variables, or correct errors etc.
+
+We can replace values using the descriptively named `.replace()` method. Lets say we want to use the abbreviation `UK` instead of `United Kingdom` in the `Country Name` column. We just give `.replace()` the value we want to replace, followed by the value we want to replace it with:
+
+```{python}
+# The `.replace()` method
+df['Country Name'].replace("United Kingdom", "UK")
+```
+
+Sure enough, `United Kingdom` has been replaced with `UK` in the Series in the output of the cell above. We can also do this with [collections of values](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.replace.html) (e.g. using a `dict` or `list` etc) rather than just single values, should we feel moved to do so.
+
+By default, `.replace()` (when used with `str` data) only works on *whole expressions*.
+
+For instance, we might expect the following code to replace `United` in both `United Kingdom` and `United States`, but we would be wrong:
+
+```{python}
+# Not what we want.
+df['Country Name'].replace("United", "Unknown")
+```
+
+This did not work because `.replace()` is searching for an element of the Series which *equals* `United`, not *contains* `United`. (There is an alternative string-specifc `.replace()` method, which behaves differently as we will see on a [later page](0_6_more_pandas_methods_strings)).
+
+We can achieve the desired result using the `regex` (standing for "regular expression") argument:
+
+```{python}
+# The expected result.
+df['Country Name'].replace("United", "Unknown",
+                           regex=True)
+```
+
+Now `regex=True`, the `.replace()` method has searched for matches *within* other strings. So, `United` has been replaced in both `United Kingdom` and `United States`, despite not matching either string in full.
+
+This method can also be used for numeric `dtype`s. For instance, some particularly patriotic data analyst might want to do the following replacement:
+
+```{python}
+# The Replace method, with numeric data.
+df['Human Development Index'].replace(0.894, 100000)
+```
 
 ### Methods for getting subsets of data from a Data Frame
 
 Another common operation we may want to perform is to view only the start (e.g. the `.head`) or the end (e.g. the `.tail`) of a Data Frame. For instance, if the rows are organized by time, amongst many other reasons.
 
 We could just use `.iloc` position-based indexing to do this. For example, to view the first three rows of the Data Frame we can use:
-<!-- #endregion -->
 
 ```{python}
 # View the first three rows of the Data Frame, using `.iloc`
