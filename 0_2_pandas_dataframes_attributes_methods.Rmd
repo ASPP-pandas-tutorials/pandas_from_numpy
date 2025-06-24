@@ -723,7 +723,7 @@ In addition to removing data from the Dataframe, we will also often want to repl
 We can replace values using the descriptively named `.replace()` method. Lets say we want to use the abbreviation `UK` instead of `United Kingdom` in the `Country Name` column. We just give `.replace()` the value we want to replace, followed by the value we want to replace it with:
 
 ```{python}
-# The `.replace()` method
+# The `.replace()` method applied to a Series (in a Data Frame).
 df['Country Name'].replace("United Kingdom", "UK")
 ```
 
