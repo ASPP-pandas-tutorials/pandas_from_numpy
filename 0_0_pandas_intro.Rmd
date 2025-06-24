@@ -17,7 +17,7 @@ jupyter:
 
 # Pandas from Numpy
 
-This tutorial will show the fundamental structure of Pandas Data Frames. We will look at the components that constitute a Data Frame - for instance, numpy arrays - in order to gain a deeper understanding of the raw ingredients that more advanced Pandas methods and functions operate on.
+This tutorial will show the fundamental structure of Pandas Data Frames. We will look at the components that constitute a Data Frame - for instance, Numpy arrays - in order to gain a deeper understanding of the raw ingredients that more advanced Pandas methods and functions operate on.
 
 ## What is Pandas?
 
@@ -115,7 +115,8 @@ fert_rates_array
 As experienced data analysts, we first want to inspect this relationship
 graphically, for example with the [Matplotlib
 library](https://matplotlib.org). Later, we will see that Pandas offers us
-some streamlined ways of plotting data, without importing other libraries.
+some streamlined ways of plotting data, without the need to import other
+libraries.
 
 ```{python}
 # Some basic plotting with Matplotlib.
