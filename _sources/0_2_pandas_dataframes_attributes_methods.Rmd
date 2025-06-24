@@ -164,7 +164,7 @@ len(zeros_array)
 len(hdis_array)
 ```
 
-::: note
+::: {note}
 
 **How does `len()` work?**
 
@@ -207,7 +207,7 @@ For this array, the `dtype` tells us that we are dealing with numerical data - s
 
 Numpy also provides a variety of what we can call "statistical attributes" which tell us statistics about the data inside the array.
 
-::: note
+::: {note}
 
 **What is a statistic**
 
@@ -1057,7 +1057,7 @@ df * 200
 
 More sensibly, we will most likely want to perform numerical operations on specific columns. We may want to *standardize* the values relative to a mean of 0 and standard deviation of 1, for instance.
 
-::: note
+::: {note}
 
 **Standard scores**
 

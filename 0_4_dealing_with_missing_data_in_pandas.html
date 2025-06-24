@@ -489,7 +489,7 @@ operations.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2593/2469014178.py:6: RuntimeWarning: invalid value encountered in divide
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2564/2469014178.py:6: RuntimeWarning: invalid value encountered in divide
   a_nan = np.array(0) / np.array(0)
 </pre></div>
 </div>
@@ -512,7 +512,7 @@ infinity) are special floating point values:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2593/58810310.py:2: RuntimeWarning: divide by zero encountered in divide
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2564/58810310.py:2: RuntimeWarning: divide by zero encountered in divide
   np.array(1) / np.array(0)
 </pre></div>
 </div>
@@ -882,7 +882,8 @@ presence of a standard NaN:</p>
 </div>
 </div>
 </div>
-<div class="note docutils">
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p><strong>Pandas NA</strong></p>
 <p>In fact <code class="docutils literal notranslate"><span class="pre">pd.isna()</span></code> doesn’t just check for NaN values, because Pandas has some
 other, less common ways to indicate an element is missing.  You will see this
@@ -893,8 +894,11 @@ See <a class="reference external" href="https://pandas.pydata.org/pandas-docs/st
 Data</a>
 for the full gory details.  The summary at this stage is:</p>
 <ul class="simple">
-<li><p>For readability, and to allow for the use of other NA values in Pandas, we suggest you use <code class="docutils literal notranslate"><span class="pre">pd.isna()</span></code> to check for missing values.</p></li>
-<li><p>That said, at the moment, Pandas nearly always indicates missing (NA) values with Numpy’s <code class="docutils literal notranslate"><span class="pre">np.nan</span></code>.</p></li>
+<li><p>For readability, and to allow for the use of other NA values in Pandas, we
+suggest you use <code class="docutils literal notranslate"><span class="pre">pd.isna()</span></code> or Pandas <code class="docutils literal notranslate"><span class="pre">.isna()</span></code> methods to check for missing
+values.</p></li>
+<li><p>That said, at the moment, Pandas nearly always indicates missing (NA) values
+with Numpy’s <code class="docutils literal notranslate"><span class="pre">np.nan</span></code>.</p></li>
 </ul>
 </div>
 <p>Missing data - fancifully referred to as <em>missingness</em> - is common in the vast

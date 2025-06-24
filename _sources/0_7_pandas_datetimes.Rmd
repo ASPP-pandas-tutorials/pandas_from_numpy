@@ -86,7 +86,7 @@ This is where having a specialized representation of time comes in handy. We
 can use the `pd.to_datetime()` function to convert this data to Pandas' special
 representation of a particular point in time.
 
-::: note
+::: {note}
 
 **Different ways of representing time**
 
@@ -318,11 +318,15 @@ approx_years_since_1_1_1970
 single_timestamp.year - np.round(approx_years_since_1_1_1970)
 ```
 
-::: note
+::: {note}
 
 **Floating point years**
 
-We could have subtracted `approx_years_since_1_1_1970` from `single_timestamp.year` without rounding, and we'd get something midway through 1969, because `approx_years_since_1_1_1970` includes the time from January 1 2025 to June 6 2025, so subtracting the unrounded value will take us back to midway through 1969.
+We could have subtracted `approx_years_since_1_1_1970` from
+`single_timestamp.year` without rounding, and we'd get something midway
+through 1969, because `approx_years_since_1_1_1970` includes the time from
+January 1 2025 to June 6 2025, so subtracting the unrounded value will take us
+back to the middle of 1969.
 
 :::
 

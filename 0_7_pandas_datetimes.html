@@ -545,7 +545,8 @@ time:</p>
 <p>This is where having a specialized representation of time comes in handy. We
 can use the <code class="docutils literal notranslate"><span class="pre">pd.to_datetime()</span></code> function to convert this data to Pandas’ special
 representation of a particular point in time.</p>
-<div class="note docutils">
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p><strong>Different ways of representing time</strong></p>
 <p>As you’ll see below, there are two different and common ways of representing
 time.  These are:</p>
@@ -694,7 +695,7 @@ convert dates which contain words like the names of months (June, July etc.):</p
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2654/560003137.py:3: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2626/560003137.py:3: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
   a_series_of_timestamps = pd.to_datetime(a_series_of_str)
 </pre></div>
 </div>
@@ -880,9 +881,14 @@ Epoch was equal to 0 (midnight, January 1st 1970):</p>
 </div>
 </div>
 </div>
-<div class="note docutils">
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p><strong>Floating point years</strong></p>
-<p>We could have subtracted <code class="docutils literal notranslate"><span class="pre">approx_years_since_1_1_1970</span></code> from <code class="docutils literal notranslate"><span class="pre">single_timestamp.year</span></code> without rounding, and we’d get something midway through 1969, because <code class="docutils literal notranslate"><span class="pre">approx_years_since_1_1_1970</span></code> includes the time from January 1 2025 to June 6 2025, so subtracting the unrounded value will take us back to midway through 1969.</p>
+<p>We could have subtracted <code class="docutils literal notranslate"><span class="pre">approx_years_since_1_1_1970</span></code> from
+<code class="docutils literal notranslate"><span class="pre">single_timestamp.year</span></code> without rounding, and we’d get something midway
+through 1969, because <code class="docutils literal notranslate"><span class="pre">approx_years_since_1_1_1970</span></code> includes the time from
+January 1 2025 to June 6 2025, so subtracting the unrounded value will take us
+back to the middle of 1969.</p>
 </div>
 </section>
 <section id="times-and-dates-in-pandas-data-frames">
