@@ -855,16 +855,26 @@ There is a new concern
 
 ## Summary
 
-On this page we have looked at the differences between attributes of the
-Pandas Series - the `name` is optional, but a default `RangeIndex` will be
-supplied if no custom `index` is specified.
+On this page we have looked at the Pandas Index, and different ways of indexing into Pandas Series.
 
-We have seen that the `RangeIndex` and other indices with integer labels can
-lead to errors if the numeric row labels become misaligned with the integer
-location of a given row. Similarly, if we do not specify a `name` attribute
-for Data Frame columns, Pandas will generate numeric labels which can create
-confusion between integer-based and direct indexing.
+We discussed the default index that Pandas provides, of integer labels, and we
+showed how to get Series values by label (`.loc`) and by position (`.iloc`).
+
+`.loc` differs from `.iloc` and other Python indexing in that slices *include
+their stop value*.
+
+We pressed you to completely avoid using direct indexing on Pandas Series, because of the potent confusion that can arise between label and position indexing.
 
 For best results, we should specify both an interpretable `index` and
 interpretable `name` attributes for our Series, especially when they are part
 of Data Frames.
+
+Direct indexing into Data Frames is common and useful, in two situations:
+
+1. Direct indexing using a column name or sequence of names.
+1. Direct indexing using a Boolean Series (see [filtering
+   page](0_5_filtering_data_with_pandas).
+
+We can use `.loc` and `.iloc` on Data Frames, remembering that this indexing
+acts like indexing two-dimensional Numpy arrays; when selecting columns, we
+first need to specify a selection for rows.
