@@ -927,7 +927,7 @@ Name: hdi_grtr_thn_median, dtype: bool
 </div></div></div>
 </div>
 <p>Now, to view the median we can use the <code class="docutils literal notranslate"><span class="pre">.median()</span></code> Series method, rather than calling the <code class="docutils literal notranslate"><span class="pre">np.median()</span></code> function as we did earlier.</p>
-<p><em>NB</em>: we mentioned on a <a class="reference internal" href="0_2_pandas_dataframes_attributes_methods.html"><span class="doc std std-doc">previous page</span></a> that Pandas Series <em>methods</em> have parallel behavior to Numpy <em>functions</em>, but they generally give better efficiency and readability, as is the case here.  Remember too that they treat NaN values as <em>missing</em> rather than <em>numerically invalid</em>, so Pandas calculations, unlike Numpy’s default calculations, typically drop NaN values.</p>
+<p><em>NB</em>: we mentioned on a <a class="reference internal" href="0_2_pandas_dataframes_attributes_methods.html"><span class="doc std std-doc">previous page</span></a> that Pandas Series <em>methods</em> have parallel behavior to Numpy <em>functions</em>, but they treat NaN values as <em>missing</em> rather than <em>numerically invalid</em>, so Pandas calculations, unlike Numpy’s default calculations, typically drop NaN values.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the median HDI</span>
