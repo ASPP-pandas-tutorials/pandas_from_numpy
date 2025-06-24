@@ -694,7 +694,7 @@ convert dates which contain words like the names of months (June, July etc.):</p
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2605/560003137.py:3: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2585/560003137.py:3: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
   a_series_of_timestamps = pd.to_datetime(a_series_of_str)
 </pre></div>
 </div>
@@ -715,7 +715,7 @@ nature of Pandas time stamps, as we will see in later sections.</p>
 </section>
 <section id="a-closer-look-at-time-stamps-and-time-deltas">
 <h2>A closer look at time stamps and time deltas<a class="headerlink" href="#a-closer-look-at-time-stamps-and-time-deltas" title="Link to this heading">#</a></h2>
-<p>The Timestamps in the output of the cell above might appear similar to strings, but in terms of the internal representation that Pandas uses they are something entirely different. They are based on something (incredibly sci-fi sounding) called the “Unix Epoch”, to which we will attend later).</p>
+<p>The Timestamps in the output of the cell above might appear similar to strings, but in terms of the internal representation that Pandas uses they are something entirely different. They are based on something (incredibly sci-fi sounding) called the “Unix Epoch”, to which we will attend later.</p>
 <p>To get an insight into this representation, let’s take a closer look at one of the individual Timestamps.</p>
 <p>Our variable <code class="docutils literal notranslate"><span class="pre">a_series_of_timestamps</span></code> is a Pandas Series. As such, as we know
 we can use <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> indexing to retrieve single values from it. In this case, we
@@ -750,7 +750,7 @@ retrieve a single <code class="docutils literal notranslate"><span class="pre">T
 </div>
 <p>At first glance this might be confusing - it doesn’t look much like a normal
 date, or time…</p>
-<p>A look through the other attributes reveals more familiar nameed units of time. For instance, the <code class="docutils literal notranslate"><span class="pre">year</span></code>, <code class="docutils literal notranslate"><span class="pre">month</span></code> and <code class="docutils literal notranslate"><span class="pre">day</span></code> attributes:</p>
+<p>A look through the other attributes reveals more familiar named units of time. For instance, the <code class="docutils literal notranslate"><span class="pre">year</span></code>, <code class="docutils literal notranslate"><span class="pre">month</span></code> and <code class="docutils literal notranslate"><span class="pre">day</span></code> attributes:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The `.year` attribute</span>
@@ -792,12 +792,12 @@ date, or time…</p>
 </div>
 <p>So what is the mysterious <code class="docutils literal notranslate"><span class="pre">.value</span></code> attribute?</p>
 <p>It is, in fact, more fundamental than the other attributes. It derives from the
-aforementioned “Unix Epoch”, a slightly ominous sounding name for a specific
-date in 1970. Here is an explanation of what that is:</p>
+aforementioned “Unix Epoch”, a slightly ominous sounding name for the duration of time
+between a given timepoint and a specific timepoint in 1970. Here is an explanation of what that is:</p>
 <blockquote>
 <div><p>“The Unix epoch is the number of seconds that have elapsed since January 1, 1970 at midnight UTC time minus the leap seconds. This means that at midnight of January 1, 1970, Unix time was 0.” (from <a class="reference external" href="https://www.epoch101.com">https://www.epoch101.com</a>)</p>
 </div></blockquote>
-<p>The <code class="docutils literal notranslate"><span class="pre">.value</span></code> attribute reports the number of nanoseconds that have elapsed
+<p>The <code class="docutils literal notranslate"><span class="pre">.value</span></code> attribute reports the <a class="reference external" href="https://pandas.pydata.org/docs/dev/reference/api/pandas.Timestamp.value.html">number of nanoseconds</a> that have elapsed
 between midnight January 1st 1970 and the particular point in time represented
 by the <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code>. This is the fundamental representation that Pandas uses in
 <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code>s — the other attributes (<code class="docutils literal notranslate"><span class="pre">year</span></code>, <code class="docutils literal notranslate"><span class="pre">month</span></code>, etc) present this

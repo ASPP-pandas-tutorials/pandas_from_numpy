@@ -219,7 +219,7 @@ nature of Pandas time stamps, as we will see in later sections.
 
 ## A closer look at time stamps and time deltas
 
-The Timestamps in the output of the cell above might appear similar to strings, but in terms of the internal representation that Pandas uses they are something entirely different. They are based on something (incredibly sci-fi sounding) called the "Unix Epoch", to which we will attend later).
+The Timestamps in the output of the cell above might appear similar to strings, but in terms of the internal representation that Pandas uses they are something entirely different. They are based on something (incredibly sci-fi sounding) called the "Unix Epoch", to which we will attend later.
 
 To get an insight into this representation, let's take a closer look at one of the individual Timestamps.
 
@@ -243,7 +243,7 @@ single_timestamp.value
 At first glance this might be confusing - it doesn't look much like a normal
 date, or time...
 
-A look through the other attributes reveals more familiar nameed units of time. For instance, the `year`, `month` and `day` attributes:
+A look through the other attributes reveals more familiar named units of time. For instance, the `year`, `month` and `day` attributes:
 
 ```{python}
 # The `.year` attribute
@@ -263,12 +263,12 @@ single_timestamp.day
 So what is the mysterious `.value` attribute? 
 
 It is, in fact, more fundamental than the other attributes. It derives from the
-aforementioned "Unix Epoch", a slightly ominous sounding name for a specific
-date in 1970. Here is an explanation of what that is:
+aforementioned "Unix Epoch", a slightly ominous sounding name for the duration of time
+between a given timepoint and a specific timepoint in 1970. Here is an explanation of what that is:
 
 > "The Unix epoch is the number of seconds that have elapsed since January 1, 1970 at midnight UTC time minus the leap seconds. This means that at midnight of January 1, 1970, Unix time was 0." (from https://www.epoch101.com)
 
-The `.value` attribute reports the number of nanoseconds that have elapsed
+The `.value` attribute reports the [number of nanoseconds](https://pandas.pydata.org/docs/dev/reference/api/pandas.Timestamp.value.html) that have elapsed
 between midnight January 1st 1970 and the particular point in time represented
 by the `Timestamp`. This is the fundamental representation that Pandas uses in
 `Timestamp`s — the other attributes (`year`, `month`, etc) present this
