@@ -6,52 +6,33 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.2
+      jupytext_version: 1.17.1
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
     name: python3
 ---
 
-# More Pandas methods
+<!-- #region -->
+# Working with strings
 
-<!---
-📝 NOTE: Covered here:
-
-* string operations, ex: df[‘name’].str[2:4], df[‘name’].str.count('a') [For
-  this, compare different country names between Mat > Mort data and
-  Dev/Fertility data, e.g. different names for Russia and South Korea])
-
-* Strings (and dates) have a special accessor to perform vectorized string (or
-  date) operations
-
-* specialized accessor methods Series.str
-
-**Matthew Notes: do everything on a Series first. Series.str follow the pandas
-from numpy structure**
-
-**For any string operations, show different routes to the same outcome e.g. via Boolean indexing and then replace etc.**
-
-Structure of this page:
-
-* show python string methods/string methods with numpy arrays
-
-* build a Series and show Series.str methods
-
-* show str methods with a dataframe + how this can be very useful when
-  cleaning data
--->
 
 String/text data is often used to represent categorical variables, and commonly appears in a variety of data analysis contexts. When dealing with string/text data we will frequently find that we need to alter the strings to correct errors, improve clarity, make formatting uniform, or for a host of other reasons.
 
 String methods are inherent to Python, and these methods or variants of them can all be used on Numpy arrays and Pandas Series/Data Frames. However, Numpy and Pandas use different interfaces for interacting with strings. To understand the differences between Numpy and Pandas with respect to strings, let's begin at the foundation, the in-built string methods of Python. The cell below contains a simple string.
-
-*NB*: if you are running this tutorial interactively, and you like messy cell outputs, you may want to use `dir()` again here to see the full complement of available string methods.
+<!-- #endregion -->
 
 ```{python}
 # A string
-string = "string_of_words"
-string
+my_string = "a few words"
+my_string
+```
+
+Here are the not-private methods and attributes of a standard Python `str`:
+
+```{python}
+# Attributes and methods not starting with `_` (or `__`):
+[k for k in dir(my_string) if not k.startswith('_')]
 ```
 
 Remember that *a method is a function attached to an object*. In this case our object is a string. 
@@ -60,36 +41,36 @@ Let's say we like reading values in our data as if they are being spoken in a lo
 
 ```{python}
 # The `.upper()` method of `str`.
-string.upper()
+my_string.upper()
 ```
 
 We can replace characters in the string using the aptly named `.replace()` method. Here we supply two strings to the method, first the string we want to replace, and then second, the string we want to replace it with. In this case, let's `.replace()` the underscores with a blank space:
 
 ```{python}
-# The `.replace()` method
-string.replace('_', ' ')
+# The `.replace()` method.
+my_string.replace(' ', '_')
 ```
 
 Fancier formatting methods will let us adjust strings, for instance, in title case (`.title()`):
 
 ```{python}
-# A more elaborate string method
-string.title()
+# A more elaborate string method.
+my_string.title()
 ```
 
 In Python, strings are collections of characters, and so we can slice them as we would a list or array, using integer indexes and the `:` symbol:
 
 ```{python}
-# Slicing with strings
-string[0:1]
+# Slicing with strings.
+my_string[0:1]
 ```
 
 ```{python}
-string[0:2]
+my_string[0:2]
 ```
 
 ```{python}
-string[0:7]
+my_string[0:7]
 ```
 
 You can visit [this page](https://www.w3schools.com/python/python_ref_string.asp) to see the variety of string methods available in base Python.
@@ -99,9 +80,9 @@ You can visit [this page](https://www.w3schools.com/python/python_ref_string.asp
 
 So, strings in base Python have a large number of in-built methods - what about strings in Numpy?
 
-Numpy arrays themselves do not have specific string methods, but the in-built Python string methods can be called on individual string values in a Numpy array. Alternatively, we can use functions from the `np.char.` module to operate on all the strings in the array concurrently.
+Numpy arrays themselves do not have specific string methods, but the in-built Python string methods can be called on individual string values in a Numpy array. Alternatively, we can use functions from the `np.char.` module to operate on all the strings in the array in one go.
 
-To investigate how string data is handled in Numpy, let's make some arrays containing strings from now (very) familiar [HDI dataset](https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index):
+To investigate how string data is handled in Numpy, let's make some arrays containing strings from now (very) familiar [HDI dataset](data/data_notes).
 
 ```{python}
 # Import libraries (no imports were needed prior to this point as string methods are part of base python)
@@ -481,20 +462,23 @@ my_clean_names
 
 ```{python}
 # Run this cell to check your answer.
-# It will print 'Success' if your cleaning worked correctly.
+# It will return 'Success' if your cleaning worked correctly.
 
-def check_names():
-    answer_list = sorted(answer_clean_series.unique())
-    if len(my_clean_names) != len(answer_list):
-        return 'The answers are of different lengths'
-    not_matching = np.array(my_clean_names) != answer_list
-    if not_matching.any():
-        print('My solution unmatched', my_clean_names[not_matching])
-        print('Desired unmatched', cleaned_names_answer[not_matching])
+def check_names(proposed_solution):
+    """ Check resulting names from processed Series `proposed_solution`
+    """
+    answer_arr = np.array(sorted(answer_clean_series.unique()))
+    solution_arr = np.array(sorted(proposed_solution.unique()))
+    if len(answer_arr) != len(solution_arr):
+        return 'The answer and solution names are of different lengths'
+    not_matching = answer_arr != solution_arr
+    if np.any(not_matching):
+        print('My solution unmatched', solution_arr[not_matching])
+        print('Desired unmatched', answer_arr[not_matching])
         return 'Remaining unmatched values'
     return 'Success'
     
-check_names()
+check_names(my_clean_series)
 ```
 
 ::: {exercise-end}
@@ -515,8 +499,23 @@ soln_clean_series = (gender_df['country_name']
                      .str.lower()
                      .str.translate(str.maketrans(' -', '__', '().,'))
                      .str.replace('russia', 'russian_federation'))
-soln_clean_names = sorted(soln_clean_series.unique())
-soln_clean_names
+check_names(soln_clean_series)
+```
+
+We can do the same processing with `.str.replace` at the expense of greater verbosity:
+
+```{python}
+# Using `.str.replace`
+soln2_clean_series = (gender_df['country_name']
+                      .str.lower()
+                      .str.replace(' ', '_')
+                      .str.replace('-', '_')
+                      .str.replace('(', '')
+                      .str.replace(')', '')
+                      .str.replace('.', '')
+                      .str.replace(',', '')
+                      .str.replace('russia', 'russian_federation'))
+check_names(soln2_clean_series)
 ```
 
 ::: {solution-end}
