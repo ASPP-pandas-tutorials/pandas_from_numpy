@@ -3056,7 +3056,7 @@ Name: Fertility Rate, dtype: float64
 
 <p class="admonition-title">Solution to<a class="reference internal" href="#NaNs-army"> Exercise 14</a></p>
 <section id="solution-content">
-<p>Remember the <code class="docutils literal notranslate"><span class="pre">.isna()</span></code> method shown above? This creates a Boolean Series containing <code class="docutils literal notranslate"><span class="pre">True</span></code> values where data is NaN, and <code class="docutils literal notranslate"><span class="pre">False</span></code> values for non-NaN data. As such, you can get the “NaNs and blanks” Dataframe shown above by running the code in the cell below.</p>
+<p>As with the other solutions, there are multiple ways you could have done this. Here are two possible ways. Remember the <code class="docutils literal notranslate"><span class="pre">.isna()</span></code> method shown above? This creates a Boolean Series containing <code class="docutils literal notranslate"><span class="pre">True</span></code> values where data is NaN, and <code class="docutils literal notranslate"><span class="pre">False</span></code> values for non-NaN data. As such, you can get the “NaNs and dashes” Dataframe shown above by running the code in the cell below.</p>
 <p>First, we filter the Dataframe to contain only rows where <code class="docutils literal notranslate"><span class="pre">Fertility</span> <span class="pre">Rate</span></code> is NaN. Then we use <code class="docutils literal notranslate"><span class="pre">.isna()</span></code> method to make the data across the whole Dataframe <code class="docutils literal notranslate"><span class="pre">True</span></code> where there are NaN values and <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise. We then use the <code class="docutils literal notranslate"><span class="pre">.replace()</span></code> method to replace <code class="docutils literal notranslate"><span class="pre">False</span></code> values with a dash string (<code class="docutils literal notranslate"><span class="pre">'-'</span></code>) and the <code class="docutils literal notranslate"><span class="pre">True</span></code> values with <code class="docutils literal notranslate"><span class="pre">np.nan</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -3066,7 +3066,7 @@ Name: Fertility Rate, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2563/2434494002.py:2: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option(&#39;future.no_silent_downcasting&#39;, True)`
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2564/2434494002.py:2: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option(&#39;future.no_silent_downcasting&#39;, True)`
   full_df[full_df[&#39;Fertility Rate&#39;].isna()].isna().replace(False, &#39;-&#39;).replace(True, np.nan)
 </pre></div>
 </div>
@@ -3225,7 +3225,7 @@ Name: Fertility Rate, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2563/1593477413.py:5: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option(&#39;future.no_silent_downcasting&#39;, True)`
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2564/1593477413.py:5: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option(&#39;future.no_silent_downcasting&#39;, True)`
   .replace(True, np.nan))
 </pre></div>
 </div>
@@ -3372,7 +3372,7 @@ Name: Fertility Rate, dtype: float64
 <p>41189 rows × 7 columns</p>
 </div></div></div>
 </div>
-<p>Note the <code class="docutils literal notranslate"><span class="pre">FutureWarning:</span></code>, this means this solution will not be possible in future versions of Pandas…</p>
+<p>Note the <code class="docutils literal notranslate"><span class="pre">FutureWarning:</span></code>, this means this solution will not be possible in future versions of Pandas, at least without additional code.</p>
 <p>We sincerely hope you never have to see another Dataframe like this one.</p>
 </section>
 </div>
