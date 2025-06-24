@@ -217,7 +217,7 @@ Alternatively, you could use Pandas' own `pd.isna()` function:
 pd.isna(df['Human Development Index'].iloc[0])
 ```
 
-::: note
+::: {note}
 
 **Pandas NA**
 
@@ -230,8 +230,11 @@ See [Working with Missing
 Data](https://pandas.pydata.org/pandas-docs/stable/user_guide/missing_data.html)
 for the full gory details.  The summary at this stage is:
 
-* For readability, and to allow for the use of other NA values in Pandas, we suggest you use `pd.isna()` to check for missing values.
-* That said, at the moment, Pandas nearly always indicates missing (NA) values with Numpy's `np.nan`.
+* For readability, and to allow for the use of other NA values in Pandas, we
+  suggest you use `pd.isna()` or Pandas `.isna()` methods to check for missing
+  values.
+* That said, at the moment, Pandas nearly always indicates missing (NA) values
+  with Numpy's `np.nan`.
 
 :::
 
