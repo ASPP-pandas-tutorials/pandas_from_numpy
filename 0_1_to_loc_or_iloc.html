@@ -460,16 +460,17 @@ document.write(`
 <li><p>A name (which can be <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p></li>
 </ul>
 </div></blockquote>
-<p>On this page we take a brief look at Series <code class="docutils literal notranslate"><span class="pre">.name</span></code>s, and show that they can be
-useful when created Data Frames from Series.</p>
-<p>Then we look at the Index for Series and Data Frames, and the default index
-that Pandas creates if you do not specify one.</p>
+<p>On this page, we think particularly about the Index (row labels) for Series
+and Data Frames.  We also discuss the Index that Pandas creates if you do not
+specify one.</p>
 <p>The default Index that Pandas makes reminds us of the differences between
-label indexing (using <code class="docutils literal notranslate"><span class="pre">.loc</span></code>) and position (integer) indexing (using <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>);
-we show that current Pandas allows some ambiguity about what type of indexing
-you are doing when using <em>direct indexing</em>.</p>
-<p>The potential ambiguity of Pandas  it is often sensible to replace Pandas’ default index with
-a custom index, to avoid accidental errors when indexing.</p>
+label indexing (using <code class="docutils literal notranslate"><span class="pre">.loc</span></code>) and position (integer) indexing (using <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>).</p>
+<p>Along the way, we’ll press you not to use direct indexing on Series, as there
+is still some dangerous ambiguity in which type of indexing you are doing with
+direct indexing on Series.</p>
+<p>Because it is easy to get mixed up about position (<code class="docutils literal notranslate"><span class="pre">.iloc</span></code>) and label (<code class="docutils literal notranslate"><span class="pre">.loc</span></code>)
+indexing, it is often sensible to replace Pandas’ default index with a custom
+index, to avoid accidental errors when indexing.</p>
 </section>
 <section id="getting-started">
 <h2>Getting started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h2>
@@ -1383,7 +1384,7 @@ this will soon change.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2459/2121855053.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2449/2121855053.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   hdi_series[4]
 </pre></div>
 </div>
@@ -1451,7 +1452,12 @@ expect.</p>
 <p><strong>Direct indexing is not currently consistent</strong></p>
 <p>As an extra warning, as Pandas shifts towards more explicit choice of labels over positions in direct indexing, there are still inconsistencies.  These will be resolved over time, so if you want to avoid confusion, skip the rest of this note, and remember <em>be explicit about labels or positions with <code class="docutils literal notranslate"><span class="pre">.loc</span></code> or <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> unless you have good reason not to</em>.</p>
 <p>If you got this far, we admire your courage.  This warning is only to say that Pandas currently treats <em>slices</em> in direct indexing differently from individual positions or labels.  Specifically, at the moment, it will always assume integers in slices are positions and not labels.  Try some experiments with <code class="docutils literal notranslate"><span class="pre">hdi_series[:5]</span></code> (string label Series) and <code class="docutils literal notranslate"><span class="pre">hdi_series_def_index[:5]</span></code> (integer label Series).</p>
-<p>You may be confused after doing that.  And this behavior will surely change at some point.  Summary — use <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> and <code class="docutils literal notranslate"><span class="pre">.loc</span></code> to avoid ambiguity.</p>
+<p>See <a class="reference external" href="https://github.com/pandas-dev/pandas/issues/49612">this Pandas Github
+issue</a> for discussion if
+you’re interested.</p>
+<p>You may be confused after trying the experiments above.  And this behavior
+will surely change at some point.  Summary — use <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> and <code class="docutils literal notranslate"><span class="pre">.loc</span></code> to avoid
+ambiguity.</p>
 </div>
 <p>We repeat, a very good additional maxim is: <strong>use <code class="docutils literal notranslate"><span class="pre">.loc</span></code> and <code class="docutils literal notranslate"><span class="pre">iloc</span></code> unless
 there is a good reason not to!</strong>.</p>
@@ -1866,7 +1872,7 @@ much like <em>integer</em> indexing on a Series, which will return a single valu
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2459/374573743.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2449/374573743.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   hdi_series[0]
 </pre></div>
 </div>

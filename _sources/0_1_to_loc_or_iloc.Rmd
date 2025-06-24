@@ -25,19 +25,20 @@ From the [What is a Series section](what-is-a-series), remember our maxim:
 > * A sequence of labels for each value (`.index`)
 > * A name (which can be `None`).
 
-On this page we take a brief look at Series `.name`s, and show that they can be
-useful when created Data Frames from Series.
-
-Then we look at the Index for Series and Data Frames, and the default index
-that Pandas creates if you do not specify one.
+On this page, we think particularly about the Index (row labels) for Series
+and Data Frames.  We also discuss the Index that Pandas creates if you do not
+specify one.
 
 The default Index that Pandas makes reminds us of the differences between
-label indexing (using `.loc`) and position (integer) indexing (using `.iloc`);
-we show that current Pandas allows some ambiguity about what type of indexing
-you are doing when using *direct indexing*.
+label indexing (using `.loc`) and position (integer) indexing (using `.iloc`).
 
-The potential ambiguity of Pandas  it is often sensible to replace Pandas' default index with
-a custom index, to avoid accidental errors when indexing.
+Along the way, we'll press you not to use direct indexing on Series, as there
+is still some dangerous ambiguity in which type of indexing you are doing with
+direct indexing on Series.
+
+Because it is easy to get mixed up about position (`.iloc`) and label (`.loc`)
+indexing, it is often sensible to replace Pandas' default index with a custom
+index, to avoid accidental errors when indexing.
 
 ## Getting started
 
@@ -606,7 +607,13 @@ As an extra warning, as Pandas shifts towards more explicit choice of labels ove
 
 If you got this far, we admire your courage.  This warning is only to say that Pandas currently treats *slices* in direct indexing differently from individual positions or labels.  Specifically, at the moment, it will always assume integers in slices are positions and not labels.  Try some experiments with `hdi_series[:5]` (string label Series) and `hdi_series_def_index[:5]` (integer label Series).
 
-You may be confused after doing that.  And this behavior will surely change at some point.  Summary — use `.iloc` and `.loc` to avoid ambiguity.
+See [this Pandas Github
+issue](https://github.com/pandas-dev/pandas/issues/49612) for discussion if
+you're interested.
+
+You may be confused after trying the experiments above.  And this behavior
+will surely change at some point.  Summary — use `.iloc` and `.loc` to avoid
+ambiguity.
 
 :::
 
