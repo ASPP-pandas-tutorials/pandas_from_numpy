@@ -1,6 +1,6 @@
 # ASPP Pandas tutorials
 
-This repository houses the Pandas tutorials originally written for the
+This repository houses the Pandas tutorials originally written for [the
 Advanced Scientific Programming in Python course](https://aspp.school).
 
 This file is for those writing or editing these pages.
