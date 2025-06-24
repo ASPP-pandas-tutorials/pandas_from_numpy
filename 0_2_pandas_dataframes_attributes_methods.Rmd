@@ -743,7 +743,7 @@ This did not work because `.replace()` is searching for an element of the Series
 We can achieve the desired result using the `regex` (standing for "regular expression") argument:
 
 ```{python}
-# The expected result.
+# Allowing replace on a partial match.
 df['Country Name'].replace("United", "Unknown",
                            regex=True)
 ```
