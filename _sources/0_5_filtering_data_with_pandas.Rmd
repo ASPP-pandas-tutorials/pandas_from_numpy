@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.1
+      jupytext_version: 1.17.2
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -611,9 +611,9 @@ You could also use the Pandas *function* `pd.isna()` here, to get the same resul
  .replace(True, np.nan))
 ```
 
-::: note
+::: {note}
 
-**Upcoming changes to Pandas and `.replace`
+**Upcoming changes to Pandas and `.replace`**
 
 Note the cell at the top of this page with `pd.set_option('future.no_silent_downcasting', True)`.  If you did not run that cell, our solution would still work, but would give a rather confusing `FutureWarning:`, discussed in the link noted in that cell.
 
