@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.2
+      jupytext_version: 1.17.1
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -61,6 +61,13 @@ To explore filtering, let's create some Numpy arrays, containing the [HDI data](
 # Import libraries for this page
 import numpy as np
 import pandas as pd
+```
+
+```{python}
+# Set an option to match `.replace` behavior to upcoming Pandas 3.
+# See <https://github.com/pandas-dev/pandas/issues/57734> for a discussion.
+# We do this to avoid confusing warnings for one solution to the exercise below.
+pd.set_option('future.no_silent_downcasting', True)
 ```
 
 We build the constituent arrays:
@@ -604,7 +611,13 @@ You could also use the Pandas *function* `pd.isna()` here, to get the same resul
  .replace(True, np.nan))
 ```
 
-Note the `FutureWarning:`, this means this solution will not be possible in future versions of Pandas, at least without additional code.
+::: note
+
+**Upcoming changes to Pandas and `.replace`
+
+Note the cell at the top of this page with `pd.set_option('future.no_silent_downcasting', True)`.  If you did not run that cell, our solution would still work, but would give a rather confusing `FutureWarning:`, discussed in the link noted in that cell.
+
+:::
 
 We sincerely hope you never have to see another Data Frame like this one.
 

@@ -491,6 +491,16 @@ Structure of this page:
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set an option to match `.replace` behavior to upcoming Pandas 3.</span>
+<span class="c1"># See &lt;https://github.com/pandas-dev/pandas/issues/57734&gt; for a discussion.</span>
+<span class="c1"># We do this to avoid confusing warnings for one solution to the exercise below.</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;future.no_silent_downcasting&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 <p>We build the constituent arrays:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -3066,10 +3076,6 @@ Name: Fertility Rate, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2533/2434494002.py:2: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option(&#39;future.no_silent_downcasting&#39;, True)`
-  full_df[full_df[&#39;Fertility Rate&#39;].isna()].isna().replace(False, &#39;-&#39;).replace(True, np.nan)
-</pre></div>
-</div>
 <div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -3225,10 +3231,6 @@ Name: Fertility Rate, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2533/1593477413.py:5: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option(&#39;future.no_silent_downcasting&#39;, True)`
-  .replace(True, np.nan))
-</pre></div>
-</div>
 <div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -3372,7 +3374,10 @@ Name: Fertility Rate, dtype: float64
 <p>41189 rows × 7 columns</p>
 </div></div></div>
 </div>
-<p>Note the <code class="docutils literal notranslate"><span class="pre">FutureWarning:</span></code>, this means this solution will not be possible in future versions of Pandas, at least without additional code.</p>
+<div class="note docutils">
+<p>**Upcoming changes to Pandas and <code class="docutils literal notranslate"><span class="pre">.replace</span></code></p>
+<p>Note the cell at the top of this page with <code class="docutils literal notranslate"><span class="pre">pd.set_option('future.no_silent_downcasting',</span> <span class="pre">True)</span></code>.  If you did not run that cell, our solution would still work, but would give a rather confusing <code class="docutils literal notranslate"><span class="pre">FutureWarning:</span></code>, discussed in the link noted in that cell.</p>
+</div>
 <p>We sincerely hope you never have to see another Data Frame like this one.</p>
 </section>
 </div>
