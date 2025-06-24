@@ -6,33 +6,32 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.2
+      jupytext_version: 1.17.1
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
     name: python3
 ---
 
-<!---
-📝 NOTE: this page will show important ways/considerations when constructing
-DataFrames via different pathways (e.g pd.concat() on named Series); and will
-further explain the DataFrame constructor. This page is just to to re-iterate
-the "DataFrames are just dictionary-like collections of Series"
--->
-
 # Let There Be Data : Creating Data Frames
 
-In [the](0_0_pandas_intro.Rmd) [previous](0_1_to_loc_or_iloc.Rmd) [tutorials](0_2_pandas_dataframes_attributes_methods.Rmd) we showed how the Pandas class objects (Series and Data Frames) are constructed from Numpy objects (arrays) and other attributes.
+In [the](0_0_pandas_intro.Rmd) [previous](0_1_to_loc_or_iloc.Rmd)
+[tutorials](0_2_pandas_dataframes_attributes_methods.Rmd) we showed how the
+Pandas class objects (Series and Data Frames) are constructed from Numpy
+objects (arrays) and other attributes.
 
 We focused on the maxims:
 
-- *"a Pandas Series is a numpy array, plus a `name` attribute and an array-like `index`"* 
+- *"a Pandas Series is a numpy array, plus a `name` attribute and an array-like `index`"*
 
 ...and...
 
 - "a Pandas DataFrame is just a *dictionary-like collection of Series*".
 
-This page will look at several different ways of constructing Data Frames. All of these use the `pd.DataFrame()` constructor but  supply it with different "ingredients". This influences the specific collection of attributes that the resultant Data Frame will have.
+This page will look at several different ways of constructing Data Frames. All
+of these use the `pd.DataFrame()` constructor but supply it with different
+"ingredients". This influences the specific collection of attributes that the
+resultant Data Frame will have.
 
 ```{python}
 # Import libraries
@@ -40,7 +39,7 @@ import numpy as np
 import pandas as pd
 ```
 
-## 0: Reading in data from a file
+## Reading in data from a file
 
 The simplest, probably most common, and easiest way to create a Data Frame is to use a `pd.read_*` functions to import data from a file.
 
@@ -52,37 +51,22 @@ df_from_file = pd.read_csv('data/airline_passengers.csv')
 df_from_file
 ```
 
-Pandas, as a major Python data science library, has a large array of `read_*` functions, for importing data stored in different formats. The following are taken from the output of `dir(pd)`:
+Pandas, as a major Python data science library, has a large array of `read_*` functions, for importing data stored in different formats.
 
-```
-'read_clipboard',
-'read_csv',
-'read_excel',
-'read_feather',
-'read_fwf',
-'read_gbq',
-'read_hdf',
-'read_html',
-'read_json',
-'read_orc',
-'read_parquet',
-'read_pickle',
-'read_sas',
-'read_spss',
-'read_sql',
-'read_sql_query',
-'read_sql_table',
-'read_stata',
-'read_table',
-'read_xml',
+```{python}
+# Names in Pandas module starting with "read_"
+[k for k in dir(pd) if k.startswith('read_')]
 ```
 
-In other situations, and to deepend our understanding of Data Frame construction, let's look at more elaborate, artisanal ways of creating Data Frames... 
+In other situations, and to deepen our understanding of Data Frame
+construction, let's look at more elaborate, artisanal ways of creating Data
+Frames...
 
 
-## 1: Creating a blank Data Frame
+## Creating a blank Data Frame
 
-The second simplest way to create a Data Frame is by using the `pd.DataFrame()` constructor with no arguments:
+Another very simple way to create a Data Frame is by using the
+`pd.DataFrame()` constructor with no arguments:
 
 ```{python}
 # Calling the constructor with no arguments
@@ -104,14 +88,14 @@ df.index
 Ditto for the columns attribute:
 
 ```{python}
-# Show the blank columns
+# Show the blank columns.
 df.columns
 ```
 
 We can add new columns (e.g. new Pandas Series) into this blank Data Frame by using direct indexing on the left hand side (LHS). E.g.
 
 ```{python}
-# Create a new column in the Data Frame
+# Create a new column in the Data Frame.
 df['new_column'] = np.array([1, 2, 3])
 df
 ```
@@ -119,7 +103,7 @@ df
 We used a Numpy array to construct this new column, however, as we know, Data Frames are a dictionary-like collection of Series, so Pandas can represent the data as a Pandas Series:
 
 ```{python}
-# Show the type of df['new_column']
+# Show the type of df['new_column'].
 new_col = df['new_column']
 type(new_col)
 ```
@@ -127,21 +111,21 @@ type(new_col)
 The string which we used as the column name (e.g. `new_column`) has become the `name` attribute of this new Series:
 
 ```{python}
-# Show the `name` of the column
+# Show the `name` of the column.
 new_col.name
 ```
 
 ...and the numpy array we supplied has become the `.values` of the Series:
 
 ```{python}
-# Show the `values` in the column
+# Show the `values` in the column.
 new_col.values
 ```
 
 Pandas has also automatically created a default `RangeIndex` for the Data Frame, because we did not specify what it should use as an index:
 
 ```{python}
-# Show the index of df[`new_column`]
+# Show the index of df.
 df.index
 ```
 
@@ -154,7 +138,7 @@ new_col.index
 If we construct Data Frames using this method ("create a blank Data Frame, add the data later"), then any new columns we add must have equal numbers of elements.  This must be so, in order that the new column can share an index with the old.
 
 ```{python}
-# Add another new column
+# Add another new column with correct number of elements.
 df['another_new_column'] = np.array(['A', 'B', 'C'])
 df
 ```
@@ -162,7 +146,7 @@ df
 If the number of elements differs, then Pandas will throw an error:
 
 ```{python tags=c("raises-exception")}
-# ValueError from wrong number of elements on RHS
+# ValueError from wrong number of elements on RHS.
 df['a_further_new_column'] = np.array([4, 5 , 6, 7])
 ```
 
@@ -197,10 +181,10 @@ Because all Series/columns in the Data Frame must share an `index`, Pandas will 
 df.index = ['Person_1', 'Person_2', 'Person_3', 'Person_4']
 ```
 
-Again, the error that Pandas gives us here is informative: `ValueError: Length mismatch: Expected axis has 3 elements, new values have 4 elements`. (Unfortunately, this may not be the case with all Pandas errors...).
+Again, the error that Pandas gives us here is informative: `ValueError: Length mismatch: Expected axis has 3 elements, new values have 4 elements`. (Unfortunately, not all Pandas errors are as obvious as this one).
 
 
-## 2: Constructing a Data Frame from a dictionary (using Numpy arrays)
+## Constructing a Data Frame from a dictionary of Numpy arrays
 
 Another common way to construct Data Frames is to use a dictionary.
 
@@ -254,9 +238,13 @@ df3['A'].name
 df3['A'].values
 ```
 
-## 3: Constructing a Data Frame from a dictionary (using Pandas series)
+## Constructing a Data Frame from a dictionary of Pandas series
 
-We can also use Pandas Series as the values in a dictionary (rather than Numpy arrays), in order to build a Data Frame. Because Pandas Series contain a Numpy array plus additional attributes, like an `index`, we need to be aware of this when using them to create Data Frames, as conflicts between the indexes of different Series can lead to errors.
+We can also use Pandas Series as the values in a dictionary (rather than Numpy
+arrays), in order to build a Data Frame. Because Pandas Series contain a Numpy
+array plus additional attributes, like an `index`, we need to be aware of this
+when using them to create Data Frames, as conflicts between the indexes of
+different Series can lead to errors.
 
 Let's build a Series with the familiar three-letter country codes, the country names, and the [HDI data](https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index):
 
@@ -267,7 +255,6 @@ country_codes_array = np.array(['AUS', 'BRA', 'CAN',
                                 'FRA', 'GBR', 'IND',
                                 'ITA', 'JPN', 'KOR',
                                 'MEX', 'RUS', 'USA'])
-country_codes_array
 ```
 
 ```{python}
@@ -277,7 +264,6 @@ country_names_array = np.array(['Australia', 'Brazil', 'Canada',
                                 'France', 'United Kingdom', 'India',
                                 'Italy', 'Japan', 'South Korea',
                                 'Mexico', 'Russia', 'United States'])
-country_names_array
 ```
 
 As previously, we will use the country codes as an `index`:
@@ -286,7 +272,6 @@ As previously, we will use the country codes as an `index`:
 # Build a Series of the country names
 country_names_series = pd.Series(country_names_array,
                                 index=country_codes_array)
-
 country_names_series
 ```
 
@@ -294,11 +279,10 @@ Now, let's do the same for the HDI scores:
 
 ```{python}
 # Human Development Index Scores for each country
-hdis_array = np.array([0.896, 0.668, 0.89 , 0.586, 
-                       0.844, 0.89 , 0.49 , 0.842, 
+hdis_array = np.array([0.896, 0.668, 0.89 , 0.586,
+                       0.844, 0.89 , 0.49 , 0.842,
                        0.883, 0.709, 0.733, 0.824,
                        0.828, 0.863, 0.894])
-hdis_array
 ```
 
 Here also we will use the country codes as the index:
@@ -313,15 +297,15 @@ We can then create the Data Frame by using the Series as values in a dictionary,
 ```{python}
 df4 = pd.DataFrame({'country_names': country_names_series,
                     'HDI': hdi_series})
-
 df4
 ```
 
-It is, however, very important when using this method to ensure that all the Series share an index.
+However, it is very important when using this method to ensure that all the
+Series share an index.
 
 Strange things can happen if they do not.
 
-Let's adjust the `hdi_series` index so that it has a numerical index:
+Let's adjust the `hdi_series` to give it a numerical index:
 
 ```{python}
 # Adjust the `hdi_series` to have a numerical index
@@ -331,7 +315,9 @@ hdi_with_int_index.index = np.arange(len(hdi_series))
 hdi_with_int_index
 ```
 
-For the latest Pandas (2.2.3 at time of writing), Pandas will give an error if we try to construct a Data Frame from a dictionary with these two Series as the values:
+For the latest Pandas (2.2.3 at time of writing), Pandas will give an error if
+we try to construct a Data Frame from a dictionary with these two Series as
+the values:
 
 ```{python tags=c("raises-exception")}
 # TypeError if we construct a Data Frame using Series without matching indexes
@@ -384,7 +370,7 @@ Remember each index label is a identifier for each row of the Data Frame. Pandas
 [Later on](0_4_dealing_with_missing_data_in_pandas.Rmd) we will see further signs that Pandas is trying to match rows between series by using the `index`.
 
 
-## 4: Constructing a Data Frame from a sequence (using Pandas series)
+## Constructing a Data Frame from a sequence (using Pandas series)
 
 
 Series have an optional `.name` (for which the default is `None`).
@@ -399,7 +385,10 @@ df5 = pd.DataFrame([country_names_series, hdi_series])
 df5
 ```
 
-Notice the `.names` of the Series become the `.index` values of the Data Frame (the row labels).  The .`index` of the two Series become the column labels.  To get the same effect as we have had, up until now, we can *transpose* the Data Frame, so that the rows become columns, and the columns becom the rows:
+Notice the `.names` of the Series become the `.index` values of the Data Frame
+(the row labels).  The .`index` of the two Series become the column labels. To
+get the same effect as we have had, up until now, we can *transpose* the Data
+Frame, so that the rows become columns, and the columns become the rows:
 
 ```{python}
 # .T is the transpose attribute of the Data Frame.  It returns a new, transposed Data Frame.

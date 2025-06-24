@@ -1037,9 +1037,11 @@ Similar kinds of *resampling procedure* are often used to generate [bootstrapped
 
 ## Plotting Methods
 
-The Data Frame plotting *methods* that we have seen on the previous pages actually also apply to Series.
+The Data Frame plotting *methods* that we have seen on the previous pages also
+apply to Series.
 
-When working with a Series, it makes most sense most of the time to use the `kind = 'hist'` argument to inspect the distribution of the data in that Series:
+When working with a Series, it makes most sense most of the time to use the
+`kind='hist'` argument to inspect the distribution of the data in that Series:
 
 ```{python}
 hdi_series.plot(kind='hist');
