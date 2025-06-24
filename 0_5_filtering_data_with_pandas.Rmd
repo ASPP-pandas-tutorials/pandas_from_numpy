@@ -447,11 +447,12 @@ full_df_2000.loc[['OWID_WRL', 'OWID_KOS', 'OWID_SRM']]
 
 Ok, so we probably want to keep `Kosovo` and `Serbia and Montenegro`, but will drop the row with the data for the whole world.
 
-We can use the `.drop()` method, with the `labels=` argument to tell Pandas to drop the row with the `'OWID_WRL'` label:
+We can use the `.drop()` method, with the `index=` argument to tell Pandas to
+drop the row with the `'OWID_WRL'` label:
 
 ```{python}
 # Remove junk row with the `.drop()` method.
-full_df_2000 = full_df_2000.drop(labels=['OWID_WRL'])
+full_df_2000 = full_df_2000.drop(index=['OWID_WRL'])
 full_df_2000
 ```
 
