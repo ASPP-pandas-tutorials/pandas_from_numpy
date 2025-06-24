@@ -489,7 +489,7 @@ operations.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2526/2469014178.py:6: RuntimeWarning: invalid value encountered in divide
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2547/2469014178.py:6: RuntimeWarning: invalid value encountered in divide
   a_nan = np.array(0) / np.array(0)
 </pre></div>
 </div>
@@ -512,7 +512,7 @@ infinity) are special floating point values:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2526/58810310.py:2: RuntimeWarning: divide by zero encountered in divide
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2547/58810310.py:2: RuntimeWarning: divide by zero encountered in divide
   np.array(1) / np.array(0)
 </pre></div>
 </div>
@@ -1586,7 +1586,8 @@ dtype: float64
 </div></div></div>
 </div>
 <p>It turns out in this dataset, every row has at least one NaN value so dropping every row with a NaN has dropped <em>everything</em>…(we did say this method was brute force)!</p>
-<p><strong>By far the most important thing to know about missing data in Pandas</strong> is that <strong>by default NaN values will be <em>ignored</em> in numerical operations</strong>.</p>
+<p><strong>By far the most important thing to know about missing data in Pandas is that
+by default NaN values will be <em>ignored</em> in numerical operations</strong>.</p>
 <p>Let’s look at the <code class="docutils literal notranslate"><span class="pre">Fertility</span> <span class="pre">Rate</span></code> column, which contains numerical data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

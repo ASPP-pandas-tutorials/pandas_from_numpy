@@ -338,7 +338,8 @@ df_no_NaN
 It turns out in this dataset, every row has at least one NaN value so dropping every row with a NaN has dropped *everything*...(we did say this method was brute force)!
 
 
-**By far the most important thing to know about missing data in Pandas** is that **by default NaN values will be *ignored* in numerical operations**.
+**By far the most important thing to know about missing data in Pandas is that
+by default NaN values will be *ignored* in numerical operations**.
 
 Let's look at the `Fertility Rate` column, which contains numerical data:
 
