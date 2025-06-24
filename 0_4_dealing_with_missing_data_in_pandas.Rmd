@@ -13,7 +13,7 @@ jupyter:
     name: python3
 ---
 
-# Handling what isn't there
+# Handling what isn't there - missing data in Pandas
 
 <!---
 📝 NOTE:
