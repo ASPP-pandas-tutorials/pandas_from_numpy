@@ -897,7 +897,7 @@ dtype: object
 </div>
 </div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">.replace()</span></code> method is also available here, it will operate on all the elements in the Series, though in this case (as there is only one <code class="docutils literal notranslate"><span class="pre">United</span> <span class="pre">States</span></code>!) it will only alter one value:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">.replace()</span></code> string method is also available here, it will operate on all the elements in the Series, though in this case (as there is only one <code class="docutils literal notranslate"><span class="pre">United</span> <span class="pre">States</span></code>) it will only alter one value:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Replacing values in the Series</span>
@@ -926,6 +926,38 @@ dtype: object
 </div>
 </div>
 </div>
+<p>By default, the <strong>string-specific</strong> <code class="docutils literal notranslate"><span class="pre">.replace</span></code> method (accessed through the <code class="docutils literal notranslate"><span class="pre">str</span></code> accessor - <code class="docutils literal notranslate"><span class="pre">.str.replace()</span></code>) will search for expressions <em>within</em> strings, as opposed to searching for exact, whole string matches.  This matches the behavior of the corresponding <code class="docutils literal notranslate"><span class="pre">.replace</span></code> method on strings.</p>
+<p>This is different to the behaviour of the <strong>non-string-specific</strong> <code class="docutils literal notranslate"><span class="pre">.replace()</span></code> method which we encountered on an <a class="reference internal" href="0_2_pandas_dataframes_attributes_methods.html"><span class="doc std std-doc">earlier page</span></a>. By default the non-string-specific <code class="docutils literal notranslate"><span class="pre">.replace()</span></code> method will search for <em>exactly matching whole strings</em>. Confusion between these two methods is a <a class="reference external" href="https://stackoverflow.com/a/50614413/23148902">common source of error</a>.</p>
+<p>As such, by using the string-specific <code class="docutils literal notranslate"><span class="pre">.str.replace()</span></code> method we can easily replace substrings in multiple elements in the data at once, even where the whole strings are not the same. For instance:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Replacing values in the Series</span>
+<span class="n">names_series</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;United&quot;</span><span class="p">,</span> <span class="s2">&quot;Unknown&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUS          Australia
+BRA             Brazil
+CAN             Canada
+CHN              China
+DEU            Germany
+ESP              Spain
+FRA             France
+GBR    Unknown Kingdom
+IND              India
+ITA              Italy
+JPN              Japan
+KOR        South Korea
+MEX             Mexico
+RUS             Russia
+USA     Unknown States
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here, the substring <code class="docutils literal notranslate"><span class="pre">United</span></code> has been replaced with <code class="docutils literal notranslate"><span class="pre">Unknown</span></code> in the both the strings <code class="docutils literal notranslate"><span class="pre">&quot;United</span> <span class="pre">Kingdom&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;United</span> <span class="pre">States&quot;</span></code>. This is a good example of a situation where a specialized accessor (like <code class="docutils literal notranslate"><span class="pre">.str.</span></code>) can change the behaviour of other methods, often in a helpful way for dealing with a specific data type.</p>
 <p>The syntax for slicing strings is the same as for a single value, but it also operates across all elements in the Series at once:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1205,7 +1237,7 @@ Name: Country Name, dtype: object
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="nn">/tmp/ipykernel_2568/1916934331.py</span> in <span class="ni">?</span><span class="nt">()</span>
+<span class="nn">/tmp/ipykernel_2565/1916934331.py</span> in <span class="ni">?</span><span class="nt">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Cannot use `.str` methods on whole Data Frame.</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">df</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 
@@ -1235,7 +1267,7 @@ same error:</p>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="nn">/tmp/ipykernel_2568/3866909753.py</span> in <span class="ni">?</span><span class="nt">()</span>
+<span class="nn">/tmp/ipykernel_2565/3866909753.py</span> in <span class="ni">?</span><span class="nt">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Oops, using `.str` fails even for all-string-dtype columns.</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Country Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Code&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">()</span>
 
