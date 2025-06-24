@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.16.6
+      jupytext_version: 1.17.2
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -250,12 +250,25 @@ names_series.str.upper()
 names_series.str.lower()
 ```
 
-The `.replace()` method is also available here, it will operate on all the elements in the Series, though in this case (as there is only one `United States`!) it will only alter one value:
+The `.replace()` string method is also available here, it will operate on all the elements in the Series, though in this case (as there is only one `United States`) it will only alter one value:
 
 ```{python}
 # Replacing values in the Series
 names_series.str.replace("United States", "USA")
 ```
+
+By default, the **string-specific** `.replace` method (accessed through the `str` accessor - `.str.replace()`) will search for expressions *within* strings, as opposed to searching for exact, whole string matches.  This matches the behavior of the corresponding `.replace` method on strings.
+
+This is different to the behaviour of the **non-string-specific** `.replace()` method which we encountered on an [earlier page](0_2_pandas_dataframes_attributes_methods). By default the non-string-specific `.replace()` method will search for *exactly matching whole strings*. Confusion between these two methods is a [common source of error](https://stackoverflow.com/a/50614413/23148902). 
+
+As such, by using the string-specific `.str.replace()` method we can easily replace substrings in multiple elements in the data at once, even where the whole strings are not the same. For instance:
+
+```{python}
+# Replacing values in the Series
+names_series.str.replace("United", "Unknown")
+```
+
+Here, the substring `United` has been replaced with `Unknown` in the both the strings `"United Kingdom"` and `"United States"`. This is a good example of a situation where a specialized accessor (like `.str.`) can change the behaviour of other methods, often in a helpful way for dealing with a specific data type.
 
 The syntax for slicing strings is the same as for a single value, but it also operates across all elements in the Series at once:
 
