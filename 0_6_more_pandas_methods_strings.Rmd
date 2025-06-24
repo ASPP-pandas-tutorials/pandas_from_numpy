@@ -257,7 +257,7 @@ The `.replace()` string method is also available here, it will operate on all th
 names_series.str.replace("United States", "USA")
 ```
 
-By default, the **string-specific** replace method (accessed through the `str` accessor - `.str.replace()`) will search for expressions *within* strings, as opposed to searching for exact, whole string matches. 
+By default, the **string-specific** `.replace` method (accessed through the `str` accessor - `.str.replace()`) will search for expressions *within* strings, as opposed to searching for exact, whole string matches.  This matches the behavior of the corresponding `.replace` method on strings.
 
 This is different to the behaviour of the **non-string-specific** `.replace()` method which we encountered on an [earlier page](0_2_pandas_dataframes_attributes_methods). By default the non-string-specific `.replace()` method will search for *exactly matching whole strings*. Confusion between these two methods is a [commong source of error](https://stackoverflow.com/a/50614413/23148902). 
 
