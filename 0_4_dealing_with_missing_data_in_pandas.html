@@ -489,7 +489,7 @@ operations.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2521/2469014178.py:6: RuntimeWarning: invalid value encountered in divide
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2532/2469014178.py:6: RuntimeWarning: invalid value encountered in divide
   a_nan = np.array(0) / np.array(0)
 </pre></div>
 </div>
@@ -512,7 +512,7 @@ infinity) are special floating point values:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2521/58810310.py:2: RuntimeWarning: divide by zero encountered in divide
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2532/58810310.py:2: RuntimeWarning: divide by zero encountered in divide
   np.array(1) / np.array(0)
 </pre></div>
 </div>
@@ -1486,8 +1486,17 @@ in 1950, with which to calculate the value.</p>
 </table>
 </div></div></div>
 </div>
-<p>(See the <a class="reference internal" href="0_5_filtering_data_with_pandas.html"><span class="doc std std-doc">filtering page</span></a> for more on filtering Data Frames.</p>
-<p>For the mean calculation, we notice again that the missing values seem to be for smaller, less-developed and newer countries.  You have already seen that Pandas assumes that NaN means missing data, and it drops NaN values in calculation like <code class="docutils literal notranslate"><span class="pre">.mean()</span></code>.  Therefore, the result is mean excluding these smaller, poorer countries, and the resulting mean will be the mean of the larger, richer countries.  To get a better estimate of worldwide health expenditure per capita, we might try and think of ways of estimating what the health expenditure would have been for these smaller countries, perhaps using other data we do have, from this data frame or elsewhere.  At least we should point out the confounded nature of the <code class="docutils literal notranslate"><span class="pre">.mean()</span></code> as a true estimate.</p>
+<p>(See the <a class="reference internal" href="0_5_filtering_data_with_pandas.html"><span class="doc std std-doc">filtering page</span></a> for more on filtering Data Frames.)</p>
+<p>For the mean calculation, we notice again that the missing values seem to be
+for smaller, less-developed and newer countries.  You have already seen that
+Pandas assumes that NaN means missing data, and it drops NaN values in
+calculations like <code class="docutils literal notranslate"><span class="pre">.mean()</span></code>.  Therefore, the result is the mean excluding
+these smaller, poorer countries, and the resulting mean will be the mean of
+the larger, richer countries.  To get a better estimate of worldwide health
+expenditure per capita, we might try and think of ways of estimating what the
+health expenditure would have been for these smaller countries, perhaps using
+other data we do have, from this data frame or elsewhere.  At least we should
+point out the confounded nature of the <code class="docutils literal notranslate"><span class="pre">.mean()</span></code> as a true estimate.</p>
 </section>
 </div>
 <p>Pandas supplies us some useful methods for checking missingness.</p>

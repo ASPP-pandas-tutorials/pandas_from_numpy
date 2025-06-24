@@ -300,9 +300,18 @@ missing_hepc = pd.isna(gender_df['health_exp_per_cap'])
 gender_df[missing_hepc]
 ```
 
-(See the [filtering page](0_5_filtering_data_with_pandas) for more on filtering Data Frames.
+(See the [filtering page](0_5_filtering_data_with_pandas) for more on filtering Data Frames.)
 
-For the mean calculation, we notice again that the missing values seem to be for smaller, less-developed and newer countries.  You have already seen that Pandas assumes that NaN means missing data, and it drops NaN values in calculation like `.mean()`.  Therefore, the result is mean excluding these smaller, poorer countries, and the resulting mean will be the mean of the larger, richer countries.  To get a better estimate of worldwide health expenditure per capita, we might try and think of ways of estimating what the health expenditure would have been for these smaller countries, perhaps using other data we do have, from this data frame or elsewhere.  At least we should point out the confounded nature of the `.mean()` as a true estimate.
+For the mean calculation, we notice again that the missing values seem to be
+for smaller, less-developed and newer countries.  You have already seen that
+Pandas assumes that NaN means missing data, and it drops NaN values in
+calculations like `.mean()`.  Therefore, the result is the mean excluding
+these smaller, poorer countries, and the resulting mean will be the mean of
+the larger, richer countries.  To get a better estimate of worldwide health
+expenditure per capita, we might try and think of ways of estimating what the
+health expenditure would have been for these smaller countries, perhaps using
+other data we do have, from this data frame or elsewhere.  At least we should
+point out the confounded nature of the `.mean()` as a true estimate.
 
 ::: {solution-end}
 :::
