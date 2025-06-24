@@ -124,7 +124,7 @@ In the last cell, using `.loc`, `'GBR'` was the stop value, and we got the row c
 
 This is a major difference from Numpy and `.iloc` behavior.
 
-::: note
+::: {note}
 
 **Stop and `.loc`**
 
@@ -418,7 +418,7 @@ from 0 to 14. This means that the integer position of each element in the
 Series no longer matches up with the index label. This can be a potential
 source of errors.
 
-::: note
+::: {note}
 
 **The index type can change if you rearrange elements**
 
@@ -426,11 +426,9 @@ If you haven't done the exercise above, please consider doing it.
 
 If you have, you will have found already that the sorted Series has a new
 Index, that is no longer a `RangeIndex` (because the integer labels now cannot
-be represented as a regular sequence of integers):
-
-```{python}
-type(hdi_series_def_index_sorted.index)
-```
+be represented as a regular sequence of integers).  Thus
+`type(hdi_series_def_index_sorted.index)` will be of type `Index`, rather than
+`RangeIndex`.
 
 :::
 
@@ -627,7 +625,7 @@ we do not expect.
 hdi_series_sorted.loc['DEU']
 ```
 
-::: warning
+::: {warning}
 
 **Direct indexing is not currently consistent**
 
@@ -756,7 +754,7 @@ named_df.columns
 
 Now, let's try using direct indexing with each Data Frame, using the column names.
 
-::: note
+::: {note}
 
 **Two standard uses of direct indexing on Data Frames**
 
@@ -1025,7 +1023,7 @@ Direct indexing into Data Frames is common and useful, in two situations:
 
 1. Direct indexing using a column name or sequence of names.
 1. Direct indexing using a Boolean Series (see [filtering
-   page](0_5_filtering_data_with_pandas).
+   page](0_5_filtering_data_with_pandas)).
 
 We can use `.loc` and `.iloc` on Data Frames, remembering that this indexing
 acts like indexing two-dimensional Numpy arrays; when selecting columns, we
