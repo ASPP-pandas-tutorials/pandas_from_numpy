@@ -908,31 +908,101 @@ Giving every column a sensible string as a `name` is one situation where direct 
 
 So far we have spent much time with `.loc` and `.iloc` on Series.
 
-There is a new concern
+Series are like one-dimensional arrays (with and Index and a Name) - therefore `.loc` and `.iloc` indexing into Series looks like indexing into one-dimensional Numpy arrays.
 
+A Data Frame is like a two dimensional array, so `.loc` and `.iloc` indexing looks like indexing in two-dimensional Numpy arrays.
+
+Consider the following two-dimensional Numpy array:
+
+```{python}
+two_d_arr = np.array([[1, 2, 3], [11, 21, 31], [101, 102, 103]])
+two_d_arr
+```
+
+If index with one expression between the indexing brackets, we select *rows*:
+
+```{python}
+# Select the second row.
+two_d_arr[1]
+```
+
+If we want to select columns, we must specify two indexing expressions between the indexing brackets, separated by a comma:
+
+```{python}
+# Select the second row, third column.
+two_d_arr[1, 2]
+```
+
+As usual, we can use slices as indexing expressions (e.g. expressions containing colons `:`):
+
+```{python}
+# Select first and second rows, second and third columns.
+two_d_arr[:2, 1:3]
+```
+
+```{python}
+# Select all rows, third column.
+two_d_arr[:, 2]
+```
+
+Because a Data Frame has rows and columns, it corresponds to a two-dimensional array.
+
+For example, let us return to a previous Data Frame.
+
+```{python}
+named_df
+```
+
+If we ask for the Data Frame `.values`, we get a two-dimensional Numpy array:
+
+```{python}
+named_df.values
+```
+
+When direct indexing with `.loc` or `.iloc` we can select rows with a single indexing expression:
+
+```{python}
+# Select row corresponding to label 'RUS'
+named_df.loc['RUS']
+```
+
+```{python}
+# Select rows from that labeled 'ITA' to that labeled 'RUS'.
+# Remember, `.loc` is inclusive of the stop value.
+named_df.loc['ITA':'RUS']
+```
+
+```{python}
+# Select second row by position.
+named_df.iloc[1]
+```
+
+```{python}
+# Select second through fifth row by position.
+# As standard for Python integers indexing, this is exclusive of stop position.
+named_df.iloc[1:5]
+```
+
+Like the Numpy two-dimension indexing case, if we want to select columns with `.loc` or `.iloc`, we must give two indexing expressions, separated by a comma:
+
+```{python}
+# Select rows 'ITA' through 'RUS', 'Country Names' column.
+named_df.loc['ITA':'RUS', 'Country Names']
+```
+
+```{python}
+# Row for 'RUS', all columns.
+named_df.loc['RUS', :]
+```
+
+```{python}
+# Select second through fifth row by position, first column by position.
+named_df.iloc[1:5, 0]
+```
+
+```{python}
+# Second row, all columns.
+named_df.iloc[1, :]
+```
 
 ## Summary
-
-On this page we have looked at the Pandas Index, and different ways of indexing into Pandas Series.
-
-We discussed the default index that Pandas provides, of integer labels, and we
-showed how to get Series values by label (`.loc`) and by position (`.iloc`).
-
-`.loc` differs from `.iloc` and other Python indexing in that slices *include
-their stop value*.
-
-We pressed you to completely avoid using direct indexing on Pandas Series, because of the potent confusion that can arise between label and position indexing.
-
-For best results, we should specify both an interpretable `index` and
-interpretable `name` attributes for our Series, especially when they are part
-of Data Frames.
-
-Direct indexing into Data Frames is common and useful, in two situations:
-
-1. Direct indexing using a column name or sequence of names.
-1. Direct indexing using a Boolean Series (see [filtering
-   page](0_5_filtering_data_with_pandas).
-
-We can use `.loc` and `.iloc` on Data Frames, remembering that this indexing
-acts like indexing two-dimensional Numpy arrays; when selecting columns, we
-first need to specify a selection for rows.
