@@ -32,7 +32,9 @@ specify one.
 The default Index that Pandas makes reminds us of the differences between
 label indexing (using `.loc`) and position (integer) indexing (using `.iloc`).
 
-Along the way, we'll often press not to use direct indexing on Series, as there is still some dangerous ambiguity in which type of indexing you are doing with direct indexing on Series.
+Along the way, we'll press you not to use direct indexing on Series, as there
+is still some dangerous ambiguity in which type of indexing you are doing with
+direct indexing on Series.
 
 Because it is easy to get mixed up about position (`.iloc`) and label (`.loc`)
 indexing, it is often sensible to replace Pandas' default index with a custom
