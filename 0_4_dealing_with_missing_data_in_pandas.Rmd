@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.2
+      jupytext_version: 1.17.1
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -366,8 +366,6 @@ df['Fertility Rate'].dropna()
 
 Let's compare computing a statistic (the mean) when we drop the NaN values from this Series versus when we leave them in.
 
-When we use the `.mean()` method on just this column, we get the following value:
-
 
 Let's first select all the rows relating to (indexed as) Zimbabwe (`'ZWE'`), and the corresponding `'Fertility Rate'` values:
 
@@ -376,6 +374,8 @@ Let's first select all the rows relating to (indexed as) Zimbabwe (`'ZWE'`), and
 zwe_fert = df.loc['ZWE', 'Fertility Rate']
 zwe_fert
 ```
+
+When we use the `.mean()` method on just this column, we get the following value:
 
 ```{python}
 # Calculate a mean with NaN data included (NaNs will be ignored).
