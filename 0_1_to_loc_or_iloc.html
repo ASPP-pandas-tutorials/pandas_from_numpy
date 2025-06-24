@@ -640,7 +640,7 @@ to do; you do what you do above: <code class="docutils literal notranslate"><spa
 including</em> the stop value.  Your problem now becomes annoying and error-prone.
 You have to look at the index, identify the last label for the row you do want
 (<code class="docutils literal notranslate"><span class="pre">'GBR'</span></code>) and then go one row further, and get the label for the row <em>after</em>
-the one you want (in this case <code class="docutils literal notranslate"><span class="pre">''IND'</span></code>.  In an alternative world, where
+the one you want (in this case <code class="docutils literal notranslate"><span class="pre">'IND'</span></code>.  In an alternative world, where
 <code class="docutils literal notranslate"><span class="pre">.loc</span></code> was <em>up to and not including</em> the stop value, indexing to get rows
 <code class="docutils literal notranslate"><span class="pre">'CAN'</span></code> through <code class="docutils literal notranslate"><span class="pre">'GBR'</span></code> would be <code class="docutils literal notranslate"><span class="pre">hdi_series.loc['CAN':'IND']</span></code>.  Now imagine
 that for some reason I had deleted the <code class="docutils literal notranslate"><span class="pre">'IND'</span></code> row, so the following row label
@@ -969,7 +969,7 @@ Otherwise it will have to rebuild an array of integers to represent the index.</
 the elements of an <code class="docutils literal notranslate"><span class="pre">index</span></code>. We’ve just seen what happens if we construct
 a Data Frame without telling Pandas what to use as an <code class="docutils literal notranslate"><span class="pre">index</span></code> - it will create
 a default <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code>. <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code> represents a series of integers.</p>
-<p>If you did the exercise, you will have found that Pandas can us <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code>
+<p>If you did the exercise, you will have found that Pandas can use <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code>
 when the index is a regular sequence of integers, but must otherwise change to
 having an index with an array containing integers, that are the value labels.</p>
 <p>What is the advantage of using an index with values that aren’t integers
@@ -1043,7 +1043,7 @@ position indexing.</strong></p>
 <section id="why-you-should-never-use-direct-indexing-on-series">
 <h2>Why you should never use direct indexing on Series<a class="headerlink" href="#why-you-should-never-use-direct-indexing-on-series" title="Link to this heading">#</a></h2>
 <p><a class="reference internal" href="0_0_pandas_intro.html#direct-indirect"><span class="std std-ref">Direct indexing</span></a> occurs where the indexing bracket <code class="docutils literal notranslate"><span class="pre">[</span></code> directly follows the Series value.  Conversely, indirect-indexing is indexing where the indexing bracket <code class="docutils literal notranslate"><span class="pre">[</span></code> follows <code class="docutils literal notranslate"><span class="pre">.loc</span></code> or <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>.</p>
-<p>Now consider the situation, that we encourage you never to put yourself in, where you use direct indexing on a Series.  You can’t specify what type if indexing you mean with direct indexing.  Do you mean label indexing or position indexing?  Pandas will have to make assumptions, and these assumptions may well wrong for what you intend.  Did we mention, you should never use direct indexing on Series?</p>
+<p>Now consider the situation, that we encourage you never to put yourself in, where you use direct indexing on a Series.  You can’t specify what type of indexing you mean with direct indexing.  Do you mean label indexing or position indexing?  Pandas will have to make assumptions, and these assumptions may well wrong for what you intend.  Did we mention, you should never use direct indexing on Series?</p>
 <p>OK, let’s imagine that you decided we were wrong, and used direct indexing on the Series above, with (implied) integer Index values.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1061,7 +1061,9 @@ position indexing.</strong></p>
 <p>At the moment, because the positions and integer row labels match up, there is
 no ambiguity as to what <code class="docutils literal notranslate"><span class="pre">4</span></code> refers to, so it may not be surprising that
 <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>, <code class="docutils literal notranslate"><span class="pre">.loc</span></code> and direct indexing all give the same result.</p>
-<p><strong>But this will not always be the case.</strong> It is extremely common for you to do operations on the Series, such as sorting and filtering that will mean that the integer labels no longer correspond to positions.</p>
+<p><strong>But this will not always be the case.</strong> It is extremely common for you to do
+operations on the Series — such as sorting and filtering — that will mean that
+the integer labels no longer correspond to positions.</p>
 <p>For instance let’s sort the data in our <code class="docutils literal notranslate"><span class="pre">hdi_series_def_index</span></code> Series in
 ascending order.  To do this we will use the <code class="docutils literal notranslate"><span class="pre">.sort_values()</span></code> method. We will
 cover Pandas methods in detail on <a class="reference internal" href="0_2_pandas_dataframes_attributes_methods.html"><span class="doc std std-doc">later
@@ -1385,7 +1387,7 @@ this will soon change.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2484/2121855053.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2448/2121855053.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   hdi_series[4]
 </pre></div>
 </div>
@@ -1793,7 +1795,7 @@ resultant Data Frame <code class="docutils literal notranslate"><span class="pre
 </div></div></div>
 </div>
 <p>We see that Pandas has automatically used the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute as the column
-name, hugely increasing the interpretability of the resulting Data Frame.</p>
+name, greatly increasing the interpretability of the resulting Data Frame.</p>
 <p>We can see the <code class="docutils literal notranslate"><span class="pre">name</span></code> in the <code class="docutils literal notranslate"><span class="pre">.columns</span></code> attribute of the new  <code class="docutils literal notranslate"><span class="pre">named_df</span></code> Data
 Frame:</p>
 <div class="cell docutils container">
@@ -1903,7 +1905,7 @@ much like <em>integer</em> indexing on a Series, which will return a single valu
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2484/374573743.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2448/374573743.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   hdi_series[0]
 </pre></div>
 </div>
@@ -2182,7 +2184,9 @@ location in the <code class="docutils literal notranslate"><span class="pre">.co
 </div>
 </div>
 </div>
-<p>We are now in the precarious situation of using a <code class="docutils literal notranslate"><span class="pre">int</span></code> <code class="docutils literal notranslate"><span class="pre">0</span></code> both as a <em>label</em> and as a <em>location</em>. In the cell above, it is a location, it the cell below it serves as a label:</p>
+<p>We are in the precarious situation of using a <code class="docutils literal notranslate"><span class="pre">int</span></code> <code class="docutils literal notranslate"><span class="pre">0</span></code> both as a <em>label</em> and
+as a <em>location</em>. In the cell above, it is a location, it the cell below it
+serves as a label:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Direct index the `0` column</span>
@@ -2591,15 +2595,22 @@ as we will otherwise get an error:</p>
 </div>
 </div>
 </div>
-<p>This compels us to stick to the good practice maxim we introduced above: <strong>use
-<code class="docutils literal notranslate"><span class="pre">.loc</span></code> and <code class="docutils literal notranslate"><span class="pre">iloc</span></code> unless there is a good reason not to!</strong>.</p>
-<p>Giving every column a sensible string as a <code class="docutils literal notranslate"><span class="pre">name</span></code> is one situation where direct indexing (e.g. in the present context using <code class="docutils literal notranslate"><span class="pre">named_df['Human</span> <span class="pre">Development</span> <span class="pre">Index']</span></code> etc.) is safe and non-error prone. As we have seen, issues can arise if we do not specify <code class="docutils literal notranslate"><span class="pre">name</span></code> attributes, and let Pandas automatically generate numeric labels for our Data Frame columns…</p>
+<p>This compels us to stick to the good practice maxim <strong>use <code class="docutils literal notranslate"><span class="pre">.loc</span></code> and <code class="docutils literal notranslate"><span class="pre">iloc</span></code>
+unless there is a good reason not to!</strong>.</p>
+<p>Giving every column a sensible string as a <code class="docutils literal notranslate"><span class="pre">name</span></code> is one situation where
+direct indexing (e.g. in the present context using <code class="docutils literal notranslate"><span class="pre">named_df['Human</span> <span class="pre">Development</span> <span class="pre">Index']</span></code> etc.) is safe and not error prone. As we have seen,
+issues can arise if we do not specify <code class="docutils literal notranslate"><span class="pre">name</span></code> attributes, and let Pandas
+automatically generate numeric labels for our Data Frame columns…</p>
 </section>
 <section id="loc-and-iloc-with-data-frames">
 <h2><code class="docutils literal notranslate"><span class="pre">.loc</span></code> and <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> with Data Frames<a class="headerlink" href="#loc-and-iloc-with-data-frames" title="Link to this heading">#</a></h2>
-<p>So far we have spent much time with <code class="docutils literal notranslate"><span class="pre">.loc</span></code> and <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> on Series.</p>
-<p>Series are like one-dimensional arrays (with and Index and a Name) - therefore <code class="docutils literal notranslate"><span class="pre">.loc</span></code> and <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> indexing into Series looks like indexing into one-dimensional Numpy arrays.</p>
-<p>A Data Frame is like a two dimensional array, so <code class="docutils literal notranslate"><span class="pre">.loc</span></code> and <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> indexing looks like indexing in two-dimensional Numpy arrays.</p>
+<p>So far we have spent much time with <code class="docutils literal notranslate"><span class="pre">.loc</span></code> and <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> on Series, but less
+time on <code class="docutils literal notranslate"><span class="pre">.loc</span></code> and <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> for Data Frames.</p>
+<p>Series are like one-dimensional arrays (with and Index and a Name) - therefore
+<code class="docutils literal notranslate"><span class="pre">.loc</span></code> and <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> indexing into Series looks like indexing into
+one-dimensional Numpy arrays.</p>
+<p>A Data Frame is like a two dimensional array, so <code class="docutils literal notranslate"><span class="pre">.loc</span></code> and <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> indexing
+looks like indexing into two-dimensional Numpy arrays.</p>
 <p>Consider the following two-dimensional Numpy array:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2616,7 +2627,8 @@ as we will otherwise get an error:</p>
 </div>
 </div>
 </div>
-<p>If index with one expression between the indexing brackets, we select <em>rows</em>:</p>
+<p>If we index with one expression between the indexing brackets, we select
+<em>rows</em>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Select the second row.</span>
@@ -2630,7 +2642,8 @@ as we will otherwise get an error:</p>
 </div>
 </div>
 </div>
-<p>If we want to select columns, we must specify two indexing expressions between the indexing brackets, separated by a comma:</p>
+<p>If we want to select columns, we must specify two indexing expressions between
+the indexing brackets, separated by a comma:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Select the second row, third column.</span>
@@ -2644,7 +2657,8 @@ as we will otherwise get an error:</p>
 </div>
 </div>
 </div>
-<p>As usual, we can use slices as indexing expressions (e.g. expressions containing colons <code class="docutils literal notranslate"><span class="pre">:</span></code>):</p>
+<p>As usual, we can use slices as indexing expressions (e.g. expressions
+containing colons <code class="docutils literal notranslate"><span class="pre">:</span></code>):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Select first and second rows, second and third columns.</span>
@@ -2672,7 +2686,8 @@ as we will otherwise get an error:</p>
 </div>
 </div>
 </div>
-<p>Because a Data Frame has rows and columns, it corresponds to a two-dimensional array.</p>
+<p>Because a Data Frame has rows and columns, it corresponds to a two-dimensional
+array.</p>
 <p>For example, let us return to a previous Data Frame.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2810,7 +2825,8 @@ as we will otherwise get an error:</p>
 </div>
 </div>
 </div>
-<p>When direct indexing with <code class="docutils literal notranslate"><span class="pre">.loc</span></code> or <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> we can select rows with a single indexing expression:</p>
+<p>When direct indexing with <code class="docutils literal notranslate"><span class="pre">.loc</span></code> or <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>, we can select rows with a single
+indexing expression:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Select row corresponding to label &#39;RUS&#39;</span>
@@ -2958,7 +2974,9 @@ Name: BRA, dtype: object
 </table>
 </div></div></div>
 </div>
-<p>Like the Numpy two-dimension indexing case, if we want to select columns with <code class="docutils literal notranslate"><span class="pre">.loc</span></code> or <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>, we must give two indexing expressions, separated by a comma:</p>
+<p>Like the Numpy two-dimension indexing case, if we want to select columns with
+<code class="docutils literal notranslate"><span class="pre">.loc</span></code> or <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>, we must give two indexing expressions, separated by
+a comma:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Select rows &#39;ITA&#39; through &#39;RUS&#39;, &#39;Country Names&#39; column.</span>
@@ -3027,7 +3045,8 @@ Name: BRA, dtype: object
 </section>
 <section id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
-<p>On this page we have looked at the Pandas Index, and different ways of indexing into Pandas Series.</p>
+<p>On this page we have looked at the Pandas Index, and different ways of
+indexing into Pandas Series.</p>
 <p>We discussed the default index that Pandas provides, of integer labels, and we
 showed how to get Series values by label (<code class="docutils literal notranslate"><span class="pre">.loc</span></code>) and by position (<code class="docutils literal notranslate"><span class="pre">.iloc</span></code>).</p>
 <p><code class="docutils literal notranslate"><span class="pre">.loc</span></code> differs from <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> and other Python indexing in that slices <em>include
