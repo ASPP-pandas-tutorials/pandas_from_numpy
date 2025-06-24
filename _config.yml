@@ -32,10 +32,10 @@ html:
   use_edit_page_button: true
   use_repository_button: true
   use_issues_button: true
-  baseurl: https://ASPP_pandas_tutorials.github.io/pandas_from_numpy
+  baseurl: https://ASPP-pandas-tutorials.github.io/pandas_from_numpy
 
 repository:
-  url: https://github.com/ASPP_pandas_tutorials/pandas_from_numpy
+  url: https://github.com/ASPP-pandas-tutorials/pandas_from_numpy
   branch: main
 
 launch_buttons:
