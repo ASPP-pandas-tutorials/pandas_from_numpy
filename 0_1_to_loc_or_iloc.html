@@ -624,7 +624,8 @@ Series, because <code class="docutils literal notranslate"><span class="pre">.lo
 the stop value.</p>
 <p>In the last cell, using <code class="docutils literal notranslate"><span class="pre">.loc</span></code>, <code class="docutils literal notranslate"><span class="pre">'GBR'</span></code> was the stop value, and we got the row corresponding to <code class="docutils literal notranslate"><span class="pre">'GBR'</span></code>.</p>
 <p>This is a major difference from Numpy and <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> behavior.</p>
-<div class="note docutils">
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p><strong>Stop and <code class="docutils literal notranslate"><span class="pre">.loc</span></code></strong></p>
 <p>Why does <code class="docutils literal notranslate"><span class="pre">.loc</span></code> slicing return the label corresponding to the stop value, instead of going <em>up to but not including</em> the stop value, like Numpy or <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>?</p>
 <p>We should say that this is absolutely the right choice.  But why?</p>
@@ -1101,33 +1102,22 @@ look at the Index.  The numbers within the Index no longer run sequentially
 from 0 to 14. This means that the integer position of each element in the
 Series no longer matches up with the index label. This can be a potential
 source of errors.</p>
-<div class="note docutils">
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p><strong>The index type can change if you rearrange elements</strong></p>
 <p>If you haven’t done the exercise above, please consider doing it.</p>
 <p>If you have, you will have found already that the sorted Series has a new
 Index, that is no longer a <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code> (because the integer labels now cannot
-be represented as a regular sequence of integers):</p>
+be represented as a regular sequence of integers).  Thus
+<code class="docutils literal notranslate"><span class="pre">type(hdi_series_def_index_sorted.index)</span></code> will be of type <code class="docutils literal notranslate"><span class="pre">Index</span></code>, rather than
+<code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code>.</p>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">hdi_series_def_index_sorted</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pandas.core.indexes.base.Index
-</pre></div>
-</div>
-</div>
-</div>
-<div class="docutils">
 <p>Let’s see what happens if we try to access the fifth element of the series
 using integer based indexing (<code class="docutils literal notranslate"><span class="pre">.iloc[4]</span></code>) location based indexing (<code class="docutils literal notranslate"><span class="pre">.loc[4]</span></code>)
 and direct indexing (<code class="docutils literal notranslate"><span class="pre">[4]</span></code>) as we did above.</p>
 <p>(Did we already say — you should never use direct indexing on Series?)</p>
 <p>As you remember, when we did this on the data before sorting, all these
 methods returned the same value.  Now, however:</p>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Integer indexing on the sorted data</span>
@@ -1260,7 +1250,7 @@ error):</p>
 <span class="n">The</span> <span class="n">above</span> <span class="n">exception</span> <span class="n">was</span> <span class="n">the</span> <span class="n">direct</span> <span class="n">cause</span> <span class="n">of</span> <span class="n">the</span> <span class="n">following</span> <span class="n">exception</span><span class="p">:</span>
 
 <span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">39</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">38</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Label indexing raises a KeyError ...</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">hdi_series</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
 
@@ -1395,7 +1385,7 @@ this will soon change.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2459/2121855053.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2468/2121855053.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   hdi_series[4]
 </pre></div>
 </div>
@@ -1459,7 +1449,8 @@ we do not expect.</p>
 </div>
 </div>
 </div>
-<div class="warning docutils">
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
 <p><strong>Direct indexing is not currently consistent</strong></p>
 <p>As an extra warning, as Pandas shifts towards more explicit choice of labels
 over positions in direct indexing, there are still inconsistencies.  These
@@ -1819,7 +1810,8 @@ Frame:</p>
 </div>
 </div>
 <p>Now, let’s try using direct indexing with each Data Frame, using the column names.</p>
-<div class="note docutils">
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p><strong>Two standard uses of direct indexing on Data Frames</strong></p>
 <p>Above we said that you should never use direct indexing on Series.  However, there are two standard uses of direct indexing on Data Frames that you can use without ambiguity.</p>
 <ol class="arabic simple">
@@ -1911,7 +1903,7 @@ much like <em>integer</em> indexing on a Series, which will return a single valu
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2459/374573743.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2468/374573743.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   hdi_series[0]
 </pre></div>
 </div>
@@ -2570,7 +2562,7 @@ as we will otherwise get an error:</p>
 <span class="n">The</span> <span class="n">above</span> <span class="n">exception</span> <span class="n">was</span> <span class="n">the</span> <span class="n">direct</span> <span class="n">cause</span> <span class="n">of</span> <span class="n">the</span> <span class="n">following</span> <span class="n">exception</span><span class="p">:</span>
 
 <span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">63</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">62</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># This will not work if each column has a `name` string</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">reversed_named_df</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -3048,7 +3040,7 @@ of Data Frames.</p>
 <ol class="arabic simple">
 <li><p>Direct indexing using a column name or sequence of names.</p></li>
 <li><p>Direct indexing using a Boolean Series (see <a class="reference internal" href="0_5_filtering_data_with_pandas.html"><span class="doc std std-doc">filtering
-page</span></a>.</p></li>
+page</span></a>).</p></li>
 </ol>
 <p>We can use <code class="docutils literal notranslate"><span class="pre">.loc</span></code> and <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> on Data Frames, remembering that this indexing
 acts like indexing two-dimensional Numpy arrays; when selecting columns, we
