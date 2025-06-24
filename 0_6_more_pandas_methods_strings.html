@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>More Pandas methods &#8212; Pandas from Numpy</title>
+    <title>Working with strings &#8212; Pandas from Numpy</title>
   
   
   
@@ -182,7 +182,7 @@
 <li class="toctree-l1"><a class="reference internal" href="0_3_constructing_dataframes.html">Let There Be Data : Creating Data Frames</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_4_dealing_with_missing_data_in_pandas.html">Handling data that is missing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_5_filtering_data_with_pandas.html">Filtering Data Frames with Boolean Series</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">More Pandas methods</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Working with strings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_7_pandas_datetimes.html">It’s Pandas time</a></li>
 
 </ul>
@@ -418,7 +418,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>More Pandas methods</h1>
+    <h1>Working with strings</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -444,47 +444,80 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="more-pandas-methods">
-<h1>More Pandas methods<a class="headerlink" href="#more-pandas-methods" title="Link to this heading">#</a></h1>
-<!---
-📝 NOTE: Covered here:
-
-* string operations, ex: df[‘name’].str[2:4], df[‘name’].str.count('a') [For
-  this, compare different country names between Mat > Mort data and
-  Dev/Fertility data, e.g. different names for Russia and South Korea])
-
-* Strings (and dates) have a special accessor to perform vectorized string (or
-  date) operations
-
-* specialized accessor methods Series.str
-
-**Matthew Notes: do everything on a Series first. Series.str follow the pandas
-from numpy structure**
-
-**For any string operations, show different routes to the same outcome e.g. via Boolean indexing and then replace etc.**
-
-Structure of this page:
-
-* show python string methods/string methods with numpy arrays
-
-* build a Series and show Series.str methods
-
-* show str methods with a dataframe + how this can be very useful when
-  cleaning data
--->
+  <section class="tex2jax_ignore mathjax_ignore" id="working-with-strings">
+<h1>Working with strings<a class="headerlink" href="#working-with-strings" title="Link to this heading">#</a></h1>
 <p>String/text data is often used to represent categorical variables, and commonly appears in a variety of data analysis contexts. When dealing with string/text data we will frequently find that we need to alter the strings to correct errors, improve clarity, make formatting uniform, or for a host of other reasons.</p>
 <p>String methods are inherent to Python, and these methods or variants of them can all be used on Numpy arrays and Pandas Series/Data Frames. However, Numpy and Pandas use different interfaces for interacting with strings. To understand the differences between Numpy and Pandas with respect to strings, let’s begin at the foundation, the in-built string methods of Python. The cell below contains a simple string.</p>
-<p><em>NB</em>: if you are running this tutorial interactively, and you like messy cell outputs, you may want to use <code class="docutils literal notranslate"><span class="pre">dir()</span></code> again here to see the full complement of available string methods.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A string</span>
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;string_of_words&quot;</span>
-<span class="n">string</span>
+<span class="n">my_string</span> <span class="o">=</span> <span class="s2">&quot;a few words&quot;</span>
+<span class="n">my_string</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;string_of_words&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;a few words&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here are the not-private methods and attributes of a standard Python <code class="docutils literal notranslate"><span class="pre">str</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Attributes and methods not starting with `_` (or `__`):</span>
+<span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">my_string</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;capitalize&#39;,
+ &#39;casefold&#39;,
+ &#39;center&#39;,
+ &#39;count&#39;,
+ &#39;encode&#39;,
+ &#39;endswith&#39;,
+ &#39;expandtabs&#39;,
+ &#39;find&#39;,
+ &#39;format&#39;,
+ &#39;format_map&#39;,
+ &#39;index&#39;,
+ &#39;isalnum&#39;,
+ &#39;isalpha&#39;,
+ &#39;isascii&#39;,
+ &#39;isdecimal&#39;,
+ &#39;isdigit&#39;,
+ &#39;isidentifier&#39;,
+ &#39;islower&#39;,
+ &#39;isnumeric&#39;,
+ &#39;isprintable&#39;,
+ &#39;isspace&#39;,
+ &#39;istitle&#39;,
+ &#39;isupper&#39;,
+ &#39;join&#39;,
+ &#39;ljust&#39;,
+ &#39;lower&#39;,
+ &#39;lstrip&#39;,
+ &#39;maketrans&#39;,
+ &#39;partition&#39;,
+ &#39;removeprefix&#39;,
+ &#39;removesuffix&#39;,
+ &#39;replace&#39;,
+ &#39;rfind&#39;,
+ &#39;rindex&#39;,
+ &#39;rjust&#39;,
+ &#39;rpartition&#39;,
+ &#39;rsplit&#39;,
+ &#39;rstrip&#39;,
+ &#39;split&#39;,
+ &#39;splitlines&#39;,
+ &#39;startswith&#39;,
+ &#39;strip&#39;,
+ &#39;swapcase&#39;,
+ &#39;title&#39;,
+ &#39;translate&#39;,
+ &#39;upper&#39;,
+ &#39;zfill&#39;]
 </pre></div>
 </div>
 </div>
@@ -494,12 +527,12 @@ Structure of this page:
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The `.upper()` method of `str`.</span>
-<span class="n">string</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+<span class="n">my_string</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;STRING_OF_WORDS&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;A FEW WORDS&#39;
 </pre></div>
 </div>
 </div>
@@ -507,13 +540,13 @@ Structure of this page:
 <p>We can replace characters in the string using the aptly named <code class="docutils literal notranslate"><span class="pre">.replace()</span></code> method. Here we supply two strings to the method, first the string we want to replace, and then second, the string we want to replace it with. In this case, let’s <code class="docutils literal notranslate"><span class="pre">.replace()</span></code> the underscores with a blank space:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The `.replace()` method</span>
-<span class="n">string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The `.replace()` method.</span>
+<span class="n">my_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;string of words&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;a_few_words&#39;
 </pre></div>
 </div>
 </div>
@@ -521,13 +554,13 @@ Structure of this page:
 <p>Fancier formatting methods will let us adjust strings, for instance, in title case (<code class="docutils literal notranslate"><span class="pre">.title()</span></code>):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A more elaborate string method</span>
-<span class="n">string</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A more elaborate string method.</span>
+<span class="n">my_string</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;String_Of_Words&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;A Few Words&#39;
 </pre></div>
 </div>
 </div>
@@ -535,37 +568,37 @@ Structure of this page:
 <p>In Python, strings are collections of characters, and so we can slice them as we would a list or array, using integer indexes and the <code class="docutils literal notranslate"><span class="pre">:</span></code> symbol:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Slicing with strings</span>
-<span class="n">string</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Slicing with strings.</span>
+<span class="n">my_string</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;s&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;a&#39;
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">string</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_string</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;st&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;a &#39;
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">string</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_string</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;string_&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;a few w&#39;
 </pre></div>
 </div>
 </div>
@@ -574,8 +607,8 @@ Structure of this page:
 <section id="string-methods-with-numpy-arrays">
 <h2>String methods with Numpy arrays<a class="headerlink" href="#string-methods-with-numpy-arrays" title="Link to this heading">#</a></h2>
 <p>So, strings in base Python have a large number of in-built methods - what about strings in Numpy?</p>
-<p>Numpy arrays themselves do not have specific string methods, but the in-built Python string methods can be called on individual string values in a Numpy array. Alternatively, we can use functions from the <code class="docutils literal notranslate"><span class="pre">np.char.</span></code> module to operate on all the strings in the array concurrently.</p>
-<p>To investigate how string data is handled in Numpy, let’s make some arrays containing strings from now (very) familiar <a class="reference external" href="https://ourworldindata.org/grapher/children-per-woman-vs-human-development-index">HDI dataset</a>:</p>
+<p>Numpy arrays themselves do not have specific string methods, but the in-built Python string methods can be called on individual string values in a Numpy array. Alternatively, we can use functions from the <code class="docutils literal notranslate"><span class="pre">np.char.</span></code> module to operate on all the strings in the array in one go.</p>
+<p>To investigate how string data is handled in Numpy, let’s make some arrays containing strings from now (very) familiar <a class="reference internal" href="data/data_notes.html"><span class="doc std std-doc">HDI dataset</span></a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import libraries (no imports were needed prior to this point as string methods are part of base python)</span>
@@ -745,7 +778,7 @@ Structure of this page:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">21</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">22</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Oh no!</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">hdis_array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 
@@ -765,7 +798,7 @@ Structure of this page:
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">22</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">23</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># This does not work</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">country_codes_array</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 
@@ -1237,7 +1270,7 @@ Name: Country Name, dtype: object
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="nn">/tmp/ipykernel_2579/1916934331.py</span> in <span class="ni">?</span><span class="nt">()</span>
+<span class="nn">/tmp/ipykernel_2575/1916934331.py</span> in <span class="ni">?</span><span class="nt">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Cannot use `.str` methods on whole Data Frame.</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">df</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 
@@ -1267,7 +1300,7 @@ same error:</p>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="nn">/tmp/ipykernel_2579/3866909753.py</span> in <span class="ni">?</span><span class="nt">()</span>
+<span class="nn">/tmp/ipykernel_2575/3866909753.py</span> in <span class="ni">?</span><span class="nt">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Oops, using `.str` fails even for all-string-dtype columns.</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Country Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Code&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">()</span>
 
@@ -2481,25 +2514,28 @@ to use in indexing operations (or any time where we need to type them).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run this cell to check your answer.</span>
-<span class="c1"># It will print &#39;Success&#39; if your cleaning worked correctly.</span>
+<span class="c1"># It will return &#39;Success&#39; if your cleaning worked correctly.</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">check_names</span><span class="p">():</span>
-    <span class="n">answer_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">answer_clean_series</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">my_clean_names</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">answer_list</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s1">&#39;The answers are of different lengths&#39;</span>
-    <span class="n">not_matching</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">my_clean_names</span><span class="p">)</span> <span class="o">!=</span> <span class="n">answer_list</span>
-    <span class="k">if</span> <span class="n">not_matching</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;My solution unmatched&#39;</span><span class="p">,</span> <span class="n">my_clean_names</span><span class="p">[</span><span class="n">not_matching</span><span class="p">])</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Desired unmatched&#39;</span><span class="p">,</span> <span class="n">cleaned_names_answer</span><span class="p">[</span><span class="n">not_matching</span><span class="p">])</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">check_names</span><span class="p">(</span><span class="n">proposed_solution</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Check resulting names from processed Series `proposed_solution`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">answer_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">answer_clean_series</span><span class="o">.</span><span class="n">unique</span><span class="p">()))</span>
+    <span class="n">solution_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">proposed_solution</span><span class="o">.</span><span class="n">unique</span><span class="p">()))</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">answer_arr</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">solution_arr</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;The answer and solution names are of different lengths&#39;</span>
+    <span class="n">not_matching</span> <span class="o">=</span> <span class="n">answer_arr</span> <span class="o">!=</span> <span class="n">solution_arr</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">not_matching</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;My solution unmatched&#39;</span><span class="p">,</span> <span class="n">solution_arr</span><span class="p">[</span><span class="n">not_matching</span><span class="p">])</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Desired unmatched&#39;</span><span class="p">,</span> <span class="n">answer_arr</span><span class="p">[</span><span class="n">not_matching</span><span class="p">])</span>
         <span class="k">return</span> <span class="s1">&#39;Remaining unmatched values&#39;</span>
     <span class="k">return</span> <span class="s1">&#39;Success&#39;</span>
     
-<span class="n">check_names</span><span class="p">()</span>
+<span class="n">check_names</span><span class="p">(</span><span class="n">my_clean_series</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;The answers are of different lengths&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;The answer and solution names are of different lengths&#39;
 </pre></div>
 </div>
 </div>
@@ -2519,228 +2555,35 @@ to use in indexing operations (or any time where we need to type them).</p>
                      <span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
                      <span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">maketrans</span><span class="p">(</span><span class="s1">&#39; -&#39;</span><span class="p">,</span> <span class="s1">&#39;__&#39;</span><span class="p">,</span> <span class="s1">&#39;().,&#39;</span><span class="p">))</span>
                      <span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;russia&#39;</span><span class="p">,</span> <span class="s1">&#39;russian_federation&#39;</span><span class="p">))</span>
-<span class="n">soln_clean_names</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">soln_clean_series</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
-<span class="n">soln_clean_names</span>
+<span class="n">check_names</span><span class="p">(</span><span class="n">soln_clean_series</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;afghanistan&#39;,
- &#39;albania&#39;,
- &#39;algeria&#39;,
- &#39;american_samoa&#39;,
- &#39;andorra&#39;,
- &#39;angola&#39;,
- &#39;antigua_and_barbuda&#39;,
- &#39;argentina&#39;,
- &#39;armenia&#39;,
- &#39;aruba&#39;,
- &#39;australia&#39;,
- &#39;austria&#39;,
- &#39;azerbaijan&#39;,
- &#39;bahamas_the&#39;,
- &#39;bahrain&#39;,
- &#39;bangladesh&#39;,
- &#39;barbados&#39;,
- &#39;belarus&#39;,
- &#39;belgium&#39;,
- &#39;belize&#39;,
- &#39;benin&#39;,
- &#39;bermuda&#39;,
- &#39;bhutan&#39;,
- &#39;bolivia&#39;,
- &#39;bosnia_and_herzegovina&#39;,
- &#39;botswana&#39;,
- &#39;brazil&#39;,
- &#39;british_virgin_islands&#39;,
- &#39;brunei_darussalam&#39;,
- &#39;bulgaria&#39;,
- &#39;burkina_faso&#39;,
- &#39;burundi&#39;,
- &#39;cabo_verde&#39;,
- &#39;cambodia&#39;,
- &#39;cameroon&#39;,
- &#39;canada&#39;,
- &#39;cayman_islands&#39;,
- &#39;central_african_republic&#39;,
- &#39;chad&#39;,
- &#39;chile&#39;,
- &#39;china&#39;,
- &#39;colombia&#39;,
- &#39;comoros&#39;,
- &#39;congo_dem_rep&#39;,
- &#39;congo_rep&#39;,
- &#39;costa_rica&#39;,
- &quot;cote_d&#39;ivoire&quot;,
- &#39;croatia&#39;,
- &#39;cuba&#39;,
- &#39;curacao&#39;,
- &#39;cyprus&#39;,
- &#39;czech_republic&#39;,
- &#39;denmark&#39;,
- &#39;djibouti&#39;,
- &#39;dominica&#39;,
- &#39;dominican_republic&#39;,
- &#39;ecuador&#39;,
- &#39;egypt_arab_rep&#39;,
- &#39;el_salvador&#39;,
- &#39;equatorial_guinea&#39;,
- &#39;eritrea&#39;,
- &#39;estonia&#39;,
- &#39;ethiopia&#39;,
- &#39;faroe_islands&#39;,
- &#39;fiji&#39;,
- &#39;finland&#39;,
- &#39;france&#39;,
- &#39;french_polynesia&#39;,
- &#39;gabon&#39;,
- &#39;gambia_the&#39;,
- &#39;georgia&#39;,
- &#39;germany&#39;,
- &#39;ghana&#39;,
- &#39;gibraltar&#39;,
- &#39;greece&#39;,
- &#39;greenland&#39;,
- &#39;grenada&#39;,
- &#39;guam&#39;,
- &#39;guatemala&#39;,
- &#39;guinea&#39;,
- &#39;guinea_bissau&#39;,
- &#39;guyana&#39;,
- &#39;haiti&#39;,
- &#39;honduras&#39;,
- &#39;hong_kong_sar_china&#39;,
- &#39;hungary&#39;,
- &#39;iceland&#39;,
- &#39;india&#39;,
- &#39;indonesia&#39;,
- &#39;iran_islamic_rep&#39;,
- &#39;iraq&#39;,
- &#39;ireland&#39;,
- &#39;isle_of_man&#39;,
- &#39;israel&#39;,
- &#39;italy&#39;,
- &#39;jamaica&#39;,
- &#39;japan&#39;,
- &#39;jordan&#39;,
- &#39;kazakhstan&#39;,
- &#39;kenya&#39;,
- &#39;kiribati&#39;,
- &quot;korea_dem_people&#39;s_rep&quot;,
- &#39;korea_rep&#39;,
- &#39;kosovo&#39;,
- &#39;kuwait&#39;,
- &#39;kyrgyz_republic&#39;,
- &#39;lao_pdr&#39;,
- &#39;latvia&#39;,
- &#39;lebanon&#39;,
- &#39;lesotho&#39;,
- &#39;liberia&#39;,
- &#39;libya&#39;,
- &#39;liechtenstein&#39;,
- &#39;lithuania&#39;,
- &#39;luxembourg&#39;,
- &#39;macao_sar_china&#39;,
- &#39;macedonia_fyr&#39;,
- &#39;madagascar&#39;,
- &#39;malawi&#39;,
- &#39;malaysia&#39;,
- &#39;maldives&#39;,
- &#39;mali&#39;,
- &#39;malta&#39;,
- &#39;marshall_islands&#39;,
- &#39;mauritania&#39;,
- &#39;mauritius&#39;,
- &#39;mexico&#39;,
- &#39;micronesia_fed_sts&#39;,
- &#39;moldova&#39;,
- &#39;monaco&#39;,
- &#39;mongolia&#39;,
- &#39;montenegro&#39;,
- &#39;morocco&#39;,
- &#39;mozambique&#39;,
- &#39;myanmar&#39;,
- &#39;namibia&#39;,
- &#39;nauru&#39;,
- &#39;nepal&#39;,
- &#39;netherlands&#39;,
- &#39;new_caledonia&#39;,
- &#39;new_zealand&#39;,
- &#39;nicaragua&#39;,
- &#39;niger&#39;,
- &#39;nigeria&#39;,
- &#39;northern_mariana_islands&#39;,
- &#39;norway&#39;,
- &#39;oman&#39;,
- &#39;pakistan&#39;,
- &#39;palau&#39;,
- &#39;panama&#39;,
- &#39;papua_new_guinea&#39;,
- &#39;paraguay&#39;,
- &#39;peru&#39;,
- &#39;philippines&#39;,
- &#39;poland&#39;,
- &#39;portugal&#39;,
- &#39;puerto_rico&#39;,
- &#39;qatar&#39;,
- &#39;romania&#39;,
- &#39;russian_federation&#39;,
- &#39;rwanda&#39;,
- &#39;samoa&#39;,
- &#39;san_marino&#39;,
- &#39;sao_tome_and_principe&#39;,
- &#39;saudi_arabia&#39;,
- &#39;senegal&#39;,
- &#39;serbia&#39;,
- &#39;seychelles&#39;,
- &#39;sierra_leone&#39;,
- &#39;singapore&#39;,
- &#39;sint_maarten_dutch_part&#39;,
- &#39;slovak_republic&#39;,
- &#39;slovenia&#39;,
- &#39;solomon_islands&#39;,
- &#39;somalia&#39;,
- &#39;south_africa&#39;,
- &#39;south_sudan&#39;,
- &#39;spain&#39;,
- &#39;sri_lanka&#39;,
- &#39;st_kitts_and_nevis&#39;,
- &#39;st_lucia&#39;,
- &#39;st_martin_french_part&#39;,
- &#39;st_vincent_and_the_grenadines&#39;,
- &#39;sudan&#39;,
- &#39;suriname&#39;,
- &#39;swaziland&#39;,
- &#39;sweden&#39;,
- &#39;switzerland&#39;,
- &#39;syrian_arab_republic&#39;,
- &#39;tajikistan&#39;,
- &#39;tanzania&#39;,
- &#39;thailand&#39;,
- &#39;timor_leste&#39;,
- &#39;togo&#39;,
- &#39;tonga&#39;,
- &#39;trinidad_and_tobago&#39;,
- &#39;tunisia&#39;,
- &#39;turkey&#39;,
- &#39;turkmenistan&#39;,
- &#39;turks_and_caicos_islands&#39;,
- &#39;tuvalu&#39;,
- &#39;uganda&#39;,
- &#39;ukraine&#39;,
- &#39;united_arab_emirates&#39;,
- &#39;united_kingdom&#39;,
- &#39;united_states&#39;,
- &#39;uruguay&#39;,
- &#39;uzbekistan&#39;,
- &#39;vanuatu&#39;,
- &#39;venezuela_rb&#39;,
- &#39;vietnam&#39;,
- &#39;virgin_islands_us&#39;,
- &#39;west_bank_and_gaza&#39;,
- &#39;yemen_rep&#39;,
- &#39;zambia&#39;,
- &#39;zimbabwe&#39;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Success&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can do the same processing with <code class="docutils literal notranslate"><span class="pre">.str.replace</span></code> at the expense of greater verbosity:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Using `.str.replace`</span>
+<span class="n">soln2_clean_series</span> <span class="o">=</span> <span class="p">(</span><span class="n">gender_df</span><span class="p">[</span><span class="s1">&#39;country_name&#39;</span><span class="p">]</span>
+                      <span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                      <span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span>
+                      <span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span>
+                      <span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;(&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+                      <span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+                      <span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+                      <span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+                      <span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;russia&#39;</span><span class="p">,</span> <span class="s1">&#39;russian_federation&#39;</span><span class="p">))</span>
+<span class="n">check_names</span><span class="p">(</span><span class="n">soln2_clean_series</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Success&#39;
 </pre></div>
 </div>
 </div>
