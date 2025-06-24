@@ -729,7 +729,7 @@ df['Country Name'].replace("United Kingdom", "UK")
 
 Sure enough, `United Kingdom` has been replaced with `UK` in the Series in the output of the cell above. We can also do this with [collections of values](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.replace.html) (e.g. using a `dict` or `list` etc) rather than just single values, should we feel moved to do so.
 
-By default, `.replace()` (when used with `str` data) only works on *whole expressions*.
+By default, `.replace()` only replaces values that are equal to the first (target) argument to `.replace`.
 
 For instance, we might expect the following code to replace `United` in both `United Kingdom` and `United States`, but we would be wrong:
 
