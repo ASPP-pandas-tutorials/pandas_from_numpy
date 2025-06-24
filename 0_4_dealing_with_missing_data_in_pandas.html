@@ -489,7 +489,7 @@ operations.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2532/2469014178.py:6: RuntimeWarning: invalid value encountered in divide
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2493/2469014178.py:6: RuntimeWarning: invalid value encountered in divide
   a_nan = np.array(0) / np.array(0)
 </pre></div>
 </div>
@@ -512,7 +512,7 @@ infinity) are special floating point values:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2532/58810310.py:2: RuntimeWarning: divide by zero encountered in divide
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2493/58810310.py:2: RuntimeWarning: divide by zero encountered in divide
   np.array(1) / np.array(0)
 </pre></div>
 </div>
@@ -1650,7 +1650,6 @@ Name: Fertility Rate, Length: 18722, dtype: float64
 </div>
 </div>
 <p>Let’s compare computing a statistic (the mean) when we drop the NaN values from this Series versus when we leave them in.</p>
-<p>When we use the <code class="docutils literal notranslate"><span class="pre">.mean()</span></code> method on just this column, we get the following value:</p>
 <p>Let’s first select all the rows relating to (indexed as) Zimbabwe (<code class="docutils literal notranslate"><span class="pre">'ZWE'</span></code>), and the corresponding <code class="docutils literal notranslate"><span class="pre">'Fertility</span> <span class="pre">Rate'</span></code> values:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1678,6 +1677,7 @@ Name: Fertility Rate, Length: 261, dtype: float64
 </div>
 </div>
 </div>
+<p>When we use the <code class="docutils literal notranslate"><span class="pre">.mean()</span></code> method on just this column, we get the following value:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate a mean with NaN data included (NaNs will be ignored).</span>
