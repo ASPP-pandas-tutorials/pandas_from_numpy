@@ -748,7 +748,7 @@ df['Country Name'].replace("United", "Unknown",
                            regex=True)
 ```
 
-Now `regex=True`, the `.replace()` method has searched for matches *within* other strings. So, `United` has been replaced in both `United Kingdom` and `United States`, despite not matching either string in full.
+With `regex=True`, the `.replace()` method has searched for matches *within* other strings. So, `United` has been replaced in both `United Kingdom` and `United States`, despite not matching either string in full.
 
 The `.replace` method can also be used for Series with numeric `dtype`s. For instance, some particularly patriotic data analyst might want to do the following replacement:
 
