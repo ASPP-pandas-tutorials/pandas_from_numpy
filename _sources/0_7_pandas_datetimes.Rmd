@@ -243,7 +243,7 @@ single_timestamp.value
 At first glance this might be confusing - it doesn't look much like a normal
 date, or time...
 
-A look through the other attributes reveals more familiar named units of time. For instance, the `year`, `month` and `day` attributes:
+A look through the other attributes reveals more familiarly named units of time. For instance, the `year`, `month` and `day` attributes:
 
 ```{python}
 # The `.year` attribute
