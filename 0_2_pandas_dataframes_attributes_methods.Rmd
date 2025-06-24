@@ -738,7 +738,7 @@ For instance, we might expect the following code to replace `United` in both `Un
 df['Country Name'].replace("United", "Unknown")
 ```
 
-This did not work because `.replace()` is searching for an element of the Series which *equals* `United`, not *contains* `United`. (There is an alternative string-specifc `.replace()` method, which behaves differently as we will see on a [later page](0_6_more_pandas_methods_strings)).
+This did not work because `.replace()` is searching for an element of the Series which *equals* `United`, not that *contains* `United`. (There is an alternative string-specifc `.replace()` method, which behaves differently as we will see on a [later page](0_6_more_pandas_methods_strings)).
 
 We can achieve the desired result using the `regex` (standing for "regular expression") argument:
 
