@@ -178,7 +178,7 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="0_0_pandas_intro.html">Pandas from Numpy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_1_to_loc_or_iloc.html">Indexing by label and position</a></li>
-<li class="toctree-l1"><a class="reference internal" href="0_2_pandas_dataframes_attributes_methods.html">Pandas DataFrames: Attributes and Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="0_2_pandas_dataframes_attributes_methods.html">Attributes and Methods of Series and Data Frames</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_3_constructing_dataframes.html">Let There Be Data : Creating Data Frames</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_4_dealing_with_missing_data_in_pandas.html">Handling data that is missing</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Filtering Data Frames with Boolean Series</a></li>
@@ -2576,11 +2576,12 @@ Name: Fertility Rate, dtype: float64
 </div></div></div>
 </div>
 <p>Ok, so we probably want to keep <code class="docutils literal notranslate"><span class="pre">Kosovo</span></code> and <code class="docutils literal notranslate"><span class="pre">Serbia</span> <span class="pre">and</span> <span class="pre">Montenegro</span></code>, but will drop the row with the data for the whole world.</p>
-<p>We can use the <code class="docutils literal notranslate"><span class="pre">.drop()</span></code> method, with the <code class="docutils literal notranslate"><span class="pre">labels=</span></code> argument to tell Pandas to drop the row with the <code class="docutils literal notranslate"><span class="pre">'OWID_WRL'</span></code> label:</p>
+<p>We can use the <code class="docutils literal notranslate"><span class="pre">.drop()</span></code> method, with the <code class="docutils literal notranslate"><span class="pre">index=</span></code> argument to tell Pandas to
+drop the row with the <code class="docutils literal notranslate"><span class="pre">'OWID_WRL'</span></code> label:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Remove junk row with the `.drop()` method.</span>
-<span class="n">full_df_2000</span> <span class="o">=</span> <span class="n">full_df_2000</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;OWID_WRL&#39;</span><span class="p">])</span>
+<span class="n">full_df_2000</span> <span class="o">=</span> <span class="n">full_df_2000</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;OWID_WRL&#39;</span><span class="p">])</span>
 <span class="n">full_df_2000</span>
 </pre></div>
 </div>

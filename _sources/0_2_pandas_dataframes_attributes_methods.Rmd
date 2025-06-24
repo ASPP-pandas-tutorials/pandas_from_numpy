@@ -13,7 +13,7 @@ jupyter:
     name: python3
 ---
 
-# Pandas DataFrames: Attributes and Methods
+# Attributes and Methods of Series and Data Frames
 
 <!---
 📝 NOTE-  Covered here:
@@ -32,11 +32,19 @@ Structure of page:
 * reinforce that "DataFrame = dictionary-like collection of Series". Then show all relevant methods/attributes of DataFrames.
 -->
 
-On the [previous](0_0_pandas_intro.Rmd) [pages](0_1_to_loc_or_iloc.Rmd) we have seen how Pandas Series are constructed by combining Numpy arrays (the `.values` attribute of a Series) with other attributes (a `.name` string and and array-like `.index`). We have then examined how Pandas Data Frames are built from a collection of Series, in a dictionary-like structure.
+On the [previous](0_0_pandas_intro.Rmd) [pages](0_1_to_loc_or_iloc.Rmd) we
+have seen how Pandas Series are constructed by combining Numpy arrays (the
+`.values` attribute of a Series) with other attributes (a `.name` string and
+array-like `.index`). We then examined how Pandas Data Frames are built from
+a collection of Series, in a dictionary-like structure.
 
-This page will dive deeper into Data Frames. Once we have constructed our Data Frame, Pandas provides many useful methods for cleaning, aggregating, plotting and (subsequently) analysing our data.
+This page will dive deeper into the machinery behind Series and Data Frames.
+Once we have constructed our Series or Data Frame, Pandas provides many useful
+methods for cleaning, aggregating, plotting and (subsequently) analysing our
+data.
 
 We will begin by showing that Pandas Series and Data Frames have many methods that parallel those of Numpy arrays, though the methods are adapted to work in the context of Pandas objects.
+
 
 ## More Pandas from Numpy
 
@@ -68,7 +76,6 @@ country_codes_array = np.array(['AUS', 'BRA', 'CAN',
                                 'FRA', 'GBR', 'IND',
                                 'ITA', 'JPN', 'KOR',
                                 'MEX', 'RUS', 'USA'])
-country_codes_array
 ```
 
 ```{python}
@@ -78,7 +85,6 @@ hdis_array = np.array([0.896, 0.668, 0.89,
                        0.844, 0.863, 0.49,
                        0.842, 0.883, 0.824,
                        0.709, 0.733, 0.894])
-hdis_array
 ```
 
 ```{python}
@@ -88,10 +94,11 @@ country_names_array = np.array(['Australia', 'Brazil', 'Canada',
                                 'France', 'United Kingdom', 'India',
                                 'Italy', 'Japan', 'South Korea',
                                 'Mexico', 'Russia', 'United States'])
-country_names_array
 ```
 
-When dealing with any object in python, it can be useful to use the in-built python `dir()` function. This returns the *names* of every attribute and method that we can access/call from the object:
+When dealing with any object in python, it can be useful to use the in-built
+python `dir()` function. This returns the *names* of every attribute and
+method that we can access/call from the object:
 
 ```{python}
 # Show all available attributes/methods
@@ -110,8 +117,9 @@ a method or attribute name to indicate that the method or attribute is
 *private* — that is, the attribute / method is for the object to use, but for
 us — the user of the object — to avoid.
 
-Ignoring the dunder attributes and methods, and those beginning with underscores, we can see a large number of
-attributes and methods that we can access from this or any other Numpy array.
+Ignoring the all attributes and methods that begin with underscores, we can
+see a large number of attributes and methods that we can access from this or
+any other Numpy array.
 
 ```{python}
 # Attributes and methods not starting with `_` (or `__`):
@@ -125,7 +133,8 @@ One of these `array` attributes is `shape`. We often want to know the `shape` of
 hdis_array.shape
 ```
 
-We can read this output as "15 elements in a single dimension". By contrast, let's look at an array with more than one dimension:
+We can read this output as "15 elements in a single dimension". By contrast,
+let's look at an array with more than one dimension:
 
 ```{python}
 # Arrays with more dimensions
@@ -168,9 +177,11 @@ len(hdis_array)
 
 **How does `len()` work?**
 
-Calling the standard Python function `len()` on an object `obj` causes Python to call the `__len__()` method of the object.  Therefore, the result of `len(obj)` is the same as that for `obj.__len__()`. 
+Calling the standard Python function `len()` on an object `obj` causes Python to call the `__len__()` method of the object.  Therefore, the result of `len(obj)` is the same as that for `obj.__len__()`.
 
-Each object type can define what `len(obj)` means.  For Numpy arrays `arr.__len__()` gives you the equivalent of `arr.shape[0]`. 
+Each object type can define what `len(obj)` means by implementing a `__len__`
+method.  For Numpy arrays `arr.__len__()` gives you the equivalent of
+`arr.shape[0]`.
 
 Later we will see that Data Frames have their own implementation of `__len__`.
 
@@ -209,7 +220,7 @@ Numpy also provides a variety of what we can call "statistical attributes" which
 
 ::: {note}
 
-**What is a statistic**
+**What is a statistic?**
 
 A statistic is some number or sequence of numbers that summarizes a distribution of values.  For example, the mean or average is a measure of the center of the distribution.  Similarly the min and max are the values on the extreme left and extreme right of a distribution.
 
@@ -247,7 +258,7 @@ hdis_array.std()
 
 ## Pandas Series attributes and methods
 
-Remember our answer to "What is a Series"?:
+Remember our answer to [What is a Series?](what-is-a-series):
 
 > A *Series* is the association of:
 >
@@ -265,7 +276,6 @@ Let's make a series from the HDI scores, called `hdi_series`. We do this using t
 # Show again from Series, then show for df below
 hdi_series =  pd.Series(hdis_array,
                         index=country_codes_array)
-
 hdi_series
 ```
 
@@ -305,7 +315,9 @@ hdi_series.size
 hdi_series.dtype
 ```
 
-Because a Series is a Numpy array (of `.values`) plus some additional attributes/methods, these methods function on the Series in a very similar manner to their equivalents on Numpy arrays.
+Because a Series is a Numpy array (of `.values`) plus some additional
+attributes/methods, these methods work on the Series in a very similar manner
+to their equivalents on Numpy arrays.
 
 This also applies to statistical methods. Let's get the `.min()` and `.max()` values from the `hdi_series`.
 
@@ -356,7 +368,6 @@ data:
 # Constructing a Series containing categorical data
 country_names_series = pd.Series(country_names_array,
                                  index=country_codes_array)
-
 country_names_series
 ```
 
@@ -379,7 +390,9 @@ numbers and strings can be unique in an array.  For our case, the output isn't v
 country_names_series.value_counts()
 ```
 
-If we want to see the *unique* values only, regardless of the number of times each value occurs, we can use the `.unique()` method.  This gives us a sorted array of the unique values.
+If we want to see the *unique* values only, regardless of the number of times
+each value occurs, we can use the `.unique()` method.  This gives us an array
+of the unique values.
 
 ```{python}
 # Show the unique values in the Series
@@ -392,11 +405,11 @@ country_names_series.unique()
 ```
 
 ```{python}
-# But of course, all the country names are unique, and they 
-# are already sorted alphabetically, so the 
+# But of course, all the country names are unique, so the
 # above is the same, in our case, as:
 country_names_series.values
 ```
+
 
 ## Pandas Data Frame attributes
 
@@ -430,7 +443,9 @@ df.shape
 ```
 
 (len-df)=
-`len(df)` (therefore, `df.__len__()`) gives the number of rows.  This corresponds the Numpy behavior of giving the number of elements on the first dimension of the array:
+`len(df)` (therefore, `df.__len__()`) gives the number of rows.  This
+corresponds to the Numpy behavior of giving the number of elements on the
+first dimension of the array:
 
 ```{python}
 # Length of Data Frame is number of rows.
@@ -738,14 +753,16 @@ For instance, we might expect the following code to replace `United` in both `Un
 df['Country Name'].replace("United", "Unknown")
 ```
 
-This did not work because `.replace()` is searching for an element of the Series which *equals* `United`, not that *contains* `United`. (There is an alternative string-specifc `.replace()` method, which behaves differently as we will see on a [later page](0_6_more_pandas_methods_strings)).
+This did not work because `.replace()` is searching for an element of the
+Series which *equals* `United`, not that *contains* `United`. (There is an
+alternative string-specific `.replace()` method, which behaves differently as
+we will see on a [later page](0_6_more_pandas_methods_strings)).
 
 We can achieve the desired result using the `regex` (standing for "regular expression") argument:
 
 ```{python}
 # Allowing replace on a partial match.
-df['Country Name'].replace("United", "Unknown",
-                           regex=True)
+df['Country Name'].replace("United", "Unknown", regex=True)
 ```
 
 With `regex=True`, the `.replace()` method has searched for matches *within* other strings. So, `United` has been replaced in both `United Kingdom` and `United States`, despite not matching either string in full.
