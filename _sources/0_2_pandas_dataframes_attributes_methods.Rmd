@@ -750,7 +750,7 @@ For instance, we might expect the following code to replace `United` in both `Un
 
 ```{python}
 # Not what we want.
-df['Country Name'].replace("United", "Unknown")
+df['Country Name'].replace("United", "Disunited")
 ```
 
 This did not work because `.replace()` is searching for an element of the
@@ -762,7 +762,7 @@ We can achieve the desired result using the `regex` (standing for "regular expre
 
 ```{python}
 # Allowing replace on a partial match.
-df['Country Name'].replace("United", "Unknown", regex=True)
+df['Country Name'].replace("United", "Disunited", regex=True)
 ```
 
 With `regex=True`, the `.replace()` method has searched for matches *within* other strings. So, `United` has been replaced in both `United Kingdom` and `United States`, despite not matching either string in full.

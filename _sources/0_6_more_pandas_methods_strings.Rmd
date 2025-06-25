@@ -246,10 +246,14 @@ As such, by using the string-specific `.str.replace()` method we can easily repl
 
 ```{python}
 # Replacing values in the Series
-names_series.str.replace("United", "Unknown")
+names_series.str.replace("United", "Disunited")
 ```
 
-Here, the substring `United` has been replaced with `Unknown` in the both the strings `"United Kingdom"` and `"United States"`. This is a good example of a situation where a specialized accessor (like `.str.`) can change the behaviour of other methods, often in a helpful way for dealing with a specific data type.
+Here, the substring `'United'` has been replaced with `'Disunited'` in the both
+the strings `"United Kingdom"` and `"United States"`. This is a good example of
+a situation where a specialized accessor (like `.str.`) can change the
+behavior of other methods, often in a helpful way for dealing with a specific
+data type.
 
 The syntax for slicing strings is the same as for a single value, but it also operates across all elements in the Series at once:
 
