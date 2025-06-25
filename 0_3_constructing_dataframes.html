@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Let There Be Data : Creating Data Frames &#8212; Pandas from Numpy</title>
+    <title>Let There Be Data (Frames) &#8212; Pandas from Numpy</title>
   
   
   
@@ -179,7 +179,7 @@
 <li class="toctree-l1"><a class="reference internal" href="0_0_pandas_intro.html">Pandas from Numpy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_1_to_loc_or_iloc.html">Indexing by label and position</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_2_pandas_dataframes_attributes_methods.html">Attributes and Methods of Series and Data Frames</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Let There Be Data : Creating Data Frames</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Let There Be Data (Frames)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_4_dealing_with_missing_data_in_pandas.html">Handling data that is missing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_5_filtering_data_with_pandas.html">Filtering Data Frames with Boolean Series</a></li>
 <li class="toctree-l1"><a class="reference internal" href="0_6_more_pandas_methods_strings.html">Working with strings</a></li>
@@ -418,7 +418,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Let There Be Data : Creating Data Frames</h1>
+    <h1>Let There Be Data (Frames)</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -432,7 +432,8 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-blank-data-frame">Creating a blank Data Frame</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-a-data-frame-from-a-dictionary-of-numpy-arrays">Constructing a Data Frame from a dictionary of Numpy arrays</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-a-data-frame-from-a-dictionary-of-pandas-series">Constructing a Data Frame from a dictionary of Pandas series</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-a-data-frame-from-a-sequence-using-pandas-series">Constructing a Data Frame from a sequence (using Pandas series)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-a-data-frame-from-a-single-pandas-series">Constructing a Data Frame from a single Pandas series</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-a-data-frame-from-a-sequence-of-pandas-series">Constructing a Data Frame from a sequence of Pandas series</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 </ul>
             </nav>
@@ -445,8 +446,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="let-there-be-data-creating-data-frames">
-<h1>Let There Be Data : Creating Data Frames<a class="headerlink" href="#let-there-be-data-creating-data-frames" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="let-there-be-data-frames">
+<h1>Let There Be Data (Frames)<a class="headerlink" href="#let-there-be-data-frames" title="Link to this heading">#</a></h1>
 <p>In <a class="reference internal" href="0_0_pandas_intro.html"><span class="std std-doc">the</span></a> <a class="reference internal" href="0_1_to_loc_or_iloc.html"><span class="std std-doc">previous</span></a>
 <a class="reference internal" href="0_2_pandas_dataframes_attributes_methods.html"><span class="std std-doc">tutorials</span></a> we showed how the
 Pandas class objects (Series and Data Frames) are constructed from Numpy
@@ -1634,8 +1635,391 @@ use the resulting sorted Index.</p></li>
 <p>Remember each index label is a identifier for each row of the Data Frame. Pandas is trying to compare the indices of the two series in order to match corresponding rows, and failing, because it cannot compare the string index of <code class="docutils literal notranslate"><span class="pre">country_names_series</span></code> to the (newly set) integer series of <code class="docutils literal notranslate"><span class="pre">hdi_series</span></code>.</p>
 <p><a class="reference internal" href="0_4_dealing_with_missing_data_in_pandas.html"><span class="std std-doc">Later on</span></a> we will see further signs that Pandas is trying to match rows between series by using the <code class="docutils literal notranslate"><span class="pre">index</span></code>.</p>
 </section>
-<section id="constructing-a-data-frame-from-a-sequence-using-pandas-series">
-<h2>Constructing a Data Frame from a sequence (using Pandas series)<a class="headerlink" href="#constructing-a-data-frame-from-a-sequence-using-pandas-series" title="Link to this heading">#</a></h2>
+<section id="constructing-a-data-frame-from-a-single-pandas-series">
+<h2>Constructing a Data Frame from a single Pandas series<a class="headerlink" href="#constructing-a-data-frame-from-a-single-pandas-series" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">pd.DataFrame</span></code> has a special case in which you pass a single Series as the data argument.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_single</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">hdi_series</span><span class="p">)</span>
+<span class="n">df_single</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.844</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.890</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>0.490</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>0.842</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.883</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>0.709</td>
+    </tr>
+    <tr>
+      <th>JPN</th>
+      <td>0.733</td>
+    </tr>
+    <tr>
+      <th>KOR</th>
+      <td>0.824</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>0.828</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.863</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>Be careful</strong> - as you will see below, if you pass a <em>sequence</em> of Series, then the Series become the <em>rows</em>.  Here, the single Series becomes a single column in the Data Frame.</p>
+<p>The column name comes from the Series name:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hdi_series</span><span class="o">.</span><span class="n">name</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As you remember, Series have an optional <code class="docutils literal notranslate"><span class="pre">.name</span></code> (for which the default is <code class="docutils literal notranslate"><span class="pre">None</span></code>).  For example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hdi_series_no_name</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">hdis_array</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">country_codes_array</span><span class="p">)</span>
+<span class="n">hdi_series_no_name</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you pass a Series with no <code class="docutils literal notranslate"><span class="pre">.name</span></code> (<code class="docutils literal notranslate"><span class="pre">.name</span> <span class="pre">==</span> <span class="pre">None</span></code>) then Panda must make a default column name.  It uses the same default for column names as it does for row names, that is, a <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code> containing integers, where, in this case, it only contains the integer value <code class="docutils literal notranslate"><span class="pre">0</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_single_no_name</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">hdi_series_no_name</span><span class="p">)</span>
+<span class="n">df_single_no_name</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.844</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.890</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>0.490</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>0.842</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.883</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>0.709</td>
+    </tr>
+    <tr>
+      <th>JPN</th>
+      <td>0.733</td>
+    </tr>
+    <tr>
+      <th>KOR</th>
+      <td>0.824</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>0.828</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.863</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_single_no_name</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RangeIndex(start=0, stop=1, step=1)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Indexing for this column, with an integer label, is likely to become confusing:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Getting the column by label.</span>
+<span class="n">df_single_no_name</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUS    0.896
+BRA    0.668
+CAN    0.890
+CHN    0.586
+DEU    0.844
+ESP    0.890
+FRA    0.490
+GBR    0.842
+IND    0.883
+ITA    0.709
+JPN    0.733
+KOR    0.824
+MEX    0.828
+RUS    0.863
+USA    0.894
+Name: 0, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Or even this (which is very confusing - direct indexing with column name):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Direct indexing using column name, where name is integer 0</span>
+<span class="n">df_single_no_name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AUS    0.896
+BRA    0.668
+CAN    0.890
+CHN    0.586
+DEU    0.844
+ESP    0.890
+FRA    0.490
+GBR    0.842
+IND    0.883
+ITA    0.709
+JPN    0.733
+KOR    0.824
+MEX    0.828
+RUS    0.863
+USA    0.894
+Name: 0, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>It’s usually advisable to either - set the Series name when constructing the Series, or later, with (e.g.) <code class="docutils literal notranslate"><span class="pre">hdi_series.name</span> <span class="pre">=</span> <span class="pre">'Human</span> <span class="pre">Development</span> <span class="pre">Index'</span></code> - or set the name explicitly to <code class="docutils literal notranslate"><span class="pre">pd.DataFrame</span></code> using the <code class="docutils literal notranslate"><span class="pre">columns=</span></code> argument:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Setting the column name or names on constructing the Data Frame.</span>
+<span class="n">df_single_now_named</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">hdi_series_no_name</span><span class="p">,</span>
+                                   <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;My HDI&#39;</span><span class="p">])</span>
+<span class="n">df_single_now_named</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>My HDI</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.844</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.890</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>0.490</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>0.842</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.883</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>0.709</td>
+    </tr>
+    <tr>
+      <th>JPN</th>
+      <td>0.733</td>
+    </tr>
+    <tr>
+      <th>KOR</th>
+      <td>0.824</td>
+    </tr>
+    <tr>
+      <th>MEX</th>
+      <td>0.828</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.863</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="constructing-a-data-frame-from-a-sequence-of-pandas-series">
+<h2>Constructing a Data Frame from a sequence of Pandas series<a class="headerlink" href="#constructing-a-data-frame-from-a-sequence-of-pandas-series" title="Link to this heading">#</a></h2>
 <p>Series have an optional <code class="docutils literal notranslate"><span class="pre">.name</span></code> (for which the default is <code class="docutils literal notranslate"><span class="pre">None</span></code>).</p>
 <p>If we specify a <code class="docutils literal notranslate"><span class="pre">.name</span></code> for each Series, then we can pass a sequence of these named Series to <code class="docutils literal notranslate"><span class="pre">pd.DataFrame</span></code>; Pandas interprets these Series as <em>rows</em> in the Data Frame.  For example:</p>
 <div class="cell docutils container">
@@ -1915,7 +2299,8 @@ Frame, so that the rows become columns, and the columns become the rows:</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-blank-data-frame">Creating a blank Data Frame</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-a-data-frame-from-a-dictionary-of-numpy-arrays">Constructing a Data Frame from a dictionary of Numpy arrays</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-a-data-frame-from-a-dictionary-of-pandas-series">Constructing a Data Frame from a dictionary of Pandas series</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-a-data-frame-from-a-sequence-using-pandas-series">Constructing a Data Frame from a sequence (using Pandas series)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-a-data-frame-from-a-single-pandas-series">Constructing a Data Frame from a single Pandas series</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-a-data-frame-from-a-sequence-of-pandas-series">Constructing a Data Frame from a sequence of Pandas series</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
 </ul>
   </nav></div>

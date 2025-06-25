@@ -1,0 +1,268 @@
+---
+jupyter:
+  orphan: true
+  jupytext:
+    formats: ipynb,Rmd
+    notebook_metadata_filter: all,-language_info
+    split_at_heading: true
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.17.2
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
+# Default names for Data Frame columns
+
+```{python}
+import numpy as np
+import pandas as pd
+```
+
+```{python}
+# Three letter codes for each country
+country_codes_array = np.array(['AUS', 'BRA', 'CAN',
+                                'CHN', 'DEU', 'ESP',
+                                'FRA', 'GBR', 'IND',
+                                'ITA', 'JPN', 'KOR',
+                                'MEX', 'RUS', 'USA'])
+
+# Human Development Index Scores for each country
+hdis_array = np.array([0.896, 0.668, 0.89,
+                       0.586, 0.89,  0.828,
+                       0.844, 0.863, 0.49,
+                       0.842, 0.883, 0.824,
+                       0.709, 0.733, 0.894])
+```
+
+Remember, a Data Frame is a dictionary-like collection of Series.
+
+We may create Data Frames with an actual dictionary of Series, or with single
+Series.
+
+When we build Data Frames from Series, it becomes eminently sensible to specify
+a `name` attribute for each Series.
+
+Pandas will not *force* us to do this, but it leads to some error-prone
+consequences if we do not. In fact, the default `RangeIndex` crops up again
+here, and can create confusion in similar ways to the ones we have seen in the
+last section.
+
+Let us reconstruct a Series with a specified Index, but no `.name`:
+
+```{python}
+hdi_series =  pd.Series(hdis_array, index=country_codes_array)
+hdi_series
+```
+
+Our `hdi_series` got the default value for its `.name` attribute: `None`.
+
+```{python}
+hdi_series.name is None
+```
+
+Let's pass this Series to the `pd.DataFrame()` constructor, to see the
+consequence of a `.name`less Series in this context.  We will call the resulting
+Data Frame `no_name_df`:
+
+```{python}
+# A Data Frame made of a Series with `name` attribute of None.
+no_name_df = pd.DataFrame(hdi_series)
+no_name_df
+```
+
+Ok, so in the absence of a `name` attribute Pandas has labelled the column with a `0`. If we inspect more deeply, we find that actually Pandas, in the absence of being instructed otherwise, has created a `RangeIndex`, but this time for the `columns` (e.g. the column names) of the Data Frame. If you look at the Data Frame above, you can see that the `index` attribute is the three-letter country codes. However, the `.columns` are a `RangeIndex`:
+
+```{python}
+# Look at the column names via the `.columns` attribute
+no_name_df.columns
+```
+
+Sure enough, if we check the `type` of the fist element in this `RangeIndex`
+it is an `int` — we can think of it not as a column *name* but a number
+standing in for a column name:
+
+```{python}
+# Check the type of the first element in the `.columns` attribute
+type(no_name_df.columns[0])
+```
+
+It may be obvious why this naming convention for Data Frame columns can lead
+to errors for reasons of low interpretability. We typically want our column
+names to be descriptive of the data in the column, to ourselves and to other
+people reading our code. If we do not specify a `name` attribute for our
+Series when creating Data Frames, the default numerical column names supplied
+by Pandas are hard to interpret, and it is easy to misinterpret, or to forget
+what data is in that column, leading to human errors.
+
+They can also lead to indexing errors, similar to those we saw in the previous
+section. To demonstrate this, let's compare the `name`less Data Frame above to
+a Data Frame created from a Series with a `name`.
+
+Now let us create a Series with index and not-default name:
+
+```{python}
+hdi_series_named = pd.Series(
+    hdis_array,
+    index=country_codes_array,
+    name='Human Development Index')
+hdi_series_named
+```
+
+Our aptly named `hdi_series_named` has a `name` attribute — (look at the
+last line of the output from the cell below, the `Name: Human Development
+Index`):
+
+Let's call the `pd.DataFrame()` constructor on this Series - we'll call the
+resultant Data Frame `named_df`:
+
+```{python}
+# Create a new Data Frame, with a sensible name for the column
+named_df = pd.DataFrame(hdi_series_named)
+named_df
+```
+
+We see that Pandas has automatically used the `name` attribute as the column
+name, greatly increasing the interpretability of the resulting Data Frame.
+
+We can see the `name` in the `.columns` attribute of the new  `named_df` Data
+Frame:
+
+```{python}
+# Show the column names from the `named_df` Data Frame
+named_df.columns
+```
+
+Now, let's try using direct indexing with each Data Frame, using the column names.
+
+Direct indexing with a column name is very straightforward for the `named_df`:
+
+```{python}
+# Direct indexing to retrieve a column by name (label).
+named_df['Human Development Index']
+```
+
+What about for `no_name_df`? Well, the column name there is `0`, of `int`
+type.
+
+What happens if use direct indexing? We are hoping we see something like the
+output of the cell above, albeit with a `0` for the `name`, rather than `Human
+Development Index`:
+
+```{python}
+# Direct indexing with no `name` attribute
+no_name_df[0]
+```
+
+Sure enough that is what we see. But the operation we have used looks very
+much like *integer* indexing on a Series, which will return a single value:
+
+```{python}
+# Integer indexing a Series (without using `.iloc`)
+hdi_series[0]
+```
+
+This can be confusing.
+
+The numerical label can also be confusing if we introduce more columns,
+especially if we mix in columns which do have `name` attributes that we
+specify.
+
+For instance, if we add in the full name of each country:
+
+```{python}
+# Country names array
+country_names_array = np.array(['Australia', 'Brazil', 'Canada',
+                                'China', 'Germany', 'Spain',
+                                'France', 'United Kingdom', 'India',
+                                'Italy', 'Japan', 'South Korea',
+                                'Mexico', 'Russia', 'United States'])
+country_names_array
+```
+
+Let's add this into the `no_name_df`, using the `name` `'Country Names'`:
+
+```{python}
+no_name_df['Country Names'] = country_names_array
+no_name_df
+```
+
+We now have one column that has an `int` as its column name, and another with
+a string.
+
+In the same way as for a numerical `index`, this situation can become
+confusing if the numerical labels become misaligned with their integer
+location in the `.columns` attribute.
+
+For instance, we could reverse the order of the columns, by using *direct indexing* in the Data Frame to request the columns in reverse order by column label:
+
+```{python}
+# Re-arrange the columns
+# Specify the order of columns we want.
+cols = ['Country Names', 0]
+# Use direct indexing to select columns in given order.
+reversed_col_df = no_name_df[cols]
+reversed_col_df
+```
+
+We now have a column with the `name` `0` (an int) that is not at the 0-th location of the `.columns` attribute:
+
+```{python}
+# Show the 0-th element of the `.columns` attribute
+reversed_col_df.columns[0]
+```
+
+We are in the precarious situation of using a `int` `0` both as a *label* and
+as a *location*. In the cell above, it is a location, it the cell below it
+serves as a label:
+
+```{python}
+# Direct index the `0` column
+reversed_col_df[0]
+```
+
+Ideally, we would like a clear separation between integer indexes (like `0`)
+and *column names*.
+
+This confusing situation can be completely avoided in the case of `named_df`. Let's add the country names to this Data Frame, that thus far only has a single column, containing the "Human Development Index" values.
+
+```{python}
+# Show the Data Frame thus far
+named_df
+```
+
+```{python}
+# Add the country names
+named_df['Country Names'] = country_names_array
+named_df
+```
+
+We don't introduce any confusion or add propensity to error by re-arranging
+these columns which have sensible string names:
+
+```{python}
+# Re-arrange the columns
+reversed_named_df = named_df[['Country Names', 'Human Development Index']]
+reversed_named_df
+```
+
+In fact, now if we want to use integer indexing, we are forced to use `.iloc`,
+as we will otherwise get an error:
+
+```{python tags=c("raises-exception")}
+# This will not work if each column has a `name` string
+reversed_named_df[0]
+```
+
+This compels us to stick to the good practice maxim **use `.loc` and `iloc`
+unless there is a good reason not to!**.
+
+Giving every column a sensible string as a `name` is one situation where
+direct indexing (e.g. in the present context using `named_df['Human
+Development Index']` etc.) is safe and not error prone. As we have seen,
+issues can arise if we do not specify `name` attributes, and let Pandas
+automatically generate numeric labels for our Data Frame columns...
