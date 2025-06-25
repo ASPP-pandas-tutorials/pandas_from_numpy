@@ -13,7 +13,7 @@ jupyter:
     name: python3
 ---
 
-# Let There Be Data : Creating Data Frames
+# Let There Be Data (Frames)
 
 In [the](0_0_pandas_intro.Rmd) [previous](0_1_to_loc_or_iloc.Rmd)
 [tutorials](0_2_pandas_dataframes_attributes_methods.Rmd) we showed how the
@@ -370,7 +370,65 @@ Remember each index label is a identifier for each row of the Data Frame. Pandas
 [Later on](0_4_dealing_with_missing_data_in_pandas.Rmd) we will see further signs that Pandas is trying to match rows between series by using the `index`.
 
 
-## Constructing a Data Frame from a sequence (using Pandas series)
+## Constructing a Data Frame from a single Pandas series
+
+`pd.DataFrame` has a special case in which you pass a single Series as the data argument.
+
+```{python}
+df_single = pd.DataFrame(hdi_series)
+df_single
+```
+
+**Be careful** - as you will see below, if you pass a *sequence* of Series, then the Series become the *rows*.  Here, the single Series becomes a single column in the Data Frame.
+
+The column name comes from the Series name:
+
+```{python}
+hdi_series.name
+```
+
+As you remember, Series have an optional `.name` (for which the default is `None`).  For example:
+
+```{python}
+hdi_series_no_name = pd.Series(hdis_array, index=country_codes_array)
+hdi_series_no_name.name is None
+```
+
+If you pass a Series with no `.name` (`.name == None`) then Panda must make a default column name.  It uses the same default for column names as it does for row names, that is, a `RangeIndex` containing integers, where, in this case, it only contains the integer value `0`:
+
+```{python}
+df_single_no_name = pd.DataFrame(hdi_series_no_name)
+df_single_no_name
+```
+
+```{python}
+df_single_no_name.columns
+```
+
+Indexing for this column, with an integer label, is likely to become confusing:
+
+```{python}
+# Getting the column by label.
+df_single_no_name.loc[:, 0]
+```
+
+Or even this (which is very confusing - direct indexing with column name):
+
+```{python}
+# Direct indexing using column name, where name is integer 0
+df_single_no_name[0]
+```
+
+It's usually advisable to either - set the Series name when constructing the Series, or later, with (e.g.) `hdi_series.name = 'Human Development Index'` - or set the name explicitly to `pd.DataFrame` using the `columns=` argument:
+
+```{python}
+# Setting the column name or names on constructing the Data Frame.
+df_single_now_named = pd.DataFrame(hdi_series_no_name,
+                                   columns=['My HDI'])
+df_single_now_named
+```
+
+## Constructing a Data Frame from a sequence of Pandas series
 
 
 Series have an optional `.name` (for which the default is `None`).
