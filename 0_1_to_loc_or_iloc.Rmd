@@ -653,264 +653,7 @@ avoid ambiguity.
 
 :::
 
-
-## Default names for Data Frame columns
-
-Remember, a Data Frame is a dictionary-like collection of Series.
-
-We may create Data Frames with an actual dictionary of Series, or with single
-Series.
-
-When we build Data Frames from Series, it becomes eminently sensible to specify
-a `name` attribute for each Series.
-
-Pandas will not *force* us to do this, but it leads to some error-prone
-consequences if we do not. In fact, the default `RangeIndex` crops up again
-here, and can create confusion in similar ways to the ones we have seen in the
-last section.
-
-Let us reconstruct a Series with a specified Index, but no `.name`:
-
-```{python}
-hdi_series =  pd.Series(hdis_array, index=country_codes_array)
-hdi_series
-```
-
-Our `hdi_series` got the default value for its `.name` attribute: `None`.
-
-```{python}
-hdi_series.name is None
-```
-
-Let's pass this Series to the `pd.DataFrame()` constructor, to see the
-consequence of a `.name`less Series in this context.  We will call the resulting
-Data Frame `no_name_df`:
-
-```{python}
-# A Data Frame made of a Series with `name` attribute of None.
-no_name_df = pd.DataFrame(hdi_series)
-no_name_df
-```
-
-Ok, so in the absence of a `name` attribute Pandas has labelled the column with a `0`. If we inspect more deeply, we find that actually Pandas, in the absence of being instructed otherwise, has created a `RangeIndex`, but this time for the `columns` (e.g. the column names) of the Data Frame. If you look at the Data Frame above, you can see that the `index` attribute is the three-letter country codes. However, the `.columns` are a `RangeIndex`:
-
-```{python}
-# Look at the column names via the `.columns` attribute
-no_name_df.columns
-```
-
-Sure enough, if we check the `type` of the fist element in this `RangeIndex`
-it is an `int` — we can think of it not as a column *name* but a number
-standing in for a column name:
-
-```{python}
-# Check the type of the first element in the `.columns` attribute
-type(no_name_df.columns[0])
-```
-
-It may be obvious why this naming convention for Data Frame columns can lead
-to errors for reasons of low interpretability. We typically want our column
-names to be descriptive of the data in the column, to ourselves and to other
-people reading our code. If we do not specify a `name` attribute for our
-Series when creating Data Frames, the default numerical column names supplied
-by Pandas are hard to interpret, and it is easy to misinterpret, or to forget
-what data is in that column, leading to human errors.
-
-They can also lead to indexing errors, similar to those we saw in the previous
-section. To demonstrate this, let's compare the `name`less Data Frame above to
-a Data Frame created from a Series with a `name`.
-
-Now let us create a Series with index and not-default name:
-
-```{python}
-hdi_series_named = pd.Series(
-    hdis_array,
-    index=country_codes_array,
-    name='Human Development Index')
-hdi_series_named
-```
-
-Our aptly named `hdi_series_named` has a `name` attribute — (look at the
-last line of the output from the cell below, the `Name: Human Development
-Index`):
-
-Let's call the `pd.DataFrame()` constructor on this Series - we'll call the
-resultant Data Frame `named_df`:
-
-```{python}
-# Create a new Data Frame, with a sensible name for the column
-named_df = pd.DataFrame(hdi_series_named)
-named_df
-```
-
-We see that Pandas has automatically used the `name` attribute as the column
-name, greatly increasing the interpretability of the resulting Data Frame.
-
-We can see the `name` in the `.columns` attribute of the new  `named_df` Data
-Frame:
-
-```{python}
-# Show the column names from the `named_df` Data Frame
-named_df.columns
-```
-
-Now, let's try using direct indexing with each Data Frame, using the column names.
-
-::: {note}
-
-**Two standard uses of direct indexing on Data Frames**
-
-Above we said that you should never use direct indexing on Series.  However, there are two standard uses of direct indexing on Data Frames that you can use without ambiguity.
-
-1. *Direct indexing with a column name*, or sequence of column names.  Here the
-   column name (label) or sequence of column names follows the Data Frame
-   value and the opening `[` — as in:
-   * `named_df['Human Development Index']` and
-   * `named_df[['Human Development Index', 'Some other column']`
-1. *Direct indexing with a Boolean Series*.  See [the filtering
-   page](0_5_filtering_data_with_pandas) for much more on Boolean Series and
-   indexing.  The Boolean Series follows the data frame value and the opening
-   `[`, and selects rows for which the Boolean Series has True values — as in:
-   `have_high_hdi = named_df['Human Development Index'] > 0.6; high_df
-   = named_df[have_high_hdi]`.
-
-We strongly suggest that you restrict your use of direct indexing to these
-cases, and to Data Frames.  We do the same.
-
-:::
-
-
-Direct indexing with a column name is very straightforward for the `named_df`:
-
-```{python}
-# Direct indexing to retrieve a column by name (label).
-named_df['Human Development Index']
-```
-
-What about for `no_name_df`? Well, the column name there is `0`, of `int`
-type.
-
-What happens if use direct indexing? We are hoping we see something like the
-output of the cell above, albeit with a `0` for the `name`, rather than `Human
-Development Index`:
-
-```{python}
-# Direct indexing with no `name` attribute
-no_name_df[0]
-```
-
-Sure enough that is what we see. But the operation we have used looks very
-much like *integer* indexing on a Series, which will return a single value:
-
-```{python}
-# Integer indexing a Series (without using `.iloc`)
-hdi_series[0]
-```
-
-This can be confusing.
-
-The numerical label can also be confusing if we introduce more columns,
-especially if we mix in columns which do have `name` attributes that we
-specify.
-
-For instance, if we add in the full name of each country:
-
-```{python}
-# Country names array
-country_names_array = np.array(['Australia', 'Brazil', 'Canada',
-                                'China', 'Germany', 'Spain',
-                                'France', 'United Kingdom', 'India',
-                                'Italy', 'Japan', 'South Korea',
-                                'Mexico', 'Russia', 'United States'])
-country_names_array
-```
-
-Let's add this into the `no_name_df`, using the `name` `'Country Names'`:
-
-```{python}
-no_name_df['Country Names'] = country_names_array
-no_name_df
-```
-
-We now have one column that has an `int` as its column name, and another with
-a string.
-
-In the same way as for a numerical `index`, this situation can become
-confusing if the numerical labels become misaligned with their integer
-location in the `.columns` attribute.
-
-For instance, we could reverse the order of the columns, by using *direct indexing* in the Data Frame to request the columns in reverse order by column label:
-
-```{python}
-# Re-arrange the columns
-# Specify the order of columns we want.
-cols = ['Country Names', 0]
-# Use direct indexing to select columns in given order.
-reversed_col_df = no_name_df[cols]
-reversed_col_df
-```
-
-We now have a column with the `name` `0` (an int) that is not at the 0-th location of the `.columns` attribute:
-
-```{python}
-# Show the 0-th element of the `.columns` attribute
-reversed_col_df.columns[0]
-```
-
-We are in the precarious situation of using a `int` `0` both as a *label* and
-as a *location*. In the cell above, it is a location, it the cell below it
-serves as a label:
-
-```{python}
-# Direct index the `0` column
-reversed_col_df[0]
-```
-
-Ideally, we would like a clear separation between integer indexes (like `0`)
-and *column names*.
-
-This confusing situation can be completely avoided in the case of `named_df`. Let's add the country names to this Data Frame, that thus far only has a single column, containing the "Human Development Index" values.
-
-```{python}
-# Show the Data Frame thus far
-named_df
-```
-
-```{python}
-# Add the country names
-named_df['Country Names'] = country_names_array
-named_df
-```
-
-We don't introduce any confusion or add propensity to error by re-arranging
-these columns which have sensible string names:
-
-```{python}
-# Re-arrange the columns
-reversed_named_df = named_df[['Country Names', 'Human Development Index']]
-reversed_named_df
-```
-
-In fact, now if we want to use integer indexing, we are forced to use `.iloc`,
-as we will otherwise get an error:
-
-```{python tags=c("raises-exception")}
-# This will not work if each column has a `name` string
-reversed_named_df[0]
-```
-
-This compels us to stick to the good practice maxim **use `.loc` and `iloc`
-unless there is a good reason not to!**.
-
-Giving every column a sensible string as a `name` is one situation where
-direct indexing (e.g. in the present context using `named_df['Human
-Development Index']` etc.) is safe and not error prone. As we have seen,
-issues can arise if we do not specify `name` attributes, and let Pandas
-automatically generate numeric labels for our Data Frame columns...
-
-
 ## `.loc` and `.iloc` with Data Frames
-
 
 So far we have spent much time with `.loc` and `.iloc` on Series, but less
 time on `.loc` and `.iloc` for Data Frames.
@@ -961,16 +704,28 @@ two_d_arr[:, 2]
 Because a Data Frame has rows and columns, it corresponds to a two-dimensional
 array.
 
-For example, let us return to a previous Data Frame.
+Let us make an example Data Frame for illustration.  In fact we'll return to the Data Frame from [the introduction to `pd.DataFrame`](pd-data-frame-intro).
 
 ```{python}
-named_df
+# Fertility rate scores for each country
+fert_rates_array = np.array([1.764, 2.247, 1.51,
+                             1.628, 1.386, 1.21,
+                             1.876, 1.641, 3.35,
+                             1.249, 1.346, 1.467,
+                             2.714, 1.19 , 2.03 ])
+# Series from array.
+fert_rate_series = pd.Series(fert_rates_array, index=country_codes_array)
+
+# Data Frame from dict of Series.
+example_df = pd.DataFrame({'Human Development Index': hdi_series,
+                           'Fertility Rate': fert_rate_series})
+example_df
 ```
 
 If we ask for the Data Frame `.values`, we get a two-dimensional Numpy array:
 
 ```{python}
-named_df.values
+example_df.values
 ```
 
 When direct indexing with `.loc` or `.iloc`, we can select rows with a single
@@ -978,24 +733,24 @@ indexing expression:
 
 ```{python}
 # Select row corresponding to label 'RUS'
-named_df.loc['RUS']
+example_df.loc['RUS']
 ```
 
 ```{python}
 # Select rows from that labeled 'ITA' to that labeled 'RUS'.
 # Remember, `.loc` is inclusive of the stop value.
-named_df.loc['ITA':'RUS']
+example_df.loc['ITA':'RUS']
 ```
 
 ```{python}
 # Select second row by position.
-named_df.iloc[1]
+example_df.iloc[1]
 ```
 
 ```{python}
 # Select second through fifth row by position.
 # As standard for Python integers indexing, this is exclusive of stop position.
-named_df.iloc[1:5]
+example_df.iloc[1:5]
 ```
 
 Like the Numpy two-dimension indexing case, if we want to select columns with
@@ -1003,24 +758,63 @@ Like the Numpy two-dimension indexing case, if we want to select columns with
 a comma:
 
 ```{python}
-# Select rows 'ITA' through 'RUS', 'Country Names' column.
-named_df.loc['ITA':'RUS', 'Country Names']
+# Select rows 'ITA' through 'RUS', 'Fertility Rate' column.
+example_df.loc['ITA':'RUS', 'Fertility Rate']
 ```
 
 ```{python}
 # Row for 'RUS', all columns.
-named_df.loc['RUS', :]
+example_df.loc['RUS', :]
 ```
 
 ```{python}
 # Select second through fifth row by position, first column by position.
-named_df.iloc[1:5, 0]
+example_df.iloc[1:5, 0]
 ```
 
 ```{python}
 # Second row, all columns.
-named_df.iloc[1, :]
+example_df.iloc[1, :]
 ```
+
+## The catechism of Pandas indexing
+
+We are now ready for the definitive advice for your life using indexing in Pandas.
+
+1. Never use direct indexing on Series.  Always use indirect indexing (`.loc`
+   and `.iloc`).
+1. You *can and should* use direct indexing on Data Frames, but in two and
+   only two specific cases.  These are:
+
+    1. *Direct indexing with a column name*, or sequence of column names. Here
+       the column name (label) or sequence of column names follows the Data
+       Frame value and the opening `[` — as in:
+       
+       ```python
+       example_df['Human Development Index']
+       ```
+       
+       and
+       
+       ```python
+       example_df[['Human Development Index', 'Fertility Rate']
+       ```
+    1. *Direct indexing with a Boolean Series*.  See [the filtering
+       page](0_5_filtering_data_with_pandas) for much more on Boolean Series
+       and indexing.  The Boolean Series follows the data frame value and the
+       opening `[`, and selects rows for which the Boolean Series has True
+       values — as in:
+       
+       ```python
+       # Make a Boolean Series.
+       have_high_hdi = example_df['Human Development Index'] > 0.6
+       # Select rows by indexing with Boolean Series.
+       high_df = example_df[have_high_hdi]
+       ```
+
+We strongly suggest that you restrict your use of direct indexing to a) Data
+Frames (not Series) and b) these specific cases.  We do the same.
+
 
 ## Summary
 
@@ -1035,9 +829,7 @@ their stop value*.
 
 We pressed you to completely avoid using direct indexing on Pandas Series, because of the potent confusion that can arise between label and position indexing.
 
-For best results, we should specify both an interpretable `index` and
-interpretable `name` attributes for our Series, especially when they are part
-of Data Frames.
+For best results, we should specify an interpretable `index` for our Series and Data Frames.
 
 Direct indexing into Data Frames is common and useful, in two situations:
 
