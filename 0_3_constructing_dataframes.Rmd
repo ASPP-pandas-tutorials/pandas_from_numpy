@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.1
+      jupytext_version: 1.17.2
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -41,7 +41,7 @@ import pandas as pd
 
 ## Reading in data from a file
 
-The simplest, probably most common, and easiest way to create a Data Frame is to use a `pd.read_*` functions to import data from a file.
+The simplest, probably most common, and easiest way to create a Data Frame is to use a `pd.read_*` function to import data from a file.
 
 `.csv` files are common way of storing data, and (as we have seen) can be imported using the creatively named `pd.read_csv()` function:
 
