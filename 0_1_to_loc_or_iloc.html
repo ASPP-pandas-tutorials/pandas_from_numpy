@@ -622,7 +622,8 @@ dtype: float64
 <p>Second, notice that we got one more value from <code class="docutils literal notranslate"><span class="pre">.loc</span></code> indexing into the
 Series, because <code class="docutils literal notranslate"><span class="pre">.loc</span></code> slicing — unlike <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> or Numpy indexing — <em>includes</em>
 the stop value.</p>
-<p>In the last cell, using <code class="docutils literal notranslate"><span class="pre">.loc</span></code>, <code class="docutils literal notranslate"><span class="pre">'GBR'</span></code> was the stop value, and we got the row corresponding to <code class="docutils literal notranslate"><span class="pre">'GBR'</span></code>.</p>
+<p>In the last cell, using <code class="docutils literal notranslate"><span class="pre">.loc</span></code>, <code class="docutils literal notranslate"><span class="pre">'GBR'</span></code> was the stop value, and we got the
+element corresponding to <code class="docutils literal notranslate"><span class="pre">'GBR'</span></code>.</p>
 <p>This is a major difference from Numpy and <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> behavior.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -632,21 +633,21 @@ the stop value.</p>
 <p>Please consider reflecting before reading on.</p>
 <p><a class="reference external" href="https://www.youtube.com/watch?v=XlDdrrFY4Ug">Elevator Muzak while you reflect</a></p>
 <p>Please click the link above to get you into a reflective mood.</p>
-<p>Back to slicing; let’s consider the problem of selecting some rows that you
-want.  You can see the Index.  In your case you want all the rows from <code class="docutils literal notranslate"><span class="pre">CAN</span></code>
-through <code class="docutils literal notranslate"><span class="pre">GBR</span></code>.  When the result includes the stop label, then its obvious what
-to do; you do what you do above: <code class="docutils literal notranslate"><span class="pre">hdi_series.loc['CAN':'GBR']</span></code>.</p>
-<p>Now consider the alternative — where slicing gives you the rows <em>up to but not
-including</em> the stop value.  Your problem now becomes annoying and error-prone.
-You have to look at the index, identify the last label for the row you do want
-(<code class="docutils literal notranslate"><span class="pre">'GBR'</span></code>) and then go one row further, and get the label for the row <em>after</em>
-the one you want (in this case <code class="docutils literal notranslate"><span class="pre">'IND'</span></code>.  In an alternative world, where
-<code class="docutils literal notranslate"><span class="pre">.loc</span></code> was <em>up to and not including</em> the stop value, indexing to get rows
-<code class="docutils literal notranslate"><span class="pre">'CAN'</span></code> through <code class="docutils literal notranslate"><span class="pre">'GBR'</span></code> would be <code class="docutils literal notranslate"><span class="pre">hdi_series.loc['CAN':'IND']</span></code>.  Now imagine
-that for some reason I had deleted the <code class="docutils literal notranslate"><span class="pre">'IND'</span></code> row, so the following row label
-is <code class="docutils literal notranslate"><span class="pre">'ITA'</span></code>. In that case, despite the fact nothing had changed in the rows I’m
-interested in, I now have to write <code class="docutils literal notranslate"><span class="pre">hdi_series.loc['CAN':'ITA']</span></code> to get the
-exact same rows.</p>
+<p>Back to slicing; let’s consider the problem of selecting some elements that you
+want.  You can see the Index.  In your case you want all the elements from
+<code class="docutils literal notranslate"><span class="pre">CAN</span></code> through <code class="docutils literal notranslate"><span class="pre">GBR</span></code>.  When the result includes the stop label, then its obvious
+what to do; you do what you do above: <code class="docutils literal notranslate"><span class="pre">hdi_series.loc['CAN':'GBR']</span></code>.</p>
+<p>Now consider the alternative — where slicing gives you the elements <em>up to but
+not including</em> the stop value.  Your problem now becomes annoying and
+error-prone. You have to look at the index, identify the last label for the
+element you do want (<code class="docutils literal notranslate"><span class="pre">'GBR'</span></code>) and then go one element further, and get the
+label for the element <em>after</em> the one you want (in this case <code class="docutils literal notranslate"><span class="pre">'IND'</span></code>.  In an
+alternative world, where <code class="docutils literal notranslate"><span class="pre">.loc</span></code> was <em>up to and not including</em> the stop value,
+indexing to get elements <code class="docutils literal notranslate"><span class="pre">'CAN'</span></code> through <code class="docutils literal notranslate"><span class="pre">'GBR'</span></code> would be
+<code class="docutils literal notranslate"><span class="pre">hdi_series.loc['CAN':'IND']</span></code>.  Now imagine that for some reason I had deleted
+the <code class="docutils literal notranslate"><span class="pre">'IND'</span></code> element, so the following element label is <code class="docutils literal notranslate"><span class="pre">'ITA'</span></code>. In that case,
+despite the fact nothing had changed in the elements I’m interested in, I now
+have to write <code class="docutils literal notranslate"><span class="pre">hdi_series.loc['CAN':'ITA']</span></code> to get the exact same elements.</p>
 <p>So, yes, it’s important to remember this difference, but a little reflection
 should reveal that this was still the right choice.</p>
 </div>
@@ -687,7 +688,8 @@ corresponding value:</p>
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">.loc</span></code> matching a label with more than one row returns a subset of the Series:</p>
+<p><code class="docutils literal notranslate"><span class="pre">.loc</span></code> matching a label with more than one element returns a subset of the
+Series:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">not_unique_labels</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;GBR&#39;</span><span class="p">]</span>
@@ -702,7 +704,7 @@ dtype: object
 </div>
 </div>
 </div>
-<p>This can lead to confusing outputs if you don’t keep track of whether the Index values uniquely identify the row.</p>
+<p>This can lead to confusing outputs if you don’t keep track of whether the Index values uniquely identify the element.</p>
 </section>
 <section id="the-default-index">
 <h2>The default index<a class="headerlink" href="#the-default-index" title="Link to this heading">#</a></h2>
@@ -767,7 +769,7 @@ dtype: float64
 </div>
 <p>Where we did not specify an Index, Pandas has automatically generated one.  As
 you can see, Pandas displays this default index as a sequence of integers,
-starting at 0, and going up to the number of rows minus 1.</p>
+starting at 0, and going up to the number of elements minus 1.</p>
 <p>Let’s take a closer look at the default Index:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1036,15 +1038,21 @@ value as if we use label based indexing (<code class="docutils literal notransla
 </div>
 </div>
 </div>
-<p><strong>Because of this potential for confusion, we strongly encourage you to index
+<p><strong>Because of this potential for confusion, we strongly suggest that you index
 Series with <code class="docutils literal notranslate"><span class="pre">.loc</span></code> and <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>, to be explicit about whether you mean label or
 position indexing.</strong></p>
 </section>
 <section id="why-you-should-never-use-direct-indexing-on-series">
 <h2>Why you should never use direct indexing on Series<a class="headerlink" href="#why-you-should-never-use-direct-indexing-on-series" title="Link to this heading">#</a></h2>
 <p><a class="reference internal" href="0_0_pandas_intro.html#direct-indirect"><span class="std std-ref">Direct indexing</span></a> occurs where the indexing bracket <code class="docutils literal notranslate"><span class="pre">[</span></code> directly follows the Series value.  Conversely, indirect-indexing is indexing where the indexing bracket <code class="docutils literal notranslate"><span class="pre">[</span></code> follows <code class="docutils literal notranslate"><span class="pre">.loc</span></code> or <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>.</p>
-<p>Now consider the situation, that we encourage you never to put yourself in, where you use direct indexing on a Series.  You can’t specify what type of indexing you mean with direct indexing.  Do you mean label indexing or position indexing?  Pandas will have to make assumptions, and these assumptions may well wrong for what you intend.  Did we mention, you should never use direct indexing on Series?</p>
-<p>OK, let’s imagine that you decided we were wrong, and used direct indexing on the Series above, with (implied) integer Index values.</p>
+<p>Now consider the situation, that we encourage you never to put yourself in,
+where you use direct indexing on a Series.  You can’t specify what type of
+indexing you mean with direct indexing.  Do you mean label indexing or position
+indexing?  Pandas will have to make assumptions, and these assumptions may well
+be wrong for what you intend.  Did we mention, you should never use direct
+indexing on Series?</p>
+<p>OK, let’s imagine that you decided we were being too strict, and used direct
+indexing on the Series above, with (implied) integer Index values.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Direct indexing on a Series.  You should never do this.</span>
@@ -1058,8 +1066,8 @@ position indexing.</strong></p>
 </div>
 </div>
 </div>
-<p>At the moment, because the positions and integer row labels match up, there is
-no ambiguity as to what <code class="docutils literal notranslate"><span class="pre">4</span></code> refers to, so it may not be surprising that
+<p>At the moment, because the positions and integer element labels match up, there
+is no ambiguity as to what <code class="docutils literal notranslate"><span class="pre">4</span></code> refers to, so it may not be surprising that
 <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>, <code class="docutils literal notranslate"><span class="pre">.loc</span></code> and direct indexing all give the same result.</p>
 <p><strong>But this will not always be the case.</strong> It is extremely common for you to do
 operations on the Series — such as sorting and filtering — that will mean that
@@ -1312,10 +1320,11 @@ as the index labels in this Series are three-letter country codes). To use
 </div>
 </div>
 </div>
-<p>It is much harder to get confused when using integer indices with <em>indirect
-indexing</em> (<code class="docutils literal notranslate"><span class="pre">.loc</span></code> and <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>).  You’ve specified what you mean (by label or by
-position) using the name of the method.  However, things can get dangerously
-confusing if you use an integer index and <em>direct indexing</em>.  Which is why you should not use direct indexing with Series.</p>
+<p>It is much harder to get confused when using integer indices as long as you
+stick with <em>indirect indexing</em> (<code class="docutils literal notranslate"><span class="pre">.loc</span></code> and <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>).  You’ve specified what you
+mean (by label or by position) using the name of the method.  However, things
+can get dangerously confusing if you use an integer index and <em>direct
+indexing</em>.  Which is why you should not use direct indexing with Series.</p>
 <p>Just to remind you, <code class="docutils literal notranslate"><span class="pre">hdi_series</span></code> has the country codes (strings like <code class="docutils literal notranslate"><span class="pre">'DEU'</span></code>)
 as the index.</p>
 <p>Now, consider, what would happen if we used an integer for <em>direct indexing</em>?
@@ -1370,8 +1379,8 @@ option 3, to disallow direct indexing on Series entirely.</p>
 </section>
 </div>
 <p>You are about to see that direct indexing on a Series, for now, does something
-frightening, which is to <em>guess</em> whether we mean to <code class="docutils literal notranslate"><span class="pre">.loc</span></code> or <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> indexing
-depending on whether the index values are integers.</p>
+frightening, which is to <em>guess</em> whether we mean to do <code class="docutils literal notranslate"><span class="pre">.loc</span></code> or <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>
+indexing depending on whether the index values are integers.</p>
 <p>So, as you have already seen above, if the index consists of integers, and you
 specify integers in your direct indexing, then Pandas will assume you mean the
 values to be labels (like <code class="docutils literal notranslate"><span class="pre">.loc</span></code>).</p>
@@ -1387,7 +1396,7 @@ this will soon change.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2487/2121855053.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2458/2121855053.py:2: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
   hdi_series[4]
 </pre></div>
 </div>
@@ -1972,8 +1981,10 @@ showed how to get Series values by label (<code class="docutils literal notransl
 <p><code class="docutils literal notranslate"><span class="pre">.loc</span></code> differs from <code class="docutils literal notranslate"><span class="pre">.iloc</span></code> and other Python indexing in that slices <em>include
 their stop value</em>.</p>
 <p>We pressed you to completely avoid using direct indexing on Pandas Series, because of the potent confusion that can arise between label and position indexing.</p>
-<p>For best results, we should specify an interpretable <code class="docutils literal notranslate"><span class="pre">index</span></code> for our Series and Data Frames.</p>
-<p>Direct indexing into Data Frames is common and useful, in two situations:</p>
+<p>For best results, you should specify an interpretable <code class="docutils literal notranslate"><span class="pre">index</span></code> for your Series
+and Data Frames.</p>
+<p>Direct indexing into Data Frames is common and useful, in two and only two
+situations:</p>
 <ol class="arabic simple">
 <li><p>Direct indexing using a column name or sequence of names.</p></li>
 <li><p>Direct indexing using a Boolean Series (see <a class="reference internal" href="0_5_filtering_data_with_pandas.html"><span class="doc std std-doc">filtering
