@@ -101,7 +101,7 @@ The gated markers (of form `solution-start` and `solution-end` etc) allow you
 to embed code cells in the exercise or solution, because this allows code cells
 to be at the top level of the notebook, where Jupyter needs them to be.
 
-The gated markers also make it possible to for the `process_notebooks.py`
+The gated markers also make it possible for the `process_notebooks.py`
 script to recognize exercise and solutions blocks, to parse them correctly.
 
 ## Development
