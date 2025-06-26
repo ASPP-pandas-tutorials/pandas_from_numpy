@@ -470,8 +470,7 @@ df['Fertility Rate'].loc['ZWE'].dropna().mean()
 point operations, such as dividing 0 by 0. In Pandas, NaNs are more commonly
 a flag to indicate the absence of data, for floating point and other data
 types.</p>
-<p>We will also look at how to handle NaNs safely in Pandas.</p>
-<p>First, let’s remind ourselves how NaNs work in Numpy.</p>
+<p>We will also look at how to handle NaNs safely in Pandas. First, let’s remind ourselves how NaNs work in Numpy.</p>
 <section id="nans-in-numpy">
 <h2>NaNs in Numpy<a class="headerlink" href="#nans-in-numpy" title="Link to this heading">#</a></h2>
 <p>As mentioned above, NaNs in Numpy result from invalid floating point
@@ -489,7 +488,7 @@ operations.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2520/2469014178.py:6: RuntimeWarning: invalid value encountered in divide
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2594/2469014178.py:6: RuntimeWarning: invalid value encountered in divide
   a_nan = np.array(0) / np.array(0)
 </pre></div>
 </div>
@@ -512,7 +511,7 @@ infinity) are special floating point values:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2520/58810310.py:2: RuntimeWarning: divide by zero encountered in divide
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2594/58810310.py:2: RuntimeWarning: divide by zero encountered in divide
   np.array(1) / np.array(0)
 </pre></div>
 </div>

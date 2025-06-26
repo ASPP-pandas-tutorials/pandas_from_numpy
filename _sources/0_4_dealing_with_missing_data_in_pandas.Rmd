@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.1
+      jupytext_version: 1.17.2
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -45,9 +45,7 @@ point operations, such as dividing 0 by 0. In Pandas, NaNs are more commonly
 a flag to indicate the absence of data, for floating point and other data
 types.
 
-We will also look at how to handle NaNs safely in Pandas.
-
-First, let's remind ourselves how NaNs work in Numpy.
+We will also look at how to handle NaNs safely in Pandas. First, let's remind ourselves how NaNs work in Numpy.
 
 
 ## NaNs in Numpy

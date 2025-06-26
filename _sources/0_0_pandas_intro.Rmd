@@ -82,7 +82,7 @@ Income per capita.
 
 ![](images/hdiRoadMap.png)
 
-([Image credit](https://hdr.undp.org/data-center/human-development-index#/indices/HDI)))
+([Image credit](https://hdr.undp.org/data-center/human-development-index#/indices/HDI))
 
 ```{python}
 # Human Development Index Scores for each country
@@ -129,8 +129,8 @@ plt.ylabel('Fertility Rate');
 
 ## Pandas Series (aka an array + an index)
 
-(Aka is an [abbreviation for Also Known
-As](https://writingexplained.org/aka-or-aka).)
+(Aka is an [abbreviation for "Also Known
+As"](https://writingexplained.org/aka-or-aka).)
 
 We want a good way to keep it clear which value corresponds to each country.
 We're going to start with the HDI values.
