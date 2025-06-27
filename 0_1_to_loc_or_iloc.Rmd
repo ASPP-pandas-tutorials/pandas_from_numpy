@@ -663,6 +663,7 @@ avoid ambiguity.
 
 :::
 
+(loc-iloc-df)=
 ## `.loc` and `.iloc` with Data Frames
 
 So far we have spent much time with `.loc` and `.iloc` on Series, but less
@@ -799,13 +800,13 @@ We are now ready for the definitive advice for your life using indexing in Panda
     1. *Direct indexing with a column name*, or sequence of column names. Here
        the column name (label) or sequence of column names follows the Data
        Frame value and the opening `[` — as in:
-       
+
        ```python
        example_df['Human Development Index']
        ```
-       
+
        and
-       
+
        ```python
        example_df[['Human Development Index', 'Fertility Rate']
        ```
