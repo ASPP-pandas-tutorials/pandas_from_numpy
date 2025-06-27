@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.2
+      jupytext_version: 1.16.6
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -70,8 +70,8 @@ Another very simple way to create a Data Frame is by using the
 
 ```{python}
 # Calling the constructor with no arguments
-df = pd.DataFrame()
-df
+blank_df = pd.DataFrame()
+blank_df
 ```
 
 Perhaps unsurprisingly, this returns a strange, blank output.
@@ -82,29 +82,29 @@ For instance, the index:
 
 ```{python}
 # Show the blank index
-df.index
+blank_df.index
 ```
 
 Ditto for the columns attribute:
 
 ```{python}
 # Show the blank columns.
-df.columns
+blank_df.columns
 ```
 
 We can add new columns (e.g. new Pandas Series) into this blank Data Frame by using direct indexing on the left hand side (LHS). E.g.
 
 ```{python}
 # Create a new column in the Data Frame.
-df['new_column'] = np.array([1, 2, 3])
-df
+blank_df['new_column'] = np.array([1, 2, 3])
+blank_df
 ```
 
 We used a Numpy array to construct this new column, however, as we know, Data Frames are a dictionary-like collection of Series, so Pandas can represent the data as a Pandas Series:
 
 ```{python}
 # Show the type of df['new_column'].
-new_col = df['new_column']
+new_col = blank_df['new_column']
 type(new_col)
 ```
 
@@ -125,8 +125,7 @@ new_col.values
 Pandas has also automatically created a default `RangeIndex` for the Data Frame, because we did not specify what it should use as an index:
 
 ```{python}
-# Show the index of df.
-df.index
+blank_df.index
 ```
 
 As you saw in [The Pandas from Numpy page](0_0_pandas_intro), Series extracted from Data Frames inherit the `.index` of the Data Frame:
@@ -139,15 +138,15 @@ If we construct Data Frames using this method ("create a blank Data Frame, add t
 
 ```{python}
 # Add another new column with correct number of elements.
-df['another_new_column'] = np.array(['A', 'B', 'C'])
-df
+blank_df['another_new_column'] = np.array(['A', 'B', 'C'])
+blank_df
 ```
 
 If the number of elements differs, then Pandas will throw an error:
 
 ```{python tags=c("raises-exception")}
 # ValueError from wrong number of elements on RHS.
-df['a_further_new_column'] = np.array([4, 5 , 6, 7])
+blank_df['a_further_new_column'] = np.array([4, 5 , 6, 7])
 ```
 
 Notice the text of this error: `ValueError: Length of values (4) does not match length of index (3)`. The error is caused because all columns must share an index, to facilitate the label-based indexing (via `.loc`) that we have seen on previous pages.
@@ -156,8 +155,8 @@ We want to avoid the [pitfalls](0_1_to_loc_or_iloc.Rmd) of integer indices, such
 
 ```{python}
 # Set the index
-df.index = ['Person_1', 'Person_2', 'Person_3']
-df
+blank_df.index = ['Person_1', 'Person_2', 'Person_3']
+blank_df
 ```
 
 We can also specify the index directly when we make the "blank" Data Frame:
@@ -178,11 +177,60 @@ Because all Series/columns in the Data Frame must share an `index`, Pandas will 
 
 ```{python tags=c("raises-exception")}
 # ValueError because we have specified the wrong number of index elements.
-df.index = ['Person_1', 'Person_2', 'Person_3', 'Person_4']
+blank_df.index = ['Person_1', 'Person_2', 'Person_3', 'Person_4']
 ```
 
 Again, the error that Pandas gives us here is informative: `ValueError: Length mismatch: Expected axis has 3 elements, new values have 4 elements`. (Unfortunately, not all Pandas errors are as obvious as this one).
 
+
+## Constructing a Data Frame from an array
+
+
+Remember (from [](loc-iloc-df)) that a Pandas Data Frame can be considered a view onto a two-dimensional array.
+
+For example, the `.values` attribute of a Data Frame returns a two-dimensional Numpy array with a copy of the underlying data
+
+```{python}
+# Select the first 10 rows of the loaded Data Frame for brevity
+early_passengers_df = df_from_file.head(10)
+# Show this as a 2D array.
+early_passengers_df.values
+```
+
+In a similar way, if you pass a Numpy array as the first argument to the Data Frame constructor, Pandas will assume you are passing this underlying 2D data array.
+
+```{python}
+two_d_arr = np.array([[1, 2, 3], [11, 21, 31], [101, 102, 103]])
+two_d_arr
+```
+
+```{python}
+# Construct Data Frame from data in two dimensional array.
+default_df = pd.DataFrame(two_d_arr)
+default_df
+```
+
+Notice that Pandas constructed a default Index (integer row labels), because we did not pass one, *and* a default and corresponding set of column labels.  In fact these default column labels are also integers, of which more soon.  For now, let us make this Data Frame more standard by giving string column labels using the `columns=` argument to the constructor:
+
+```{python}
+# Naming the columns when constructing from 2D array.
+pd.DataFrame(two_d_arr, columns=['First', 'Second', 'Third'])
+```
+
+Better still, we can add meaningful row labels by using the `index=` argument:
+
+```{python}
+# Naming the columns and rows when constructing from 2D array.
+pd.DataFrame(two_d_arr,
+             columns=['First', 'Second', 'Third'],
+             index=['Row 1', 'Row 2', 'Row 3'])
+```
+
+If you pass a 1D array to the constructor, it assumes you mean this as one column of a 2D array:
+
+```{python}
+pd.DataFrame([10, 20, 20])
+```
 
 ## Constructing a Data Frame from a dictionary of Numpy arrays
 

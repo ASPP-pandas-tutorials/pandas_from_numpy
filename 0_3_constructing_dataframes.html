@@ -430,6 +430,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-in-data-from-a-file">Reading in data from a file</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-blank-data-frame">Creating a blank Data Frame</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-a-data-frame-from-an-array">Constructing a Data Frame from an array</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-a-data-frame-from-a-dictionary-of-numpy-arrays">Constructing a Data Frame from a dictionary of Numpy arrays</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-a-data-frame-from-a-dictionary-of-pandas-series">Constructing a Data Frame from a dictionary of Pandas series</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-a-data-frame-from-a-single-pandas-series">Constructing a Data Frame from a single Pandas series</a></li>
@@ -613,8 +614,8 @@ Frames…</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calling the constructor with no arguments</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-<span class="n">df</span>
+<span class="n">blank_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">blank_df</span>
 </pre></div>
 </div>
 </div>
@@ -650,7 +651,7 @@ Frames…</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the blank index</span>
-<span class="n">df</span><span class="o">.</span><span class="n">index</span>
+<span class="n">blank_df</span><span class="o">.</span><span class="n">index</span>
 </pre></div>
 </div>
 </div>
@@ -664,7 +665,7 @@ Frames…</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the blank columns.</span>
-<span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+<span class="n">blank_df</span><span class="o">.</span><span class="n">columns</span>
 </pre></div>
 </div>
 </div>
@@ -678,8 +679,8 @@ Frames…</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a new column in the Data Frame.</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;new_column&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="n">df</span>
+<span class="n">blank_df</span><span class="p">[</span><span class="s1">&#39;new_column&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">blank_df</span>
 </pre></div>
 </div>
 </div>
@@ -726,7 +727,7 @@ Frames…</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the type of df[&#39;new_column&#39;].</span>
-<span class="n">new_col</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;new_column&#39;</span><span class="p">]</span>
+<span class="n">new_col</span> <span class="o">=</span> <span class="n">blank_df</span><span class="p">[</span><span class="s1">&#39;new_column&#39;</span><span class="p">]</span>
 <span class="nb">type</span><span class="p">(</span><span class="n">new_col</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -768,8 +769,7 @@ Frames…</p>
 <p>Pandas has also automatically created a default <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code> for the Data Frame, because we did not specify what it should use as an index:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the index of df.</span>
-<span class="n">df</span><span class="o">.</span><span class="n">index</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">blank_df</span><span class="o">.</span><span class="n">index</span>
 </pre></div>
 </div>
 </div>
@@ -796,8 +796,8 @@ Frames…</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add another new column with correct number of elements.</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;another_new_column&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">])</span>
-<span class="n">df</span>
+<span class="n">blank_df</span><span class="p">[</span><span class="s1">&#39;another_new_column&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">])</span>
+<span class="n">blank_df</span>
 </pre></div>
 </div>
 </div>
@@ -848,7 +848,7 @@ Frames…</p>
 <div class="cell tag_raises-exception docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ValueError from wrong number of elements on RHS.</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;a_further_new_column&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span> <span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+<span class="n">blank_df</span><span class="p">[</span><span class="s1">&#39;a_further_new_column&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span> <span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -857,7 +857,7 @@ Frames…</p>
 <span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
 <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">14</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># ValueError from wrong number of elements on RHS.</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;a_further_new_column&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span> <span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">blank_df</span><span class="p">[</span><span class="s1">&#39;a_further_new_column&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span> <span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
 
 <span class="nn">File /opt/hostedtoolcache/Python/3.12.11/x64/lib/python3.12/site-packages/pandas/core/frame.py:4316,</span> in <span class="ni">DataFrame.__setitem__</span><span class="nt">(self, key, value)</span>
 <span class="g g-Whitespace">   </span><span class="mi">4313</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_setitem_array</span><span class="p">([</span><span class="n">key</span><span class="p">],</span> <span class="n">value</span><span class="p">)</span>
@@ -914,8 +914,8 @@ Frames…</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set the index</span>
-<span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Person_1&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_2&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_3&#39;</span><span class="p">]</span>
-<span class="n">df</span>
+<span class="n">blank_df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Person_1&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_2&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_3&#39;</span><span class="p">]</span>
+<span class="n">blank_df</span>
 </pre></div>
 </div>
 </div>
@@ -1056,7 +1056,7 @@ Frames…</p>
 <div class="cell tag_raises-exception docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ValueError because we have specified the wrong number of index elements.</span>
-<span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Person_1&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_2&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_3&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_4&#39;</span><span class="p">]</span>
+<span class="n">blank_df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Person_1&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_2&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_3&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_4&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1065,7 +1065,7 @@ Frames…</p>
 <span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
 <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">18</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># ValueError because we have specified the wrong number of index elements.</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Person_1&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_2&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_3&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_4&#39;</span><span class="p">]</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">blank_df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Person_1&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_2&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_3&#39;</span><span class="p">,</span> <span class="s1">&#39;Person_4&#39;</span><span class="p">]</span>
 
 <span class="nn">File /opt/hostedtoolcache/Python/3.12.11/x64/lib/python3.12/site-packages/pandas/core/generic.py:6332,</span> in <span class="ni">NDFrame.__setattr__</span><span class="nt">(self, name, value)</span>
 <span class="g g-Whitespace">   </span><span class="mi">6330</span> <span class="k">try</span><span class="p">:</span>
@@ -1105,6 +1105,264 @@ Frames…</p>
 </div>
 </div>
 <p>Again, the error that Pandas gives us here is informative: <code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">Length</span> <span class="pre">mismatch:</span> <span class="pre">Expected</span> <span class="pre">axis</span> <span class="pre">has</span> <span class="pre">3</span> <span class="pre">elements,</span> <span class="pre">new</span> <span class="pre">values</span> <span class="pre">have</span> <span class="pre">4</span> <span class="pre">elements</span></code>. (Unfortunately, not all Pandas errors are as obvious as this one).</p>
+</section>
+<section id="constructing-a-data-frame-from-an-array">
+<h2>Constructing a Data Frame from an array<a class="headerlink" href="#constructing-a-data-frame-from-an-array" title="Link to this heading">#</a></h2>
+<p>Remember (from <a class="reference internal" href="0_1_to_loc_or_iloc.html#loc-iloc-df"><span class="std std-ref">.loc and .iloc with Data Frames</span></a>) that a Pandas Data Frame can be considered a view onto a two-dimensional array.</p>
+<p>For example, the <code class="docutils literal notranslate"><span class="pre">.values</span></code> attribute of a Data Frame returns a two-dimensional Numpy array with a copy of the underlying data</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Select the first 10 rows of the loaded Data Frame for brevity</span>
+<span class="n">early_passengers_df</span> <span class="o">=</span> <span class="n">df_from_file</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="c1"># Show this as a 2D array.</span>
+<span class="n">early_passengers_df</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[&#39;1949-01&#39;, 112],
+       [&#39;1949-02&#39;, 118],
+       [&#39;1949-03&#39;, 132],
+       [&#39;1949-04&#39;, 129],
+       [&#39;1949-05&#39;, 121],
+       [&#39;1949-06&#39;, 135],
+       [&#39;1949-07&#39;, 148],
+       [&#39;1949-08&#39;, 148],
+       [&#39;1949-09&#39;, 136],
+       [&#39;1949-10&#39;, 119]], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<p>In a similar way, if you pass a Numpy array as the first argument to the Data Frame constructor, Pandas will assume you are passing this underlying 2D data array.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">two_d_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">11</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">31</span><span class="p">],</span> <span class="p">[</span><span class="mi">101</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">103</span><span class="p">]])</span>
+<span class="n">two_d_arr</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[  1,   2,   3],
+       [ 11,  21,  31],
+       [101, 102, 103]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Construct Data Frame from data in two dimensional array.</span>
+<span class="n">default_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">two_d_arr</span><span class="p">)</span>
+<span class="n">default_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>11</td>
+      <td>21</td>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>101</td>
+      <td>102</td>
+      <td>103</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Notice that Pandas constructed a default Index (integer row labels), because we did not pass one, <em>and</em> a default and corresponding set of column labels.  In fact these default column labels are also integers, of which more soon.  For now, let us make this Data Frame more standard by giving string column labels using the <code class="docutils literal notranslate"><span class="pre">columns=</span></code> argument to the constructor:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Naming the columns when constructing from 2D array.</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">two_d_arr</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;First&#39;</span><span class="p">,</span> <span class="s1">&#39;Second&#39;</span><span class="p">,</span> <span class="s1">&#39;Third&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>First</th>
+      <th>Second</th>
+      <th>Third</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>11</td>
+      <td>21</td>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>101</td>
+      <td>102</td>
+      <td>103</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Better still, we can add meaningful row labels by using the <code class="docutils literal notranslate"><span class="pre">index=</span></code> argument:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Naming the columns and rows when constructing from 2D array.</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">two_d_arr</span><span class="p">,</span>
+             <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;First&#39;</span><span class="p">,</span> <span class="s1">&#39;Second&#39;</span><span class="p">,</span> <span class="s1">&#39;Third&#39;</span><span class="p">],</span>
+             <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Row 1&#39;</span><span class="p">,</span> <span class="s1">&#39;Row 2&#39;</span><span class="p">,</span> <span class="s1">&#39;Row 3&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>First</th>
+      <th>Second</th>
+      <th>Third</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Row 1</th>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>Row 2</th>
+      <td>11</td>
+      <td>21</td>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>Row 3</th>
+      <td>101</td>
+      <td>102</td>
+      <td>103</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>If you pass a 1D array to the constructor, it assumes you mean this as one column of a 2D array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>20</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
 </section>
 <section id="constructing-a-data-frame-from-a-dictionary-of-numpy-arrays">
 <h2>Constructing a Data Frame from a dictionary of Numpy arrays<a class="headerlink" href="#constructing-a-data-frame-from-a-dictionary-of-numpy-arrays" title="Link to this heading">#</a></h2>
@@ -1520,7 +1778,7 @@ the values:</p>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">33</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">39</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># TypeError if we construct a Data Frame using Series without matching indexes</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">df5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;country_names&#39;</span><span class="p">:</span> <span class="n">country_names_series</span><span class="p">,</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span>                     <span class="s1">&#39;HDI&#39;</span><span class="p">:</span> <span class="n">hdi_with_int_index</span><span class="p">})</span>
@@ -2297,6 +2555,7 @@ Frame, so that the rows become columns, and the columns become the rows:</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-in-data-from-a-file">Reading in data from a file</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-blank-data-frame">Creating a blank Data Frame</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-a-data-frame-from-an-array">Constructing a Data Frame from an array</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-a-data-frame-from-a-dictionary-of-numpy-arrays">Constructing a Data Frame from a dictionary of Numpy arrays</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-a-data-frame-from-a-dictionary-of-pandas-series">Constructing a Data Frame from a dictionary of Pandas series</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-a-data-frame-from-a-single-pandas-series">Constructing a Data Frame from a single Pandas series</a></li>
