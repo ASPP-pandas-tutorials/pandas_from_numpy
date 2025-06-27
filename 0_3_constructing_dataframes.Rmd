@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.2
+      jupytext_version: 1.16.6
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -183,6 +183,26 @@ df.index = ['Person_1', 'Person_2', 'Person_3', 'Person_4']
 
 Again, the error that Pandas gives us here is informative: `ValueError: Length mismatch: Expected axis has 3 elements, new values have 4 elements`. (Unfortunately, not all Pandas errors are as obvious as this one).
 
+
+## Constructing a Data Frame from an array
+
+
+Remember (from [](loc-iloc-df)) that a Pandas Data Frame can be considered a view onto a two-dimensional array.
+
+For example, the `.values` attribute of a Data Frame returns a two-dimensional Numpy array with a copy of the underlying data
+
+```{python}
+# Select the first 10 rows of the loaded Data Frame for brevity
+early_passengers_df = df_from_file.head(10)
+# Show this as a 2D array.
+early_passengers_df.values
+```
+
+In a similar way, if you pass a Numpy array as the first argument to the Data Frame constructor, Pandas will assume you are passing this underlying 2D data array.
+
+```{python}
+an_array = np.array([[1, 2]])
+```
 
 ## Constructing a Data Frame from a dictionary of Numpy arrays
 
