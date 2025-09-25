@@ -24,7 +24,7 @@ exclude_patterns:
   - images/LICENSE.md
   - data/README.md
   - .pytest_cache/*
-  - .ipynb_notebooks/*
+  - .ipynb_checkpoints/*
 
 html:
   favicon: images/pandas_numpy.ico
