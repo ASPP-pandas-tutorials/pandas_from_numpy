@@ -16,16 +16,14 @@ interactive notebooks in e.g. JupyterLite.
 
 There is some markup that we need for the pretty HTML output that looks ugly in
 a Jupyter interface such as [JupyterLite](https://jupyterlite.readthedocs.io).
-Accordingly, we post-process the pages with a script
-`_scripts/process_notebooks.py` to load the pages as text notebooks, and write
-out `.ipynb` files with modified markup that looks better in a Jupyter
-interface.  Some of the authoring advice here is to allow that process to work
-smoothly, because the `process_notebooks.py` file reads the input Myst-MD
-format notebooks using [Jupytext](https://jupytext.readthedocs.io) before
-converting to Jupyter `.ipynb` files.
+Accordingly, we post-process the pages with a script `jljb-write-dir` from the
+[jljb package](https://github.com/matthew-brett/jljb) to load the pages as
+text notebooks, and write out `.ipynb` files with modified markup that looks
+better in a Jupyter interface. Some of the authoring advice here is to allow
+that process to work smoothly, because the `jljb` code reads the input Myst-MD
+format notebooks using
 
 ## Notes and admonitions
-
 
 See [Jupyter Book notes and
 admonitions](https://jupyterbook.org/en/stable/content/content-blocks.html#notes-warnings-and-other-admonitions).

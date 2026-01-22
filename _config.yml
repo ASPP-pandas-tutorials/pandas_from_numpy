@@ -18,7 +18,6 @@ execute:
 exclude_patterns:
   - README.md
   - todo.md
-  - _scripts/*
   - _notes/*
   - _to_ignore.md
   - images/LICENSE.md
