@@ -6,7 +6,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.17.2
+      jupytext_version: 1.17.1
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -96,8 +96,8 @@ country_names_array = np.array(['Australia', 'Brazil', 'Canada',
                                 'Mexico', 'Russia', 'United States'])
 ```
 
-When dealing with any object in python, it can be useful to use the in-built
-python `dir()` function. This returns the *names* of every attribute and
+When dealing with any object in Python, it can be useful to use the in-built
+Python `dir()` function. This returns the *names* of every attribute and
 method that we can access/call from the object:
 
 ```{python}
@@ -188,7 +188,9 @@ Later we will see that Data Frames have their own implementation of `__len__`.
 :::
 
 
-We also often want to know the type of data in our array, as it will affect the analyses we can perform. Are we dealing with numbers or text, for instance? 
+We also often want to know the type of data in our array, as it will affect
+the analyses we can perform. Are we dealing with numbers or text, for
+instance?
 
 To access this information, we can view the `dtype` attribute. 
 
@@ -199,7 +201,8 @@ Let's look at the `dtype` for the `country_codes` array:
 country_codes_array.dtype
 ```
 
-The `dtype` attribute here is just telling us that this is string data. For an explanation of the meaning, see the image below.
+The `dtype` attribute tells us that this is string data. For an explanation of
+the meaning, see the image below.
 
 ![](images/numpy_string_dtypes.png)
 
@@ -443,6 +446,7 @@ df.shape
 ```
 
 (len-df)=
+
 `len(df)` (therefore, `df.__len__()`) gives the number of rows.  This
 corresponds to the Numpy behavior of giving the number of elements on the
 first dimension of the array:
@@ -473,7 +477,7 @@ df.size
 
 Your job here is to make a new Series which summarises aspects of the `df` Data Frame. In the `.values` array, your Series should contain the values of the `.shape` and `.size` attributes of `df`. It should also contain the `dtype` of the `index` of `df` (therefore, telling your user whether the `index` contains numeric labels, `str` labels, or something else). See if you can figure out how to get Pandas to report this via indexing (e.g. rather than copy pasting the information from the output of `df.index`).
 
-The `index` of your Series should clearly state what each `value` is. E.g. the strings `shape`, `size`, `index_dtype` should be the `index` labels in your Series. 
+The `index` of your Series should clearly state what each `value` is. E.g. the strings `shape`, `size`, `index_dtype` should be the `index` labels in your Series.
 
 The `name` attribute of your Series should be`df_attributes`.
 
@@ -482,7 +486,7 @@ When displayed, your Series should look like this:
 ```
 shape          (15, 4)
 size                60
-index_dtype     object
+index_dtype      int64
 Name: df_attributes, dtype: object
 ```
 
@@ -504,7 +508,7 @@ You can also run `hint_2()` to get a hint on how to get Pandas to report the `dt
 ::: {solution-start} attributes-series
 :class: dropdown
 :::
-            
+
 Our solution to this is below. First, we create an array containing the attributes. We must use the `str()` function to convert the output of `df.shape` to a single dimension (a `str` with 7 characters, rather than a `(2, )` tuple). This is in order to make its shape match that of `df.size` and the `index.dtype` string. Otherwise we get a nasty error when passing the array to the `pd.Series()` constructor, because we are trying to make a `.values` array using values with incompatible dimensions. 
 
 We got the `dtype` of the `index` labels by accessing the `dtype` attribute of the `index`, in a chained operation e.g.: `df.index.dtype`.
@@ -548,7 +552,25 @@ df.columns
 df.dtypes
 ```
 
-The `object` data type means that the column contains either mixed data or string data (in this case string data). The numeric data in this Data Frame is represented as a 64-bit float (`float64`).
+(pd-2-3-strings)=
+
+::: {note}
+
+**Strings in Pandas 2 and 3**
+
+The exact output from `df.dtypes` above will differ depending on your Pandas
+version.
+
+If you have Pandas version 3 or greater, you will see that the `Code` and
+`Country Name` columns have data type `str` — a special Pandas data type to
+contain strings.
+
+If you have a Pandas version less than 3, `Code` and `Country Name` have data type `object` — a generic Pandas column data type that can contain any Python object.
+
+:::
+
+The numeric data in this Data Frame is represented as a 64-bit float
+(`float64`).
 
 Now we know how much data we have, and what type of data it is. Currently, if
 we want to access a specific row of the Data Frame (remember, each row here is

@@ -26,9 +26,14 @@ converting to Jupyter `.ipynb` files.
 
 ## Notes and admonitions
 
+
+See [Jupyter Book notes and
+admonitions](https://jupyterbook.org/en/stable/content/content-blocks.html#notes-warnings-and-other-admonitions).
+
 Use `:::` for
 `<div>` blocks ([JupyterBook allows
-this](https://jupyterbook.org/en/stable/content/content-blocks.html#markdown-friendly-directives-with)):
+this](https://jupyterbook.org/en/stable/content/content-blocks.html#markdown-friendly-directives-with)).
+
 So, for example, prefer:
 
 ~~~
