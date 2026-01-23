@@ -132,7 +132,7 @@ purposes, the `Timestamp` is just a more general description of
 `datetime64[ns]` (with the latter just giving more information about the amount
 of memory used for storage and the time resolution...)
 
-We can now do "mathemstics with times" and use subtraction to calculate the
+We can now do "mathematics with times" and use subtraction to calculate the
 difference between these dates:
 
 ```{python}
