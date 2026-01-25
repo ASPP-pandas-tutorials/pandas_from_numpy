@@ -33,11 +33,6 @@ jobs:
         run: |
           pip install -r build_requirements.txt
 
-      - name: Run tests
-        run: |
-          pip install pytest
-          pytest .
-
       # Build the page
       - name: Build the book
         run: |

@@ -113,7 +113,8 @@ timestamp_series
 ```
 
 As you see from the output of the cell above, the `dtype` of this data is no
-longer `object` as it was above. It is now `datetime64[ns]`
+longer `str` (Pandas 3) or `object` (Pandas 2) as it was above (see [Pandas
+string in versions 3 and 2](pd-2-3-strings). It is now `datetime64[ns]`
 — which we can read as "a datetime representation, in 64 bits, down to the
 nanosecond resolution". Sounds fancy!
 
@@ -131,7 +132,7 @@ purposes, the `Timestamp` is just a more general description of
 `datetime64[ns]` (with the latter just giving more information about the amount
 of memory used for storage and the time resolution...)
 
-We can now do "mathemstics with times" and use subtraction to calculate the
+We can now do "mathematics with times" and use subtraction to calculate the
 difference between these dates:
 
 ```{python}

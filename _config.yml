@@ -18,13 +18,12 @@ execute:
 exclude_patterns:
   - README.md
   - todo.md
-  - _scripts/*
   - _notes/*
   - _to_ignore.md
   - images/LICENSE.md
   - data/README.md
   - .pytest_cache/*
-  - .ipynb_notebooks/*
+  - .ipynb_checkpoints/*
 
 html:
   favicon: images/pandas_numpy.ico
