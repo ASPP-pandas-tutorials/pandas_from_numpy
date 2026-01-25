@@ -30,9 +30,9 @@
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
@@ -51,7 +51,7 @@
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/togglebutton.js?v=1ae7504c"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
@@ -537,8 +537,8 @@ licenses page</span></a> for more detail.</p>
 </div>
 </div>
 </div>
-<p>When dealing with any object in python, it can be useful to use the in-built
-python <code class="docutils literal notranslate"><span class="pre">dir()</span></code> function. This returns the <em>names</em> of every attribute and
+<p>When dealing with any object in Python, it can be useful to use the in-built
+Python <code class="docutils literal notranslate"><span class="pre">dir()</span></code> function. This returns the <em>names</em> of every attribute and
 method that we can access/call from the object:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -677,7 +677,6 @@ method that we can access/call from the object:</p>
  &#39;getfield&#39;,
  &#39;imag&#39;,
  &#39;item&#39;,
- &#39;itemset&#39;,
  &#39;itemsize&#39;,
  &#39;mT&#39;,
  &#39;max&#39;,
@@ -685,11 +684,9 @@ method that we can access/call from the object:</p>
  &#39;min&#39;,
  &#39;nbytes&#39;,
  &#39;ndim&#39;,
- &#39;newbyteorder&#39;,
  &#39;nonzero&#39;,
  &#39;partition&#39;,
  &#39;prod&#39;,
- &#39;ptp&#39;,
  &#39;put&#39;,
  &#39;ravel&#39;,
  &#39;real&#39;,
@@ -775,7 +772,6 @@ any other Numpy array.</p>
  &#39;getfield&#39;,
  &#39;imag&#39;,
  &#39;item&#39;,
- &#39;itemset&#39;,
  &#39;itemsize&#39;,
  &#39;mT&#39;,
  &#39;max&#39;,
@@ -783,11 +779,9 @@ any other Numpy array.</p>
  &#39;min&#39;,
  &#39;nbytes&#39;,
  &#39;ndim&#39;,
- &#39;newbyteorder&#39;,
  &#39;nonzero&#39;,
  &#39;partition&#39;,
  &#39;prod&#39;,
- &#39;ptp&#39;,
  &#39;put&#39;,
  &#39;ravel&#39;,
  &#39;real&#39;,
@@ -926,7 +920,9 @@ method.  For Numpy arrays <code class="docutils literal notranslate"><span class
 <code class="docutils literal notranslate"><span class="pre">arr.shape[0]</span></code>.</p>
 <p>Later we will see that Data Frames have their own implementation of <code class="docutils literal notranslate"><span class="pre">__len__</span></code>.</p>
 </div>
-<p>We also often want to know the type of data in our array, as it will affect the analyses we can perform. Are we dealing with numbers or text, for instance?</p>
+<p>We also often want to know the type of data in our array, as it will affect
+the analyses we can perform. Are we dealing with numbers or text, for
+instance?</p>
 <p>To access this information, we can view the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> attribute.</p>
 <p>Let’s look at the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> for the <code class="docutils literal notranslate"><span class="pre">country_codes</span></code> array:</p>
 <div class="cell docutils container">
@@ -942,7 +938,8 @@ method.  For Numpy arrays <code class="docutils literal notranslate"><span class
 </div>
 </div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">dtype</span></code> attribute here is just telling us that this is string data. For an explanation of the meaning, see the image below.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">dtype</span></code> attribute tells us that this is string data. For an explanation of
+the meaning, see the image below.</p>
 <p><img alt="" src="_images/numpy_string_dtypes.png" /></p>
 <p>Let’s look at the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> of the <code class="docutils literal notranslate"><span class="pre">hdis_array</span></code>:</p>
 <div class="cell docutils container">
@@ -1093,7 +1090,7 @@ dtype: float64
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;AUS&#39;, &#39;BRA&#39;, &#39;CAN&#39;, &#39;CHN&#39;, &#39;DEU&#39;, &#39;ESP&#39;, &#39;FRA&#39;, &#39;GBR&#39;, &#39;IND&#39;, &#39;ITA&#39;,
        &#39;JPN&#39;, &#39;KOR&#39;, &#39;MEX&#39;, &#39;RUS&#39;, &#39;USA&#39;],
-      dtype=&#39;object&#39;)
+      dtype=&#39;str&#39;)
 </pre></div>
 </div>
 </div>
@@ -1294,7 +1291,7 @@ KOR       South Korea
 MEX            Mexico
 RUS            Russia
 USA     United States
-dtype: object
+dtype: str
 </pre></div>
 </div>
 </div>
@@ -1375,9 +1372,12 @@ of the unique values.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;Australia&#39;, &#39;Brazil&#39;, &#39;Canada&#39;, &#39;China&#39;, &#39;Germany&#39;, &#39;Spain&#39;,
-       &#39;France&#39;, &#39;United Kingdom&#39;, &#39;India&#39;, &#39;Italy&#39;, &#39;Japan&#39;,
-       &#39;South Korea&#39;, &#39;Mexico&#39;, &#39;Russia&#39;, &#39;United States&#39;], dtype=object)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;StringArray&gt;
+[     &#39;Australia&#39;,         &#39;Brazil&#39;,         &#39;Canada&#39;,          &#39;China&#39;,
+        &#39;Germany&#39;,          &#39;Spain&#39;,         &#39;France&#39;, &#39;United Kingdom&#39;,
+          &#39;India&#39;,          &#39;Italy&#39;,          &#39;Japan&#39;,    &#39;South Korea&#39;,
+         &#39;Mexico&#39;,         &#39;Russia&#39;,  &#39;United States&#39;]
+Length: 15, dtype: str
 </pre></div>
 </div>
 </div>
@@ -1391,9 +1391,12 @@ of the unique values.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;Australia&#39;, &#39;Brazil&#39;, &#39;Canada&#39;, &#39;China&#39;, &#39;Germany&#39;, &#39;Spain&#39;,
-       &#39;France&#39;, &#39;United Kingdom&#39;, &#39;India&#39;, &#39;Italy&#39;, &#39;Japan&#39;,
-       &#39;South Korea&#39;, &#39;Mexico&#39;, &#39;Russia&#39;, &#39;United States&#39;], dtype=object)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;StringArray&gt;
+[     &#39;Australia&#39;,         &#39;Brazil&#39;,         &#39;Canada&#39;,          &#39;China&#39;,
+        &#39;Germany&#39;,          &#39;Spain&#39;,         &#39;France&#39;, &#39;United Kingdom&#39;,
+          &#39;India&#39;,          &#39;Italy&#39;,          &#39;Japan&#39;,    &#39;South Korea&#39;,
+         &#39;Mexico&#39;,         &#39;Russia&#39;,  &#39;United States&#39;]
+Length: 15, dtype: str
 </pre></div>
 </div>
 </div>
@@ -1587,7 +1590,6 @@ attributes and methods (that don’t begin with <code class="docutils literal no
  &#39;all&#39;,
  &#39;any&#39;,
  &#39;apply&#39;,
- &#39;applymap&#39;,
  &#39;asfreq&#39;,
  &#39;asof&#39;,
  &#39;assign&#39;,
@@ -1596,10 +1598,8 @@ attributes and methods (that don’t begin with <code class="docutils literal no
  &#39;at_time&#39;,
  &#39;attrs&#39;,
  &#39;axes&#39;,
- &#39;backfill&#39;,
  &#39;between_time&#39;,
  &#39;bfill&#39;,
- &#39;bool&#39;,
  &#39;boxplot&#39;,
  &#39;clip&#39;,
  &#39;columns&#39;,
@@ -1637,10 +1637,10 @@ attributes and methods (that don’t begin with <code class="docutils literal no
  &#39;ffill&#39;,
  &#39;fillna&#39;,
  &#39;filter&#39;,
- &#39;first&#39;,
  &#39;first_valid_index&#39;,
  &#39;flags&#39;,
  &#39;floordiv&#39;,
+ &#39;from_arrow&#39;,
  &#39;from_dict&#39;,
  &#39;from_records&#39;,
  &#39;ge&#39;,
@@ -1669,7 +1669,6 @@ attributes and methods (that don’t begin with <code class="docutils literal no
  &#39;keys&#39;,
  &#39;kurt&#39;,
  &#39;kurtosis&#39;,
- &#39;last&#39;,
  &#39;last_valid_index&#39;,
  &#39;le&#39;,
  &#39;loc&#39;,
@@ -1694,7 +1693,6 @@ attributes and methods (that don’t begin with <code class="docutils literal no
  &#39;notnull&#39;,
  &#39;nsmallest&#39;,
  &#39;nunique&#39;,
- &#39;pad&#39;,
  &#39;pct_change&#39;,
  &#39;pipe&#39;,
  &#39;pivot&#39;,
@@ -1744,7 +1742,6 @@ attributes and methods (that don’t begin with <code class="docutils literal no
  &#39;sub&#39;,
  &#39;subtract&#39;,
  &#39;sum&#39;,
- &#39;swapaxes&#39;,
  &#39;swaplevel&#39;,
  &#39;tail&#39;,
  &#39;take&#39;,
@@ -1753,9 +1750,9 @@ attributes and methods (that don’t begin with <code class="docutils literal no
  &#39;to_dict&#39;,
  &#39;to_excel&#39;,
  &#39;to_feather&#39;,
- &#39;to_gbq&#39;,
  &#39;to_hdf&#39;,
  &#39;to_html&#39;,
+ &#39;to_iceberg&#39;,
  &#39;to_json&#39;,
  &#39;to_latex&#39;,
  &#39;to_markdown&#39;,
@@ -1856,7 +1853,7 @@ first dimension of the array:</p>
 <p>When displayed, your Series should look like this:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">shape</span>          <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 <span class="n">size</span>                <span class="mi">60</span>
-<span class="n">index_dtype</span>     <span class="nb">object</span>
+<span class="n">index_dtype</span>      <span class="n">int64</span>
 <span class="n">Name</span><span class="p">:</span> <span class="n">df_attributes</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="nb">object</span>
 </pre></div>
 </div>
@@ -1920,7 +1917,7 @@ Name: df_attributes, dtype: object
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;Code&#39;, &#39;Human Development Index&#39;, &#39;Fertility Rate&#39;, &#39;Population&#39;,
        &#39;Country Name&#39;],
-      dtype=&#39;object&#39;)
+      dtype=&#39;str&#39;)
 </pre></div>
 </div>
 </div>
@@ -1934,17 +1931,28 @@ Name: df_attributes, dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Code                        object
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Code                           str
 Human Development Index    float64
 Fertility Rate             float64
 Population                 float64
-Country Name                object
+Country Name                   str
 dtype: object
 </pre></div>
 </div>
 </div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">object</span></code> data type means that the column contains either mixed data or string data (in this case string data). The numeric data in this Data Frame is represented as a 64-bit float (<code class="docutils literal notranslate"><span class="pre">float64</span></code>).</p>
+<div class="admonition note" id="pd-2-3-strings">
+<p class="admonition-title">Note</p>
+<p><strong>Strings in Pandas 2 and 3</strong></p>
+<p>The exact output from <code class="docutils literal notranslate"><span class="pre">df.dtypes</span></code> above will differ depending on your Pandas
+version.</p>
+<p>If you have Pandas version 3 or greater, you will see that the <code class="docutils literal notranslate"><span class="pre">Code</span></code> and
+<code class="docutils literal notranslate"><span class="pre">Country</span> <span class="pre">Name</span></code> columns have data type <code class="docutils literal notranslate"><span class="pre">str</span></code> — a special Pandas data type to
+contain strings.</p>
+<p>If you have a Pandas version less than 3, <code class="docutils literal notranslate"><span class="pre">Code</span></code> and <code class="docutils literal notranslate"><span class="pre">Country</span> <span class="pre">Name</span></code> have data type <code class="docutils literal notranslate"><span class="pre">object</span></code> — a generic Pandas column data type that can contain any Python object.</p>
+</div>
+<p>The numeric data in this Data Frame is represented as a 64-bit float
+(<code class="docutils literal notranslate"><span class="pre">float64</span></code>).</p>
 <p>Now we know how much data we have, and what type of data it is. Currently, if
 we want to access a specific row of the Data Frame (remember, each row here is
 one country), we will have to index either by position, or by using the labels from the default <code class="docutils literal notranslate"><span class="pre">RangeIndex</span></code>. We did not
@@ -2126,7 +2134,7 @@ previously, Pandas will automatically supply one:</p>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;AUS&#39;, &#39;BRA&#39;, &#39;CAN&#39;, &#39;CHN&#39;, &#39;DEU&#39;, &#39;ESP&#39;, &#39;FRA&#39;, &#39;GBR&#39;, &#39;IND&#39;, &#39;ITA&#39;,
        &#39;JPN&#39;, &#39;KOR&#39;, &#39;MEX&#39;, &#39;RUS&#39;, &#39;USA&#39;],
-      dtype=&#39;object&#39;, name=&#39;Code&#39;)
+      dtype=&#39;str&#39;, name=&#39;Code&#39;)
 </pre></div>
 </div>
 </div>
@@ -3265,7 +3273,7 @@ KOR      South Korea
 MEX           Mexico
 RUS           Russia
 USA    United States
-Name: Country Name, dtype: object
+Name: Country Name, dtype: str
 </pre></div>
 </div>
 </div>
@@ -3297,7 +3305,7 @@ KOR       South Korea
 MEX            Mexico
 RUS            Russia
 USA     United States
-Name: Country Name, dtype: object
+Name: Country Name, dtype: str
 </pre></div>
 </div>
 </div>
@@ -3331,7 +3339,7 @@ KOR          South Korea
 MEX               Mexico
 RUS               Russia
 USA     Disunited States
-Name: Country Name, dtype: object
+Name: Country Name, dtype: str
 </pre></div>
 </div>
 </div>
@@ -3906,25 +3914,25 @@ Name: Human Development Index, dtype: float64
   </thead>
   <tbody>
     <tr>
-      <th>ITA</th>
-      <td>0.842</td>
-      <td>1.249</td>
-      <td>57.2722</td>
-      <td>Italy</td>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>281.4841</td>
+      <td>United States</td>
     </tr>
     <tr>
-      <th>ESP</th>
-      <td>0.828</td>
-      <td>1.210</td>
-      <td>41.0197</td>
-      <td>Spain</td>
+      <th>IND</th>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1057.9227</td>
+      <td>India</td>
     </tr>
     <tr>
-      <th>BRA</th>
-      <td>0.668</td>
-      <td>2.247</td>
-      <td>174.0182</td>
-      <td>Brazil</td>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1269.5811</td>
+      <td>China</td>
     </tr>
   </tbody>
 </table>
@@ -3972,11 +3980,11 @@ Name: Human Development Index, dtype: float64
   </thead>
   <tbody>
     <tr>
-      <th>IND</th>
-      <td>0.490</td>
-      <td>3.350</td>
-      <td>1057.9227</td>
-      <td>India</td>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>281.4841</td>
+      <td>United States</td>
     </tr>
     <tr>
       <th>AUS</th>
@@ -3986,11 +3994,11 @@ Name: Human Development Index, dtype: float64
       <td>Australia</td>
     </tr>
     <tr>
-      <th>DEU</th>
-      <td>0.890</td>
-      <td>1.386</td>
-      <td>81.7972</td>
-      <td>Germany</td>
+      <th>MEX</th>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>98.6255</td>
+      <td>Mexico</td>
     </tr>
   </tbody>
 </table>
@@ -4050,20 +4058,6 @@ df.sample<span class="o">?</span>
   </thead>
   <tbody>
     <tr>
-      <th>BRA</th>
-      <td>0.668</td>
-      <td>2.247</td>
-      <td>174.0182</td>
-      <td>Brazil</td>
-    </tr>
-    <tr>
-      <th>DEU</th>
-      <td>0.890</td>
-      <td>1.386</td>
-      <td>81.7972</td>
-      <td>Germany</td>
-    </tr>
-    <tr>
       <th>AUS</th>
       <td>0.896</td>
       <td>1.764</td>
@@ -4076,6 +4070,20 @@ df.sample<span class="o">?</span>
       <td>1.628</td>
       <td>1269.5811</td>
       <td>China</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>174.0182</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>81.7972</td>
+      <td>Germany</td>
     </tr>
   </tbody>
 </table>
@@ -4096,21 +4104,25 @@ df.sample<span class="o">?</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Trying to take a without-replacement sample that is too large.</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">first_five</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.11/x64/lib/python3.12/site-packages/pandas/core/generic.py:6137,</span> in <span class="ni">NDFrame.sample</span><span class="nt">(self, n, frac, replace, weights, random_state, axis, ignore_index)</span>
-<span class="g g-Whitespace">   </span><span class="mi">6134</span> <span class="k">if</span> <span class="n">weights</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">6135</span>     <span class="n">weights</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">preprocess_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">6137</span> <span class="n">sampled_indices</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">obj_len</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">replace</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">rs</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">6138</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">sampled_indices</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">6140</span> <span class="k">if</span> <span class="n">ignore_index</span><span class="p">:</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/pandas/core/generic.py:6000,</span> in <span class="ni">NDFrame.sample</span><span class="nt">(self, n, frac, replace, weights, random_state, axis, ignore_index)</span>
+<span class="g g-Whitespace">   </span><span class="mi">5997</span> <span class="k">if</span> <span class="n">weights</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">5998</span>     <span class="n">weights</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">preprocess_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">6000</span> <span class="n">sampled_indices</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">obj_len</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">replace</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">rs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">6001</span> <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">sampled_indices</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">6003</span> <span class="k">if</span> <span class="n">ignore_index</span><span class="p">:</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.11/x64/lib/python3.12/site-packages/pandas/core/sample.py:152,</span> in <span class="ni">sample</span><span class="nt">(obj_len, size, replace, weights, random_state)</span>
-<span class="g g-Whitespace">    </span><span class="mi">149</span>     <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">150</span>         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid weights: weights sum to zero&quot;</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">152</span> <span class="k">return</span> <span class="n">random_state</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">obj_len</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="n">replace</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">153</span>     <span class="n">np</span><span class="o">.</span><span class="n">intp</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span>
-<span class="g g-Whitespace">    </span><span class="mi">154</span> <span class="p">)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/pandas/core/sample.py:161,</span> in <span class="ni">sample</span><span class="nt">(obj_len, size, replace, weights, random_state)</span>
+<span class="g g-Whitespace">    </span><span class="mi">154</span>     <span class="k">if</span> <span class="ow">not</span> <span class="n">replace</span> <span class="ow">and</span> <span class="n">size</span> <span class="o">*</span> <span class="n">weights</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">155</span>         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">156</span>             <span class="s2">&quot;Weighted sampling cannot be achieved with replace=False. Either &quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">157</span>             <span class="s2">&quot;set replace=True or use smaller weights. See the docstring of &quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">158</span>             <span class="s2">&quot;sample for details.&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">159</span>         <span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">161</span> <span class="k">return</span> <span class="n">random_state</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">obj_len</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="n">replace</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">162</span>     <span class="n">np</span><span class="o">.</span><span class="n">intp</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span>
+<span class="g g-Whitespace">    </span><span class="mi">163</span> <span class="p">)</span>
 
-<span class="nn">File numpy/random/mtrand.pyx:1020,</span> in <span class="ni">numpy.random.mtrand.RandomState.choice</span><span class="nt">()</span>
+<span class="nn">File numpy/random/mtrand.pyx:1025,</span> in <span class="ni">numpy.random.mtrand.RandomState.choice</span><span class="nt">()</span>
 
 <span class="ne">ValueError</span>: Cannot take a larger sample than population when &#39;replace=False&#39;
 </pre></div>
@@ -4159,27 +4171,6 @@ df.sample<span class="o">?</span>
   </thead>
   <tbody>
     <tr>
-      <th>CHN</th>
-      <td>0.586</td>
-      <td>1.628</td>
-      <td>1269.5811</td>
-      <td>China</td>
-    </tr>
-    <tr>
-      <th>DEU</th>
-      <td>0.890</td>
-      <td>1.386</td>
-      <td>81.7972</td>
-      <td>Germany</td>
-    </tr>
-    <tr>
-      <th>CHN</th>
-      <td>0.586</td>
-      <td>1.628</td>
-      <td>1269.5811</td>
-      <td>China</td>
-    </tr>
-    <tr>
       <th>BRA</th>
       <td>0.668</td>
       <td>2.247</td>
@@ -4187,11 +4178,11 @@ df.sample<span class="o">?</span>
       <td>Brazil</td>
     </tr>
     <tr>
-      <th>DEU</th>
-      <td>0.890</td>
-      <td>1.386</td>
-      <td>81.7972</td>
-      <td>Germany</td>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1269.5811</td>
+      <td>China</td>
     </tr>
     <tr>
       <th>AUS</th>
@@ -4208,11 +4199,11 @@ df.sample<span class="o">?</span>
       <td>Canada</td>
     </tr>
     <tr>
-      <th>BRA</th>
-      <td>0.668</td>
-      <td>2.247</td>
-      <td>174.0182</td>
-      <td>Brazil</td>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
     </tr>
     <tr>
       <th>CHN</th>
@@ -4222,11 +4213,32 @@ df.sample<span class="o">?</span>
       <td>China</td>
     </tr>
     <tr>
-      <th>AUS</th>
-      <td>0.896</td>
-      <td>1.764</td>
-      <td>19.1324</td>
-      <td>Australia</td>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1269.5811</td>
+      <td>China</td>
     </tr>
   </tbody>
 </table>
@@ -4277,46 +4289,11 @@ Data Frame.  To get a sample that is half the size the original Data Frame
   </thead>
   <tbody>
     <tr>
-      <th>MEX</th>
-      <td>0.709</td>
-      <td>2.714</td>
-      <td>98.6255</td>
-      <td>Mexico</td>
-    </tr>
-    <tr>
-      <th>GBR</th>
-      <td>0.863</td>
-      <td>1.641</td>
-      <td>59.0573</td>
-      <td>United Kingdom</td>
-    </tr>
-    <tr>
-      <th>JPN</th>
-      <td>0.883</td>
-      <td>1.346</td>
-      <td>127.0278</td>
-      <td>Japan</td>
-    </tr>
-    <tr>
-      <th>AUS</th>
-      <td>0.896</td>
-      <td>1.764</td>
-      <td>19.1324</td>
-      <td>Australia</td>
-    </tr>
-    <tr>
-      <th>RUS</th>
-      <td>0.733</td>
-      <td>1.190</td>
-      <td>146.7177</td>
-      <td>Russia</td>
-    </tr>
-    <tr>
-      <th>CHN</th>
-      <td>0.586</td>
-      <td>1.628</td>
-      <td>1269.5811</td>
-      <td>China</td>
+      <th>KOR</th>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>46.7666</td>
+      <td>South Korea</td>
     </tr>
     <tr>
       <th>FRA</th>
@@ -4331,6 +4308,41 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>2.247</td>
       <td>174.0182</td>
       <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1269.5811</td>
+      <td>China</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>146.7177</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>19.1324</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>JPN</th>
+      <td>0.883</td>
+      <td>1.346</td>
+      <td>127.0278</td>
+      <td>Japan</td>
     </tr>
   </tbody>
 </table>
@@ -4350,21 +4362,21 @@ Data Frame.  To get a sample that is half the size the original Data Frame
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.824, 1.467, 46.7666, &#39;South Korea&#39;],
-       [0.828, 1.21, 41.0197, &#39;Spain&#39;],
-       [0.844, 1.876, 59.4837, &#39;France&#39;],
-       [0.894, 2.03, 281.4841, &#39;United States&#39;],
-       [0.883, 1.346, 127.0278, &#39;Japan&#39;],
-       [0.89, 1.386, 81.7972, &#39;Germany&#39;],
-       [0.586, 1.628, 1269.5811, &#39;China&#39;],
-       [0.668, 2.247, 174.0182, &#39;Brazil&#39;],
-       [0.733, 1.19, 146.7177, &#39;Russia&#39;],
-       [0.89, 1.51, 30.8918, &#39;Canada&#39;],
-       [0.709, 2.714, 98.6255, &#39;Mexico&#39;],
-       [0.863, 1.641, 59.0573, &#39;United Kingdom&#39;],
-       [0.49, 3.35, 1057.9227, &#39;India&#39;],
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.842, 1.249, 57.2722, &#39;Italy&#39;],
        [0.896, 1.764, 19.1324, &#39;Australia&#39;],
-       [0.842, 1.249, 57.2722, &#39;Italy&#39;]], dtype=object)
+       [0.668, 2.247, 174.0182, &#39;Brazil&#39;],
+       [0.844, 1.876, 59.4837, &#39;France&#39;],
+       [0.733, 1.19, 146.7177, &#39;Russia&#39;],
+       [0.883, 1.346, 127.0278, &#39;Japan&#39;],
+       [0.894, 2.03, 281.4841, &#39;United States&#39;],
+       [0.824, 1.467, 46.7666, &#39;South Korea&#39;],
+       [0.89, 1.51, 30.8918, &#39;Canada&#39;],
+       [0.828, 1.21, 41.0197, &#39;Spain&#39;],
+       [0.49, 3.35, 1057.9227, &#39;India&#39;],
+       [0.863, 1.641, 59.0573, &#39;United Kingdom&#39;],
+       [0.89, 1.386, 81.7972, &#39;Germany&#39;],
+       [0.709, 2.714, 98.6255, &#39;Mexico&#39;],
+       [0.586, 1.628, 1269.5811, &#39;China&#39;]], dtype=object)
 </pre></div>
 </div>
 </div>
@@ -4430,53 +4442,11 @@ Data Frame.  To get a sample that is half the size the original Data Frame
   </thead>
   <tbody>
     <tr>
-      <th>DEU</th>
-      <td>0.890</td>
-      <td>1.386</td>
-      <td>81.7972</td>
-      <td>Germany</td>
-    </tr>
-    <tr>
-      <th>GBR</th>
-      <td>0.863</td>
-      <td>1.641</td>
-      <td>59.0573</td>
-      <td>United Kingdom</td>
-    </tr>
-    <tr>
-      <th>FRA</th>
-      <td>0.844</td>
-      <td>1.876</td>
-      <td>59.4837</td>
-      <td>France</td>
-    </tr>
-    <tr>
-      <th>ITA</th>
-      <td>0.842</td>
-      <td>1.249</td>
-      <td>57.2722</td>
-      <td>Italy</td>
-    </tr>
-    <tr>
-      <th>USA</th>
-      <td>0.894</td>
-      <td>2.030</td>
-      <td>281.4841</td>
-      <td>United States</td>
-    </tr>
-    <tr>
       <th>ESP</th>
       <td>0.828</td>
       <td>1.210</td>
       <td>41.0197</td>
       <td>Spain</td>
-    </tr>
-    <tr>
-      <th>RUS</th>
-      <td>0.733</td>
-      <td>1.190</td>
-      <td>146.7177</td>
-      <td>Russia</td>
     </tr>
     <tr>
       <th>KOR</th>
@@ -4493,11 +4463,32 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>Mexico</td>
     </tr>
     <tr>
-      <th>AUS</th>
-      <td>0.896</td>
-      <td>1.764</td>
-      <td>19.1324</td>
-      <td>Australia</td>
+      <th>FRA</th>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>59.4837</td>
+      <td>France</td>
+    </tr>
+    <tr>
+      <th>ITA</th>
+      <td>0.842</td>
+      <td>1.249</td>
+      <td>57.2722</td>
+      <td>Italy</td>
+    </tr>
+    <tr>
+      <th>GBR</th>
+      <td>0.863</td>
+      <td>1.641</td>
+      <td>59.0573</td>
+      <td>United Kingdom</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1057.9227</td>
+      <td>India</td>
     </tr>
     <tr>
       <th>CAN</th>
@@ -4507,11 +4498,25 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>Canada</td>
     </tr>
     <tr>
-      <th>JPN</th>
-      <td>0.883</td>
-      <td>1.346</td>
-      <td>127.0278</td>
-      <td>Japan</td>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>146.7177</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>281.4841</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>81.7972</td>
+      <td>Germany</td>
     </tr>
     <tr>
       <th>CHN</th>
@@ -4528,11 +4533,18 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>Brazil</td>
     </tr>
     <tr>
-      <th>IND</th>
-      <td>0.490</td>
-      <td>3.350</td>
-      <td>1057.9227</td>
-      <td>India</td>
+      <th>AUS</th>
+      <td>0.896</td>
+      <td>1.764</td>
+      <td>19.1324</td>
+      <td>Australia</td>
+    </tr>
+    <tr>
+      <th>JPN</th>
+      <td>0.883</td>
+      <td>1.346</td>
+      <td>127.0278</td>
+      <td>Japan</td>
     </tr>
   </tbody>
 </table>
@@ -4580,32 +4592,18 @@ Data Frame.  To get a sample that is half the size the original Data Frame
   </thead>
   <tbody>
     <tr>
-      <th>ESP</th>
-      <td>0.828</td>
-      <td>1.210</td>
-      <td>41.0197</td>
-      <td>Spain</td>
-    </tr>
-    <tr>
-      <th>MEX</th>
-      <td>0.709</td>
-      <td>2.714</td>
-      <td>98.6255</td>
-      <td>Mexico</td>
-    </tr>
-    <tr>
-      <th>CHN</th>
-      <td>0.586</td>
-      <td>1.628</td>
-      <td>1269.5811</td>
-      <td>China</td>
-    </tr>
-    <tr>
       <th>ITA</th>
       <td>0.842</td>
       <td>1.249</td>
       <td>57.2722</td>
       <td>Italy</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>41.0197</td>
+      <td>Spain</td>
     </tr>
     <tr>
       <th>JPN</th>
@@ -4622,27 +4620,6 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>Australia</td>
     </tr>
     <tr>
-      <th>FRA</th>
-      <td>0.844</td>
-      <td>1.876</td>
-      <td>59.4837</td>
-      <td>France</td>
-    </tr>
-    <tr>
-      <th>IND</th>
-      <td>0.490</td>
-      <td>3.350</td>
-      <td>1057.9227</td>
-      <td>India</td>
-    </tr>
-    <tr>
-      <th>CAN</th>
-      <td>0.890</td>
-      <td>1.510</td>
-      <td>30.8918</td>
-      <td>Canada</td>
-    </tr>
-    <tr>
       <th>BRA</th>
       <td>0.668</td>
       <td>2.247</td>
@@ -4650,18 +4627,18 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>Brazil</td>
     </tr>
     <tr>
-      <th>KOR</th>
-      <td>0.824</td>
-      <td>1.467</td>
-      <td>46.7666</td>
-      <td>South Korea</td>
+      <th>CHN</th>
+      <td>0.586</td>
+      <td>1.628</td>
+      <td>1269.5811</td>
+      <td>China</td>
     </tr>
     <tr>
-      <th>DEU</th>
-      <td>0.890</td>
-      <td>1.386</td>
-      <td>81.7972</td>
-      <td>Germany</td>
+      <th>MEX</th>
+      <td>0.709</td>
+      <td>2.714</td>
+      <td>98.6255</td>
+      <td>Mexico</td>
     </tr>
     <tr>
       <th>GBR</th>
@@ -4671,6 +4648,20 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>United Kingdom</td>
     </tr>
     <tr>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>146.7177</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
       <th>USA</th>
       <td>0.894</td>
       <td>2.030</td>
@@ -4678,11 +4669,32 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>United States</td>
     </tr>
     <tr>
-      <th>RUS</th>
-      <td>0.733</td>
-      <td>1.190</td>
-      <td>146.7177</td>
-      <td>Russia</td>
+      <th>KOR</th>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>46.7666</td>
+      <td>South Korea</td>
+    </tr>
+    <tr>
+      <th>IND</th>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1057.9227</td>
+      <td>India</td>
+    </tr>
+    <tr>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>81.7972</td>
+      <td>Germany</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>59.4837</td>
+      <td>France</td>
     </tr>
   </tbody>
 </table>
@@ -4742,53 +4754,18 @@ Data Frame.  To get a sample that is half the size the original Data Frame
   </thead>
   <tbody>
     <tr>
-      <th>BRA</th>
-      <td>0.668</td>
-      <td>2.247</td>
-      <td>174.0182</td>
-      <td>Brazil</td>
+      <th>IND</th>
+      <td>0.490</td>
+      <td>3.350</td>
+      <td>1057.9227</td>
+      <td>India</td>
     </tr>
     <tr>
-      <th>DEU</th>
-      <td>0.890</td>
-      <td>1.386</td>
-      <td>81.7972</td>
-      <td>Germany</td>
-    </tr>
-    <tr>
-      <th>DEU</th>
-      <td>0.890</td>
-      <td>1.386</td>
-      <td>81.7972</td>
-      <td>Germany</td>
-    </tr>
-    <tr>
-      <th>AUS</th>
-      <td>0.896</td>
-      <td>1.764</td>
-      <td>19.1324</td>
-      <td>Australia</td>
-    </tr>
-    <tr>
-      <th>CHN</th>
-      <td>0.586</td>
-      <td>1.628</td>
-      <td>1269.5811</td>
-      <td>China</td>
-    </tr>
-    <tr>
-      <th>FRA</th>
-      <td>0.844</td>
-      <td>1.876</td>
-      <td>59.4837</td>
-      <td>France</td>
-    </tr>
-    <tr>
-      <th>DEU</th>
-      <td>0.890</td>
-      <td>1.386</td>
-      <td>81.7972</td>
-      <td>Germany</td>
+      <th>KOR</th>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>46.7666</td>
+      <td>South Korea</td>
     </tr>
     <tr>
       <th>ESP</th>
@@ -4798,39 +4775,25 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>Spain</td>
     </tr>
     <tr>
-      <th>BRA</th>
-      <td>0.668</td>
-      <td>2.247</td>
-      <td>174.0182</td>
-      <td>Brazil</td>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
     </tr>
     <tr>
-      <th>AUS</th>
-      <td>0.896</td>
-      <td>1.764</td>
-      <td>19.1324</td>
-      <td>Australia</td>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>146.7177</td>
+      <td>Russia</td>
     </tr>
     <tr>
-      <th>IND</th>
-      <td>0.490</td>
-      <td>3.350</td>
-      <td>1057.9227</td>
-      <td>India</td>
-    </tr>
-    <tr>
-      <th>ITA</th>
-      <td>0.842</td>
-      <td>1.249</td>
-      <td>57.2722</td>
-      <td>Italy</td>
-    </tr>
-    <tr>
-      <th>IND</th>
-      <td>0.490</td>
-      <td>3.350</td>
-      <td>1057.9227</td>
-      <td>India</td>
+      <th>KOR</th>
+      <td>0.824</td>
+      <td>1.467</td>
+      <td>46.7666</td>
+      <td>South Korea</td>
     </tr>
     <tr>
       <th>ESP</th>
@@ -4838,34 +4801,6 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>1.210</td>
       <td>41.0197</td>
       <td>Spain</td>
-    </tr>
-    <tr>
-      <th>FRA</th>
-      <td>0.844</td>
-      <td>1.876</td>
-      <td>59.4837</td>
-      <td>France</td>
-    </tr>
-    <tr>
-      <th>MEX</th>
-      <td>0.709</td>
-      <td>2.714</td>
-      <td>98.6255</td>
-      <td>Mexico</td>
-    </tr>
-    <tr>
-      <th>USA</th>
-      <td>0.894</td>
-      <td>2.030</td>
-      <td>281.4841</td>
-      <td>United States</td>
-    </tr>
-    <tr>
-      <th>ITA</th>
-      <td>0.842</td>
-      <td>1.249</td>
-      <td>57.2722</td>
-      <td>Italy</td>
     </tr>
     <tr>
       <th>RUS</th>
@@ -4882,25 +4817,46 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>Germany</td>
     </tr>
     <tr>
-      <th>JPN</th>
-      <td>0.883</td>
-      <td>1.346</td>
-      <td>127.0278</td>
-      <td>Japan</td>
+      <th>DEU</th>
+      <td>0.890</td>
+      <td>1.386</td>
+      <td>81.7972</td>
+      <td>Germany</td>
     </tr>
     <tr>
-      <th>MEX</th>
-      <td>0.709</td>
-      <td>2.714</td>
-      <td>98.6255</td>
-      <td>Mexico</td>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
     </tr>
     <tr>
-      <th>IND</th>
-      <td>0.490</td>
-      <td>3.350</td>
-      <td>1057.9227</td>
-      <td>India</td>
+      <th>ESP</th>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>41.0197</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>BRA</th>
+      <td>0.668</td>
+      <td>2.247</td>
+      <td>174.0182</td>
+      <td>Brazil</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>281.4841</td>
+      <td>United States</td>
     </tr>
     <tr>
       <th>ITA</th>
@@ -4910,11 +4866,67 @@ Data Frame.  To get a sample that is half the size the original Data Frame
       <td>Italy</td>
     </tr>
     <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>281.4841</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>FRA</th>
+      <td>0.844</td>
+      <td>1.876</td>
+      <td>59.4837</td>
+      <td>France</td>
+    </tr>
+    <tr>
       <th>MEX</th>
       <td>0.709</td>
       <td>2.714</td>
       <td>98.6255</td>
       <td>Mexico</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>CAN</th>
+      <td>0.890</td>
+      <td>1.510</td>
+      <td>30.8918</td>
+      <td>Canada</td>
+    </tr>
+    <tr>
+      <th>ESP</th>
+      <td>0.828</td>
+      <td>1.210</td>
+      <td>41.0197</td>
+      <td>Spain</td>
+    </tr>
+    <tr>
+      <th>RUS</th>
+      <td>0.733</td>
+      <td>1.190</td>
+      <td>146.7177</td>
+      <td>Russia</td>
+    </tr>
+    <tr>
+      <th>USA</th>
+      <td>0.894</td>
+      <td>2.030</td>
+      <td>281.4841</td>
+      <td>United States</td>
     </tr>
   </tbody>
 </table>
@@ -4961,9 +4973,9 @@ Data Frame.  To get a sample that is half the size the original Data Frame
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Human Development Index     -0.035400
-Fertility Rate               0.400467
-Population                 143.112320
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Human Development Index    -0.041000
+Fertility Rate              0.225067
+Population                 94.614347
 Name: mean, dtype: float64
 </pre></div>
 </div>
@@ -4991,9 +5003,9 @@ Name: mean, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Human Development Index      0.039067
-Fertility Rate              -0.100200
-Population                -224.509560
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Human Development Index      0.051533
+Fertility Rate               0.108267
+Population                -182.270607
 Name: mean, dtype: float64
 </pre></div>
 </div>
@@ -5017,7 +5029,7 @@ apply to Series.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e468d237a20d07ee50ed0ef478a2ea8832370992ee7b3d2a2ec3565eb8968f67.png" src="_images/e468d237a20d07ee50ed0ef478a2ea8832370992ee7b3d2a2ec3565eb8968f67.png" />
+<img alt="_images/b258c966441fab2eec94be277a4dcbafb87c29243852a9f173356b03098e21c6.png" src="_images/b258c966441fab2eec94be277a4dcbafb87c29243852a9f173356b03098e21c6.png" />
 </div>
 </div>
 <p>Other kinds of plot require data specified both for the x- and y- axes, so can only be used with Data Frames:</p>
@@ -5035,12 +5047,12 @@ apply to Series.</p>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># A ValueError from trying to scatter plot a Series</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">hdi_series</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.12.11/x64/lib/python3.12/site-packages/pandas/plotting/_core.py:977,</span> in <span class="ni">PlotAccessor.__call__</span><span class="nt">(self, *args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">975</span>         <span class="k">return</span> <span class="n">plot_backend</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">kind</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">976</span>     <span class="k">else</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">977</span>         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;plot kind </span><span class="si">{</span><span class="n">kind</span><span class="si">}</span><span class="s2"> can only be used for data frames&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">978</span> <span class="k">elif</span> <span class="n">kind</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_series_kinds</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">979</span>     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ABCDataFrame</span><span class="p">):</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/pandas/plotting/_core.py:1131,</span> in <span class="ni">PlotAccessor.__call__</span><span class="nt">(self, *args, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1129</span>         <span class="k">return</span> <span class="n">plot_backend</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">kind</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1130</span>     <span class="k">else</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1131</span>         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;plot kind </span><span class="si">{</span><span class="n">kind</span><span class="si">}</span><span class="s2"> can only be used for data frames&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1132</span> <span class="k">elif</span> <span class="n">kind</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_series_kinds</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1133</span>     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ABCDataFrame</span><span class="p">):</span>
 
 <span class="ne">ValueError</span>: plot kind scatter can only be used for data frames
 </pre></div>
@@ -5057,7 +5069,7 @@ apply to Series.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3d4e283578d43f9053b031f138ce30660c654051b1a9f5fe47823d1d127f585b.png" src="_images/3d4e283578d43f9053b031f138ce30660c654051b1a9f5fe47823d1d127f585b.png" />
+<img alt="_images/35c321d179ed332e9b78570d763f51746792829aee47f2e173ac9426e774bb55.png" src="_images/35c321d179ed332e9b78570d763f51746792829aee47f2e173ac9426e774bb55.png" />
 </div>
 </div>
 </section>
@@ -5662,7 +5674,7 @@ Name: Human Development Index, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/6f13cb12cb69690504f9800c2304f6965d920fd4cebb0a10fda62eef2a94b8d8.png" src="_images/6f13cb12cb69690504f9800c2304f6965d920fd4cebb0a10fda62eef2a94b8d8.png" />
+<img alt="_images/bb63e081fa2d276659e3c48eb33a6ade6481474047ed41ee259844f659f38f7e.png" src="_images/bb63e081fa2d276659e3c48eb33a6ade6481474047ed41ee259844f659f38f7e.png" />
 </div>
 </div>
 <p>We can see from this procedure that we have two bivariate outliers, with respect to <code class="docutils literal notranslate"><span class="pre">Population</span></code> and <code class="docutils literal notranslate"><span class="pre">HDI</span></code>, at the bottom right of the scatter plot.</p>
@@ -5740,7 +5752,7 @@ Name: Population_z, dtype: float64
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;Code&#39;&gt;
 </pre></div>
 </div>
-<img alt="_images/df77a05cc8b7b78c41ce286042ddf8ca1fa3c59d52441e146d6e8969cecc976b.png" src="_images/df77a05cc8b7b78c41ce286042ddf8ca1fa3c59d52441e146d6e8969cecc976b.png" />
+<img alt="_images/0086aed542a446d5f697689fe33d4650ee17f4160bdcef1c00557c9df433229e.png" src="_images/0086aed542a446d5f697689fe33d4650ee17f4160bdcef1c00557c9df433229e.png" />
 </div>
 </div>
 <p><em>Food for thought</em>: what will happen if you reverse the order of <code class="docutils literal notranslate"><span class="pre">Country</span> <span class="pre">Name</span></code> and <code class="docutils literal notranslate"><span class="pre">Population</span></code> in the direct indexing operation? Do you think this will change the x-axis and and y-axis variables on the <code class="docutils literal notranslate"><span class="pre">.plot()</span></code>?</p>

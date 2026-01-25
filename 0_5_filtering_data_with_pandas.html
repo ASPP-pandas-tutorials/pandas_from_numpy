@@ -30,9 +30,9 @@
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
@@ -51,7 +51,7 @@
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/togglebutton.js?v=1ae7504c"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
@@ -497,6 +497,12 @@ Structure of this page:
 <span class="c1"># See &lt;https://github.com/pandas-dev/pandas/issues/57734&gt; for a discussion.</span>
 <span class="c1"># We do this to avoid confusing warnings for one solution to the exercise below.</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;future.no_silent_downcasting&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2788/1352713902.py:4: Pandas4Warning: &#39;future.no_silent_downcasting&#39; is deprecated, please refrain from using it.
+  pd.set_option(&#39;future.no_silent_downcasting&#39;, True)
 </pre></div>
 </div>
 </div>
@@ -2741,7 +2747,7 @@ drop the row with the <code class="docutils literal notranslate"><span class="pr
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;Human Development Index&#39;, ylabel=&#39;Fertility Rate&#39;&gt;
 </pre></div>
 </div>
-<img alt="_images/eb853e62b2ce7092f2c4db1064ba33cec0c75762e378825513bc6dd0725107cb.png" src="_images/eb853e62b2ce7092f2c4db1064ba33cec0c75762e378825513bc6dd0725107cb.png" />
+<img alt="_images/dd37fe6d11f3de637744bdcd85b85982625d64ca46ec07c48521d5b55d602b99.png" src="_images/dd37fe6d11f3de637744bdcd85b85982625d64ca46ec07c48521d5b55d602b99.png" />
 </div>
 </div>
 <p>To plot the trend either side of the HDI median, let’s create a Boolean Series based on the median HDI value.</p>
@@ -2784,7 +2790,7 @@ Name: Human Development Index, Length: 240, dtype: bool
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/646eceb7428a31ee2d5d220279d9e6c6849bc9a466a66e62f2a595febf0260f4.png" src="_images/646eceb7428a31ee2d5d220279d9e6c6849bc9a466a66e62f2a595febf0260f4.png" />
+<img alt="_images/a44e9ad88bcd2e3474249b8c71d11f142f792fe59f03d8ed233a598534ccaf4b.png" src="_images/a44e9ad88bcd2e3474249b8c71d11f142f792fe59f03d8ed233a598534ccaf4b.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2797,7 +2803,7 @@ Name: Human Development Index, Length: 240, dtype: bool
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a432b2dd813c76336a9d22329106523546ba69c975451dc188670cf4241cca18.png" src="_images/a432b2dd813c76336a9d22329106523546ba69c975451dc188670cf4241cca18.png" />
+<img alt="_images/2685d3490638150b2576dfe60851ee5f89684d2dc7c8ea999cfc77a1a58912bb.png" src="_images/2685d3490638150b2576dfe60851ee5f89684d2dc7c8ea999cfc77a1a58912bb.png" />
 </div>
 </div>
 <p>We can see graphically that the trends differ either side of the median, in a way that is clearer than looking at the full data on one plot.</p>
@@ -2883,7 +2889,7 @@ Name: Fertility Rate, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/dacfef460243584303ec6ee1bf3b4f342462bee3edb16f83b0f7a39f05e00a91.png" src="_images/dacfef460243584303ec6ee1bf3b4f342462bee3edb16f83b0f7a39f05e00a91.png" />
+<img alt="_images/d300b87c1915338d71fd1d028b78baa5379deea5c6f1ad2a1adce5e9db711731.png" src="_images/d300b87c1915338d71fd1d028b78baa5379deea5c6f1ad2a1adce5e9db711731.png" />
 </div>
 </div>
 <p>Interesting, it looks like actually, there may be a negative linear trend in these countries, which was not visible in the scatterplot showing all of the data.</p>

@@ -30,9 +30,9 @@
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/exercise.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
@@ -51,7 +51,7 @@
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/togglebutton.js?v=1ae7504c"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
@@ -495,7 +495,7 @@ create a Pandas Series containing some <em>strings</em> representing dates:</p>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    2025-06-06
 1    2025-06-07
-dtype: object
+dtype: str
 </pre></div>
 </div>
 </div>
@@ -572,13 +572,14 @@ for more.</p>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0   2025-06-06
 1   2025-06-07
-dtype: datetime64[ns]
+dtype: datetime64[us]
 </pre></div>
 </div>
 </div>
 </div>
 <p>As you see from the output of the cell above, the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> of this data is no
-longer <code class="docutils literal notranslate"><span class="pre">object</span></code> as it was above. It is now <code class="docutils literal notranslate"><span class="pre">datetime64[ns]</span></code>
+longer <code class="docutils literal notranslate"><span class="pre">str</span></code> (Pandas 3) or <code class="docutils literal notranslate"><span class="pre">object</span></code> (Pandas 2) as it was above (see <a class="reference internal" href="0_2_pandas_dataframes_attributes_methods.html#pd-2-3-strings"><span class="std std-ref">Pandas
+string in versions 3 and 2</span></a>. It is now <code class="docutils literal notranslate"><span class="pre">datetime64[ns]</span></code>
 — which we can read as “a datetime representation, in 64 bits, down to the
 nanosecond resolution”. Sounds fancy!</p>
 <p>We can confirm the type of the data using the <code class="docutils literal notranslate"><span class="pre">type()</span></code> function:</p>
@@ -601,7 +602,7 @@ a <code class="docutils literal notranslate"><span class="pre">Timestamp</span><
 purposes, the <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code> is just a more general description of
 <code class="docutils literal notranslate"><span class="pre">datetime64[ns]</span></code> (with the latter just giving more information about the amount
 of memory used for storage and the time resolution…)</p>
-<p>We can now do “mathemstics with times” and use subtraction to calculate the
+<p>We can now do “mathematics with times” and use subtraction to calculate the
 difference between these dates:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -648,7 +649,7 @@ will interpret the date strings, using the <code class="docutils literal notrans
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0   2025-06-06
 1   2025-07-06
-dtype: datetime64[ns]
+dtype: datetime64[us]
 </pre></div>
 </div>
 </div>
@@ -695,13 +696,13 @@ convert dates which contain words like the names of months (June, July etc.):</p
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2595/560003137.py:3: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2832/560003137.py:3: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
   a_series_of_timestamps = pd.to_datetime(a_series_of_str)
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0   2025-06-06
 1   2025-06-07
-dtype: datetime64[ns]
+dtype: datetime64[us]
 </pre></div>
 </div>
 </div>
@@ -1244,7 +1245,7 @@ back to the middle of 1969.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d8f874b344cd3d3829819d800d1e6ad5715c83274963f256082bc36fd49c186c.png" src="_images/d8f874b344cd3d3829819d800d1e6ad5715c83274963f256082bc36fd49c186c.png" />
+<img alt="_images/c4f826b8ac7a9913b477688fb4b5addd5576cc8d960e35baf7729ab9fe349361.png" src="_images/c4f826b8ac7a9913b477688fb4b5addd5576cc8d960e35baf7729ab9fe349361.png" />
 </div>
 </div>
 <p>As expected, the trend for <code class="docutils literal notranslate"><span class="pre">Year</span></code> increasely linearly (<em>duh!</em>), whilst <code class="docutils literal notranslate"><span class="pre">Fertility</span> <span class="pre">Rate</span></code> falls and <code class="docutils literal notranslate"><span class="pre">Human</span> <span class="pre">Development</span> <span class="pre">Index</span></code>/<code class="docutils literal notranslate"><span class="pre">Population</span></code> (mostly) climb.</p>
@@ -1359,7 +1360,7 @@ rename the original <code class="docutils literal notranslate"><span class="pre"
 30   2020-01-01
 31   2021-01-01
 32   2022-01-01
-Name: Year_as_Timestamp, dtype: datetime64[ns]
+Name: Year_as_Timestamp, dtype: datetime64[us]
 </pre></div>
 </div>
 </div>
@@ -2161,7 +2162,7 @@ Name: Year_as_Timestamp, dtype: int32
                &#39;2014-01-01&#39;, &#39;2015-01-01&#39;, &#39;2016-01-01&#39;, &#39;2017-01-01&#39;,
                &#39;2018-01-01&#39;, &#39;2019-01-01&#39;, &#39;2020-01-01&#39;, &#39;2021-01-01&#39;,
                &#39;2022-01-01&#39;],
-              dtype=&#39;datetime64[ns]&#39;, name=&#39;Year_as_Timestamp&#39;, freq=None)
+              dtype=&#39;datetime64[us]&#39;, name=&#39;Year_as_Timestamp&#39;, freq=None)
 </pre></div>
 </div>
 </div>
@@ -2174,7 +2175,7 @@ Name: Year_as_Timestamp, dtype: int32
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pandas.core.indexes.datetimes.DatetimeIndex
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pandas.DatetimeIndex
 </pre></div>
 </div>
 </div>
@@ -2365,7 +2366,7 @@ automatically place the Timestamp information on the x-axis:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2d784cd7a3243fc0153b28a372f33b065dbd6bae0b505a3cbb82ead24f4aa094.png" src="_images/2d784cd7a3243fc0153b28a372f33b065dbd6bae0b505a3cbb82ead24f4aa094.png" />
+<img alt="_images/67224eb39f1e392c02db38233c50e619e49f89e143a76894c5b5c3cffedf8b76.png" src="_images/67224eb39f1e392c02db38233c50e619e49f89e143a76894c5b5c3cffedf8b76.png" />
 </div>
 </div>
 </section>
